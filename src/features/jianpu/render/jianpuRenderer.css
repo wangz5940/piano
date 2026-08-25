@@ -1,0 +1,319 @@
+.jianpu-renderer {
+  width: 100%;
+  max-width: 1120px;
+  min-width: 0;
+  margin-inline: auto;
+  color: #171510;
+}
+
+.jianpu-renderer-sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.jianpu-renderer-signature {
+  display: flex;
+  gap: 18px;
+  margin: 0 0 8px 26px;
+  color: #4f4a43;
+  font-family: ui-serif, "Songti SC", serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.jianpu-renderer-systems {
+  display: grid;
+  gap: 26px;
+}
+
+.jianpu-renderer-system {
+  min-width: 0;
+  overflow: visible;
+  background: #fffefb;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 154px;
+}
+
+.jianpu-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.jianpu-svg text {
+  user-select: none;
+}
+
+.jianpu-svg-barline,
+.jianpu-svg-duration-lines line,
+.jianpu-svg-hold-line,
+.jianpu-svg-sustain line {
+  vector-effect: non-scaling-stroke;
+}
+
+.jianpu-svg-barline {
+  stroke: #171510;
+  stroke-width: 1.25;
+}
+
+.jianpu-svg-barline.is-system-end {
+  stroke: #171510;
+  stroke-width: 1.5;
+}
+
+.jianpu-svg-barline.is-final {
+  stroke: #171510;
+  stroke-width: 2.5;
+}
+
+.jianpu-svg-brace {
+  fill: #171510;
+  font-family: "Baskerville", "Times New Roman", ui-serif, serif;
+  font-weight: 400;
+  transform: scaleX(0.38);
+  transform-origin: 7px center;
+}
+
+.jianpu-svg-system-measure-number {
+  fill: #58544c;
+  font-family: ui-serif, "Songti SC", serif;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.jianpu-svg-position-band rect {
+  fill: #eef5ed;
+  stroke: #9eb39f;
+  stroke-width: 0.65;
+}
+
+.jianpu-svg-position-band.is-move rect {
+  fill: #fff1d4;
+  stroke: #c99c54;
+}
+
+.jianpu-svg-position-band.is-return rect {
+  fill: #edf2fa;
+  stroke: #93a6c7;
+}
+
+.jianpu-svg-position-label {
+  fill: #234d40;
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.jianpu-svg-position-band.is-move .jianpu-svg-position-label {
+  fill: #8a571e;
+}
+
+.jianpu-svg-position-band.is-return .jianpu-svg-position-label {
+  fill: #38578c;
+}
+
+.jianpu-svg-position-map {
+  fill: #64776e;
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 5.5px;
+  font-weight: 600;
+  text-anchor: end;
+}
+
+.jianpu-svg-direction {
+  fill: #514b42;
+  font-size: 9px;
+}
+
+.jianpu-svg-chord-label {
+  fill: #171510;
+  font-family: ui-serif, "Songti SC", serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.jianpu-svg-lyric,
+.staff-lyric {
+  fill: #3f544b;
+  font-family: ui-serif, "Songti SC", serif;
+  font-size: 10px;
+}
+
+.staff-aid-renderer {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  color: #183d32;
+}
+
+.staff-aid-renderer .staff-score {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.jianpu-svg-warning circle {
+  fill: #fff4dc;
+  stroke: #b77a32;
+  stroke-width: 1;
+}
+
+.jianpu-svg-warning text {
+  fill: #8b561d;
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.jianpu-svg-event {
+  color: #171510;
+  outline: none;
+}
+
+.jianpu-svg-event[role="button"] {
+  cursor: pointer;
+}
+
+.jianpu-svg-current-background {
+  fill: #f5d49b;
+  stroke: #bc7b3d;
+  stroke-width: 1;
+}
+
+.jianpu-svg-event.is-done .jianpu-svg-degree,
+.jianpu-svg-event.is-done .jianpu-svg-accidental {
+  fill: #625f58;
+}
+
+.jianpu-svg-event:focus .jianpu-svg-degree {
+  paint-order: stroke;
+  stroke: #f3b766;
+  stroke-width: 3px;
+}
+
+.jianpu-svg-event:hover .jianpu-svg-degree {
+  fill: #9a4f21;
+}
+
+.jianpu-svg-degree {
+  fill: #171510;
+  font-family: "SimpMusic Base", ui-serif, "Songti SC", serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.jianpu-svg-event[data-hand="left"] .jianpu-svg-degree {
+  fill: #171510;
+}
+
+.jianpu-svg-accidental {
+  fill: #171510;
+  font-family: "SimpMusic Base", ui-serif, "Songti SC", serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.jianpu-svg-octave-dots,
+.jianpu-svg-augmentation-dots {
+  fill: currentColor;
+}
+
+.jianpu-svg-duration-lines line,
+.jianpu-svg-hold-line {
+  stroke: #171510;
+  stroke-linecap: round;
+}
+
+.jianpu-svg-duration-lines line {
+  stroke-width: 1.4;
+}
+
+.jianpu-svg-hold-line {
+  stroke-width: 1.7;
+}
+
+.jianpu-svg-sustain line {
+  stroke: #171510;
+  stroke-linecap: round;
+  stroke-width: 1.4;
+}
+
+.jianpu-svg-tie {
+  fill: #171510;
+  font-family: "SimpMusic Accent", ui-serif, serif;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.jianpu-svg-slur {
+  fill: none;
+  stroke: #171510;
+  stroke-width: 1;
+}
+
+.jianpu-svg-articulation {
+  fill: #171510;
+  font-family: ui-serif, "Songti SC", serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.jianpu-svg-dynamics {
+  fill: #171510;
+  font-family: ui-serif, "Times New Roman", serif;
+  font-size: 10px;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.jianpu-svg-rest {
+  fill: #171510;
+  font-family: "SimpMusic Base", ui-serif, "Songti SC", serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.jianpu-svg-fingering circle {
+  fill: #fffdf8;
+  stroke: #9e8058;
+  stroke-width: 1;
+}
+
+.jianpu-svg-fingering text {
+  fill: #5f4728;
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.jianpu-svg-keyboard-label {
+  fill: #766d61;
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 7px;
+}
+
+.textbook-jianpu-score .jianpu-renderer-systems {
+  gap: 28px;
+}
+
+@media (max-width: 700px) {
+  .jianpu-renderer-systems {
+    gap: 20px;
+  }
+
+  .jianpu-svg-degree {
+    font-size: 25px;
+  }
+}

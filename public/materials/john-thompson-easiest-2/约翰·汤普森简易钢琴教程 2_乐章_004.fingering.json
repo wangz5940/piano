@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "john-thompson-easiest-2.segment.004",
+  "source_pages": [
+    23,
+    24
+  ],
+  "extraction": {
+    "engine": "macOS Vision OCR",
+    "status": "candidate",
+    "candidate_count": 1,
+    "text_rule_count": 0
+  },
+  "candidates": [
+    {
+      "confidence": 0.3,
+      "fingers": [
+        2,
+        1
+      ],
+      "normalized_box": {
+        "height": 0.011741682823668165,
+        "width": 0.027616279013690403,
+        "x": 0.4883720927060909,
+        "y": 0.021526418764291178
+      },
+      "page": 23,
+      "pixel_box": {
+        "height": 27.59295463562019,
+        "width": 87.37790679931643,
+        "x": 1545.2093013220715,
+        "y": 2271.8199612682956
+      },
+      "record_type": "fingering_candidate",
+      "schema_version": "1.0",
+      "source": "约翰·汤普森简易钢琴教程 2.pdf",
+      "status": "candidate",
+      "text": "-21-"
+    }
+  ],
+  "text_rules": [],
+  "limitation": "指法候选来自普通文字 OCR 的 1-5 数字和教材文字说明，不是经过人工校对的逐音指法；正式跟弹只能使用 source=score 或人工确认后的指法。"
+}
