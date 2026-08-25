@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "john-thompson-easiest-1.segment.013",
+  "source_pages": [
+    38,
+    39,
+    40
+  ],
+  "extraction": {
+    "engine": "macOS Vision OCR",
+    "status": "candidate",
+    "candidate_count": 2,
+    "text_rule_count": 0
+  },
+  "candidates": [
+    {
+      "confidence": 0.3,
+      "fingers": [
+        3,
+        4
+      ],
+      "normalized_box": {
+        "height": 0.015904572366297942,
+        "width": 0.018895348613748614,
+        "x": 0.10610465119579042,
+        "y": 0.8986083500660227
+      },
+      "page": 38,
+      "pixel_box": {
+        "height": 27.65805134499212,
+        "width": 45.0087203979492,
+        "x": 252.74127914837277,
+        "y": 148.66202789019442
+      },
+      "record_type": "fingering_candidate",
+      "schema_version": "1.0",
+      "source": "约翰·汤普森简易钢琴教程 1.pdf",
+      "status": "candidate",
+      "text": "34"
+    },
+    {
+      "confidence": 1,
+      "fingers": [
+        3,
+        5
+      ],
+      "normalized_box": {
+        "height": 0.015936254905665526,
+        "width": 0.015988371534371604,
+        "x": 0.8706395350488441,
+        "y": 0.9023904381988462
+      },
+      "page": 39,
+      "pixel_box": {
+        "height": 27.66533851623535,
+        "width": 38.08430099487316,
+        "x": 2073.8633724863466,
+        "y": 141.78486077056758
+      },
+      "record_type": "fingering_candidate",
+      "schema_version": "1.0",
+      "source": "约翰·汤普森简易钢琴教程 1.pdf",
+      "status": "candidate",
+      "text": "35"
+    }
+  ],
+  "text_rules": [],
+  "limitation": "指法候选来自普通文字 OCR 的 1-5 数字和教材文字说明，不是经过人工校对的逐音指法；正式跟弹只能使用 source=score 或人工确认后的指法。"
+}
