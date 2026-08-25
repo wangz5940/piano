@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "john-thompson-easiest-2.segment.009",
+  "source_pages": [
+    31
+  ],
+  "extraction": {
+    "engine": "macOS Vision OCR",
+    "status": "candidate",
+    "candidate_count": 1,
+    "text_rule_count": 3
+  },
+  "candidates": [
+    {
+      "confidence": 0.5,
+      "fingers": [
+        2
+      ],
+      "normalized_box": {
+        "height": 0.011741683635305922,
+        "width": 0.007267442575447536,
+        "x": 0.7558139532035553,
+        "y": 0.7632093928203119
+      },
+      "page": 31,
+      "pixel_box": {
+        "height": 27.592956542968917,
+        "width": 22.994188308716005,
+        "x": 2391.395347936049,
+        "y": 528.8649703292982
+      },
+      "record_type": "fingering_candidate",
+      "schema_version": "1.0",
+      "source": "约翰·汤普森简易钢琴教程 2.pdf",
+      "status": "candidate",
+      "text": "2"
+    }
+  ],
+  "text_rules": [
+    {
+      "source": "ocr_text",
+      "page": 31,
+      "text": "手指操练习",
+      "status": "candidate"
+    },
+    {
+      "source": "ocr_text",
+      "page": 31,
+      "text": "右手",
+      "status": "candidate"
+    },
+    {
+      "source": "ocr_text",
+      "page": 31,
+      "text": "左手",
+      "status": "candidate"
+    }
+  ],
+  "limitation": "指法候选来自普通文字 OCR 的 1-5 数字和教材文字说明，不是经过人工校对的逐音指法；正式跟弹只能使用 source=score 或人工确认后的指法。"
+}

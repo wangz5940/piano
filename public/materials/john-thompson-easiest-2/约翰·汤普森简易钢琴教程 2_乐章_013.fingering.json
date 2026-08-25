@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "john-thompson-easiest-2.segment.013",
+  "source_pages": [
+    33
+  ],
+  "extraction": {
+    "engine": "macOS Vision OCR",
+    "status": "candidate",
+    "candidate_count": 4,
+    "text_rule_count": 5
+  },
+  "candidates": [
+    {
+      "confidence": 1,
+      "fingers": [
+        3
+      ],
+      "normalized_box": {
+        "height": 0.011741682823668165,
+        "width": 0.007267441972619193,
+        "x": 0.27616279056892296,
+        "y": 0.8375733855157589
+      },
+      "page": 33,
+      "pixel_box": {
+        "height": 27.59295463562019,
+        "width": 22.994186401367127,
+        "x": 873.7790693600722,
+        "y": 354.10958940234644
+      },
+      "record_type": "fingering_candidate",
+      "schema_version": "1.0",
+      "source": "约翰·汤普森简易钢琴教程 2.pdf",
+      "status": "candidate",
+      "text": "3"
+    },
+    {
+      "confidence": 1,
+      "fingers": [
+        2
+      ],
+      "normalized_box": {
+        "height": 0.013698629825673159,
+        "width": 0.007267441972619193,
+        "x": 0.27616279056892296,
+        "y": 0.8238747556742476
+      },
+      "page": 33,
+      "pixel_box": {
+        "height": 32.191780090331925,
+        "width": 22.994186401367127,
+        "x": 873.7790693600722,
+        "y": 381.70254407518615
+      },
+      "record_type": "fingering_candidate",
+      "schema_version": "1.0",
+      "source": "约翰·汤普森简易钢琴教程 2.pdf",
+      "status": "candidate",
+      "text": "2"
+    },
+    {
+      "confidence": 1,
+      "fingers": [
+        3
+      ],
+      "normalized_box": {
+        "height": 0.013698629825673159,
+        "width": 0.008720929643749126,
+        "x": 0.12354651182541226,
+        "y": 0.7475538164309339
+      },
+      "page": 33,
+      "pixel_box": {
+        "height": 32.191780090331925,
+        "width": 27.593021392822234,
+        "x": 390.9011634156044,
+        "y": 561.0567512969734
+      },
+      "record_type": "fingering_candidate",
+      "schema_version": "1.0",
+      "source": "约翰·汤普森简易钢琴教程 2.pdf",
+      "status": "candidate",
+      "text": "3"
+    },
+    {
+      "confidence": 0.5,
+      "fingers": [
+        3,
+        1
+      ],
+      "normalized_box": {
+        "height": 0.017872340425531874,
+        "width": 0.029069767890476772,
+        "x": 0.4840116280460407,
+        "y": 0.017446808720620544
+      },
+      "page": 33,
+      "pixel_box": {
+        "height": 41.9999999999999,
+        "width": 91.97674560546851,
+        "x": 1531.4127911376727,
+        "y": 2266.999999506542
+      },
+      "record_type": "fingering_candidate",
+      "schema_version": "1.0",
+      "source": "约翰·汤普森简易钢琴教程 2.pdf",
+      "status": "candidate",
+      "text": "-31-"
+    }
+  ],
+  "text_rules": [
+    {
+      "source": "ocr_text",
+      "page": 33,
+      "text": "手指操练习",
+      "status": "candidate"
+    },
+    {
+      "source": "ocr_text",
+      "page": 33,
+      "text": "右手",
+      "status": "candidate"
+    },
+    {
+      "source": "ocr_text",
+      "page": 33,
+      "text": "下的音符用左手",
+      "status": "candidate"
+    },
+    {
+      "source": "ocr_text",
+      "page": 33,
+      "text": "则用右手弹哟。",
+      "status": "candidate"
+    },
+    {
+      "source": "ocr_text",
+      "page": 33,
+      "text": "左手",
+      "status": "candidate"
+    }
+  ],
+  "limitation": "指法候选来自普通文字 OCR 的 1-5 数字和教材文字说明，不是经过人工校对的逐音指法；正式跟弹只能使用 source=score 或人工确认后的指法。"
+}
