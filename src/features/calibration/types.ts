@@ -52,6 +52,11 @@ export interface calibration_event_metadata {
   articulation: string;
   dynamics: string;
   slur: "none" | "start" | "continue" | "stop";
+  fermata?: "upright" | "inverted";
+  ornament?: string;
+  wedge?: "crescendo" | "diminuendo" | "stop";
+  pedal?: "start" | "stop" | "change" | "continue";
+  words?: string;
   source_page: number | null;
   source_system: number | null;
 }

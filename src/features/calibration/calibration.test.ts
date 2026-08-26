@@ -59,6 +59,11 @@ describe("通用乐谱校准领域", () => {
       articulation: "staccato",
       dynamics: "mf",
       slur: "start",
+      fermata: "upright",
+      ornament: "trill-mark",
+      wedge: "crescendo",
+      pedal: "start",
+      words: "dolce",
     });
     expect(imported.event_metadata[left[0].id]).toMatchObject({
       staff: 2,
@@ -67,6 +72,11 @@ describe("通用乐谱校准领域", () => {
     expect(imported.document.measures[1].events[0]).toMatchObject({
       onset_beats: 0,
       duration_beats: 1,
+    });
+    expect(imported.document.measures[1]).toMatchObject({
+      meter: { beats: 3, beat_unit: 4 },
+      key_signature: "F major",
+      tonic_midi: 65,
     });
     expect(imported.event_metadata[imported.document.measures[1].events[0].id].staff)
       .toBe(1);
@@ -202,6 +212,9 @@ const musicxml_fixture = `<?xml version="1.0" encoding="UTF-8"?>
         <staves>2</staves>
       </attributes>
       <direction><direction-type><dynamics><mf/></dynamics></direction-type></direction>
+      <direction><direction-type><wedge type="crescendo"/></direction-type></direction>
+      <direction><direction-type><pedal type="start"/></direction-type></direction>
+      <direction><direction-type><words>dolce</words></direction-type></direction>
       <note>
         <pitch><step>G</step><octave>4</octave></pitch>
         <duration>4</duration><voice>1</voice><staff>1</staff>
@@ -209,6 +222,8 @@ const musicxml_fixture = `<?xml version="1.0" encoding="UTF-8"?>
         <notations>
           <technical><fingering>1</fingering></technical>
           <articulations><staccato/></articulations>
+          <fermata type="upright"/>
+          <ornaments><trill-mark/></ornaments>
           <slur type="start"/>
         </notations>
       </note>
@@ -233,6 +248,8 @@ const musicxml_fixture = `<?xml version="1.0" encoding="UTF-8"?>
     </measure>
     <measure number="2">
       <attributes>
+        <key><fifths>-1</fifths><mode>major</mode></key>
+        <time><beats>3</beats><beat-type>4</beat-type></time>
         <clef number="1"><sign>G</sign><line>2</line></clef>
       </attributes>
       <note>
