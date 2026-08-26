@@ -97,6 +97,10 @@ describe("教材谱库", () => {
     expect(markup).not.toContain("逐音指法谱");
     expect(markup).not.toContain("审核门禁");
     expect(markup).not.toContain("发布当前版本");
+    expect(markup).toContain("上一曲");
+    expect(markup).toContain("下一曲");
+    expect(markup).toContain("已经是第一曲");
+    expect(markup).toContain("已经是最后一曲");
   });
 
   it("空教材目录展示可恢复的产品空态", () => {

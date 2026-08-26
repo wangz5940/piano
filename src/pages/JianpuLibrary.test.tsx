@@ -170,6 +170,10 @@ describe("简谱教材", () => {
     expect(markup).toContain("收起阅读目录");
     expect(markup).toContain(">简谱<");
     expect(markup).toContain("右手谱");
+    expect(markup).toContain("上一曲");
+    expect(markup).toContain("下一曲");
+    expect(markup).toContain("已经是第一曲");
+    expect(markup).toContain("已经是最后一曲");
     expect(markup).not.toContain("左手休止");
   });
 
