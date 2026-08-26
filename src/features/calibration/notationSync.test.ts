@@ -114,6 +114,19 @@ describe("简谱与五线谱双向同步", () => {
     })).toThrow("拍号格式无效");
   });
 
+  it("允许逐小节变拍号而不误报全曲拍号不一致", () => {
+    const project = make_project();
+    project.document.measures.push({
+      id: "measure-2",
+      number: "2",
+      meter: { beats: 3, beat_unit: 4 },
+      events: [],
+    });
+
+    expect(validate_notation_sync(project).map((issue) => issue.code))
+      .not.toContain("notation_time_signature_mismatch");
+  });
+
   it("按手别固定两个高音谱表，左手 G4 仍保留在第二谱表", () => {
     const project = make_project();
     const event = project.document.measures[0].events[0];

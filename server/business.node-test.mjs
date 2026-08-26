@@ -12,7 +12,11 @@ import {
   parse_session_cookie,
   verify_password,
 } from "./auth.mjs";
-import { create_request_handler, score_document_to_musicxml } from "./app.mjs";
+import {
+  create_request_handler,
+  score_document_to_jianpu_score,
+  score_document_to_musicxml,
+} from "./app.mjs";
 import { open_database } from "./database.mjs";
 
 test("密码使用随机盐并能验证正确密码", async () => {
@@ -142,6 +146,28 @@ test("MusicXML 导出保留 Slur 起止标记", () => {
   assert.doesNotMatch(xml, /type="continue"/);
   assert.match(xml, /<slur type="start"\/>/);
   assert.match(xml, /<slur type="stop"\/>/);
+});
+
+test("简谱导出对同音高多声部只保留一个指法", () => {
+  const score = score_document_to_jianpu_score({
+    measures: [{
+      number: "1",
+      events: [{
+        onset_beats: 0,
+        duration_beats: 1,
+        hand: "right",
+        notes: [{ midi: 60, finger: 1 }],
+      }, {
+        onset_beats: 0,
+        duration_beats: 1,
+        hand: "right",
+        notes: [{ midi: 60, finger: 2 }],
+      }],
+    }],
+  }, "beyer.segment.test");
+
+  assert.deepEqual(score.measures[0].events[0].right_notes, [60]);
+  assert.equal(score.measures[0].events[0].right_fingerings.length, 1);
 });
 
 test("业务 API 支持账号、同步、练习归档和管理员内容版本", async (context) => {
