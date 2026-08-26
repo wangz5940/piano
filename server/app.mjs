@@ -1384,29 +1384,50 @@ export function score_document_to_musicxml(document, event_metadata = {}) {
     "  </part-list>",
     '  <part id="P1">',
   ];
+  let previous_time;
+  let previous_fifths;
   for (const [measure_index, measure] of document.measures.entries()) {
     lines.push(`    <measure number="${xml_escape(measure.number || String(measure_index + 1))}">`);
     const measure_time = parse_measure_meter(measure.meter, time);
-    if (measure_index === 0) {
+    const measure_fifths = key_signature_to_fifths(
+      measure.key_signature ?? document.key_signature,
+      measure.tonic_midi ?? document.tonic_midi,
+    );
+    const time_changed = !previous_time ||
+      previous_time.beats !== measure_time.beats ||
+      previous_time.beat_unit !== measure_time.beat_unit;
+    const key_changed = previous_fifths === undefined ||
+      previous_fifths !== measure_fifths;
+    if (measure_index === 0 || time_changed || key_changed) {
       lines.push("      <attributes>");
-      lines.push(`        <divisions>${divisions}</divisions>`);
-      lines.push("        <key>");
-      lines.push(`          <fifths>${key_signature_to_fifths(document.key_signature, document.tonic_midi)}</fifths>`);
-      lines.push("        </key>");
-      lines.push("        <time>");
-      lines.push(`          <beats>${measure_time.beats}</beats>`);
-      lines.push(`          <beat-type>${measure_time.beat_unit}</beat-type>`);
-      lines.push("        </time>");
-      lines.push("        <staves>2</staves>");
-      for (const staff_number of [1, 2]) {
-        const clef = musicxml_clef_for_staff();
-        lines.push(`        <clef number="${staff_number}">`);
-        lines.push(`          <sign>${clef.sign}</sign>`);
-        lines.push(`          <line>${clef.line}</line>`);
-        lines.push("        </clef>");
+      if (measure_index === 0) {
+        lines.push(`        <divisions>${divisions}</divisions>`);
+      }
+      if (key_changed) {
+        lines.push("        <key>");
+        lines.push(`          <fifths>${measure_fifths}</fifths>`);
+        lines.push("        </key>");
+      }
+      if (time_changed) {
+        lines.push("        <time>");
+        lines.push(`          <beats>${measure_time.beats}</beats>`);
+        lines.push(`          <beat-type>${measure_time.beat_unit}</beat-type>`);
+        lines.push("        </time>");
+      }
+      if (measure_index === 0) {
+        lines.push("        <staves>2</staves>");
+        for (const staff_number of [1, 2]) {
+          const clef = musicxml_clef_for_staff();
+          lines.push(`        <clef number="${staff_number}">`);
+          lines.push(`          <sign>${clef.sign}</sign>`);
+          lines.push(`          <line>${clef.line}</line>`);
+          lines.push("        </clef>");
+        }
       }
       lines.push("      </attributes>");
     }
+    previous_time = measure_time;
+    previous_fifths = measure_fifths;
 
     const events_by_staff = new Map();
     for (const event of measure.events) {
@@ -1444,7 +1465,7 @@ function score_event_to_musicxml_notes(event, staff, divisions, metadata) {
   const notes = event.notes.length > 0 ? event.notes : [undefined];
   return notes.flatMap((note, note_index) => {
     const lines = [
-      ...musicxml_dynamics_direction(event, metadata, note_index),
+      ...musicxml_event_directions(event, metadata, note_index),
       "      <note>",
     ];
     if (note_index > 0) {
@@ -1475,21 +1496,47 @@ function score_event_to_musicxml_notes(event, staff, divisions, metadata) {
   });
 }
 
-function musicxml_dynamics_direction(event, metadata, note_index) {
-  const dynamics = String(metadata?.dynamics ?? "").trim();
-  if (!dynamics || note_index > 0) {
+function musicxml_event_directions(event, metadata, note_index) {
+  if (note_index > 0) {
     return [];
   }
-  return [
-    '      <direction placement="below">',
-    "        <direction-type>",
-    "          <dynamics>",
-    `            <${xml_name(dynamics)}/>`,
-    "          </dynamics>",
-    "        </direction-type>",
-    `        <staff>${musicxml_staff_for_event(event)}</staff>`,
-    "      </direction>",
-  ];
+  const direction_types = [];
+  const dynamics = String(metadata?.dynamics ?? "").trim();
+  if (dynamics) {
+    direction_types.push(
+      "          <dynamics>",
+      `            <${xml_name(dynamics)}/>`,
+      "          </dynamics>",
+    );
+  }
+  const wedge = normalize_musicxml_relation(
+    metadata?.wedge,
+    ["crescendo", "diminuendo", "stop"],
+  );
+  if (wedge) {
+    direction_types.push(`          <wedge type="${wedge}"/>`);
+  }
+  const pedal = normalize_musicxml_relation(
+    metadata?.pedal,
+    ["start", "stop", "change", "continue"],
+  );
+  if (pedal) {
+    direction_types.push(`          <pedal type="${pedal}"/>`);
+  }
+  const words = String(metadata?.words ?? "").trim();
+  if (words) {
+    direction_types.push(`          <words>${xml_escape(words)}</words>`);
+  }
+  return direction_types.length === 0
+    ? []
+    : [
+        '      <direction placement="below">',
+        "        <direction-type>",
+        ...direction_types,
+        "        </direction-type>",
+        `        <staff>${musicxml_staff_for_event(event)}</staff>`,
+        "      </direction>",
+      ];
 }
 
 function musicxml_notations(event, note, note_index, metadata) {
@@ -1499,8 +1546,21 @@ function musicxml_notations(event, note, note_index, metadata) {
   const articulation = note_index === 0
     ? normalize_musicxml_articulation(metadata?.articulation)
     : undefined;
+  const fermata = note_index === 0
+    ? normalize_musicxml_relation(metadata?.fermata, ["upright", "inverted"])
+    : undefined;
+  const ornament = note_index === 0
+    ? normalize_musicxml_ornament(metadata?.ornament)
+    : undefined;
   const tie_types = note ? musicxml_tie_types(event.tie) : [];
-  if (!note?.finger && !slur && !articulation && tie_types.length === 0) {
+  if (
+    !note?.finger &&
+    !slur &&
+    !articulation &&
+    !fermata &&
+    !ornament &&
+    tie_types.length === 0
+  ) {
     return [];
   }
   const lines = ["        <notations>"];
@@ -1517,11 +1577,37 @@ function musicxml_notations(event, note, note_index, metadata) {
     lines.push(`            <${articulation}/>`);
     lines.push("          </articulations>");
   }
+  if (fermata) {
+    lines.push(`          <fermata type="${fermata}"/>`);
+  }
+  if (ornament) {
+    lines.push("          <ornaments>");
+    lines.push(`            <${ornament}/>`);
+    lines.push("          </ornaments>");
+  }
   if (slur) {
     lines.push(`          <slur type="${slur}"/>`);
   }
   lines.push("        </notations>");
   return lines;
+}
+
+function normalize_musicxml_relation(value, allowed) {
+  const normalized = String(value ?? "").trim();
+  return allowed.includes(normalized) ? normalized : undefined;
+}
+
+function normalize_musicxml_ornament(value) {
+  const normalized = String(value ?? "").trim();
+  return [
+    "trill-mark",
+    "turn",
+    "inverted-turn",
+    "mordent",
+    "inverted-mordent",
+  ].includes(normalized)
+    ? normalized
+    : undefined;
 }
 
 function musicxml_tie_types(tie) {
@@ -1600,21 +1686,29 @@ function duration_to_musicxml_type(duration_beats) {
 }
 
 function key_signature_to_fifths(key_signature, tonic_midi) {
-  const normalized = String(key_signature ?? "").toLowerCase();
-  if (normalized.includes("f#") || normalized.includes("f♯")) return 6;
-  if (normalized.includes("c#") || normalized.includes("c♯")) return 7;
-  if (normalized.includes("bb") || normalized.includes("b♭")) return -2;
-  if (normalized.includes("eb") || normalized.includes("e♭")) return -3;
-  if (normalized.includes("ab") || normalized.includes("a♭")) return -4;
-  if (normalized.includes("db") || normalized.includes("d♭")) return -5;
-  if (normalized.includes("gb") || normalized.includes("g♭")) return -6;
-  if (normalized.includes("cb") || normalized.includes("c♭")) return -7;
-  if (normalized.includes("g")) return 1;
-  if (normalized.includes("d")) return 2;
-  if (normalized.includes("a")) return 3;
-  if (normalized.includes("e")) return 4;
-  if (normalized.includes("b")) return 5;
-  if (normalized.includes("f")) return -1;
+  const normalized = String(key_signature ?? "").trim().toLowerCase();
+  const tonic = /^([a-g])\s*([#♯b♭]?)/.exec(normalized);
+  if (tonic) {
+    const name = `${tonic[1]}${tonic[2].replace("♯", "#").replace("♭", "b")}`;
+    const minor = normalized.includes("minor") || normalized.includes("小调");
+    const fifths_by_key = minor
+      ? new Map([
+          ["ab", -7], ["eb", -6], ["bb", -5], ["f", -4],
+          ["c", -3], ["g", -2], ["d", -1], ["a", 0],
+          ["e", 1], ["b", 2], ["f#", 3], ["c#", 4],
+          ["g#", 5], ["d#", 6], ["a#", 7],
+        ])
+      : new Map([
+          ["cb", -7], ["gb", -6], ["db", -5], ["ab", -4],
+          ["eb", -3], ["bb", -2], ["f", -1], ["c", 0],
+          ["g", 1], ["d", 2], ["a", 3], ["e", 4],
+          ["b", 5], ["f#", 6], ["c#", 7],
+        ]);
+    const fifths = fifths_by_key.get(name);
+    if (fifths !== undefined) {
+      return fifths;
+    }
+  }
   const major_fifths_by_tonic = new Map([
     [0, 0],
     [7, 1],

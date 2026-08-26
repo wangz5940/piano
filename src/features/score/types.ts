@@ -162,6 +162,8 @@ export interface score_document_measure {
   id: string;
   number: string;
   meter: { beats: number; beat_unit: number };
+  key_signature?: string;
+  tonic_midi?: number;
   events: score_document_event[];
 }
 

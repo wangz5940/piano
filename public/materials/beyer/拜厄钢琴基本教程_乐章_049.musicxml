@@ -3,7 +3,7 @@
   <identification>
     <encoding>
       <software>Panio calibration</software>
-      <encoding-date>2026-08-25</encoding-date>
+      <encoding-date>2026-08-26</encoding-date>
     </encoding>
   </identification>
   <part-list>
@@ -15,6 +15,9 @@
     <measure number="1">
       <attributes>
         <divisions>16</divisions>
+        <key>
+          <fifths>0</fifths>
+        </key>
         <time>
           <beats>4</beats>
           <beat-type>4</beat-type>
@@ -42,6 +45,7 @@
           <technical>
             <fingering>3</fingering>
           </technical>
+          <slur type="start"/>
         </notations>
       </note>
       <note>
@@ -497,6 +501,7 @@
           <technical>
             <fingering>3</fingering>
           </technical>
+          <slur type="stop"/>
         </notations>
       </note>
       <note>
@@ -842,6 +847,7 @@
           <technical>
             <fingering>1</fingering>
           </technical>
+          <slur type="stop"/>
         </notations>
       </note>
       <backup>
@@ -922,6 +928,7 @@
           <technical>
             <fingering>2</fingering>
           </technical>
+          <slur type="start"/>
         </notations>
       </note>
       <note>
@@ -954,6 +961,14 @@
           </technical>
         </notations>
       </note>
+      <direction placement="below">
+        <direction-type>
+          <dynamics>
+            <pp/>
+          </dynamics>
+        </direction-type>
+        <staff>1</staff>
+      </direction>
       <note>
         <pitch>
           <step>D</step>
@@ -1062,6 +1077,7 @@
           <technical>
             <fingering>1</fingering>
           </technical>
+          <slur type="stop"/>
         </notations>
       </note>
       <backup>
@@ -1142,6 +1158,7 @@
           <technical>
             <fingering>2</fingering>
           </technical>
+          <slur type="start"/>
         </notations>
       </note>
       <note>
@@ -1282,6 +1299,7 @@
           <technical>
             <fingering>5</fingering>
           </technical>
+          <slur type="stop"/>
         </notations>
       </note>
       <backup>
@@ -1362,6 +1380,7 @@
           <technical>
             <fingering>3</fingering>
           </technical>
+          <slur type="start"/>
         </notations>
       </note>
       <note>
@@ -1707,6 +1726,7 @@
           <technical>
             <fingering>1</fingering>
           </technical>
+          <slur type="stop"/>
         </notations>
       </note>
       <backup>
