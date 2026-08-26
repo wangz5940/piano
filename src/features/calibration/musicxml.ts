@@ -106,6 +106,8 @@ export function parse_musicxml_to_score_document(
     let divisions = 1;
     let divisions_are_valid = true;
     let meter = first_meter;
+    let key_signature = first_key;
+    let tonic_midi = key_to_tonic_midi.get(first_key.split(" ")[0]) ?? 60;
     let page = 1;
     let system = 1;
     const clefs = new Map<number, calibration_event_metadata["clef"]>([
@@ -123,11 +125,16 @@ export function parse_musicxml_to_score_document(
         id: `${document_id}-measure-${measure_index + 1}`,
         number: measure_number,
         meter: { ...meter },
+        key_signature,
+        tonic_midi,
         events: [],
       };
       let cursor_quarters = 0;
       let previous_onset = 0;
       let pending_dynamics = "";
+      let pending_wedge: calibration_event_metadata["wedge"];
+      let pending_pedal: calibration_event_metadata["pedal"];
+      let pending_words = "";
       let note_sequence = 0;
 
       for (const node of measure_children) {
@@ -175,6 +182,10 @@ export function parse_musicxml_to_score_document(
             const key = mode === "minor"
               ? `${relative_minor(major_key.split(" ")[0])} minor`
               : major_key;
+            key_signature = key;
+            tonic_midi = key_to_tonic_midi.get(key.split(" ")[0]) ?? tonic_midi;
+            target.key_signature = key_signature;
+            target.tonic_midi = tonic_midi;
             if (measure_index === 0 && part_index === 0) {
               first_key = key;
             }
@@ -194,8 +205,19 @@ export function parse_musicxml_to_score_document(
           continue;
         }
         if (has_child(node, "direction")) {
-          pending_dynamics =
-            read_dynamic(children(node, "direction")) || pending_dynamics;
+          const direction_nodes = children(node, "direction");
+          pending_dynamics = read_dynamic(direction_nodes) || pending_dynamics;
+          pending_wedge = read_direction_relation(
+            direction_nodes,
+            "wedge",
+            ["crescendo", "diminuendo", "stop"],
+          ) ?? pending_wedge;
+          pending_pedal = read_direction_relation(
+            direction_nodes,
+            "pedal",
+            ["start", "stop", "change", "continue"],
+          ) ?? pending_pedal;
+          pending_words = read_direction_words(direction_nodes) || pending_words;
           continue;
         }
         if (has_child(node, "backup")) {
@@ -238,6 +260,8 @@ export function parse_musicxml_to_score_document(
         const tie = read_relation_type(note_nodes, "tie");
         const slur = read_nested_relation_type(note_nodes, "slur");
         const articulation = read_articulation(note_nodes);
+        const fermata = read_fermata(note_nodes);
+        const ornament = read_ornament(note_nodes);
         const fingering = read_fingering(note_nodes);
         if (note && fingering) {
           note.finger = fingering;
@@ -259,6 +283,11 @@ export function parse_musicxml_to_score_document(
           if (current_metadata) {
             current_metadata.articulation ||= articulation;
             current_metadata.dynamics ||= pending_dynamics;
+            current_metadata.fermata ||= fermata;
+            current_metadata.ornament ||= ornament;
+            current_metadata.wedge ||= pending_wedge;
+            current_metadata.pedal ||= pending_pedal;
+            current_metadata.words ||= pending_words;
             current_metadata.slur = merge_relation(
               current_metadata.slur,
               slur,
@@ -284,11 +313,19 @@ export function parse_musicxml_to_score_document(
             articulation,
             dynamics: pending_dynamics,
             slur,
+            fermata,
+            ornament,
+            wedge: pending_wedge,
+            pedal: pending_pedal,
+            words: pending_words,
             source_page: page,
             source_system: system,
           };
         }
         pending_dynamics = "";
+        pending_wedge = undefined;
+        pending_pedal = undefined;
+        pending_words = "";
         previous_onset = onset_quarters;
         if (!is_chord) {
           cursor_quarters += duration_quarters;
@@ -386,6 +423,40 @@ function read_dynamic(nodes: xml_node[]): string {
   return dynamics
     .flatMap((node) => Object.keys(node).filter((key) => key !== ":@"))
     .join(",");
+}
+
+function read_direction_relation<T extends string>(
+  nodes: xml_node[],
+  key: string,
+  valid_types: readonly T[],
+): T | undefined {
+  const direction_types = first_children(nodes, "direction-type");
+  const relation = direction_types.find((node) => has_child(node, key));
+  const type = relation ? attribute(relation, "type") : "";
+  return valid_types.includes(type as T) ? type as T : undefined;
+}
+
+function read_direction_words(nodes: xml_node[]): string {
+  return text_value(first_children(nodes, "direction-type"), "words").trim();
+}
+
+function read_fermata(
+  nodes: xml_node[],
+): calibration_event_metadata["fermata"] {
+  const fermata = first_children(nodes, "notations")
+    .find((node) => has_child(node, "fermata"));
+  const type = fermata ? attribute(fermata, "type") : "";
+  return type === "inverted" ? "inverted" : fermata ? "upright" : undefined;
+}
+
+function read_ornament(nodes: xml_node[]): string | undefined {
+  const ornaments = first_children(
+    first_children(nodes, "notations"),
+    "ornaments",
+  );
+  return ornaments
+    .flatMap((node) => Object.keys(node).filter((key) => key !== ":@"))
+    .find(Boolean);
 }
 
 function read_relation_type(

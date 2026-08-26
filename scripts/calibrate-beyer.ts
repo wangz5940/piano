@@ -34,6 +34,7 @@ import type { score_document } from "../src/features/score/index.ts";
 
 import {
   score_document_to_jianpu_score,
+  score_document_to_musicxml,
 } from "../server/app.mjs";
 import { open_database } from "../server/database.mjs";
 import {
@@ -71,12 +72,17 @@ interface prepared_calibration {
   validation: calibration_validation_result;
   jianpu_path: string;
   jianpu_json: string;
+  musicxml_path?: string;
+  musicxml_text?: string;
   practice_path?: string;
   practice_json?: string;
   preserved_manual: boolean;
   repairs: {
+    duration_truncations: number;
     meter_extensions: number;
     orphan_ties_removed: number;
+    meter_corrections: number;
+    key_corrections: number;
   };
 }
 
@@ -161,6 +167,18 @@ function prepare_segment(
     segment.jianpu_url.replace(/^\/+materials\//u, ""),
   );
   const existing_jianpu = read_json<Record<string, unknown>>(jianpu_path);
+  const practice_path = catalog_segment.derived_assets?.practice_events_url
+    ? resolve(
+        materials_root,
+        catalog_segment.derived_assets.practice_events_url.replace(
+          /^\/+materials\//u,
+          "",
+        ),
+      )
+    : undefined;
+  const existing_practice = practice_path
+    ? read_json<Record<string, unknown>>(practice_path)
+    : undefined;
 
   const preserved_manual =
     existing !== undefined && !is_batch_generated(existing);
@@ -172,32 +190,60 @@ function prepare_segment(
         source_xml,
         source_sha256,
       );
+  const reference = preserved_manual
+    ? parse_musicxml_to_score_document(
+        source_xml,
+        {
+          composer: "Ferdinand Beyer",
+          opus: String(segment.sequence),
+          edition: material.title,
+          publisher: "",
+          source: segment.source_page_label,
+        },
+        {
+          id: `reference-beyer-${segment.id}`,
+          source_file: segment.musicxml_url,
+        },
+      )
+    : {
+        document: project.document,
+        event_metadata: project.event_metadata,
+      };
   preserve_project_hands(project.document, existing_jianpu);
+  if (preserved_manual && existing_practice) {
+    restore_confirmed_fingerings(project.document, existing_practice);
+    apply_generated_fingerings(project.document);
+  }
+  const reference_repairs = synchronize_reference_signature(
+    project.document,
+    reference.document,
+  );
+  if (preserved_manual) {
+    merge_reference_notation(project, reference);
+  }
+  const repairs = {
+    ...repair_structural_issues(project, preserved_manual),
+    ...reference_repairs,
+  };
   synchronize_project_notation_metadata(project);
-  const repairs = preserved_manual
-    ? { meter_extensions: 0, orphan_ties_removed: 0 }
-    : repair_structural_issues(project);
   const validation = validate_calibration_project(project);
   const jianpu_score = score_document_to_jianpu_score(
     project.document,
     segment.id,
   );
   preserve_jianpu_chords(jianpu_score, existing_jianpu);
-  const practice_path = catalog_segment.derived_assets?.practice_events_url
+  const musicxml_path = preserved_manual
     ? resolve(
         materials_root,
-        catalog_segment.derived_assets.practice_events_url.replace(
-          /^\/+materials\//u,
-          "",
-        ),
+        catalog_segment.musicxml_url.replace(/^\/+materials\//u, ""),
       )
     : undefined;
-  const practice_json = practice_path
+  const musicxml_text = musicxml_path
+    ? score_document_to_musicxml(project.document, project.event_metadata)
+    : undefined;
+  const practice_json = existing_practice
     ? JSON.stringify(
-        add_practice_fingerings(
-          read_json<Record<string, unknown>>(practice_path),
-          project.document,
-        ),
+        add_practice_fingerings(existing_practice, project.document),
         null,
         2,
       ) + "\n"
@@ -209,6 +255,8 @@ function prepare_segment(
     validation,
     jianpu_path,
     jianpu_json: `${JSON.stringify(jianpu_score)}\n`,
+    musicxml_path,
+    musicxml_text,
     practice_path,
     practice_json,
     preserved_manual,
@@ -367,17 +415,49 @@ function map_source_pages(
 
 function repair_structural_issues(
   project: calibration_project,
-): prepared_calibration["repairs"] {
+  preserve_reference_meter: boolean,
+): Pick<
+  prepared_calibration["repairs"],
+  "duration_truncations" | "meter_extensions" | "orphan_ties_removed"
+> {
+  let duration_truncations = 0;
   let meter_extensions = 0;
   for (const measure of project.document.measures) {
-    const event_end = measure.events.reduce(
-      (maximum, event) =>
-        Math.max(maximum, event.onset_beats + event.duration_beats),
-      0,
-    );
-    if (event_end > measure.meter.beats + 0.002) {
-      measure.meter.beats = Math.ceil(event_end - 0.002);
-      meter_extensions += 1;
+    if (!preserve_reference_meter) {
+      const event_end = measure.events.reduce(
+        (maximum, event) =>
+          Math.max(maximum, event.onset_beats + event.duration_beats),
+        0,
+      );
+      if (event_end > measure.meter.beats + 0.002) {
+        measure.meter.beats = Math.ceil(event_end - 0.002);
+        meter_extensions += 1;
+      }
+      continue;
+    }
+    const streams = new Map<string, typeof measure.events>();
+    for (const event of measure.events) {
+      const key = `${event.hand}:${event.voice}`;
+      const stream = streams.get(key) ?? [];
+      stream.push(event);
+      streams.set(key, stream);
+    }
+    for (const stream of streams.values()) {
+      const ordered = [...stream].sort((left, right) =>
+        left.onset_beats - right.onset_beats ||
+        left.id.localeCompare(right.id));
+      for (const [index, event] of ordered.entries()) {
+        const next_onset = ordered[index + 1]?.onset_beats ??
+          measure.meter.beats;
+        const allowed_duration = next_onset - event.onset_beats;
+        if (
+          allowed_duration > 0 &&
+          event.duration_beats > allowed_duration + 0.002
+        ) {
+          event.duration_beats = Number(allowed_duration.toFixed(4));
+          duration_truncations += 1;
+        }
+      }
     }
   }
 
@@ -396,7 +476,122 @@ function repair_structural_issues(
       }
     }
   }
-  return { meter_extensions, orphan_ties_removed };
+  return { duration_truncations, meter_extensions, orphan_ties_removed };
+}
+
+function synchronize_reference_signature(
+  document: score_document,
+  reference: score_document,
+): Pick<
+  prepared_calibration["repairs"],
+  "meter_corrections" | "key_corrections"
+> {
+  let meter_corrections = 0;
+  let key_corrections = 0;
+  if (
+    document.key_signature !== reference.key_signature ||
+    document.tonic_midi !== reference.tonic_midi
+  ) {
+    document.key_signature = reference.key_signature;
+    document.tonic_midi = reference.tonic_midi;
+    key_corrections += 1;
+  }
+  if (document.time_signature !== reference.time_signature) {
+    document.time_signature = reference.time_signature;
+    meter_corrections += 1;
+  }
+  for (const [index, measure] of document.measures.entries()) {
+    const reference_measure = reference.measures[index];
+    const reference_meter = reference_measure?.meter;
+    if (
+      reference_meter &&
+      (
+        measure.meter.beats !== reference_meter.beats ||
+        measure.meter.beat_unit !== reference_meter.beat_unit
+      )
+    ) {
+      measure.meter = { ...reference_meter };
+      meter_corrections += 1;
+    }
+    if (
+      reference_measure?.key_signature &&
+      (
+        measure.key_signature !== reference_measure.key_signature ||
+        measure.tonic_midi !== reference_measure.tonic_midi
+      )
+    ) {
+      measure.key_signature = reference_measure.key_signature;
+      measure.tonic_midi = reference_measure.tonic_midi;
+      key_corrections += 1;
+    }
+  }
+  return { meter_corrections, key_corrections };
+}
+
+function merge_reference_notation(
+  project: calibration_project,
+  reference: Pick<calibration_project, "document" | "event_metadata">,
+): void {
+  const metadata_fields = [
+    "dynamics",
+    "articulation",
+    "slur",
+    "fermata",
+    "ornament",
+    "wedge",
+    "pedal",
+    "words",
+  ] as const;
+  for (const [measure_index, source_measure] of reference.document.measures.entries()) {
+    const target_measure = project.document.measures[measure_index];
+    if (!target_measure) {
+      continue;
+    }
+    for (const source_event of source_measure.events) {
+      const source_pitches = new Set(source_event.notes.map((note) => note.midi));
+      const matching_events = target_measure.events
+        .filter((event) =>
+          event.hand === source_event.hand &&
+          event.notes.some((note) => source_pitches.has(note.midi)))
+        .sort((left, right) =>
+          Math.abs(left.onset_beats - source_event.onset_beats) -
+          Math.abs(right.onset_beats - source_event.onset_beats));
+      const fallback_events = target_measure.events
+        .filter((event) =>
+          event.notes.some((note) => source_pitches.has(note.midi)))
+        .sort((left, right) =>
+          Math.abs(left.onset_beats - source_event.onset_beats) -
+          Math.abs(right.onset_beats - source_event.onset_beats));
+      const target_event = matching_events[0] ?? fallback_events[0];
+      if (!target_event) {
+        continue;
+      }
+      if (!target_event.tie && source_event.tie) {
+        target_event.tie = source_event.tie;
+      }
+      const source_metadata = reference.event_metadata[source_event.id];
+      const target_metadata = project.event_metadata[target_event.id];
+      if (!source_metadata || !target_metadata) {
+        continue;
+      }
+      for (const field of metadata_fields) {
+        const source_value = source_metadata[field];
+        const target_value = target_metadata[field];
+        if (
+          source_value !== undefined &&
+          source_value !== "" &&
+          source_value !== "none" &&
+          (
+            target_value === undefined ||
+            target_value === "" ||
+            target_value === "none"
+          )
+        ) {
+          Object.assign(target_metadata, { [field]: source_value });
+        }
+      }
+    }
+  }
 }
 
 function add_practice_fingerings(
@@ -457,6 +652,79 @@ function add_practice_fingerings(
   };
 }
 
+function restore_confirmed_fingerings(
+  document: score_document,
+  practice: Record<string, unknown>,
+): number {
+  const events = Array.isArray(practice.events)
+    ? practice.events as Array<Record<string, unknown>>
+    : [];
+  const confirmed = new Map<string, number>();
+  for (const event of events) {
+    const measure_index = Number(event.measure_index);
+    const onset = Number(event.onset_beats);
+    const fingerings = Array.isArray(event.fingerings)
+      ? event.fingerings as Array<Record<string, unknown>>
+      : [];
+    for (const fingering of fingerings) {
+      const hand = fingering.hand;
+      const midi = Number(fingering.note);
+      const finger = Number(fingering.finger);
+      if (
+        Number.isInteger(measure_index) &&
+        Number.isFinite(onset) &&
+        (hand === "left" || hand === "right") &&
+        Number.isInteger(midi) &&
+        Number.isInteger(finger) &&
+        finger >= 1 &&
+        finger <= 5
+      ) {
+        confirmed.set(
+          fingering_lookup_key(measure_index, onset, hand, midi),
+          finger,
+        );
+      }
+    }
+  }
+
+  let restored = 0;
+  for (const [measure_index, measure] of document.measures.entries()) {
+    for (const event of measure.events) {
+      for (const note of event.notes) {
+        const finger = confirmed.get(fingering_lookup_key(
+          measure_index + 1,
+          event.onset_beats,
+          event.hand,
+          note.midi,
+        ));
+        if (finger === undefined) {
+          continue;
+        }
+        note.finger = finger as 1 | 2 | 3 | 4 | 5;
+        note.fingering = {
+          source: "manual",
+          status: "published",
+          reason: "依据已完成校对并确认正确的教材练习数据恢复。",
+          confirmed_by: null,
+          confirmed_at: null,
+          source_refs: [],
+        };
+        restored += 1;
+      }
+    }
+  }
+  return restored;
+}
+
+function fingering_lookup_key(
+  measure_index: number,
+  onset_beats: number,
+  hand: "left" | "right",
+  midi: number,
+): string {
+  return `${measure_index}|${Number(onset_beats.toFixed(3))}|${hand}|${midi}`;
+}
+
 function write_all(prepared: prepared_calibration[]): void {
   const normalized_items = prepared.map((item) => {
     try {
@@ -494,6 +762,9 @@ function write_all(prepared: prepared_calibration[]): void {
 
   for (const item of prepared) {
     atomic_write(item.jianpu_path, item.jianpu_json);
+    if (item.musicxml_path && item.musicxml_text) {
+      atomic_write(item.musicxml_path, item.musicxml_text);
+    }
     if (item.practice_path && item.practice_json) {
       atomic_write(item.practice_path, item.practice_json);
     }
@@ -706,8 +977,20 @@ function build_report(prepared: prepared_calibration[]): {
       ),
     0,
   );
+  const duration_truncations = prepared.reduce(
+    (total, item) => total + item.repairs.duration_truncations,
+    0,
+  );
   const meter_extensions = prepared.reduce(
     (total, item) => total + item.repairs.meter_extensions,
+    0,
+  );
+  const meter_corrections = prepared.reduce(
+    (total, item) => total + item.repairs.meter_corrections,
+    0,
+  );
+  const key_corrections = prepared.reduce(
+    (total, item) => total + item.repairs.key_corrections,
     0,
   );
   const orphan_ties_removed = prepared.reduce(
@@ -740,7 +1023,10 @@ function build_report(prepared: prepared_calibration[]): {
     `自动校准=${generated}`,
     `音符=${note_count}`,
     `已有指法=${fingered_count}`,
-    `拍数修复=${meter_extensions}`,
+    `时值截断=${duration_truncations}`,
+    `OMR拍数扩展=${meter_extensions}`,
+    `拍号修复=${meter_corrections}`,
+    `调号修复=${key_corrections}`,
     `孤立Tie修复=${orphan_ties_removed}`,
     `含错误片段=${documents_with_errors.length}`,
   ].join(" ");
@@ -756,7 +1042,10 @@ function build_report(prepared: prepared_calibration[]): {
 - 自动结构校准：${generated}
 - 音符总数：${note_count}
 - 已有逐音指法：${fingered_count}
-- 按事件终点扩展小节拍数：${meter_extensions}
+- 重叠或越界时值截断：${duration_truncations}
+- OMR 异常小节拍数扩展：${meter_extensions}
+- 拍号修复：${meter_corrections}
+- 调号修复：${key_corrections}
 - 移除跨乐章孤立 Tie：${orphan_ties_removed}
 - 含错误片段：${documents_with_errors.length}
 

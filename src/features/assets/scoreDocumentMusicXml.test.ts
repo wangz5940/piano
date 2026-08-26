@@ -81,6 +81,13 @@ describe("score_document_to_musicxml", () => {
           notes: [],
           source_refs: [],
         }],
+      }, {
+        id: "m2",
+        number: "2",
+        meter: { beats: 3, beat_unit: 4 },
+        key_signature: "F major",
+        tonic_midi: 65,
+        events: [],
       }],
       review: {
         reviewed_by: null,
@@ -98,6 +105,11 @@ describe("score_document_to_musicxml", () => {
         dynamics: "mf",
         articulation: "staccato",
         slur: "start",
+        fermata: "upright",
+        ornament: "trill-mark",
+        wedge: "crescendo",
+        pedal: "start",
+        words: "dolce",
       },
       "right-stop": {
         staff: 1,
@@ -124,6 +136,13 @@ describe("score_document_to_musicxml", () => {
     expect(xml).toContain("<fingering>1</fingering>");
     expect(xml).toContain("<mf/>");
     expect(xml).toContain("<staccato/>");
+    expect(xml).toContain('<fermata type="upright"/>');
+    expect(xml).toContain("<trill-mark/>");
+    expect(xml).toContain('<wedge type="crescendo"/>');
+    expect(xml).toContain('<pedal type="start"/>');
+    expect(xml).toContain("<words>dolce</words>");
+    expect(xml).toContain("<fifths>-1</fifths>");
+    expect(xml).toContain("<beats>3</beats>");
     expect(xml.match(/<tie type="start"\/>/g)).toHaveLength(2);
     expect(xml.match(/<tie type="stop"\/>/g)).toHaveLength(2);
     expect(xml.match(/<tied type="start"\/>/g)).toHaveLength(2);
