@@ -61,6 +61,7 @@ function normalize_measure(
       event,
       event.right_notes,
       event.right_fingerings ?? [],
+      event.right_slur,
       score,
       measure,
       event_index,
@@ -73,6 +74,7 @@ function normalize_measure(
       event,
       event.left_notes,
       event.left_fingerings ?? [],
+      event.left_slur,
       score,
       measure,
       event_index,
@@ -109,6 +111,7 @@ function append_hand_event(
   event: jianpu_event,
   notes: number[],
   fingerings: jianpu_event_fingering[],
+  slur: jianpu_event["right_slur"],
   score: jianpu_score,
   measure: jianpu_measure,
   event_index: number,
@@ -134,6 +137,7 @@ function append_hand_event(
       const fingering = find_jianpu_fingering(fingerings, midi, note_index);
       return fingering ? { ...note, finger: fingering.finger } : note;
     }),
+    markings: slur && slur !== "none" ? { slur } : undefined,
     source_ref: {
       source: "jianpu_score",
       source_id: `${score.segment_id}-m${measure.index}-e${event_index}`,

@@ -142,7 +142,7 @@ describe("简谱与五线谱双向同步", () => {
     expect(project.event_metadata["event-1"].staff).toBe(2);
   });
 
-  it("结束 Slur 时自动连接前方最近同手同声部开始事件", () => {
+  it("结束 Slur 时自动连接前方最近同手开始事件", () => {
     const project = make_project();
     project.document.measures[0].events = [{
       id: "right-start",
@@ -173,7 +173,7 @@ describe("简谱与五线谱双向同步", () => {
       onset_beats: 2,
       duration_beats: 1,
       hand: "right",
-      voice: 1,
+      voice: 2,
       notes: [{ id: "right-stop-note", midi: 64, source_refs: [] }],
       source_refs: [],
     }];
@@ -190,6 +190,64 @@ describe("简谱与五线谱双向同步", () => {
     expect(project.event_metadata["right-middle"].slur).toBe("continue");
     expect(project.event_metadata["right-stop"].slur).toBe("stop");
     expect(project.event_metadata["left-other"].slur).toBe("none");
+  });
+
+  it("嵌套 Slur 结束时按同手栈后进先出配对", () => {
+    const project = make_project();
+    project.document.measures[0].events = [{
+      id: "right-outer-start",
+      onset_beats: 0,
+      duration_beats: 1,
+      hand: "right",
+      voice: 1,
+      notes: [{ id: "right-outer-start-note", midi: 60, source_refs: [] }],
+      source_refs: [],
+    }, {
+      id: "right-inner-start",
+      onset_beats: 1,
+      duration_beats: 1,
+      hand: "right",
+      voice: 2,
+      notes: [{ id: "right-inner-start-note", midi: 62, source_refs: [] }],
+      source_refs: [],
+    }, {
+      id: "left-stop",
+      onset_beats: 1.5,
+      duration_beats: 1,
+      hand: "left",
+      voice: 2,
+      notes: [{ id: "left-stop-note", midi: 48, source_refs: [] }],
+      source_refs: [],
+    }, {
+      id: "right-inner-stop",
+      onset_beats: 2,
+      duration_beats: 1,
+      hand: "right",
+      voice: 1,
+      notes: [{ id: "right-inner-stop-note", midi: 64, source_refs: [] }],
+      source_refs: [],
+    }, {
+      id: "right-outer-stop",
+      onset_beats: 3,
+      duration_beats: 1,
+      hand: "right",
+      voice: 1,
+      notes: [{ id: "right-outer-stop-note", midi: 65, source_refs: [] }],
+      source_refs: [],
+    }];
+    synchronize_project_notation_metadata(project);
+
+    apply_slur_marking(project, "right-outer-start", "start");
+    apply_slur_marking(project, "right-inner-start", "start");
+    project.event_metadata["left-stop"].slur = "stop";
+    const inner_result = apply_slur_marking(project, "right-inner-stop", "stop");
+    const outer_result = apply_slur_marking(project, "right-outer-stop", "stop");
+
+    expect(inner_result.paired_start_event_id).toBe("right-inner-start");
+    expect(outer_result.paired_start_event_id).toBe("right-outer-start");
+    expect(project.event_metadata["left-stop"].slur).toBe("stop");
+    expect(project.event_metadata["right-inner-start"].slur).toBe("start");
+    expect(project.event_metadata["right-inner-stop"].slur).toBe("stop");
   });
 });
 

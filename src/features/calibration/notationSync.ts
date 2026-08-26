@@ -229,6 +229,9 @@ export function apply_slur_marking(
     }
     const metadata = project.event_metadata[candidate.event.id] ??
       default_event_metadata(candidate.event);
+    if (metadata.slur === "start" || metadata.slur === "stop") {
+      continue;
+    }
     metadata.slur = "continue";
     project.event_metadata[candidate.event.id] = metadata;
     continued_event_ids.push(candidate.event.id);
@@ -302,27 +305,27 @@ function find_previous_slur_start_index(
   target_index: number,
 ): number {
   const target = ordered_events[target_index];
-  for (let index = target_index - 1; index >= 0; index -= 1) {
+  const open_start_indices: number[] = [];
+  for (let index = 0; index < target_index; index += 1) {
     const candidate = ordered_events[index];
     if (!is_same_slur_lane(candidate.event, target.event)) {
       continue;
     }
     const slur = event_metadata[candidate.event.id]?.slur ?? "none";
-    if (slur === "stop") {
-      return -1;
-    }
     if (slur === "start") {
-      return index;
+      open_start_indices.push(index);
+    } else if (slur === "stop") {
+      open_start_indices.pop();
     }
   }
-  return -1;
+  return open_start_indices.at(-1) ?? -1;
 }
 
 function is_same_slur_lane(
   first: score_document_event,
   second: score_document_event,
 ): boolean {
-  return first.hand === second.hand && event_voice(first) === event_voice(second);
+  return first.hand === second.hand;
 }
 
 function event_voice(event: score_document_event): number {

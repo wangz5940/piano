@@ -1,9 +1,8 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   BookOpenText,
   ChevronDown,
-  ChevronUp,
   ChevronsLeft,
   ChevronsRight,
   CircleAlert,
@@ -17,10 +16,11 @@ import {
   Rows3,
   Trash2,
 } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { AppShell } from "@/components/AppShell";
 import { MusicXmlScoreRenderer } from "@/features/assets/MusicXmlScoreRenderer";
+import { ScoreZoomSurface } from "@/features/assets/ScoreZoomSurface";
 import type { material_id } from "@/features/assets/types";
 import {
   is_score_favorite,
@@ -34,6 +34,7 @@ import {
   load_jianpu_score,
 } from "@/features/jianpu/loadJianpuLibrary";
 import { soft_delete_material_segment } from "@/features/materials/materialDeletion";
+import { useCenteredActiveItem } from "@/hooks/useCenteredActiveItem";
 import {
   JianpuRenderer,
   to_render_score_from_jianpu_score,
@@ -52,6 +53,7 @@ import type {
 
 type reading_view = "jianpu" | "original";
 type render_state = "loading" | "ready" | "error";
+const jianpu_score_excerpt_size = 8;
 
 interface jianpu_library_props {
   initial_catalog?: jianpu_catalog;
@@ -59,6 +61,7 @@ interface jianpu_library_props {
 
 export function JianpuLibrary({ initial_catalog }: jianpu_library_props) {
   const { material_id: route_material_id, segment_id, chapter_id } = useParams();
+  const navigate = useNavigate();
   const user = use_auth_store((state) => state.user);
   const [catalog, set_catalog] = useState(initial_catalog);
   const [load_error, set_load_error] = useState<string>();
@@ -66,6 +69,18 @@ export function JianpuLibrary({ initial_catalog }: jianpu_library_props) {
   const [deleting_segment_id, set_deleting_segment_id] = useState<string>();
   const [is_navigation_collapsed, set_is_navigation_collapsed] = useState(false);
   const [favorite_entries, set_favorite_entries] = useState(load_score_favorites);
+  const [switching_direction, set_switching_direction] = useState<"previous" | "next">();
+  const segment_list_ref = useRef<HTMLDivElement>(null);
+  useCenteredActiveItem(
+    segment_list_ref,
+    [
+      route_material_id ?? "",
+      segment_id ?? "",
+      chapter_id ?? "",
+      catalog?.generated_at ?? "",
+      String(is_navigation_collapsed),
+    ].join(":"),
+  );
 
   useEffect(() => {
     if (initial_catalog) {
@@ -156,6 +171,17 @@ export function JianpuLibrary({ initial_catalog }: jianpu_library_props) {
       set_deleting_segment_id(undefined);
     }
   };
+  const segment_navigation = segment
+    ? get_jianpu_segment_navigation(material, segment)
+    : undefined;
+  const handle_navigate_segment = (
+    target_segment: jianpu_segment,
+    direction: "previous" | "next",
+  ) => {
+    set_switching_direction(direction);
+    navigate(`/简谱教材/${material.id}/${target_segment.id}`);
+    window.setTimeout(() => set_switching_direction(undefined), 360);
+  };
 
   return (
     <AppShell>
@@ -219,7 +245,7 @@ export function JianpuLibrary({ initial_catalog }: jianpu_library_props) {
           {!is_navigation_collapsed && (
             <>
               <p>{material.description}</p>
-              <div className="jianpu-segment-list">
+              <div className="jianpu-segment-list" ref={segment_list_ref}>
                 {get_chapter_tree_groups(material).map((group) => (
                   <details
                     key={group.chapter.id}
@@ -276,6 +302,16 @@ export function JianpuLibrary({ initial_catalog }: jianpu_library_props) {
                 ? () => handle_delete_segment(segment!)
                 : undefined}
               is_deleting={deleting_segment_id === segment!.id}
+              navigation={segment_navigation
+                ? {
+                    previous_segment: segment_navigation.previous_segment,
+                    next_segment: segment_navigation.next_segment,
+                    current_index: segment_navigation.current_index,
+                    total_count: segment_navigation.total_count,
+                    switching_direction,
+                    on_navigate: handle_navigate_segment,
+                  }
+                : undefined}
             />
           )}
         </div>
@@ -468,6 +504,7 @@ function JianpuReader({
   on_toggle_favorite,
   on_delete,
   is_deleting = false,
+  navigation,
 }: {
   material: jianpu_material;
   segment: jianpu_segment;
@@ -475,6 +512,7 @@ function JianpuReader({
   on_toggle_favorite: () => void;
   on_delete?: () => void;
   is_deleting?: boolean;
+  navigation?: jianpu_segment_navigation_props;
 }) {
   const [reading_view, set_reading_view] = useState<reading_view>("jianpu");
   const [score, set_score] = useState<jianpu_score>();
@@ -517,6 +555,21 @@ function JianpuReader({
           </p>
         </div>
         <div className="jianpu-reader-head-actions">
+          {navigation && (
+            <ScoreSequenceControls
+              previous_title={navigation.previous_segment?.title}
+              next_title={navigation.next_segment?.title}
+              current_index={navigation.current_index}
+              total_count={navigation.total_count}
+              switching_direction={navigation.switching_direction}
+              on_previous={navigation.previous_segment
+                ? () => navigation.on_navigate(navigation.previous_segment!, "previous")
+                : undefined}
+              on_next={navigation.next_segment
+                ? () => navigation.on_navigate(navigation.next_segment!, "next")
+                : undefined}
+            />
+          )}
           <button
             type="button"
             className={`repertoire-favorite-toggle ${is_favorite ? "is-favorite" : ""}`}
@@ -571,10 +624,17 @@ function JianpuReader({
         ) : score_state === "error" || !score ? (
           <JianpuScoreState copy="本片段暂时无法显示简谱，请先切换到原谱核对。" is_error />
         ) : (
-          <JianpuPageSliceReader score={score} page_slices={segment.page_slices} />
+          <JianpuPageSliceReader
+            score={score}
+            page_slices={segment.page_slices}
+          />
         )
       ) : (
-        <OriginalScorePanel musicxml_url={segment.musicxml_url} title={segment.title} />
+        <OriginalScorePanel
+          musicxml_url={segment.musicxml_url}
+          title={segment.title}
+          page_slices={segment.page_slices}
+        />
       )}
     </article>
   );
@@ -588,17 +648,21 @@ function JianpuPageSliceReader({
   page_slices: jianpu_page_slice[];
 }) {
   const [expanded_slice_keys, set_expanded_slice_keys] = useState<Set<string>>(
-    () => get_initial_expanded_slice_keys(page_slices),
+    () => get_initial_expanded_slice_keys(create_score_excerpt_slices(page_slices)),
+  );
+  const score_slices = useMemo(
+    () => create_score_excerpt_slices(page_slices),
+    [page_slices],
   );
 
   useEffect(() => {
-    set_expanded_slice_keys(get_initial_expanded_slice_keys(page_slices));
-  }, [score.segment_id, page_slices]);
+    set_expanded_slice_keys(get_initial_expanded_slice_keys(score_slices));
+  }, [score.segment_id, score_slices]);
 
   return (
-    <section className="jianpu-page-reader" aria-label="按原谱页阅读简谱">
-      {page_slices.map((page_slice, index) => {
-        const previous_slice = page_slices[index - 1];
+    <section className="jianpu-page-reader" aria-label="按小节组阅读简谱">
+      {score_slices.map((page_slice, index) => {
+        const previous_slice = score_slices[index - 1];
         const slice_key = get_page_slice_key(page_slice);
         const is_expanded = expanded_slice_keys.has(slice_key);
         const is_new_chapter = !previous_slice ||
@@ -640,11 +704,17 @@ function JianpuPageSliceReader({
                 </div>
               </details>
               {is_expanded ? (
-                <TextbookJianpuScore
-                  score={page_score}
-                  is_page_slice
-                  show_final_bar={page_slice.measure_end === score.measures.length}
-                />
+                <ScoreZoomSurface
+                  measure_start={page_slice.measure_start}
+                  measure_end={page_slice.measure_end}
+                  className="textbook-score-slice"
+                >
+                  <TextbookJianpuScore
+                    score={page_score}
+                    is_page_slice
+                    show_final_bar={page_slice.measure_end === score.measures.length}
+                  />
+                </ScoreZoomSurface>
               ) : (
                 <button
                   type="button"
@@ -655,7 +725,7 @@ function JianpuPageSliceReader({
                     return next;
                   })}
                 >
-                  展开本页简谱
+                  展开本段谱面
                   <ChevronsRight size={16} />
                 </button>
               )}
@@ -667,24 +737,44 @@ function JianpuPageSliceReader({
   );
 }
 
-function get_initial_expanded_slice_keys(page_slices: jianpu_page_slice[]): Set<string> {
+type jianpu_score_excerpt_slice = jianpu_page_slice;
+
+function create_score_excerpt_slices(
+  page_slices: jianpu_page_slice[],
+): jianpu_score_excerpt_slice[] {
+  return page_slices.flatMap((page_slice) => {
+    const slices: jianpu_score_excerpt_slice[] = [];
+    for (
+      let measure_start = page_slice.measure_start;
+      measure_start <= page_slice.measure_end;
+      measure_start += jianpu_score_excerpt_size
+    ) {
+      const measure_end = Math.min(
+        page_slice.measure_end,
+        measure_start + jianpu_score_excerpt_size - 1,
+      );
+      slices.push({
+        ...page_slice,
+        title: `${page_slice.title} · ${measure_start}-${measure_end}`,
+        text: page_slice.text,
+        measure_start,
+        measure_end,
+      });
+    }
+    return slices;
+  });
+}
+
+function get_initial_expanded_slice_keys(page_slices: jianpu_score_excerpt_slice[]): Set<string> {
   const first_slice = page_slices[0];
-  if (!first_slice || get_slice_measure_count(first_slice) > 64) {
+  if (!first_slice) {
     return new Set();
   }
-  const initial_slices = page_slices.length <= 2 &&
-    page_slices.every((slice) => get_slice_measure_count(slice) <= 64)
-    ? page_slices
-    : [first_slice];
-  return new Set(initial_slices.map(get_page_slice_key));
+  return new Set([get_page_slice_key(first_slice)]);
 }
 
 function get_page_slice_key(page_slice: jianpu_page_slice): string {
   return `${page_slice.source_pages.join("-")}-${page_slice.measure_start}-${page_slice.measure_end}`;
-}
-
-function get_slice_measure_count(page_slice: jianpu_page_slice): number {
-  return page_slice.measure_end - page_slice.measure_start + 1;
 }
 
 function format_source_page_label(source_pages: number[]): string {
@@ -696,6 +786,59 @@ function JianpuScoreState({ copy, is_error = false }: { copy: string; is_error?:
     <div className={`jianpu-score-state ${is_error ? "is-error" : ""}`}>
       {is_error ? <CircleAlert size={20} /> : <LoaderCircle size={20} />}
       <p>{copy}</p>
+    </div>
+  );
+}
+
+interface jianpu_segment_navigation_props {
+  previous_segment?: jianpu_segment;
+  next_segment?: jianpu_segment;
+  current_index: number;
+  total_count: number;
+  switching_direction?: "previous" | "next";
+  on_navigate: (segment: jianpu_segment, direction: "previous" | "next") => void;
+}
+
+function ScoreSequenceControls({
+  previous_title,
+  next_title,
+  current_index,
+  total_count,
+  switching_direction,
+  on_previous,
+  on_next,
+}: {
+  previous_title?: string;
+  next_title?: string;
+  current_index: number;
+  total_count: number;
+  switching_direction?: "previous" | "next";
+  on_previous?: () => void;
+  on_next?: () => void;
+}) {
+  return (
+    <div className="score-sequence-controls" aria-label="曲目顺序切换">
+      <button
+        type="button"
+        className={switching_direction === "previous" ? "is-switching" : ""}
+        disabled={!on_previous || Boolean(switching_direction)}
+        title={previous_title ? `上一曲：${previous_title}` : "已经是第一曲"}
+        onClick={on_previous}
+      >
+        <ChevronsLeft size={15} />
+        {switching_direction === "previous" ? "切换中" : "上一曲"}
+      </button>
+      <span>{current_index + 1}/{total_count}</span>
+      <button
+        type="button"
+        className={switching_direction === "next" ? "is-switching" : ""}
+        disabled={!on_next || Boolean(switching_direction)}
+        title={next_title ? `下一曲：${next_title}` : "已经是最后一曲"}
+        onClick={on_next}
+      >
+        {switching_direction === "next" ? "切换中" : "下一曲"}
+        <ChevronsRight size={15} />
+      </button>
     </div>
   );
 }
@@ -771,36 +914,101 @@ function get_hand_mode_reader_label(hand_mode: jianpu_hand_mode): string {
   return hand_mode === "right" ? "右手材料" : "左手材料";
 }
 
-function OriginalScorePanel({ musicxml_url, title }: { musicxml_url: string; title: string }) {
-  const [render_state, set_render_state] = useState<render_state>("loading");
-  const [is_expanded, set_is_expanded] = useState(true);
+function OriginalScorePanel({
+  musicxml_url,
+  title,
+  page_slices,
+}: {
+  musicxml_url: string;
+  title: string;
+  page_slices: jianpu_page_slice[];
+}) {
+  const [expanded_slice_keys, set_expanded_slice_keys] = useState<Set<string>>(
+    () => get_initial_expanded_slice_keys(create_score_excerpt_slices(page_slices)),
+  );
+  const score_slices = useMemo(
+    () => create_score_excerpt_slices(page_slices),
+    [page_slices],
+  );
+
+  useEffect(() => {
+    set_expanded_slice_keys(get_initial_expanded_slice_keys(score_slices));
+  }, [musicxml_url, score_slices]);
 
   return (
     <section className="jianpu-original-score" aria-label={`${title}原谱`}>
       <header className="jianpu-original-score-head">
         <p className="section-kicker"><FileMusic size={15} /> 原谱对照</p>
-        <button
-          type="button"
-          className="score-collapse-toggle"
-          aria-expanded={is_expanded}
-          onClick={() => set_is_expanded((value) => !value)}
-        >
-          {is_expanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-          {is_expanded ? "收起谱面" : "展开谱面"}
-        </button>
       </header>
-      {is_expanded && (
-        <>
-          {render_state === "loading" && <JianpuScoreState copy="正在加载本片段原谱…" />}
-          {render_state === "error" && <JianpuScoreState copy="本片段原谱暂时无法显示。" is_error />}
-          <MusicXmlScoreRenderer
-            musicxml_url={musicxml_url}
-            className="jianpu-original-score-host"
-            on_state_change={set_render_state}
-          />
-        </>
-      )}
+      <section className="jianpu-page-reader" aria-label="按小节组阅读原谱">
+        {score_slices.map((page_slice, index) => {
+          const slice_key = get_page_slice_key(page_slice);
+          const is_expanded = expanded_slice_keys.has(slice_key);
+          return (
+            <article key={slice_key} className="jianpu-page-card">
+              <header className="jianpu-page-card-head">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <p>{format_source_page_label(page_slice.source_pages)}</p>
+                  <h3>{page_slice.title}</h3>
+                </div>
+                <small>第 {page_slice.measure_start}—{page_slice.measure_end} 小节</small>
+              </header>
+              {is_expanded ? (
+                <OriginalScoreSlice
+                  musicxml_url={musicxml_url}
+                  measure_start={page_slice.measure_start}
+                  measure_end={page_slice.measure_end}
+                />
+              ) : (
+                <button
+                  type="button"
+                  className="jianpu-page-score-toggle"
+                  onClick={() => set_expanded_slice_keys((current) => {
+                    const next = new Set(current);
+                    next.add(slice_key);
+                    return next;
+                  })}
+                >
+                  展开本段原谱
+                  <ChevronsRight size={16} />
+                </button>
+              )}
+            </article>
+          );
+        })}
+      </section>
     </section>
+  );
+}
+
+function OriginalScoreSlice({
+  musicxml_url,
+  measure_start,
+  measure_end,
+}: {
+  musicxml_url: string;
+  measure_start: number;
+  measure_end: number;
+}) {
+  const [render_state, set_render_state] = useState<render_state>("loading");
+
+  return (
+    <ScoreZoomSurface
+      measure_start={measure_start}
+      measure_end={measure_end}
+      className="original-score-slice"
+    >
+      {render_state === "loading" && <JianpuScoreState copy="正在加载本段原谱…" />}
+      {render_state === "error" && <JianpuScoreState copy="本段原谱暂时无法显示。" is_error />}
+      <MusicXmlScoreRenderer
+        musicxml_url={musicxml_url}
+        className="jianpu-original-score-host"
+        render_measure_start={measure_start}
+        render_measure_end={measure_end}
+        on_state_change={set_render_state}
+      />
+    </ScoreZoomSurface>
   );
 }
 
@@ -845,6 +1053,21 @@ function get_selected_segment(
     return material.segments[0];
   }
   return material.segments.find((item) => item.id === requested_segment_id);
+}
+
+function get_jianpu_segment_navigation(
+  material: jianpu_material,
+  segment: jianpu_segment,
+) {
+  const current_index = material.segments.findIndex((item) => item.id === segment.id);
+  return {
+    current_index: Math.max(0, current_index),
+    total_count: material.segments.length,
+    previous_segment: current_index > 0 ? material.segments[current_index - 1] : undefined,
+    next_segment: current_index >= 0 && current_index < material.segments.length - 1
+      ? material.segments[current_index + 1]
+      : undefined,
+  };
 }
 
 function get_selected_chapter(

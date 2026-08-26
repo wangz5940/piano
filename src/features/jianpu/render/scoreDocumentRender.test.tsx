@@ -230,6 +230,80 @@ describe("ScoreDocument v2 教学 SVG", () => {
     expect(jianpu_markup.match(/class="jianpu-svg-slur"/g)).toHaveLength(1);
   });
 
+  it("简谱和自绘五线谱按同手栈后进先出渲染嵌套 Slur", () => {
+    const document = make_score_document();
+    document.measures = [{
+      id: "measure-1",
+      number: "1",
+      meter: { beats: 4, beat_unit: 4 },
+      events: [{
+        id: "right-outer-start",
+        onset_beats: 0,
+        duration_beats: 1,
+        hand: "right",
+        voice: 1,
+        notes: [{ id: "right-outer-start-note", midi: 72, source_refs: [] }],
+        source_refs: [],
+      }, {
+        id: "right-inner-start",
+        onset_beats: 1,
+        duration_beats: 1,
+        hand: "right",
+        voice: 2,
+        notes: [{ id: "right-inner-start-note", midi: 74, source_refs: [] }],
+        source_refs: [],
+      }, {
+        id: "left-stop",
+        onset_beats: 1.5,
+        duration_beats: 1,
+        hand: "left",
+        voice: 2,
+        notes: [{ id: "left-stop-note", midi: 48, source_refs: [] }],
+        source_refs: [],
+      }, {
+        id: "right-inner-stop",
+        onset_beats: 2,
+        duration_beats: 1,
+        hand: "right",
+        voice: 1,
+        notes: [{ id: "right-inner-stop-note", midi: 76, source_refs: [] }],
+        source_refs: [],
+      }, {
+        id: "right-outer-stop",
+        onset_beats: 3,
+        duration_beats: 1,
+        hand: "right",
+        voice: 1,
+        notes: [{ id: "right-outer-stop-note", midi: 77, source_refs: [] }],
+        source_refs: [],
+      }],
+    }];
+    const metadata: Record<string, jianpu_event_markings> = {
+      "right-outer-start": { slur: "start" },
+      "right-inner-start": { slur: "start" },
+      "left-stop": { slur: "stop" },
+      "right-inner-stop": { slur: "stop" },
+      "right-outer-stop": { slur: "stop" },
+    };
+    const score = to_render_score_from_score_document(document, metadata);
+    const staff_markup = renderToStaticMarkup(
+      <StaffAidRenderer score={score} />,
+    );
+    const jianpu_markup = renderToStaticMarkup(
+      <JianpuRenderer score={score} mode="reading" width={520} />,
+    );
+
+    for (const markup of [staff_markup, jianpu_markup]) {
+      expect(markup).toContain('data-slur-from="right-inner-start"');
+      expect(markup).toContain('data-slur-to="right-inner-stop"');
+      expect(markup).toContain('data-slur-from="right-outer-start"');
+      expect(markup).toContain('data-slur-to="right-outer-stop"');
+      expect(markup).not.toContain('data-slur-from="right-inner-start" data-slur-to="left-stop"');
+    }
+    expect(staff_markup.match(/class="staff-slur"/g)).toHaveLength(2);
+    expect(jianpu_markup.match(/class="jianpu-svg-slur"/g)).toHaveLength(2);
+  });
+
   it("自绘五线谱按同手同声部同音高渲染延音线", () => {
     const document = make_score_document();
     document.measures = [{

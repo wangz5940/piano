@@ -265,7 +265,7 @@ function StaffSystemSlurs({
     to: staff_slur_anchor;
     lane: string;
   }> = [];
-  const active_by_lane = new Map<string, staff_slur_anchor>();
+  const active_by_lane = new Map<string, staff_slur_anchor[]>();
   measures.forEach((measure, measure_offset) => {
     const measure_x = left_margin + measure_offset * measure_width;
     const events = [...measure.right, ...measure.left]
@@ -281,11 +281,18 @@ function StaffSystemSlurs({
       const anchor = get_staff_slur_anchor(event, measure, measure_x, top, staff);
       const lane = slur_lane(event);
       if (slur === "start") {
-        active_by_lane.set(lane, anchor);
+        const active = active_by_lane.get(lane) ?? [];
+        active.push(anchor);
+        active_by_lane.set(lane, active);
       } else if (slur === "stop") {
-        const start = active_by_lane.get(lane);
+        const active = active_by_lane.get(lane) ?? [];
+        const start = active.pop();
         if (start) {
           slurs.push({ from: start, to: anchor, lane });
+        }
+        if (active.length > 0) {
+          active_by_lane.set(lane, active);
+        } else {
           active_by_lane.delete(lane);
         }
       }
@@ -439,7 +446,7 @@ function staff_tie_path(
 }
 
 function slur_lane(event: jianpu_render_hand_event): string {
-  return `${event.hand}:${event_voice(event)}`;
+  return event.hand;
 }
 
 function tie_lane(event: jianpu_render_hand_event, midi: number): string {
