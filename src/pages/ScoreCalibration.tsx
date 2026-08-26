@@ -26,7 +26,7 @@ import {
   SlidersHorizontal,
   Trash2,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { AppShell } from "@/components/AppShell";
 import { api_request } from "@/features/api/client";
@@ -163,6 +163,7 @@ export function ScoreCalibration({
   user_override,
   initial_projects,
 }: score_calibration_props = {}) {
+  const [search_params] = useSearchParams();
   const stored_user = use_auth_store((state) => state.user);
   const auth_status = use_auth_store((state) => state.status);
   const user = user_override === undefined ? stored_user : user_override ?? undefined;
@@ -202,6 +203,7 @@ export function ScoreCalibration({
   const [message, set_message] = useState<string>();
   const [data_json_error, set_data_json_error] = useState<string>();
   const [deleting_material_segment_id, set_deleting_material_segment_id] = useState<string>();
+  const requested_segment_key = search_params.get("segment") ?? "";
   const stop_playback_ref = useRef<(() => void) | null>(null);
   const workbench_ref = useRef<HTMLElement>(null);
   const score_stage_ref = useRef<HTMLDivElement>(null);
@@ -320,9 +322,19 @@ export function ScoreCalibration({
             material,
             segment,
           })))[0];
+        const requested_segment = next_catalog.materials
+          .flatMap((material) => material.segments.map((segment) => ({
+            material,
+            segment,
+          })))
+          .find(({ material, segment }) =>
+            get_segment_key(material, segment) === requested_segment_key);
         if (first_segment) {
           set_selected_segment_key((current) =>
-            current || get_segment_key(first_segment.material, first_segment.segment));
+            current ||
+            (requested_segment
+              ? get_segment_key(requested_segment.material, requested_segment.segment)
+              : get_segment_key(first_segment.material, first_segment.segment)));
         }
         set_message(undefined);
       })
@@ -341,7 +353,17 @@ export function ScoreCalibration({
     return () => {
       active = false;
     };
-  }, [initial_projects, user?.role]);
+  }, [initial_projects, requested_segment_key, user?.role]);
+
+  useEffect(() => {
+    if (!requested_segment_key || segment_options.length === 0) {
+      return;
+    }
+    if (segment_options.some(({ material, segment }) =>
+      get_segment_key(material, segment) === requested_segment_key)) {
+      set_selected_segment_key(requested_segment_key);
+    }
+  }, [requested_segment_key, segment_options]);
 
   useEffect(() => {
     if (initial_projects || !selected_segment_key || segment_options.length === 0) {

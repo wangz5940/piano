@@ -31,15 +31,18 @@ import type {
   material_segment,
 } from "@/features/assets/types";
 import { use_auth_store } from "@/store/useAuthStore";
+import type { account_user } from "@/features/auth/types";
 
 interface material_library_props {
   initial_catalog?: material_catalog;
+  user_override?: account_user | null;
 }
 
-export function MaterialLibrary({ initial_catalog }: material_library_props) {
+export function MaterialLibrary({ initial_catalog, user_override }: material_library_props) {
   const { material_id: route_material_id, segment_id } = useParams();
   const navigate = useNavigate();
-  const user = use_auth_store((state) => state.user);
+  const stored_user = use_auth_store((state) => state.user);
+  const user = user_override === undefined ? stored_user : user_override ?? undefined;
   const [catalog, set_catalog] = useState(initial_catalog);
   const [load_error, set_load_error] = useState<string>();
   const [load_attempt, set_load_attempt] = useState(0);
@@ -265,6 +268,9 @@ export function MaterialLibrary({ initial_catalog }: material_library_props) {
           )}
           <MaterialScoreViewer
             segment={selected_segment}
+            calibration_href={user?.role === "admin"
+              ? get_calibration_route(selected_segment.material_id, selected_segment.id)
+              : undefined}
             on_delete_segment={user?.role === "admin"
               ? handle_delete_selected_segment
               : undefined}
@@ -368,6 +374,10 @@ function get_material_segment_navigation(
 function get_material_route(material: material_collection): string {
   const first_segment = material.segments[0];
   return first_segment ? `/教材/${material.id}/${first_segment.id}` : "/教材";
+}
+
+function get_calibration_route(material_id: material_id, segment_id: string): string {
+  return `/校准?segment=${encodeURIComponent(`${material_id}:${segment_id}`)}`;
 }
 
 function get_segment_label(segment: material_segment): string {

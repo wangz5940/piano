@@ -145,7 +145,7 @@ describe("统一简谱渲染核心", () => {
     expect(markup).toContain('data-slur-lane="left"');
   });
 
-  it("拜厄 032 阅读版在中等宽度下保持每行四小节", () => {
+  it("拜厄 032 阅读版按宽度动态排成每行 6 到 8 小节", () => {
     const source = JSON.parse(
       readFileSync(
         new URL("../../../../public/materials/jianpu/beyer/032.json", import.meta.url),
@@ -154,7 +154,11 @@ describe("统一简谱渲染核心", () => {
     ) as jianpu_score;
     const ast = to_render_score_from_jianpu_score(source);
     const layout = layout_render_score(ast, {
-      container_width: 600,
+      container_width: 820,
+      mode: "reading",
+    });
+    const wide_layout = layout_render_score(ast, {
+      container_width: 1240,
       mode: "reading",
     });
     const mobile_layout = layout_render_score(ast, {
@@ -163,7 +167,9 @@ describe("统一简谱渲染核心", () => {
     });
 
     expect(layout.systems.map((system) => system.measures.length))
-      .toEqual([4, 4]);
+      .toEqual([6, 2]);
+    expect(wide_layout.systems.map((system) => system.measures.length))
+      .toEqual([8]);
     expect(mobile_layout.systems.every((system) =>
       system.measures.length <= 2 &&
       system.measures.every((measure) =>
