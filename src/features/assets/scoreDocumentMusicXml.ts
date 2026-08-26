@@ -19,6 +19,10 @@ export function score_document_to_musicxml(
 ): string {
   const time = parse_time_signature(document.time_signature);
   const divisions = 16;
+  const slur_entries_by_event_id = build_musicxml_slur_entries(
+    document,
+    event_metadata,
+  );
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<score-partwise version="4.0">',
@@ -101,6 +105,7 @@ export function score_document_to_musicxml(
           staff,
           divisions,
           event_metadata[event.id],
+          slur_entries_by_event_id.get(event.id) ?? [],
         ));
       }
     }
@@ -116,6 +121,7 @@ function score_event_to_musicxml_notes(
   staff: number,
   divisions: number,
   metadata?: score_document_musicxml_event_metadata,
+  slur_entries: musicxml_slur_entry[] = [],
 ): string[] {
   const duration = Math.max(1, Math.round(Number(event.duration_beats) * divisions));
   const notes = event.notes.length > 0 ? event.notes : [undefined];
@@ -146,7 +152,7 @@ function score_event_to_musicxml_notes(
     lines.push(`        <voice>${event.voice ?? staff}</voice>`);
     lines.push(`        <type>${duration_to_musicxml_type(event.duration_beats)}</type>`);
     lines.push(`        <staff>${staff}</staff>`);
-    lines.push(...musicxml_notations(event, note, note_index, metadata));
+    lines.push(...musicxml_notations(event, note, note_index, metadata, slur_entries));
     lines.push("      </note>");
     return lines;
   });
@@ -204,10 +210,9 @@ function musicxml_notations(
   note: score_document_event["notes"][number] | undefined,
   note_index: number,
   metadata?: score_document_musicxml_event_metadata,
+  slur_entries: musicxml_slur_entry[] = [],
 ): string[] {
-  const slur = note_index === 0 && metadata?.slur && metadata.slur !== "none"
-    ? metadata.slur
-    : undefined;
+  const slurs = note_index === 0 ? slur_entries : [];
   const articulation = note_index === 0 ? normalize_articulation(metadata?.articulation) : undefined;
   const fermata = note_index === 0
     ? normalize_relation(metadata?.fermata, ["upright", "inverted"])
@@ -218,7 +223,7 @@ function musicxml_notations(
   const tie_types = note ? musicxml_tie_types(event.tie) : [];
   if (
     !note?.finger &&
-    !slur &&
+    slurs.length === 0 &&
     !articulation &&
     !fermata &&
     !ornament &&
@@ -248,11 +253,76 @@ function musicxml_notations(
     lines.push(`            <${ornament}/>`);
     lines.push("          </ornaments>");
   }
-  if (slur) {
-    lines.push(`          <slur type="${slur}"/>`);
+  for (const slur of slurs) {
+    lines.push(`          <slur type="${slur.type}" number="${slur.number}"/>`);
   }
   lines.push("        </notations>");
   return lines;
+}
+
+interface musicxml_slur_entry {
+  type: "start" | "stop";
+  number: number;
+}
+
+function build_musicxml_slur_entries(
+  document: score_document,
+  event_metadata: Readonly<Record<string, score_document_musicxml_event_metadata>>,
+): Map<string, musicxml_slur_entry[]> {
+  const result = new Map<string, musicxml_slur_entry[]>();
+  const active_by_hand = new Map<score_document_event["hand"], number[]>();
+  const active_numbers = new Set<number>();
+  for (const event of ordered_document_events(document)) {
+    if (event.notes.length === 0) {
+      continue;
+    }
+    const slur = event_metadata[event.id]?.slur;
+    if (!slur || slur === "none" || slur === "continue") {
+      continue;
+    }
+    const active = active_by_hand.get(event.hand) ?? [];
+    if (slur === "start") {
+      const number = next_available_slur_number(active_numbers);
+      active.push(number);
+      active_numbers.add(number);
+      active_by_hand.set(event.hand, active);
+      result.set(event.id, [{ type: "start", number }]);
+      continue;
+    }
+    const number = active.pop();
+    if (number !== undefined) {
+      active_numbers.delete(number);
+      result.set(event.id, [{ type: "stop", number }]);
+    }
+    if (active.length > 0) {
+      active_by_hand.set(event.hand, active);
+    } else {
+      active_by_hand.delete(event.hand);
+    }
+  }
+  return result;
+}
+
+function next_available_slur_number(active_numbers: ReadonlySet<number>): number {
+  let number = 1;
+  while (active_numbers.has(number)) {
+    number += 1;
+  }
+  return number;
+}
+
+function ordered_document_events(document: score_document): score_document_event[] {
+  return document.measures.flatMap((measure, measure_index) =>
+    measure.events.map((event) => ({ event, measure_index })))
+    .sort((left, right) =>
+      left.measure_index - right.measure_index ||
+      left.event.onset_beats - right.event.onset_beats ||
+      event_voice(left.event) - event_voice(right.event))
+    .map((entry) => entry.event);
+}
+
+function event_voice(event: score_document_event): number {
+  return event.voice ?? (event.hand === "left" ? 2 : 1);
 }
 
 function normalize_relation<T extends string>(

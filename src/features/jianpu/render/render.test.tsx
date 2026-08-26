@@ -97,6 +97,54 @@ describe("统一简谱渲染核心", () => {
     expect(ast.measures[0].left[0].notes[0].finger).toBe(5);
   });
 
+  it("教材简谱保留左右手独立 Slur 标记并渲染连线", () => {
+    const score: jianpu_score = {
+      schema_version: "1.0",
+      segment_id: "slurred-jianpu",
+      key_signature: "C 大调（1 = C）",
+      tonic_midi: 60,
+      time_signature: "4/4",
+      measures: [{
+        index: 1,
+        number: "1",
+        directions: [],
+        events: [{
+          onset_beats: 0,
+          duration_beats: 1,
+          right_notes: [72],
+          left_notes: [48],
+          right_slur: "start",
+          left_slur: "start",
+        }, {
+          onset_beats: 1,
+          duration_beats: 1,
+          right_notes: [74],
+          left_notes: [],
+          right_slur: "stop",
+        }, {
+          onset_beats: 2,
+          duration_beats: 1,
+          right_notes: [],
+          left_notes: [50],
+          left_slur: "stop",
+        }],
+      }],
+    };
+
+    const ast = to_render_score_from_jianpu_score(score);
+    const markup = renderToStaticMarkup(
+      <JianpuRenderer score={ast} mode="reading" width={520} />,
+    );
+
+    expect(ast.measures[0].right[0].markings?.slur).toBe("start");
+    expect(ast.measures[0].right[1].markings?.slur).toBe("stop");
+    expect(ast.measures[0].left[0].markings?.slur).toBe("start");
+    expect(ast.measures[0].left[1].markings?.slur).toBe("stop");
+    expect(markup.match(/class="jianpu-svg-slur"/g)).toHaveLength(2);
+    expect(markup).toContain('data-slur-lane="right"');
+    expect(markup).toContain('data-slur-lane="left"');
+  });
+
   it("拜厄 032 阅读版在中等宽度下保持每行四小节", () => {
     const source = JSON.parse(
       readFileSync(

@@ -1179,6 +1179,7 @@ function sync_calibration_original_data(
   const original_data = score_document_to_jianpu_score(
     input.project.document,
     input.segment_id,
+    input.project.event_metadata ?? {},
   );
   const serialized = `${JSON.stringify(original_data)}\n`;
   atomic_write(target_path, serialized);
@@ -1305,7 +1306,7 @@ function sync_calibration_material_catalog(
   return changed;
 }
 
-export function score_document_to_jianpu_score(document, segment_id) {
+export function score_document_to_jianpu_score(document, segment_id, event_metadata = {}) {
   return {
     schema_version: "1.0",
     segment_id,
@@ -1316,12 +1317,12 @@ export function score_document_to_jianpu_score(document, segment_id) {
       index: Number(measure.number) || index + 1,
       number: measure.number,
       directions: [],
-      events: score_events_to_jianpu_events(measure.events),
+    events: score_events_to_jianpu_events(measure.events, event_metadata),
     })),
   };
 }
 
-function score_events_to_jianpu_events(events) {
+function score_events_to_jianpu_events(events, event_metadata = {}) {
   const grouped = new Map();
   for (const event of events) {
     const key = [
@@ -1336,12 +1337,20 @@ function score_events_to_jianpu_events(events) {
       left_notes: [],
       right_fingerings: [],
       left_fingerings: [],
+      right_slur: undefined,
+      left_slur: undefined,
       chord: event.chord ?? null,
     };
     const target = event.hand === "left" ? existing.left_notes : existing.right_notes;
     const fingering_target = event.hand === "left"
       ? existing.left_fingerings
       : existing.right_fingerings;
+    const slur = normalize_jianpu_slur(event_metadata[event.id]?.slur);
+    if (event.hand === "left") {
+      existing.left_slur = merge_jianpu_slur(existing.left_slur, slur);
+    } else {
+      existing.right_slur = merge_jianpu_slur(existing.right_slur, slur);
+    }
     for (const note of event.notes) {
       target.push(note.midi);
       if (note.finger !== undefined) {
@@ -1361,13 +1370,30 @@ function score_events_to_jianpu_events(events) {
       left_notes: unique_numbers(event.left_notes),
       right_fingerings: unique_fingerings(event.right_fingerings),
       left_fingerings: unique_fingerings(event.left_fingerings),
+      ...(event.right_slur ? { right_slur: event.right_slur } : {}),
+      ...(event.left_slur ? { left_slur: event.left_slur } : {}),
     }))
     .sort((a, b) => a.onset_beats - b.onset_beats || a.duration_beats - b.duration_beats);
+}
+
+function normalize_jianpu_slur(value) {
+  return ["start", "continue", "stop"].includes(value) ? value : undefined;
+}
+
+function merge_jianpu_slur(current, next) {
+  if (!next) {
+    return current;
+  }
+  return current ?? next;
 }
 
 export function score_document_to_musicxml(document, event_metadata = {}) {
   const time = parse_time_signature(document.time_signature);
   const divisions = 16;
+  const slur_entries_by_event_id = build_musicxml_slur_entries(
+    document,
+    event_metadata,
+  );
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<score-partwise version="4.0">',
@@ -1450,6 +1476,7 @@ export function score_document_to_musicxml(document, event_metadata = {}) {
           staff,
           divisions,
           event_metadata[event.id],
+          slur_entries_by_event_id.get(event.id) ?? [],
         ));
       }
     }
@@ -1460,7 +1487,13 @@ export function score_document_to_musicxml(document, event_metadata = {}) {
   return `${lines.join("\n")}\n`;
 }
 
-function score_event_to_musicxml_notes(event, staff, divisions, metadata) {
+function score_event_to_musicxml_notes(
+  event,
+  staff,
+  divisions,
+  metadata,
+  slur_entries = [],
+) {
   const duration = Math.max(1, Math.round(Number(event.duration_beats) * divisions));
   const notes = event.notes.length > 0 ? event.notes : [undefined];
   return notes.flatMap((note, note_index) => {
@@ -1490,7 +1523,7 @@ function score_event_to_musicxml_notes(event, staff, divisions, metadata) {
     lines.push(`        <voice>${event.voice ?? staff}</voice>`);
     lines.push(`        <type>${duration_to_musicxml_type(event.duration_beats)}</type>`);
     lines.push(`        <staff>${staff}</staff>`);
-    lines.push(...musicxml_notations(event, note, note_index, metadata));
+    lines.push(...musicxml_notations(event, note, note_index, metadata, slur_entries));
     lines.push("      </note>");
     return lines;
   });
@@ -1539,10 +1572,8 @@ function musicxml_event_directions(event, metadata, note_index) {
       ];
 }
 
-function musicxml_notations(event, note, note_index, metadata) {
-  const slur = note_index === 0 && metadata?.slur && metadata.slur !== "none"
-    ? metadata.slur
-    : undefined;
+function musicxml_notations(event, note, note_index, metadata, slur_entries = []) {
+  const slurs = note_index === 0 ? slur_entries : [];
   const articulation = note_index === 0
     ? normalize_musicxml_articulation(metadata?.articulation)
     : undefined;
@@ -1555,7 +1586,7 @@ function musicxml_notations(event, note, note_index, metadata) {
   const tie_types = note ? musicxml_tie_types(event.tie) : [];
   if (
     !note?.finger &&
-    !slur &&
+    slurs.length === 0 &&
     !articulation &&
     !fermata &&
     !ornament &&
@@ -1585,11 +1616,68 @@ function musicxml_notations(event, note, note_index, metadata) {
     lines.push(`            <${ornament}/>`);
     lines.push("          </ornaments>");
   }
-  if (slur) {
-    lines.push(`          <slur type="${slur}"/>`);
+  for (const slur of slurs) {
+    lines.push(`          <slur type="${slur.type}" number="${slur.number}"/>`);
   }
   lines.push("        </notations>");
   return lines;
+}
+
+function build_musicxml_slur_entries(document, event_metadata) {
+  const result = new Map();
+  const active_by_hand = new Map();
+  const active_numbers = new Set();
+  for (const event of ordered_document_events(document)) {
+    if (!Array.isArray(event.notes) || event.notes.length === 0) {
+      continue;
+    }
+    const slur = event_metadata[event.id]?.slur;
+    if (!slur || slur === "none" || slur === "continue") {
+      continue;
+    }
+    const active = active_by_hand.get(event.hand) ?? [];
+    if (slur === "start") {
+      const number = next_available_slur_number(active_numbers);
+      active.push(number);
+      active_numbers.add(number);
+      active_by_hand.set(event.hand, active);
+      result.set(event.id, [{ type: "start", number }]);
+      continue;
+    }
+    const number = active.pop();
+    if (number !== undefined) {
+      active_numbers.delete(number);
+      result.set(event.id, [{ type: "stop", number }]);
+    }
+    if (active.length > 0) {
+      active_by_hand.set(event.hand, active);
+    } else {
+      active_by_hand.delete(event.hand);
+    }
+  }
+  return result;
+}
+
+function next_available_slur_number(active_numbers) {
+  let number = 1;
+  while (active_numbers.has(number)) {
+    number += 1;
+  }
+  return number;
+}
+
+function ordered_document_events(document) {
+  return document.measures.flatMap((measure, measure_index) =>
+    measure.events.map((event) => ({ event, measure_index })))
+    .sort((left, right) =>
+      left.measure_index - right.measure_index ||
+      left.event.onset_beats - right.event.onset_beats ||
+      event_voice(left.event) - event_voice(right.event))
+    .map((entry) => entry.event);
+}
+
+function event_voice(event) {
+  return event.voice ?? (event.hand === "left" ? 2 : 1);
 }
 
 function normalize_musicxml_relation(value, allowed) {

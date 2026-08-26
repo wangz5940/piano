@@ -230,6 +230,7 @@ function prepare_segment(
   const jianpu_score = score_document_to_jianpu_score(
     project.document,
     segment.id,
+    project.event_metadata,
   );
   preserve_jianpu_chords(jianpu_score, existing_jianpu);
   const musicxml_path = preserved_manual

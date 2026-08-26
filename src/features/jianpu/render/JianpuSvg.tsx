@@ -99,7 +99,7 @@ function SystemSlursSvg({
     to: jianpu_slur_anchor;
     lane: string;
   }> = [];
-  const active_by_lane = new Map<string, jianpu_slur_anchor>();
+  const active_by_lane = new Map<string, jianpu_slur_anchor[]>();
   for (const event_box of get_ordered_system_event_boxes(system)) {
     const slur = event_box.event.markings?.slur;
     if (!slur || slur === "none" || event_box.event.kind !== "note") {
@@ -108,11 +108,18 @@ function SystemSlursSvg({
     const lane = get_slur_lane(event_box);
     const anchor = get_jianpu_slur_anchor(event_box);
     if (slur === "start") {
-      active_by_lane.set(lane, anchor);
+      const active = active_by_lane.get(lane) ?? [];
+      active.push(anchor);
+      active_by_lane.set(lane, active);
     } else if (slur === "stop") {
-      const start = active_by_lane.get(lane);
+      const active = active_by_lane.get(lane) ?? [];
+      const start = active.pop();
       if (start) {
         slurs.push({ from: start, to: anchor, lane });
+      }
+      if (active.length > 0) {
+        active_by_lane.set(lane, active);
+      } else {
         active_by_lane.delete(lane);
       }
     }
@@ -155,7 +162,7 @@ function get_ordered_system_event_boxes(
 }
 
 function get_slur_lane(event_box: jianpu_event_box): string {
-  return `${event_box.event.hand}:${get_event_voice(event_box)}`;
+  return event_box.event.hand;
 }
 
 function get_event_voice(event_box: jianpu_event_box): number {

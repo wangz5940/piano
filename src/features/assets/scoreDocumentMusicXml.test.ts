@@ -148,8 +148,181 @@ describe("score_document_to_musicxml", () => {
     expect(xml.match(/<tied type="start"\/>/g)).toHaveLength(2);
     expect(xml.match(/<tied type="stop"\/>/g)).toHaveLength(2);
     expect(xml).not.toContain('type="continue"');
-    expect(xml).toContain('<slur type="start"/>');
-    expect(xml).toContain('<slur type="stop"/>');
+    expect(xml).toContain('<slur type="start" number="1"/>');
+    expect(xml).toContain('<slur type="stop" number="1"/>');
     vi.useRealTimers();
+  });
+
+  it("按手别栈为嵌套 Slur 输出稳定编号", () => {
+    const document: score_document = {
+      schema_version: 2,
+      id: "nested-slur-fixture",
+      number: "2",
+      title: "嵌套连线样本",
+      key_signature: "C major",
+      tonic_midi: 60,
+      time_signature: "4/4",
+      status: "published",
+      provenance: {
+        kind: "manual",
+        source_id: "fixture",
+        source_file: null,
+        source_sha256: null,
+        font_config_version: null,
+        importer_version: "test",
+        references: [],
+      },
+      lyrics: [],
+      hand_positions: [],
+      measures: [{
+        id: "m1",
+        number: "1",
+        meter: { beats: 4, beat_unit: 4 },
+        events: [{
+          id: "right-outer-start",
+          onset_beats: 0,
+          duration_beats: 1,
+          hand: "right",
+          voice: 1,
+          notes: [{ id: "right-outer-start-note", midi: 72, source_refs: [] }],
+          source_refs: [],
+        }, {
+          id: "right-inner-start",
+          onset_beats: 1,
+          duration_beats: 1,
+          hand: "right",
+          voice: 2,
+          notes: [{ id: "right-inner-start-note", midi: 74, source_refs: [] }],
+          source_refs: [],
+        }, {
+          id: "left-stop",
+          onset_beats: 1.5,
+          duration_beats: 1,
+          hand: "left",
+          voice: 2,
+          notes: [{ id: "left-stop-note", midi: 48, source_refs: [] }],
+          source_refs: [],
+        }, {
+          id: "right-inner-stop",
+          onset_beats: 2,
+          duration_beats: 1,
+          hand: "right",
+          voice: 1,
+          notes: [{ id: "right-inner-stop-note", midi: 76, source_refs: [] }],
+          source_refs: [],
+        }, {
+          id: "right-outer-stop",
+          onset_beats: 3,
+          duration_beats: 1,
+          hand: "right",
+          voice: 1,
+          notes: [{ id: "right-outer-stop-note", midi: 77, source_refs: [] }],
+          source_refs: [],
+        }],
+      }],
+      review: {
+        reviewed_by: null,
+        reviewed_at: null,
+        published_by: null,
+        published_at: null,
+        note: null,
+      },
+    };
+
+    const xml = score_document_to_musicxml(document, {
+      "right-outer-start": { slur: "start" },
+      "right-inner-start": { slur: "start" },
+      "left-stop": { slur: "stop" },
+      "right-inner-stop": { slur: "stop" },
+      "right-outer-stop": { slur: "stop" },
+    });
+
+    expect(xml).toContain('<slur type="start" number="1"/>');
+    expect(xml).toContain('<slur type="start" number="2"/>');
+    expect(xml).toContain('<slur type="stop" number="2"/>');
+    expect(xml).toContain('<slur type="stop" number="1"/>');
+    expect(xml).not.toContain('<slur type="stop" number="3"/>');
+  });
+
+  it("同时打开的左右手 Slur 使用不同 MusicXML 编号", () => {
+    const document: score_document = {
+      schema_version: 2,
+      id: "parallel-hand-slur-fixture",
+      number: "3",
+      title: "双手连线样本",
+      key_signature: "C major",
+      tonic_midi: 60,
+      time_signature: "4/4",
+      status: "published",
+      provenance: {
+        kind: "manual",
+        source_id: "fixture",
+        source_file: null,
+        source_sha256: null,
+        font_config_version: null,
+        importer_version: "test",
+        references: [],
+      },
+      lyrics: [],
+      hand_positions: [],
+      measures: [{
+        id: "m1",
+        number: "1",
+        meter: { beats: 4, beat_unit: 4 },
+        events: [{
+          id: "right-start",
+          onset_beats: 0,
+          duration_beats: 1,
+          hand: "right",
+          voice: 1,
+          notes: [{ id: "right-start-note", midi: 72, source_refs: [] }],
+          source_refs: [],
+        }, {
+          id: "left-start",
+          onset_beats: 0,
+          duration_beats: 2,
+          hand: "left",
+          voice: 2,
+          notes: [{ id: "left-start-note", midi: 48, source_refs: [] }],
+          source_refs: [],
+        }, {
+          id: "left-stop",
+          onset_beats: 2,
+          duration_beats: 2,
+          hand: "left",
+          voice: 2,
+          notes: [{ id: "left-stop-note", midi: 52, source_refs: [] }],
+          source_refs: [],
+        }, {
+          id: "right-stop",
+          onset_beats: 3,
+          duration_beats: 1,
+          hand: "right",
+          voice: 1,
+          notes: [{ id: "right-stop-note", midi: 74, source_refs: [] }],
+          source_refs: [],
+        }],
+      }],
+      review: {
+        reviewed_by: null,
+        reviewed_at: null,
+        published_by: null,
+        published_at: null,
+        note: null,
+      },
+    };
+
+    const xml = score_document_to_musicxml(document, {
+      "right-start": { slur: "start" },
+      "left-start": { slur: "start" },
+      "left-stop": { slur: "stop" },
+      "right-stop": { slur: "stop" },
+    });
+
+    const slur_tags = xml.match(/<slur[^>]+\/>/g);
+    expect(slur_tags).toContain('<slur type="start" number="1"/>');
+    expect(slur_tags).toContain('<slur type="start" number="2"/>');
+    expect(slur_tags).toContain('<slur type="stop" number="1"/>');
+    expect(slur_tags).toContain('<slur type="stop" number="2"/>');
   });
 });

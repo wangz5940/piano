@@ -270,8 +270,28 @@ function normalize_event(value: unknown): jianpu_event {
     left_notes: as_midi_notes(record.left_notes, "简谱左手音符无效"),
     right_fingerings: as_optional_jianpu_fingerings(record.right_fingerings, "简谱右手指法无效"),
     left_fingerings: as_optional_jianpu_fingerings(record.left_fingerings, "简谱左手指法无效"),
+    right_slur: as_optional_jianpu_slur(record.right_slur, "简谱右手连线无效"),
+    left_slur: as_optional_jianpu_slur(record.left_slur, "简谱左手连线无效"),
     chord: as_optional_string(record.chord, "简谱和弦标记无效"),
   };
+}
+
+function as_optional_jianpu_slur(
+  value: unknown,
+  message: string,
+): jianpu_event["right_slur"] {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+  if (
+    value === "none" ||
+    value === "start" ||
+    value === "continue" ||
+    value === "stop"
+  ) {
+    return value;
+  }
+  throw new Error(message);
 }
 
 function as_optional_jianpu_fingerings(

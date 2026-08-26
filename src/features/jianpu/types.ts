@@ -75,8 +75,12 @@ export interface jianpu_event {
   left_notes: number[];
   right_fingerings?: jianpu_event_fingering[];
   left_fingerings?: jianpu_event_fingering[];
+  right_slur?: jianpu_slur_role;
+  left_slur?: jianpu_slur_role;
   chord?: string;
 }
+
+export type jianpu_slur_role = "none" | "start" | "continue" | "stop";
 
 export interface jianpu_event_fingering {
   note: number;

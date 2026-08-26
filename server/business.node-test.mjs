@@ -144,8 +144,128 @@ test("MusicXML 导出保留 Slur 起止标记", () => {
   assert.equal((xml.match(/<tied type="start"\/>/g) ?? []).length, 2);
   assert.equal((xml.match(/<tied type="stop"\/>/g) ?? []).length, 2);
   assert.doesNotMatch(xml, /type="continue"/);
-  assert.match(xml, /<slur type="start"\/>/);
-  assert.match(xml, /<slur type="stop"\/>/);
+  assert.match(xml, /<slur type="start" number="1"\/>/);
+  assert.match(xml, /<slur type="stop" number="1"\/>/);
+});
+
+test("MusicXML 导出按手别栈为嵌套 Slur 编号", () => {
+  const document = {
+    schema_version: 2,
+    id: "nested-slur-fixture",
+    title: "嵌套连线样本",
+    key_signature: "C major",
+    tonic_midi: 60,
+    time_signature: "4/4",
+    measures: [{
+      number: "1",
+      meter: { beats: 4, beat_unit: 4 },
+      events: [{
+        id: "right-outer-start",
+        onset_beats: 0,
+        duration_beats: 1,
+        hand: "right",
+        voice: 1,
+        notes: [{ midi: 72, source_refs: [] }],
+      }, {
+        id: "right-inner-start",
+        onset_beats: 1,
+        duration_beats: 1,
+        hand: "right",
+        voice: 2,
+        notes: [{ midi: 74, source_refs: [] }],
+      }, {
+        id: "left-stop",
+        onset_beats: 1.5,
+        duration_beats: 1,
+        hand: "left",
+        voice: 2,
+        notes: [{ midi: 48, source_refs: [] }],
+      }, {
+        id: "right-inner-stop",
+        onset_beats: 2,
+        duration_beats: 1,
+        hand: "right",
+        voice: 1,
+        notes: [{ midi: 76, source_refs: [] }],
+      }, {
+        id: "right-outer-stop",
+        onset_beats: 3,
+        duration_beats: 1,
+        hand: "right",
+        voice: 1,
+        notes: [{ midi: 77, source_refs: [] }],
+      }],
+    }],
+  };
+  const xml = score_document_to_musicxml(document, {
+    "right-outer-start": { slur: "start" },
+    "right-inner-start": { slur: "start" },
+    "left-stop": { slur: "stop" },
+    "right-inner-stop": { slur: "stop" },
+    "right-outer-stop": { slur: "stop" },
+  });
+
+  assert.match(xml, /<slur type="start" number="1"\/>/);
+  assert.match(xml, /<slur type="start" number="2"\/>/);
+  assert.match(xml, /<slur type="stop" number="2"\/>/);
+  assert.match(xml, /<slur type="stop" number="1"\/>/);
+  assert.doesNotMatch(xml, /<slur type="stop" number="3"\/>/);
+});
+
+test("MusicXML 导出为同时打开的左右手 Slur 使用不同编号", () => {
+  const document = {
+    schema_version: 2,
+    id: "parallel-hand-slur-fixture",
+    title: "双手连线样本",
+    key_signature: "C major",
+    tonic_midi: 60,
+    time_signature: "4/4",
+    measures: [{
+      number: "1",
+      meter: { beats: 4, beat_unit: 4 },
+      events: [{
+        id: "right-start",
+        onset_beats: 0,
+        duration_beats: 1,
+        hand: "right",
+        voice: 1,
+        notes: [{ midi: 72, source_refs: [] }],
+      }, {
+        id: "left-start",
+        onset_beats: 0,
+        duration_beats: 2,
+        hand: "left",
+        voice: 2,
+        notes: [{ midi: 48, source_refs: [] }],
+      }, {
+        id: "left-stop",
+        onset_beats: 2,
+        duration_beats: 2,
+        hand: "left",
+        voice: 2,
+        notes: [{ midi: 52, source_refs: [] }],
+      }, {
+        id: "right-stop",
+        onset_beats: 3,
+        duration_beats: 1,
+        hand: "right",
+        voice: 1,
+        notes: [{ midi: 74, source_refs: [] }],
+      }],
+    }],
+  };
+  const xml = score_document_to_musicxml(document, {
+    "right-start": { slur: "start" },
+    "left-start": { slur: "start" },
+    "left-stop": { slur: "stop" },
+    "right-stop": { slur: "stop" },
+  });
+
+  const slur_tags = xml.match(/<slur[^>]+\/>/g);
+  assert.ok(slur_tags.includes('<slur type="start" number="1"/>'));
+  assert.ok(slur_tags.includes('<slur type="start" number="2"/>'));
+  assert.ok(slur_tags.includes('<slur type="stop" number="1"/>'));
+  assert.ok(slur_tags.includes('<slur type="stop" number="2"/>'));
 });
 
 test("简谱导出对同音高多声部只保留一个指法", () => {
@@ -168,6 +288,49 @@ test("简谱导出对同音高多声部只保留一个指法", () => {
 
   assert.deepEqual(score.measures[0].events[0].right_notes, [60]);
   assert.equal(score.measures[0].events[0].right_fingerings.length, 1);
+});
+
+test("简谱导出保留左右手独立 Slur 标记", () => {
+  const score = score_document_to_jianpu_score({
+    measures: [{
+      number: "1",
+      events: [{
+        id: "right-start",
+        onset_beats: 0,
+        duration_beats: 1,
+        hand: "right",
+        notes: [{ midi: 72, finger: 1 }],
+      }, {
+        id: "left-start",
+        onset_beats: 0,
+        duration_beats: 1,
+        hand: "left",
+        notes: [{ midi: 48, finger: 5 }],
+      }, {
+        id: "right-stop",
+        onset_beats: 1,
+        duration_beats: 1,
+        hand: "right",
+        notes: [{ midi: 74, finger: 2 }],
+      }, {
+        id: "left-stop",
+        onset_beats: 2,
+        duration_beats: 1,
+        hand: "left",
+        notes: [{ midi: 50, finger: 4 }],
+      }],
+    }],
+  }, "beyer.segment.slur", {
+    "right-start": { slur: "start" },
+    "left-start": { slur: "start" },
+    "right-stop": { slur: "stop" },
+    "left-stop": { slur: "stop" },
+  });
+
+  assert.equal(score.measures[0].events[0].right_slur, "start");
+  assert.equal(score.measures[0].events[0].left_slur, "start");
+  assert.equal(score.measures[0].events[1].right_slur, "stop");
+  assert.equal(score.measures[0].events[2].left_slur, "stop");
 });
 
 test("业务 API 支持账号、同步、练习归档和管理员内容版本", async (context) => {

@@ -86,6 +86,7 @@ import {
   type score_favorite_entry,
 } from "@/features/repertoire/favorites";
 import { soft_delete_material_segment } from "@/features/materials/materialDeletion";
+import { useCenteredActiveItem } from "@/hooks/useCenteredActiveItem";
 import type {
   jianpu_catalog,
   jianpu_material,
@@ -205,6 +206,7 @@ export function ScoreCalibration({
   const workbench_ref = useRef<HTMLElement>(null);
   const score_stage_ref = useRef<HTMLDivElement>(null);
   const score_content_ref = useRef<HTMLDivElement>(null);
+  const project_list_ref = useRef<HTMLDivElement>(null);
   const segment_options = useMemo(
     () => catalog?.materials.flatMap((material) =>
       material.segments.map((segment) => ({ material, segment }))) ?? [],
@@ -224,6 +226,15 @@ export function ScoreCalibration({
   }, [projects]);
   const project = projects.find((candidate) =>
     candidate.id === selected_project_id) ?? projects[0];
+  useCenteredActiveItem(
+    project_list_ref,
+    [
+      project?.id ?? "",
+      selected_segment_key,
+      String(segment_options.length),
+      String(is_segment_panel_collapsed),
+    ].join(":"),
+  );
 
   useEffect(() => {
     if (!project) {
@@ -1153,7 +1164,7 @@ export function ScoreCalibration({
           </header>
           {!is_segment_panel_collapsed && (
             <>
-              <div className="calibration-project-list">
+              <div className="calibration-project-list" ref={project_list_ref}>
                 {segment_options.length > 0
                   ? segment_options.map(({ material, segment }) => {
                     const project_id = get_material_project_id(material, segment);
