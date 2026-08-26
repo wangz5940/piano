@@ -7,7 +7,7 @@ import type {
   score_document_note,
   score_hand,
 } from "@/features/score";
-import { create_imported_fingering_annotation } from "@/features/score";
+import { create_imported_fingering_annotation } from "../score";
 
 import type {
   calibration_event_metadata,
@@ -104,6 +104,7 @@ export function parse_musicxml_to_score_document(
 
   parts.forEach((part, part_index) => {
     let divisions = 1;
+    let divisions_are_valid = true;
     let meter = first_meter;
     let page = 1;
     let system = 1;
@@ -141,7 +142,16 @@ export function parse_musicxml_to_score_document(
         }
         if (has_child(node, "attributes")) {
           const attribute_nodes = children(node, "attributes");
-          divisions = numeric_text(attribute_nodes, "divisions", divisions);
+          const divisions_text = text_value(attribute_nodes, "divisions")
+            .trim();
+          if (divisions_text) {
+            const next_divisions = Number(divisions_text);
+            divisions_are_valid =
+              Number.isFinite(next_divisions) && next_divisions > 0;
+            if (divisions_are_valid) {
+              divisions = next_divisions;
+            }
+          }
           const time_nodes = first_children(attribute_nodes, "time");
           if (time_nodes.length > 0) {
             meter = {
@@ -189,14 +199,16 @@ export function parse_musicxml_to_score_document(
           continue;
         }
         if (has_child(node, "backup")) {
-          cursor_quarters -=
-            numeric_text(children(node, "backup"), "duration", 0) / divisions;
+          cursor_quarters -= divisions_are_valid
+            ? numeric_text(children(node, "backup"), "duration", 0) / divisions
+            : 0;
           cursor_quarters = Math.max(0, cursor_quarters);
           continue;
         }
         if (has_child(node, "forward")) {
-          cursor_quarters +=
-            numeric_text(children(node, "forward"), "duration", 0) / divisions;
+          cursor_quarters += divisions_are_valid
+            ? numeric_text(children(node, "forward"), "duration", 0) / divisions
+            : 0;
           continue;
         }
         if (!has_child(node, "note")) {
@@ -207,7 +219,9 @@ export function parse_musicxml_to_score_document(
         const note_nodes = children(node, "note");
         const is_chord = note_nodes.some((candidate) => has_child(candidate, "chord"));
         const duration_quarters =
-          numeric_text(note_nodes, "duration", 0) / divisions ||
+          (divisions_are_valid
+            ? numeric_text(note_nodes, "duration", 0) / divisions
+            : 0) ||
           duration_from_type(text_value(note_nodes, "type"));
         const onset_quarters = is_chord ? previous_onset : cursor_quarters;
         const onset_beats = onset_quarters * meter.beat_unit / 4;

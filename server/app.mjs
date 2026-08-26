@@ -1305,7 +1305,7 @@ function sync_calibration_material_catalog(
   return changed;
 }
 
-function score_document_to_jianpu_score(document, segment_id) {
+export function score_document_to_jianpu_score(document, segment_id) {
   return {
     schema_version: "1.0",
     segment_id,
@@ -1665,7 +1665,7 @@ function unique_numbers(values) {
 function unique_fingerings(values) {
   const seen = new Set();
   return values.filter((value) => {
-    const key = `${value.note}:${value.finger}`;
+    const key = String(value.note);
     if (seen.has(key)) {
       return false;
     }

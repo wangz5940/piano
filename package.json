@@ -15,6 +15,8 @@
     "admin:create": "node server/admin.mjs",
     "backup": "node server/backup.mjs",
     "capture:jianpu": "node scripts/capture-jianpu.mjs",
+    "calibrate:beyer": "vite-node scripts/calibrate-beyer.ts",
+    "calibrate:beyer:write": "vite-node scripts/calibrate-beyer.ts --write",
     "sync:jianpu-imported": "node scripts/sync-imported-jianpu.mjs",
     "sync:jianpu-structured": "node scripts/sync-imported-structured-jianpu.mjs",
     "import:hymns:pptx": "node scripts/hymn-pptx/import.mjs",
