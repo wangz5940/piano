@@ -14,6 +14,7 @@ import {
   MapPin,
   Music2,
   Rows3,
+  ScanSearch,
   Trash2,
 } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -41,6 +42,7 @@ import {
 } from "@/features/jianpu/render";
 import { use_app_settings_store } from "@/store/useAppSettingsStore";
 import { use_auth_store } from "@/store/useAuthStore";
+import type { account_user } from "@/features/auth/types";
 import type {
   jianpu_catalog,
   jianpu_chapter,
@@ -53,16 +55,17 @@ import type {
 
 type reading_view = "jianpu" | "original";
 type render_state = "loading" | "ready" | "error";
-const jianpu_score_excerpt_size = 8;
 
 interface jianpu_library_props {
   initial_catalog?: jianpu_catalog;
+  user_override?: account_user | null;
 }
 
-export function JianpuLibrary({ initial_catalog }: jianpu_library_props) {
+export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library_props) {
   const { material_id: route_material_id, segment_id, chapter_id } = useParams();
   const navigate = useNavigate();
-  const user = use_auth_store((state) => state.user);
+  const stored_user = use_auth_store((state) => state.user);
+  const user = user_override === undefined ? stored_user : user_override ?? undefined;
   const [catalog, set_catalog] = useState(initial_catalog);
   const [load_error, set_load_error] = useState<string>();
   const [delete_message, set_delete_message] = useState<string>();
@@ -302,6 +305,9 @@ export function JianpuLibrary({ initial_catalog }: jianpu_library_props) {
                 ? () => handle_delete_segment(segment!)
                 : undefined}
               is_deleting={deleting_segment_id === segment!.id}
+              calibration_href={user?.role === "admin"
+                ? get_calibration_route(material.id, segment!.id)
+                : undefined}
               navigation={segment_navigation
                 ? {
                     previous_segment: segment_navigation.previous_segment,
@@ -505,6 +511,7 @@ function JianpuReader({
   on_delete,
   is_deleting = false,
   navigation,
+  calibration_href,
 }: {
   material: jianpu_material;
   segment: jianpu_segment;
@@ -513,6 +520,7 @@ function JianpuReader({
   on_delete?: () => void;
   is_deleting?: boolean;
   navigation?: jianpu_segment_navigation_props;
+  calibration_href?: string;
 }) {
   const [reading_view, set_reading_view] = useState<reading_view>("jianpu");
   const [score, set_score] = useState<jianpu_score>();
@@ -583,6 +591,12 @@ function JianpuReader({
             <FileMusic size={16} />
             原谱对照
           </Link>
+          {calibration_href && (
+            <Link to={calibration_href} className="jianpu-original-link">
+              <ScanSearch size={16} />
+              去校准
+            </Link>
+          )}
           {on_delete && (
             <button
               type="button"
@@ -648,21 +662,17 @@ function JianpuPageSliceReader({
   page_slices: jianpu_page_slice[];
 }) {
   const [expanded_slice_keys, set_expanded_slice_keys] = useState<Set<string>>(
-    () => get_initial_expanded_slice_keys(create_score_excerpt_slices(page_slices)),
-  );
-  const score_slices = useMemo(
-    () => create_score_excerpt_slices(page_slices),
-    [page_slices],
+    () => get_initial_expanded_slice_keys(page_slices),
   );
 
   useEffect(() => {
-    set_expanded_slice_keys(get_initial_expanded_slice_keys(score_slices));
-  }, [score.segment_id, score_slices]);
+    set_expanded_slice_keys(get_initial_expanded_slice_keys(page_slices));
+  }, [score.segment_id, page_slices]);
 
   return (
     <section className="jianpu-page-reader" aria-label="按小节组阅读简谱">
-      {score_slices.map((page_slice, index) => {
-        const previous_slice = score_slices[index - 1];
+      {page_slices.map((page_slice, index) => {
+        const previous_slice = page_slices[index - 1];
         const slice_key = get_page_slice_key(page_slice);
         const is_expanded = expanded_slice_keys.has(slice_key);
         const is_new_chapter = !previous_slice ||
@@ -737,35 +747,7 @@ function JianpuPageSliceReader({
   );
 }
 
-type jianpu_score_excerpt_slice = jianpu_page_slice;
-
-function create_score_excerpt_slices(
-  page_slices: jianpu_page_slice[],
-): jianpu_score_excerpt_slice[] {
-  return page_slices.flatMap((page_slice) => {
-    const slices: jianpu_score_excerpt_slice[] = [];
-    for (
-      let measure_start = page_slice.measure_start;
-      measure_start <= page_slice.measure_end;
-      measure_start += jianpu_score_excerpt_size
-    ) {
-      const measure_end = Math.min(
-        page_slice.measure_end,
-        measure_start + jianpu_score_excerpt_size - 1,
-      );
-      slices.push({
-        ...page_slice,
-        title: `${page_slice.title} · ${measure_start}-${measure_end}`,
-        text: page_slice.text,
-        measure_start,
-        measure_end,
-      });
-    }
-    return slices;
-  });
-}
-
-function get_initial_expanded_slice_keys(page_slices: jianpu_score_excerpt_slice[]): Set<string> {
+function get_initial_expanded_slice_keys(page_slices: jianpu_page_slice[]): Set<string> {
   const first_slice = page_slices[0];
   if (!first_slice) {
     return new Set();
@@ -924,16 +906,12 @@ function OriginalScorePanel({
   page_slices: jianpu_page_slice[];
 }) {
   const [expanded_slice_keys, set_expanded_slice_keys] = useState<Set<string>>(
-    () => get_initial_expanded_slice_keys(create_score_excerpt_slices(page_slices)),
-  );
-  const score_slices = useMemo(
-    () => create_score_excerpt_slices(page_slices),
-    [page_slices],
+    () => get_initial_expanded_slice_keys(page_slices),
   );
 
   useEffect(() => {
-    set_expanded_slice_keys(get_initial_expanded_slice_keys(score_slices));
-  }, [musicxml_url, score_slices]);
+    set_expanded_slice_keys(get_initial_expanded_slice_keys(page_slices));
+  }, [musicxml_url, page_slices]);
 
   return (
     <section className="jianpu-original-score" aria-label={`${title}原谱`}>
@@ -941,7 +919,7 @@ function OriginalScorePanel({
         <p className="section-kicker"><FileMusic size={15} /> 原谱对照</p>
       </header>
       <section className="jianpu-page-reader" aria-label="按小节组阅读原谱">
-        {score_slices.map((page_slice, index) => {
+        {page_slices.map((page_slice, index) => {
           const slice_key = get_page_slice_key(page_slice);
           const is_expanded = expanded_slice_keys.has(slice_key);
           return (
@@ -1068,6 +1046,10 @@ function get_jianpu_segment_navigation(
       ? material.segments[current_index + 1]
       : undefined,
   };
+}
+
+function get_calibration_route(material_id: material_id, segment_id: string): string {
+  return `/校准?segment=${encodeURIComponent(`${material_id}:${segment_id}`)}`;
 }
 
 function get_selected_chapter(

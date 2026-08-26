@@ -73,6 +73,16 @@ const catalog_fixture: material_catalog = {
   ],
 };
 
+const admin = {
+  id: "admin-material",
+  email: "admin@example.com",
+  display_name: "管理员",
+  role: "admin" as const,
+  status: "active" as const,
+  created_at: "2026-08-24T00:00:00.000Z",
+  updated_at: "2026-08-24T00:00:00.000Z",
+};
+
 describe("教材谱库", () => {
   it("显示两套教材和候选谱例的人工核对提示", () => {
     const markup = renderToStaticMarkup(
@@ -101,6 +111,28 @@ describe("教材谱库", () => {
     expect(markup).toContain("下一曲");
     expect(markup).toContain("已经是第一曲");
     expect(markup).toContain("已经是最后一曲");
+    expect(markup).not.toContain("去校准");
+  });
+
+  it("管理员可从曲谱详情直接进入对应校准台", () => {
+    const markup = renderToStaticMarkup(
+      <MemoryRouter initialEntries={["/教材/hanon/hanon.segment.001"]}>
+        <Routes>
+          <Route
+            path="/教材/:material_id/:segment_id"
+            element={(
+              <MaterialLibrary
+                initial_catalog={apply_material_fingering_annotations(catalog_fixture)}
+                user_override={admin}
+              />
+            )}
+          />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(markup).toContain("去校准");
+    expect(markup).toContain('href="/校准?segment=hanon%3Ahanon.segment.001"');
   });
 
   it("空教材目录展示可恢复的产品空态", () => {

@@ -113,6 +113,16 @@ const catalog_fixture: jianpu_catalog = {
   ],
 };
 
+const admin = {
+  id: "admin-jianpu",
+  email: "admin@example.com",
+  display_name: "管理员",
+  role: "admin" as const,
+  status: "active" as const,
+  created_at: "2026-08-24T00:00:00.000Z",
+  updated_at: "2026-08-24T00:00:00.000Z",
+};
+
 describe("简谱教材", () => {
   it("教材谱面使用统一 SVG 并且不把单手空位画成休止", () => {
     const score: jianpu_score = {
@@ -174,7 +184,24 @@ describe("简谱教材", () => {
     expect(markup).toContain("下一曲");
     expect(markup).toContain("已经是第一曲");
     expect(markup).toContain("已经是最后一曲");
+    expect(markup).not.toContain("去校准");
     expect(markup).not.toContain("左手休止");
+  });
+
+  it("管理员可从简谱曲谱直接进入对应校准台", () => {
+    const markup = renderToStaticMarkup(
+      <MemoryRouter initialEntries={["/简谱教材/beyer/beyer.segment.001"]}>
+        <Routes>
+          <Route
+            path="/简谱教材/:material_id/:segment_id"
+            element={<JianpuLibrary initial_catalog={catalog_fixture} user_override={admin} />}
+          />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(markup).toContain("去校准");
+    expect(markup).toContain('href="/校准?segment=beyer%3Abeyer.segment.001"');
   });
 
   it("按索引打开哈农片段时保留章节和双手信息", () => {
