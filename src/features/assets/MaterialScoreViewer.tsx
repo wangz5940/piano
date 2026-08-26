@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { ChevronDown, ChevronUp, ChevronsLeft, ChevronsRight, CircleAlert, FileMusic, Hand, Heart, LoaderCircle, MapPin, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, ChevronsLeft, ChevronsRight, CircleAlert, FileMusic, Hand, Heart, LoaderCircle, MapPin, ScanSearch, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import { use_app_settings_store } from "@/store/useAppSettingsStore";
 import {
@@ -25,10 +26,10 @@ interface material_score_viewer_props {
   on_delete_segment?: () => void;
   is_deleting?: boolean;
   navigation?: material_segment_navigation_props;
+  calibration_href?: string;
 }
 
 type render_state = "loading" | "ready" | "error";
-const material_score_excerpt_size = 8;
 
 export function MaterialScoreViewer({
   segment,
@@ -38,11 +39,9 @@ export function MaterialScoreViewer({
   on_delete_segment,
   is_deleting = false,
   navigation,
+  calibration_href,
 }: material_score_viewer_props) {
   const [is_expanded, set_is_expanded] = useState(true);
-  const [expanded_range_keys, set_expanded_range_keys] = useState<Set<string>>(
-    () => new Set([get_measure_range_key(create_measure_ranges(segment.measure_count)[0])]),
-  );
   const [favorite_entries, set_favorite_entries] = useState(load_score_favorites);
   const show_fingerings = use_app_settings_store((state) => state.show_fingerings);
   const set_show_fingerings = use_app_settings_store((state) => state.set_show_fingerings);
@@ -53,12 +52,6 @@ export function MaterialScoreViewer({
   useEffect(() => {
     save_score_favorites(favorite_entries);
   }, [favorite_entries]);
-
-  useEffect(() => {
-    set_expanded_range_keys(new Set([get_measure_range_key(create_measure_ranges(segment.measure_count)[0])]));
-  }, [segment.id, segment.measure_count]);
-
-  const measure_ranges = create_measure_ranges(segment.measure_count);
 
   return (
     <section className="material-score-viewer" aria-label={`${display_title}教材对照谱`}>
@@ -113,6 +106,12 @@ export function MaterialScoreViewer({
             <Hand size={14} />
             {show_fingerings ? "隐藏指法" : "显示指法"}
           </button>
+          {calibration_href && (
+            <Link to={calibration_href} className="score-collapse-toggle">
+              <ScanSearch size={15} />
+              去校准
+            </Link>
+          )}
           {on_delete_segment && (
             <button
               type="button"
@@ -166,47 +165,16 @@ export function MaterialScoreViewer({
           )}
 
           <div className="material-score-canvas">
-            {measure_ranges.map((range, index) => {
-              const range_key = get_measure_range_key(range);
-              const is_range_expanded = expanded_range_keys.has(range_key);
-              return (
-                <article key={range_key} className="material-score-range-card">
-                  <header className="material-score-range-head">
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <div>
-                      <p>原谱片段</p>
-                      <h3>第 {range.start}-{range.end} 小节</h3>
-                    </div>
-                    <small>{range.end - range.start + 1} 小节</small>
-                  </header>
-                  {is_range_expanded ? (
-                    <MaterialScoreSlice
-                      segment={segment}
-                      show_fingerings={show_fingerings}
-                      measure_start={range.start}
-                      measure_end={range.end}
-                    />
-                  ) : (
-                    <button
-                      type="button"
-                      className="jianpu-page-score-toggle"
-                      onClick={() => set_expanded_range_keys((current) => {
-                        const next = new Set(current);
-                        next.add(range_key);
-                        return next;
-                      })}
-                    >
-                      展开本段原谱
-                      <ChevronsRight size={16} />
-                    </button>
-                  )}
-                </article>
-              );
-            })}
+            <MaterialScoreSlice
+              segment={segment}
+              show_fingerings={show_fingerings}
+              measure_start={1}
+              measure_end={segment.measure_count}
+            />
           </div>
 
           <p className="material-score-provenance">
-            分段加载原谱 · 对照方式：{segment.mapping_confidence === "source_page" ? "按源页关联" : "练习编号已确认"}
+            自适应原谱排版 · 对照方式：{segment.mapping_confidence === "source_page" ? "按源页关联" : "练习编号已确认"}
           </p>
         </>
       )}
@@ -308,26 +276,6 @@ function MaterialScoreSlice({
       />
     </ScoreZoomSurface>
   );
-}
-
-interface measure_range {
-  start: number;
-  end: number;
-}
-
-function create_measure_ranges(measure_count: number): measure_range[] {
-  const ranges: measure_range[] = [];
-  for (let start = 1; start <= measure_count; start += material_score_excerpt_size) {
-    ranges.push({
-      start,
-      end: Math.min(measure_count, start + material_score_excerpt_size - 1),
-    });
-  }
-  return ranges.length > 0 ? ranges : [{ start: 1, end: 1 }];
-}
-
-function get_measure_range_key(range: measure_range): string {
-  return `${range.start}-${range.end}`;
 }
 
 function get_material_favorite_id(segment: material_segment): string {

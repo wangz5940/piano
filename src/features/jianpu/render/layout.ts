@@ -23,18 +23,17 @@ const fingering_circle_radius = 7.5;
 const note_visual_center_offset = 6;
 const minimum_fingering_octave_dot_gap = 7;
 const maximum_hold_segment_width = 24;
-const maximum_measures_per_system = 4;
 const minimum_measure_width_by_mode: Record<jianpu_layout_options["mode"], number> = {
   practice: 158,
-  reading: 132,
+  reading: 104,
 };
 const event_density_width_by_mode: Record<jianpu_layout_options["mode"], number> = {
   practice: 21,
-  reading: 17,
+  reading: 13,
 };
 const beat_width_by_mode: Record<jianpu_layout_options["mode"], number> = {
   practice: 36,
-  reading: 29,
+  reading: 25,
 };
 
 interface measure_system_group {
@@ -88,6 +87,10 @@ function group_measures_into_systems(
     return [];
   }
   const systems: measure_system_group[] = [];
+  const maximum_measures_per_system = get_maximum_measures_per_system(
+    available_width,
+    mode,
+  );
   let current: jianpu_render_measure[] = [];
   let current_target_width = 0;
 
@@ -126,6 +129,25 @@ function group_measures_into_systems(
   }
   flush(false);
   return systems;
+}
+
+function get_maximum_measures_per_system(
+  available_width: number,
+  mode: jianpu_layout_options["mode"],
+): number {
+  if (mode === "practice") {
+    return 4;
+  }
+  if (available_width >= 1120) {
+    return 8;
+  }
+  if (available_width >= 960) {
+    return 7;
+  }
+  if (available_width >= 720) {
+    return 6;
+  }
+  return Math.max(1, Math.floor(available_width / minimum_measure_width_by_mode.reading));
 }
 
 function layout_system(

@@ -7036,7 +7036,8 @@ a {
 .score-zoom-content {
   display: grid;
   gap: 10px;
-  min-width: 980px;
+  width: 100%;
+  min-width: min(760px, 100%);
   zoom: var(--score-zoom);
 }
 
@@ -7304,10 +7305,6 @@ a {
 
   .jianpu-original-link {
     margin-top: 12px;
-  }
-
-  .score-zoom-content {
-    min-width: 760px;
   }
 
   .jianpu-teaching-copy,
