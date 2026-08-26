@@ -393,19 +393,6 @@ export function validate_notation_sync(
       code: "notation_invalid_time_signature",
       message: `拍号 ${project.document.time_signature} 无法映射到简谱和五线谱。`,
     });
-  } else {
-    for (const measure of project.document.measures) {
-      if (
-        measure.meter.beats !== meter.beats ||
-        measure.meter.beat_unit !== meter.beat_unit
-      ) {
-        discrepancies.push({
-          code: "notation_time_signature_mismatch",
-          message: `${measure.number} 小节拍号与全曲拍号 ${project.document.time_signature} 不一致。`,
-          measure_id: measure.id,
-        });
-      }
-    }
   }
   if (!project.document.key_signature.trim()) {
     discrepancies.push({

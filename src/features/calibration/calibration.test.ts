@@ -155,6 +155,38 @@ describe("通用乐谱校准领域", () => {
       metadata.staff >= 1 &&
       metadata.clef !== "unknown")).toBe(true);
   });
+
+  it("Audiveris 输出 divisions=0 时按音符类型回退为有限时值", () => {
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+      <score-partwise version="4.0">
+        <part-list><score-part id="P1"><part-name>Piano</part-name></score-part></part-list>
+        <part id="P1">
+          <measure number="1">
+            <attributes>
+              <divisions>0</divisions>
+              <time><beats>4</beats><beat-type>4</beat-type></time>
+              <clef><sign>G</sign><line>2</line></clef>
+            </attributes>
+            <note>
+              <pitch><step>G</step><octave>4</octave></pitch>
+              <duration>1</duration>
+              <voice>1</voice>
+              <type>whole</type>
+            </note>
+          </measure>
+        </part>
+      </score-partwise>`;
+    const imported = parse_musicxml_to_score_document(xml, work, {
+      id: "beyer-divisions-zero",
+    });
+    const events = imported.document.measures.flatMap((measure) =>
+      measure.events);
+
+    expect(events).toHaveLength(1);
+    expect(events.every((event) =>
+      Number.isFinite(event.duration_beats))).toBe(true);
+    expect(events.every((event) => event.duration_beats === 4)).toBe(true);
+  });
 });
 
 const musicxml_fixture = `<?xml version="1.0" encoding="UTF-8"?>
