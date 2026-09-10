@@ -1,0 +1,36 @@
+services:
+  piano:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: piano-app
+    restart: unless-stopped
+    ports:
+      - "4173:4173"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=4173
+      - STATIC_DIR=dist
+      - COOKIE_SECURE=0
+      - TRUST_PROXY=0
+      - RATE_LIMIT_PER_MINUTE=180
+      - AUTH_RATE_LIMIT=10
+      - MAX_CONNECTIONS=1000
+      - PANIO_DATABASE_PATH=data/panio.sqlite
+      - PANIO_UPLOADS_DIR=data/content
+      - PANIO_BACKUP_DIR=backups
+      - PANIO_BACKUP_RETENTION=14
+    volumes:
+      - piano-data:/app/data
+      - piano-backups:/app/backups
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:4173/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  piano-data:
+  piano-backups:
