@@ -3,7 +3,6 @@ import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
 import {
-  hymn_repertoire_entries,
   imported_jianpu_entries,
   imported_teaching_entries,
   repertoire_entries,
@@ -22,14 +21,6 @@ describe("热门曲目库", () => {
       entry.score.steps.length > 0 &&
       entry.rights_note.includes("整首结构化教学谱") &&
       entry.score.source.reference_image?.url.includes("/materials/jianpu-imported/"))).toBe(true);
-    expect(hymn_repertoire_entries.length).toBeGreaterThanOrEqual(12);
-    expect(hymn_repertoire_entries.every((entry) =>
-      entry.rights_note.includes("PPTX OOXML") &&
-      entry.score.source.kind === "reference" &&
-      entry.score.source.status === "needs_review" &&
-      entry.score.source.reference_image === undefined &&
-      entry.score.source.content_sha256?.length === 64 &&
-      entry.score.steps.length === 0)).toBe(true);
     const kd_searching = imported_teaching_entries.find((entry) => entry.title.includes("KD Searching"));
     expect(kd_searching?.score.measure_beats).toHaveLength(24);
     expect(kd_searching?.score.measure_beats?.[18]).toBe(3);
@@ -54,13 +45,13 @@ describe("热门曲目库", () => {
     );
 
     expect(markup).toContain("公版教学谱");
-    expect(markup).toContain("诗歌练习");
     expect(markup).toContain("授权教学版");
     expect(markup).toContain("《致爱丽丝》主题旋律骨架");
-    expect(markup).toContain("《耶稣爱我》");
-    expect(markup).toContain("《信靠耶稣何其甘甜》");
-    expect(markup).toContain("<code>712首-文字</code> 的 SimpMusic PPTX");
-    expect(markup).toContain("PPTX OOXML 来源已接入");
+    expect(markup).not.toContain("诗歌练习");
+    expect(markup).not.toContain("《耶稣爱我》");
+    expect(markup).not.toContain("《信靠耶稣何其甘甜》");
+    expect(markup).not.toContain("712首-文字");
+    expect(markup).not.toContain("PPTX OOXML 来源已接入");
     expect(markup).not.toContain("本地 <code>.trae/歌谱</code> 的 JPG 原谱");
     expect(markup).toContain("《KD Searching》 · 整首");
     expect(markup).toContain("《孤勇者》");
@@ -72,6 +63,10 @@ describe("热门曲目库", () => {
     expect(markup).toContain("我的收藏");
     expect(markup).toContain("一键收起");
     expect(markup).toContain("一键展开");
+    expect(markup.match(/aria-expanded="false"/g)).toHaveLength(
+      repertoire_entries.length + imported_teaching_entries.length,
+    );
+    expect(markup).not.toContain("本曲学什么");
     expect(markup).toContain("《欢乐颂》主题");
     expect(markup).toContain("《KD Searching》 · 整首");
     expect(markup).toContain('href="#repertoire-ode-to-joy"');

@@ -19,7 +19,6 @@ import {
   serialize_session_cookie,
   verify_password,
 } from "./auth.mjs";
-import { score_publish_error } from "./database.mjs";
 import {
   create_rate_limiter,
   is_safe_request_target,
@@ -34,7 +33,6 @@ import {
   validate_content_version,
   validate_curriculum_node_move,
   validate_curriculum_revision_create,
-  validate_hymn_candidate_create,
   validate_lesson_score_binding,
   validate_login,
   validate_practice_session,
@@ -43,7 +41,6 @@ import {
   validate_registration,
   validate_role_update,
   validate_score_draft_create,
-  validate_score_draft_save,
   validate_score_calibration_save,
   validate_score_event_patch,
   validate_snapshot,
@@ -815,38 +812,6 @@ async function handle_api_request(context) {
     return;
   }
 
-  if (pathname === "/api/v1/admin/hymn-candidates" && method === "POST") {
-    require_admin(user);
-    const input = validate_hymn_candidate_create(
-      await read_json_body(request, 16 * 1_024 * 1_024),
-    );
-    const candidate = repository.create_hymn_candidate(user.id, input);
-    if (!candidate) {
-      send_error(
-        response,
-        409,
-        "score_candidate_exists",
-        "同 ID 或 slug 的诗歌候选已经存在。",
-        request_id,
-      );
-      return;
-    }
-    repository.record_audit_event({
-      actor_user_id: user.id,
-      action: "admin.hymn_candidate.create",
-      target_type: "score_draft",
-      target_id: candidate.draft.id,
-      details: { score_id: candidate.score.id },
-    });
-    send_json(response, 201, {
-      candidate: {
-        score: serialize_score(candidate.score),
-        draft: serialize_score_draft(candidate.draft),
-      },
-    });
-    return;
-  }
-
   if (pathname === "/api/v1/admin/content" && method === "POST") {
     require_admin(user);
     const input = validate_content_create(await read_json_body(request));
@@ -917,58 +882,12 @@ async function handle_api_request(context) {
     return;
   }
 
-  const save_score_draft_match = pathname.match(
-    /^\/api\/v1\/admin\/score-drafts\/([A-Za-z0-9._:-]+)$/,
-  );
-  if (save_score_draft_match && method === "PATCH") {
-    require_admin(user);
-    const input = validate_score_draft_save(
-      await read_json_body(request, 16 * 1_024 * 1_024),
-    );
-    let draft;
-    try {
-      draft = repository.save_hymn_score_draft(
-        user.id,
-        save_score_draft_match[1],
-        input,
-      );
-    } catch (error) {
-      if (error instanceof Error) {
-        send_error(response, 400, "invalid_score_edit", error.message, request_id);
-        return;
-      }
-      throw error;
-    }
-    if (!draft) {
-      send_error(response, 404, "not_found", "诗歌乐谱草稿不存在。", request_id);
-      return;
-    }
-    repository.record_audit_event({
-      actor_user_id: user.id,
-      action: "admin.hymn_score_draft.save",
-      target_type: "score_draft",
-      target_id: draft.id,
-      details: { score_id: draft.score_id },
-    });
-    send_json(response, 200, { draft: serialize_score_draft(draft) });
-    return;
-  }
-
   const publish_score_draft_match = pathname.match(
     /^\/api\/v1\/admin\/score-drafts\/([A-Za-z0-9._:-]+)\/publish$/,
   );
   if (publish_score_draft_match && method === "POST") {
     require_admin(user);
-    let version;
-    try {
-      version = repository.publish_score_draft(user.id, publish_score_draft_match[1]);
-    } catch (error) {
-      if (error instanceof score_publish_error) {
-        send_error(response, 409, error.code, error.message, request_id);
-        return;
-      }
-      throw error;
-    }
+    const version = repository.publish_score_draft(user.id, publish_score_draft_match[1]);
     if (!version) {
       send_error(response, 404, "not_found", "乐谱草稿不存在。", request_id);
       return;
@@ -1933,7 +1852,6 @@ function serialize_score_version(version) {
     version_number: version.version_number,
     source_sha256: version.source_sha256,
     document: version.document,
-    hymn_review: version.hymn_review,
     created_at: version.created_at,
     published_at: version.published_at,
   };
@@ -1945,7 +1863,6 @@ function serialize_score_draft(draft) {
     score_id: draft.score_id,
     base_version_id: draft.base_version_id,
     document: draft.document,
-    hymn_review: draft.hymn_review,
     updated_at: draft.updated_at,
   };
 }

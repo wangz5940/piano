@@ -6,15 +6,6 @@ import { DatabaseSync } from "node:sqlite";
 import { migrate_score_document } from "../src/features/score/migration-runtime.mjs";
 import { validate_score_document } from "./validation.mjs";
 
-export class score_publish_error extends Error {
-  constructor(reasons) {
-    super(reasons.join("；"));
-    this.name = "score_publish_error";
-    this.code = "score_publish_blocked";
-    this.reasons = reasons;
-  }
-}
-
 const empty_progress = Object.freeze({
   schema_version: 2,
   current_phase_id: "hand-foundation",
@@ -1134,62 +1125,6 @@ function create_repository(database) {
       `).get(score_id, include_drafts ? 1 : 0);
       return row ? hydrate_score(database, row) : undefined;
     },
-    create_hymn_candidate(user_id, input) {
-      const conflict = database.prepare(`
-        SELECT 1 AS found FROM scores WHERE id = ? OR slug = ?
-      `).get(input.score.id, input.score.slug);
-      if (conflict) {
-        return undefined;
-      }
-      const now = new Date().toISOString();
-      const draft_id = randomUUID();
-      const document = prepare_hymn_candidate_document(input.document);
-      validate_score_document(document);
-      const review = create_hymn_review_record(input.review, document);
-
-      database.exec("BEGIN IMMEDIATE");
-      try {
-        database.prepare(`
-          INSERT INTO scores(
-            id, slug, title, status, metadata_json, current_version_id,
-            created_by, created_at, updated_at
-          ) VALUES (?, ?, ?, 'draft', ?, NULL, ?, ?, ?)
-        `).run(
-          input.score.id,
-          input.score.slug,
-          input.score.title,
-          JSON.stringify({
-            kind: "hymn",
-            number: document.number,
-            source_id: document.provenance.source_id,
-          }),
-          user_id,
-          now,
-          now,
-        );
-        database.prepare(`
-          INSERT INTO score_drafts(
-            id, score_id, base_version_id, document_json, document_schema_version,
-            hymn_review_json, updated_by, updated_at
-          ) VALUES (?, ?, NULL, ?, 2, ?, ?, ?)
-        `).run(
-          draft_id,
-          input.score.id,
-          JSON.stringify(document),
-          JSON.stringify(review),
-          user_id,
-          now,
-        );
-        database.exec("COMMIT");
-      } catch (error) {
-        database.exec("ROLLBACK");
-        throw error;
-      }
-      return {
-        score: this.get_score(input.score.id, true),
-        draft: this.get_score_draft(draft_id),
-      };
-    },
     create_score_draft(user_id, score_id, base_version_id) {
       const score = this.get_score(score_id, true);
       if (!score) {
@@ -1215,16 +1150,13 @@ function create_repository(database) {
       database.prepare(`
         INSERT INTO score_drafts(
           id, score_id, base_version_id, document_json, document_schema_version,
-          hymn_review_json, updated_by, updated_at
-        ) VALUES (?, ?, ?, ?, 2, ?, ?, ?)
+          updated_by, updated_at
+        ) VALUES (?, ?, ?, ?, 2, ?, ?)
       `).run(
         id,
         score_id,
         base_version.id,
         JSON.stringify(document),
-        base_version.hymn_review
-          ? JSON.stringify(prepare_hymn_review_draft(base_version.hymn_review, document))
-          : null,
         user_id,
         now,
       );
@@ -1267,70 +1199,6 @@ function create_repository(database) {
       );
       return this.get_score_draft(draft_id);
     },
-    save_hymn_score_draft(user_id, draft_id, input) {
-      const draft = this.get_score_draft(draft_id);
-      if (!draft || !draft.hymn_review) {
-        return undefined;
-      }
-      const now = new Date().toISOString();
-      const document = prepare_saved_hymn_document(
-        draft,
-        input.document,
-        input.review.review_state,
-        user_id,
-        now,
-      );
-      validate_score_document(document);
-      const review = update_hymn_review_record(
-        draft.hymn_review,
-        input.review,
-        document,
-      );
-
-      database.exec("BEGIN IMMEDIATE");
-      try {
-        database.prepare(`
-          UPDATE score_drafts
-          SET document_json = ?, document_schema_version = 2,
-              hymn_review_json = ?, updated_by = ?, updated_at = ?
-          WHERE id = ?
-        `).run(
-          JSON.stringify(document),
-          JSON.stringify(review),
-          user_id,
-          now,
-          draft_id,
-        );
-        database.prepare(`
-          INSERT INTO score_edit_events(
-            id, draft_id, score_version_id, actor_user_id, command_json, created_at
-          ) VALUES (?, ?, NULL, ?, ?, ?)
-        `).run(
-          randomUUID(),
-          draft_id,
-          user_id,
-          JSON.stringify({
-            type: "replace_document",
-            fields: [
-              "pitch",
-              "duration",
-              "hand",
-              "lyrics",
-              "fingering",
-              "hand_position",
-              "chord",
-            ],
-            review_state: review.review_state,
-          }),
-          now,
-        );
-        database.exec("COMMIT");
-      } catch (error) {
-        database.exec("ROLLBACK");
-        throw error;
-      }
-      return this.get_score_draft(draft_id);
-    },
     publish_score_draft(user_id, draft_id) {
       const draft = this.get_score_draft(draft_id);
       if (!draft) {
@@ -1343,31 +1211,24 @@ function create_repository(database) {
       const version_number = this.get_next_score_version_number(draft.score_id);
       const id = randomUUID();
       const now = new Date().toISOString();
-      if (draft.hymn_review) {
-        assert_hymn_publishable(draft.document, draft.hymn_review);
-      }
       const document = prepare_score_document_for_publish(draft.document, user_id, now);
       validate_score_document(document, { for_publish: true });
       const document_json = JSON.stringify(document);
       const source_sha256 = createHash("sha256").update(document_json).digest("hex");
-      const published_review = draft.hymn_review
-        ? { ...draft.hymn_review, review_state: "published" }
-        : undefined;
       database.exec("BEGIN IMMEDIATE");
       try {
         database.prepare(`
           INSERT INTO score_versions(
             id, score_id, version_number, source_sha256, document_json,
-            document_schema_version, hymn_review_json,
+            document_schema_version,
             musicxml_path, practice_data_path, created_by, created_at, published_at
-          ) VALUES (?, ?, ?, ?, ?, 2, ?, NULL, NULL, ?, ?, ?)
+          ) VALUES (?, ?, ?, ?, ?, 2, NULL, NULL, ?, ?, ?)
         `).run(
           id,
           draft.score_id,
           version_number,
           source_sha256,
           document_json,
-          published_review ? JSON.stringify(published_review) : null,
           user_id,
           now,
           now,
@@ -2059,9 +1920,6 @@ function normalize_score_version(row) {
     version_number: Number(row.version_number),
     source_sha256: row.source_sha256,
     document: normalize_persisted_score_document(row, false),
-    hymn_review: row.hymn_review_json
-      ? parse_json(row.hymn_review_json, undefined)
-      : undefined,
     musicxml_path: row.musicxml_path ?? undefined,
     practice_data_path: row.practice_data_path ?? undefined,
     created_by: row.created_by ?? undefined,
@@ -2076,9 +1934,6 @@ function normalize_score_draft(row) {
     score_id: row.score_id,
     base_version_id: row.base_version_id ?? undefined,
     document: normalize_persisted_score_document(row, true),
-    hymn_review: row.hymn_review_json
-      ? parse_json(row.hymn_review_json, undefined)
-      : undefined,
     updated_by: row.updated_by ?? undefined,
     updated_at: row.updated_at,
   };
@@ -2114,234 +1969,6 @@ function prepare_score_document_draft(document) {
     note: "Draft created from an immutable score version",
   };
   return next_document;
-}
-
-function prepare_hymn_candidate_document(document) {
-  const next_document = structuredClone(document);
-  next_document.status = "needs_review";
-  next_document.review = {
-    reviewed_by: null,
-    reviewed_at: null,
-    published_by: null,
-    published_at: null,
-    note: next_document.review?.note ?? "Imported hymn candidate requires review",
-  };
-  return next_document;
-}
-
-function prepare_saved_hymn_document(draft, document, review_state, user_id, now) {
-  const next_document = structuredClone(document);
-  if (next_document.id !== draft.document.id) {
-    throw new Error("不能修改乐谱草稿 ID");
-  }
-  next_document.provenance = structuredClone(draft.document.provenance);
-  next_document.status = review_state === "reviewed" ? "reviewed" : "needs_review";
-  next_document.review = {
-    reviewed_by: review_state === "reviewed" ? user_id : null,
-    reviewed_at: review_state === "reviewed" ? now : null,
-    published_by: null,
-    published_at: null,
-    note: review_state === "reviewed"
-      ? "Hymn source and normalized preview reviewed by an administrator"
-      : "Hymn draft changed by an administrator",
-  };
-  return next_document;
-}
-
-function create_hymn_review_record(review, document) {
-  const slides = review.slides.map((slide) => ({
-    ...structuredClone(slide),
-    source_svg_sha256: hash_text(slide.source_svg),
-    normalized_svg_sha256: hash_text(slide.normalized_svg),
-  }));
-  return complete_hymn_review_hashes({
-    review_state: review.review_state,
-    font_config_version: review.font_config_version,
-    slides,
-    issues: structuredClone(review.issues),
-  }, document);
-}
-
-function prepare_hymn_review_draft(review, document) {
-  return complete_hymn_review_hashes({
-    ...structuredClone(review),
-    review_state: "needs_review",
-  }, document);
-}
-
-function update_hymn_review_record(current, input, document) {
-  const normalized_by_slide = new Map(
-    input.normalized_slides.map((slide) => [slide.slide_number, slide.svg]),
-  );
-  if (
-    normalized_by_slide.size !== current.slides.length ||
-    current.slides.some((slide) => !normalized_by_slide.has(slide.slide_number))
-  ) {
-    throw new Error("规范教学预览必须与来源幻灯片一一对应");
-  }
-  const issues_by_id = new Map(input.issues.map((issue) => [issue.id, issue]));
-  if (
-    issues_by_id.size !== current.issues.length ||
-    current.issues.some((issue) => !issues_by_id.has(issue.id))
-  ) {
-    throw new Error("问题清单只能更新状态，不能删除或替换导入问题");
-  }
-  const issues = current.issues.map((issue) => {
-    const next_issue = issues_by_id.get(issue.id);
-    if (
-      next_issue.code !== issue.code ||
-      next_issue.kind !== issue.kind ||
-      next_issue.severity !== issue.severity
-    ) {
-      throw new Error("问题清单的代码、类型和严重度不可修改");
-    }
-    return {
-      ...structuredClone(issue),
-      status: next_issue.status,
-      message: next_issue.message,
-    };
-  });
-  const slides = current.slides.map((slide) => {
-    const normalized_svg = normalized_by_slide.get(slide.slide_number);
-    return {
-      ...structuredClone(slide),
-      normalized_svg,
-      normalized_svg_sha256: hash_text(normalized_svg),
-    };
-  });
-  return complete_hymn_review_hashes({
-    ...structuredClone(current),
-    review_state: input.review_state,
-    slides,
-    issues,
-  }, document);
-}
-
-function complete_hymn_review_hashes(review, document) {
-  const document_sha256 = hash_json(document);
-  const normalized_hashes = review.slides.map((slide) => ({
-    slide_number: slide.slide_number,
-    sha256: slide.normalized_svg_sha256,
-  }));
-  return {
-    ...review,
-    document_sha256,
-    derived_hash: hash_json({
-      document_sha256,
-      normalized_slides: normalized_hashes,
-    }),
-  };
-}
-
-function assert_hymn_publishable(document, review) {
-  const reasons = [];
-  if (review.review_state !== "reviewed") {
-    reasons.push("诗歌尚未完成审核");
-  }
-  if (
-    review.issues.some((issue) =>
-      issue.status === "unresolved" && issue.kind === "unknown_glyph")
-  ) {
-    reasons.push("未知字形仍未处理");
-  }
-  if (
-    review.issues.some((issue) =>
-      issue.status === "unresolved" && issue.kind === "structural")
-  ) {
-    reasons.push("结构问题仍未处理");
-  }
-  if (review.font_config_version !== document.provenance.font_config_version) {
-    reasons.push("字体配置版本与 ScoreDocument 不一致");
-  }
-
-  const known_refs = new Set(
-    review.slides.flatMap((slide) => slide.source_refs).map(source_ref_key),
-  );
-  const required_refs = collect_hymn_document_source_refs(document, reasons);
-  if (required_refs.some((reference) => !known_refs.has(source_ref_key(reference)))) {
-    reasons.push("ScoreDocument 包含不存在的来源引用");
-  }
-
-  if (hash_json(document) !== review.document_sha256) {
-    reasons.push("ScoreDocument 与派生产物文档哈希不一致");
-  }
-  for (const slide of review.slides) {
-    if (hash_text(slide.source_svg) !== slide.source_svg_sha256) {
-      reasons.push(`第 ${slide.slide_number} 张来源 SVG 哈希不一致`);
-    }
-    if (hash_text(slide.normalized_svg) !== slide.normalized_svg_sha256) {
-      reasons.push(`第 ${slide.slide_number} 张规范 SVG 哈希不一致`);
-    }
-  }
-  const expected_derived_hash = hash_json({
-    document_sha256: review.document_sha256,
-    normalized_slides: review.slides.map((slide) => ({
-      slide_number: slide.slide_number,
-      sha256: slide.normalized_svg_sha256,
-    })),
-  });
-  if (expected_derived_hash !== review.derived_hash) {
-    reasons.push("规范教学派生产物哈希不一致");
-  }
-  if (reasons.length > 0) {
-    throw new score_publish_error([...new Set(reasons)]);
-  }
-}
-
-function collect_hymn_document_source_refs(document, reasons) {
-  const refs = [...as_array(document.provenance?.references)];
-  if (refs.length === 0) {
-    reasons.push("PPTX 乐谱缺少来源引用");
-  }
-  for (const measure of as_array(document.measures)) {
-    for (const event of as_array(measure.events)) {
-      const event_refs = as_array(event.source_refs);
-      if (event_refs.length === 0) {
-        reasons.push(`事件 ${event.id} 缺少来源引用`);
-      }
-      refs.push(...event_refs);
-      for (const note of as_array(event.notes)) {
-        const note_refs = as_array(note.source_refs);
-        if (note_refs.length === 0) {
-          reasons.push(`音符 ${note.id} 缺少来源引用`);
-        }
-        refs.push(...note_refs, ...as_array(note.fingering?.source_refs));
-      }
-      refs.push(...as_array(event.chord_annotation?.source_refs));
-    }
-  }
-  for (const lyric of as_array(document.lyrics)) {
-    const lyric_refs = as_array(lyric.annotation?.source_refs);
-    if (lyric_refs.length === 0) {
-      reasons.push(`歌词 ${lyric.id} 缺少来源引用`);
-    }
-    refs.push(...lyric_refs);
-  }
-  for (const position of as_array(document.hand_positions)) {
-    const position_refs = as_array(position.annotation?.source_refs);
-    if (position_refs.length === 0) {
-      reasons.push(`手位 ${position.id} 缺少来源引用`);
-    }
-    refs.push(...position_refs);
-  }
-  return refs;
-}
-
-function source_ref_key(reference) {
-  return [
-    reference.slide_number,
-    reference.shape_id,
-    reference.paragraph_index ?? "",
-    reference.run_index ?? "",
-  ].join(":");
-}
-
-function hash_json(value) {
-  return hash_text(JSON.stringify(value));
-}
-
-function hash_text(value) {
-  return createHash("sha256").update(value).digest("hex");
 }
 
 function prepare_score_document_for_publish(document, user_id, now) {

@@ -1810,7 +1810,6 @@ a {
 }
 
 .calibration-header-actions,
-.calibration-import-bar,
 .calibration-score-toolbar,
 .calibration-page-nav,
 .calibration-preview-tabs {
@@ -1896,7 +1895,7 @@ a {
 
 .calibration-shell {
   display: grid;
-  grid-template-columns: 190px minmax(0, 1fr);
+  grid-template-columns: 150px 210px minmax(0, 1fr);
   height: clamp(680px, calc(100vh - 118px), 1180px);
   min-height: 0;
   overflow: hidden;
@@ -1905,9 +1904,10 @@ a {
 }
 
 .calibration-shell.is-segment-panel-collapsed {
-  grid-template-columns: 42px minmax(0, 1fr);
+  grid-template-columns: 150px 42px minmax(0, 1fr);
 }
 
+.calibration-tutorials,
 .calibration-projects {
   display: flex;
   min-width: 0;
@@ -1917,10 +1917,15 @@ a {
   background: #f1eee7;
 }
 
+.calibration-tutorials {
+  background: #e8ede5;
+}
+
 .calibration-projects.is-collapsed {
   align-items: stretch;
 }
 
+.calibration-tutorials > header,
 .calibration-projects > header,
 .calibration-issues > header,
 .calibration-event-editor > header {
@@ -1972,11 +1977,13 @@ a {
   writing-mode: vertical-rl;
 }
 
+.calibration-tutorials > header strong,
 .calibration-projects > header strong,
 .calibration-issues > header strong {
   font-family: ui-monospace, "SF Mono", monospace;
 }
 
+.calibration-tutorial-list,
 .calibration-project-list {
   display: grid;
   align-content: start;
@@ -1988,6 +1995,7 @@ a {
   scrollbar-gutter: stable;
 }
 
+.calibration-tutorial-list button,
 .calibration-project-list button {
   display: grid;
   gap: 4px;
@@ -1998,6 +2006,36 @@ a {
   border-bottom: 1px solid #ddd7cc;
   background: transparent;
   text-align: left;
+}
+
+.calibration-tutorial-list button:hover,
+.calibration-tutorial-list button.is-selected {
+  color: #fffdf7;
+  background: #285c4c;
+}
+
+.calibration-tutorial-list button.is-selected {
+  box-shadow: inset 3px 0 #d9863d;
+}
+
+.calibration-tutorial-list strong,
+.calibration-tutorial-list span {
+  display: block;
+}
+
+.calibration-tutorial-list strong {
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.calibration-tutorial-list span {
+  color: #778079;
+  font-size: 9px;
+}
+
+.calibration-tutorial-list button:hover span,
+.calibration-tutorial-list button.is-selected span {
+  color: #dce8df;
 }
 
 .calibration-project-list button.is-selected {
@@ -2048,25 +2086,6 @@ a {
   overflow: hidden;
 }
 
-.calibration-import-bar {
-  min-height: 48px;
-  gap: 7px;
-  padding: 7px 10px;
-  overflow-x: auto;
-  border-bottom: 1px solid #d5cec2;
-  background: #f7f4ed;
-}
-
-.calibration-import-bar > span {
-  min-width: 0;
-  margin-left: auto;
-  overflow: hidden;
-  color: #75776f;
-  font-size: 9px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .calibration-file-button {
   display: inline-flex;
   min-height: 31px;
@@ -2099,63 +2118,34 @@ a {
 
 .calibration-workbench {
   display: grid;
-  grid-template-columns: minmax(270px, 0.9fr) minmax(360px, 1.25fr) 310px;
+  grid-template-columns: minmax(420px, 1fr) 310px;
   min-height: 0;
   flex: 1;
   overflow: hidden;
 }
 
-.calibration-workbench.is-source-panel-collapsed {
-  grid-template-columns: 42px minmax(360px, 1fr) 310px;
-}
-
 .calibration-workbench.is-inspector-bottom {
-  grid-template-columns: minmax(230px, 0.38fr) minmax(720px, 1.62fr);
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) minmax(210px, 0.34fr);
 }
 
-.calibration-workbench.is-inspector-bottom.is-source-panel-collapsed {
-  grid-template-columns: 42px minmax(720px, 1fr);
-}
-
 .calibration-workbench.is-inspector-hidden {
-  grid-template-columns: minmax(230px, 0.34fr) minmax(760px, 1.66fr);
+  grid-template-columns: minmax(0, 1fr);
 }
 
-.calibration-workbench.is-inspector-hidden.is-source-panel-collapsed {
-  grid-template-columns: 42px minmax(760px, 1fr);
-}
-
-.calibration-source-pane,
 .calibration-score-pane,
 .calibration-inspector {
   min-width: 0;
   min-height: 0;
 }
 
-.calibration-source-pane,
 .calibration-score-pane {
   border-right: 1px solid #d5cec2;
 }
 
-.calibration-source-pane {
-  display: flex;
-  flex-direction: column;
-}
-
 .calibration-score-pane {
   display: flex;
   flex-direction: column;
-}
-
-.calibration-source-pane.is-collapsed {
-  align-items: stretch;
-  min-width: 0;
-}
-
-.calibration-source-pane.is-collapsed .calibration-pane-head {
-  justify-content: center;
-  padding: 0;
 }
 
 .calibration-pane-head {
@@ -2241,82 +2231,11 @@ a {
   background: #285c4c;
 }
 
-.calibration-source-stage,
 .calibration-score-stage {
   flex: 1;
   min-height: 0;
   overflow: auto;
   background: #e8e5dd;
-}
-
-.calibration-source-stage {
-  display: grid;
-  place-items: center;
-}
-
-.calibration-source-stage img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  box-shadow: 0 2px 12px rgb(32 34 30 / 13%);
-}
-
-.calibration-source-stage iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.calibration-empty-source {
-  display: grid;
-  justify-items: center;
-  gap: 7px;
-  color: #777970;
-  text-align: center;
-}
-
-.calibration-empty-source strong {
-  color: #3e4541;
-  font-size: 12px;
-}
-
-.calibration-empty-source span {
-  font-size: 9px;
-}
-
-.calibration-title-annotation {
-  display: grid;
-  width: min(360px, 100%);
-  gap: 6px;
-  padding: 10px;
-  border: 1px solid #d0c7b9;
-  background: #fffefb;
-  text-align: left;
-}
-
-.calibration-title-annotation strong {
-  color: #244a3f;
-  font-size: 11px;
-}
-
-.calibration-title-annotation span,
-.calibration-title-annotation summary {
-  color: #62665f;
-  font-size: 9px;
-  line-height: 1.55;
-}
-
-.calibration-title-annotation summary {
-  cursor: pointer;
-  font-weight: 900;
-}
-
-.calibration-title-annotation details > div {
-  display: grid;
-  max-height: 180px;
-  gap: 3px;
-  overflow: auto;
-  padding-top: 6px;
 }
 
 .calibration-score-toolbar {
@@ -2889,23 +2808,21 @@ a {
 
 @media (max-width: 1180px) {
   .calibration-shell {
-    grid-template-columns: 160px minmax(0, 1fr);
+    grid-template-columns: 130px 160px minmax(0, 1fr);
   }
 
   .calibration-shell.is-segment-panel-collapsed {
-    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-columns: 130px 42px minmax(0, 1fr);
   }
 
   .calibration-workbench {
-    grid-template-columns: minmax(210px, 0.85fr) minmax(260px, 1.15fr);
-  }
-
-  .calibration-workbench.is-source-panel-collapsed {
-    grid-template-columns: 42px minmax(260px, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(260px, 0.45fr);
   }
 
   .calibration-inspector {
-    grid-column: 1 / -1;
+    grid-column: 1;
+    grid-row: 2;
     grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr);
     grid-template-rows: 320px;
     border-top: 1px solid #d5cec2;
@@ -2958,10 +2875,17 @@ a {
     max-height: none;
   }
 
+  .calibration-tutorials,
   .calibration-projects {
     max-height: 190px;
     border-right: 0;
     border-bottom: 1px solid #d5cec2;
+  }
+
+  .calibration-tutorial-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .calibration-project-list {
@@ -2980,14 +2904,12 @@ a {
     display: block;
   }
 
-  .calibration-source-pane,
   .calibration-score-pane,
   .calibration-issues {
     border-right: 0;
     border-bottom: 1px solid #d5cec2;
   }
 
-  .calibration-source-stage,
   .calibration-score-stage {
     height: 430px;
   }
@@ -3369,19 +3291,50 @@ a {
 .repertoire-card {
   padding: 24px;
   border: 1px solid #d4cdbf;
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgb(255 253 247 / 78%);
 }
 
 .repertoire-card > header {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: 15px;
 }
 
 .repertoire-card {
   scroll-margin-top: 84px;
+}
+
+.repertoire-card-summary {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 15px;
+  padding: 0;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.repertoire-card-summary:hover .repertoire-card-title {
+  color: #b35f2e;
+}
+
+.repertoire-card-summary:focus-visible {
+  outline: 2px solid #b36a36;
+  outline-offset: 6px;
+}
+
+.repertoire-card-summary > svg {
+  color: #60776b;
+}
+
+.repertoire-card-summary-copy {
+  display: block;
+  min-width: 0;
 }
 
 .repertoire-card-header-actions {
@@ -3418,6 +3371,23 @@ a {
 .repertoire-card h2,
 .repertoire-card header p {
   margin: 0;
+}
+
+.repertoire-card-title {
+  display: block;
+  margin-top: 4px;
+  color: #294c3f;
+  font-family: ui-serif, "Songti SC", serif;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.repertoire-card-attribution {
+  display: block;
+  margin-top: 5px;
+  color: #737268;
+  font-size: 11px;
 }
 
 .favorites-summary {
@@ -3613,6 +3583,10 @@ a {
   line-height: 1.55;
 }
 
+.repertoire-card-details {
+  min-width: 0;
+}
+
 .imported-jianpu-preview {
   display: grid;
   grid-template-columns: minmax(210px, 0.45fr) minmax(0, 1fr);
@@ -3738,7 +3712,7 @@ a {
   text-align: center;
 }
 
-.repertoire-card > footer {
+.repertoire-card-details > footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3750,11 +3724,11 @@ a {
   font-size: 10px;
 }
 
-.repertoire-card > footer p {
+.repertoire-card-details > footer p {
   margin: 0;
 }
 
-.repertoire-card > footer a {
+.repertoire-card-details > footer a {
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -3787,12 +3761,11 @@ a {
   }
 
   .repertoire-card > header {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .repertoire-card-header-actions {
-    grid-column: 2;
-    justify-self: start;
+    justify-self: end;
   }
 
   .repertoire-favorite-item {
@@ -3809,7 +3782,7 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .repertoire-card > footer {
+  .repertoire-card-details > footer {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -5794,11 +5767,27 @@ a {
 }
 
 .material-score-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   padding-bottom: 3px;
 }
 
+.material-score-title {
+  min-width: 0;
+  grid-column: 1 / -1;
+}
+
+.material-score-title h2 {
+  overflow-wrap: anywhere;
+}
+
 .material-score-head-actions {
-  align-items: flex-start;
+  width: 100%;
+  grid-column: 1 / -1;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-top: 10px;
 }
 
 .material-status-badge {

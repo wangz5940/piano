@@ -36,7 +36,7 @@ export function validate_calibration_project(
   };
 
   if (!project.source.file_name) {
-    issue("L0", "error", "source_not_attached", "尚未绑定已有内容来源。");
+    issue("L0", "error", "source_not_attached", "尚未绑定教材来源。");
   }
   if (project.document.measures.length === 0) {
     issue("L0", "error", "empty_score", "数字乐谱没有小节。");

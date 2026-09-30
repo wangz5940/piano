@@ -99,6 +99,7 @@ describe("教材谱库", () => {
     expect(markup).toContain("教材谱库");
     expect(markup).toContain("拜厄钢琴基本教程");
     expect(markup).toContain("哈农钢琴练指法");
+    expect(markup).toContain('class="material-score-title"');
     expect(markup).toContain("仅供核对");
     expect(markup).toContain("原谱第 6、7 页");
     expect(markup).toContain("识别标签：练习 1");

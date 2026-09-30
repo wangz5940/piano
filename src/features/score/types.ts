@@ -4,47 +4,12 @@ export type score_document_status = "candidate" | "needs_review" | "reviewed" | 
 export type score_annotation_source = "pptx" | "generated" | "manual" | "legacy";
 export type score_annotation_status = "candidate" | "needs_review" | "confirmed" | "published" | "rejected";
 export type score_hand_position_movement = "stay" | "move" | "return";
-export type hymn_review_state = "candidate" | "needs_review" | "reviewed" | "published";
-export type hymn_review_issue_kind =
-  | "unknown_glyph"
-  | "structural"
-  | "source"
-  | "other";
-export type hymn_review_issue_status = "unresolved" | "resolved";
 
 export interface score_source_reference {
   slide_number: number;
   shape_id: string;
   paragraph_index: number | null;
   run_index: number | null;
-}
-
-export interface hymn_review_issue {
-  id: string;
-  code: string;
-  kind: hymn_review_issue_kind;
-  severity: "warning" | "error";
-  status: hymn_review_issue_status;
-  message: string;
-  source_refs: score_source_reference[];
-}
-
-export interface hymn_review_slide {
-  slide_number: number;
-  source_svg: string;
-  normalized_svg: string;
-  source_svg_sha256: string;
-  normalized_svg_sha256: string;
-  source_refs: score_source_reference[];
-}
-
-export interface hymn_review_record {
-  review_state: hymn_review_state;
-  font_config_version: string;
-  document_sha256: string;
-  derived_hash: string;
-  slides: hymn_review_slide[];
-  issues: hymn_review_issue[];
 }
 
 export interface score_annotation {

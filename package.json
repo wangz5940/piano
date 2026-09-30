@@ -19,8 +19,6 @@
     "calibrate:beyer:write": "vite-node scripts/calibrate-beyer.ts --write",
     "sync:jianpu-imported": "node scripts/sync-imported-jianpu.mjs",
     "sync:jianpu-structured": "node scripts/sync-imported-structured-jianpu.mjs",
-    "import:hymns:pptx": "node scripts/hymn-pptx/import.mjs",
-    "verify:hymns:pptx": "node --test scripts/hymn-pptx/*.node-test.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

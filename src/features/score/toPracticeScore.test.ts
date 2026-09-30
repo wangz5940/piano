@@ -14,8 +14,8 @@ describe("to_practice_score", () => {
     const score = to_practice_score(make_version());
 
     expect(score).toMatchObject({
-      id: "hymn-371",
-      score_version_id: "hymn-371-v2",
+      id: "score-demo-c-major",
+      score_version_id: "score-demo-c-major-v2",
       score_document: { status: "published" },
       key_signature: "C major",
       jianpu_tonic_midi: 60,
@@ -82,8 +82,8 @@ describe("to_practice_score", () => {
 
 function make_version(): published_score_version {
   return {
-    id: "hymn-371-v2",
-    score_id: "hymn-371",
+    id: "score-demo-c-major-v2",
+    score_id: "score-demo-c-major",
     source_sha256: "a".repeat(64),
     published_at: "2026-07-24T08:00:00.000Z",
     document: make_document(),
@@ -93,20 +93,20 @@ function make_version(): published_score_version {
 function make_document(): score_document_v2 {
   return {
     schema_version: 2,
-    id: "hymn-371",
-    number: "371",
-    title: "耶稣爱我",
+    id: "score-demo-c-major",
+    number: "demo-1",
+    title: "C 大调练习曲",
     key_signature: "C major",
     tonic_midi: 60,
     time_signature: "4/4",
     status: "published",
     provenance: {
-      kind: "pptx",
-      source_id: "hymn-pptx-371",
-      source_file: "371 耶稣爱我.pptx",
+      kind: "manual",
+      source_id: "manual-demo",
+      source_file: null,
       source_sha256: "b".repeat(64),
-      font_config_version: "font-v1",
-      importer_version: "importer-v1",
+      font_config_version: null,
+      importer_version: null,
       references: [],
     },
     lyrics: [],

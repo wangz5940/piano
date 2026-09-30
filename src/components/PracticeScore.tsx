@@ -325,11 +325,11 @@ function ScorePendingSourceState({ score }: { score: practice_score }) {
   return (
     <section className="score-pending-source" aria-label="谱面待审核">
       <div>
-        <p className="section-kicker"><Rows3 size={15} /> PPTX OOXML 来源已接入</p>
-        <h3>这首诗歌还没有已发布的可跟弹谱。</h3>
+        <p className="section-kicker"><Rows3 size={15} /> 谱面来源待校对</p>
+        <h3>这份曲谱还没有已发布的可跟弹版本。</h3>
         <p>
-          当前只保留来源结构、歌词和质量状态，等待人工校对生成
-          ScoreDocument v2 后再进入实时判定。
+          当前只保留来源和质量状态，等待人工校对生成
+          可用谱面后再进入实时判定。
         </p>
       </div>
       <dl>

@@ -56,13 +56,14 @@ describe("36 周课程数据", () => {
       .every((source) => source.source_status === "needs_review")).toBe(true);
   });
 
-  it("全部练习项都有可阅读谱面或明确的 PPTX OOXML 来源状态", () => {
-    expect(lessons.every((lesson) =>
-      lesson.score.steps.length > 0 ||
-      lesson.score.source.label.includes("PPTX OOXML 来源"))).toBe(true);
+  it("全部练习项都有可阅读谱面", () => {
+    expect(lessons.every((lesson) => lesson.score.steps.length > 0)).toBe(true);
     expect(lessons.every((lesson) => lesson.score.time_signature.length > 0)).toBe(true);
     expect(lessons.every((lesson) => lesson.score.start_position.length > 0)).toBe(true);
     expect(lessons.every((lesson) => lesson.score.finger_hint.length > 0)).toBe(true);
+    expect(lessons.some((lesson) =>
+      /诗歌|PPTX OOXML|耶稣爱我/.test(`${lesson.title} ${lesson.description} ${lesson.source_ref}`),
+    )).toBe(false);
     expect(lessons.every((lesson) =>
       lesson.score.finger_guide.preparation.length > 0 &&
       lesson.score.finger_guide.actions.length > 0 &&
@@ -126,32 +127,18 @@ describe("36 周课程数据", () => {
       }
       expect(step_signature(day_2)).toEqual(step_signature(day_1));
       expect(step_signature(day_3)).toEqual(step_signature(day_1));
-      if (day_3.score.steps.length === 0) {
-        expect(day_3.title).toContain("PPTX OOXML 来源核对");
-        expect(day_3.practice_mode).toBe("manual_checklist");
-        expect(day_3.score.source.status).toBe("needs_review");
-      } else {
-        expect(get_measure_count(day_3)).toBe(get_measure_count_from_title(day_3.title));
-      }
+      expect(get_measure_count(day_3)).toBe(get_measure_count_from_title(day_3.title));
     }
   });
 
-  it("把 12 首诗歌从旧 JPG/手写谱回退改为 PPTX OOXML 待审核来源", () => {
-    const hymn_lesson = get_lesson("w9-d1-repertoire");
-    if (!hymn_lesson) {
-      throw new Error("第 9 周诗歌曲目课缺失");
+  it("原诗歌周次恢复为通用结构化曲目谱", () => {
+    for (const week_number of [9, 12, 16, 20, 24, 28, 32, 36]) {
+      const repertoire_lesson = get_lesson(`w${week_number}-d1-repertoire`);
+      expect(repertoire_lesson?.practice_mode).toBe("guided_input");
+      expect(repertoire_lesson?.score.source.kind).toBe("inline");
+      expect(repertoire_lesson?.score.source.status).toBe("published");
+      expect(repertoire_lesson?.score.steps.length).toBeGreaterThan(0);
     }
-
-    expect(hymn_lesson.title).toContain("《耶稣爱我》");
-    expect(hymn_lesson.source_ref).toContain("PPTX OOXML 待审核来源");
-    expect(hymn_lesson.practice_mode).toBe("manual_checklist");
-    expect(hymn_lesson.score.source.kind).toBe("reference");
-    expect(hymn_lesson.score.source.status).toBe("needs_review");
-    expect(hymn_lesson.score.source.reference_image).toBeUndefined();
-    expect(hymn_lesson.score.source.content_sha256).toHaveLength(64);
-    expect(hymn_lesson.score.finger_guide.position_map).toHaveLength(0);
-    expect(hymn_lesson.score.steps).toHaveLength(0);
-    expect(get_lesson("w36-d3-repertoire")?.title).toContain("《至大医生现今可近》");
   });
 
   it("全部视奏课的标题小节数与真实谱面一致，并覆盖 4、8、16、24、32 小节", () => {
