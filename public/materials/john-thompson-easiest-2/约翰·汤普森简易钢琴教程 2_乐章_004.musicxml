@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 4.0.3 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="4.0.3">
   <identification>
     <encoding>
@@ -21,7 +20,7 @@
   </identification>
   <defaults>
     <scaling>
-      <millimeters>8.1280</millimeters>
+      <millimeters>8.128</millimeters>
       <tenths>40</tenths>
     </scaling>
     <page-layout>
@@ -62,9 +61,7 @@
       </midi-instrument>
     </score-part>
   </part-list>
-  <!--= = = = = = = = = = = = = = = = = = = = = = = = = = = = =-->
   <part id="P1">
-    <!--=======================================================-->
     <measure number="0" implicit="yes">
       <print>
         <measure-numbering>system</measure-numbering>
@@ -102,7 +99,6 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="1">
       <print new-system="yes"></print>
       <attributes>
@@ -128,7 +124,6 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="2" width="188">
       <print new-system="yes">
         <system-layout>
@@ -157,7 +152,7 @@
         <duration>3</duration>
         <voice>1</voice>
         <type>quarter</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-13">up</stem>
         <staff>1</staff>
       </note>
@@ -198,7 +193,6 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="3" width="122">
       <note default-x="14">
         <pitch>
@@ -223,7 +217,6 @@
         <staff>1</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="4" width="95">
       <note default-x="14">
         <pitch>
@@ -233,12 +226,11 @@
         <duration>6</duration>
         <voice>1</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-13">up</stem>
         <staff>1</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="5" width="106">
       <note default-x="14">
         <pitch>
@@ -248,7 +240,7 @@
         <duration>6</duration>
         <voice>1</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-46">down</stem>
         <staff>1</staff>
       </note>
@@ -256,7 +248,6 @@
         <bar-style>light-heavy</bar-style>
       </barline>
     </measure>
-    <!--=======================================================-->
     <measure number="6" width="196">
       <print new-page="yes">
         <system-layout>
@@ -272,7 +263,7 @@
         <measure-numbering>system</measure-numbering>
       </print>
       <attributes>
-        <divisions>0</divisions>
+        <divisions>960</divisions>
         <time>
           <beats>4</beats>
           <beat-type>4</beat-type>
@@ -284,19 +275,19 @@
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="76">
         <pitch>
           <step>C</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="10">up</stem>
@@ -307,58 +298,62 @@
           <step>D</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-54">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="7" width="99">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="44">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="17">
         <pitch>
           <step>E</step>
           <octave>3</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>5</voice>
         <type>whole</type>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="8" width="136">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="63">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>D</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-54">down</stem>
@@ -369,58 +364,62 @@
           <step>C</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="10">up</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="9" width="99">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="44">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>F</step>
           <octave>3</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>5</voice>
         <type>whole</type>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="10" width="137">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="63">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>F</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-44">down</stem>
@@ -431,58 +430,62 @@
           <step>E</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-49">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="11" width="99">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="44">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>D</step>
           <octave>3</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>5</voice>
         <type>whole</type>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="12" width="137">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="63">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="18">
         <pitch>
           <step>G</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-40">down</stem>
@@ -493,33 +496,35 @@
           <step>F</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-44">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="13" width="137">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="63">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>E</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-49">down</stem>
@@ -530,14 +535,13 @@
           <step>D</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-54">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="14" width="184">
       <print new-system="yes">
         <system-layout>
@@ -552,6 +556,7 @@
         </staff-layout>
       </print>
       <attributes>
+        <divisions>960</divisions>
         <staff-details print-object="yes"></staff-details>
       </attributes>
       <note default-x="107">
@@ -559,19 +564,19 @@
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="59">
         <pitch>
           <step>C</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="10">up</stem>
@@ -582,58 +587,62 @@
           <step>D</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-54">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="15" width="103">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="46">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>E</step>
           <octave>3</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>5</voice>
         <type>whole</type>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="16" width="142">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="66">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>D</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-54">down</stem>
@@ -644,58 +653,62 @@
           <step>C</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="10">up</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="17" width="103">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="45">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>F</step>
           <octave>3</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>5</voice>
         <type>whole</type>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="18" width="142">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="66">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>F</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-44">down</stem>
@@ -706,58 +719,62 @@
           <step>E</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-49">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="19" width="104">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="46">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>D</step>
           <octave>3</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>5</voice>
         <type>whole</type>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="20" width="143">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="66">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>G</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-39">down</stem>
@@ -768,33 +785,35 @@
           <step>G</step>
           <octave>3</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>1920</duration>
         <voice>5</voice>
         <type>half</type>
         <stem default-y="-39">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="21" width="116">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note default-x="46">
         <rest measure="yes">
           <display-step>D</display-step>
           <display-octave>5</display-octave>
         </rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
         <staff>1</staff>
       </note>
       <backup>
-        <duration>2</duration>
+        <duration>3840</duration>
       </backup>
       <note default-x="16">
         <pitch>
           <step>C</step>
           <octave>3</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>5</voice>
         <type>whole</type>
         <staff>2</staff>
@@ -804,9 +823,7 @@
       </barline>
     </measure>
   </part>
-  <!--= = = = = = = = = = = = = = = = = = = = = = = = = = = = =-->
   <part id="P2">
-    <!--=======================================================-->
     <measure number="0" implicit="yes" width="520">
       <print>
         <system-layout>
@@ -851,7 +868,7 @@
         <stem default-y="-165">down</stem>
       </note>
       <note default-x="510">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>A</step>
           <octave>4</octave>
@@ -862,7 +879,7 @@
         <stem default-y="-165">down</stem>
       </note>
       <note default-x="510">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>E</step>
           <octave>5</octave>
@@ -873,7 +890,6 @@
         <stem default-y="-165">down</stem>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="1" width="520">
       <print new-system="yes">
         <system-layout>
@@ -939,7 +955,6 @@
         <duration>8</duration>
       </backup>
     </measure>
-    <!--=======================================================-->
     <measure number="2">
       <print new-system="yes"></print>
       <attributes>
@@ -955,7 +970,6 @@
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="3">
       <note>
         <rest measure="yes"></rest>
@@ -963,7 +977,6 @@
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="4">
       <note>
         <rest measure="yes"></rest>
@@ -971,7 +984,6 @@
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="5">
       <note>
         <rest measure="yes"></rest>
@@ -979,13 +991,12 @@
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="6">
       <print new-page="yes">
         <measure-numbering>none</measure-numbering>
       </print>
       <attributes>
-        <divisions>0</divisions>
+        <divisions>960</divisions>
         <time>
           <beats>4</beats>
           <beat-type>4</beat-type>
@@ -994,131 +1005,159 @@
       </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="7">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="8">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="9">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="10">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="11">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="12">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="13">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="14">
       <print new-system="yes"></print>
       <attributes>
+        <divisions>960</divisions>
         <staff-details print-object="no"></staff-details>
       </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="15">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="16">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="17">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="18">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="19">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="20">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="21">
+      <attributes>
+        <divisions>960</divisions>
+      </attributes>
       <note>
         <rest measure="yes"></rest>
-        <duration>2</duration>
+        <duration>3840</duration>
         <voice>1</voice>
       </note>
     </measure>

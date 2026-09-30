@@ -73,6 +73,8 @@ export interface jianpu_event {
   duration_beats: number;
   right_notes: number[];
   left_notes: number[];
+  right_rest?: boolean;
+  left_rest?: boolean;
   right_fingerings?: jianpu_event_fingering[];
   left_fingerings?: jianpu_event_fingering[];
   right_slur?: jianpu_slur_role;
@@ -92,6 +94,9 @@ export interface jianpu_measure {
   index: number;
   number: string;
   directions: string[];
+  meter?: { beats: number; beat_unit: number };
+  key_signature?: string;
+  tonic_midi?: number;
   events: jianpu_event[];
 }
 

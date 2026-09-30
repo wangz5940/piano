@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+  },
+  "include": ["recalibrate-textbooks.ts", "verify-textbooks.ts", "lib/**/*.ts"]
+}

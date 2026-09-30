@@ -253,10 +253,22 @@ function normalize_score(value: unknown): jianpu_score {
 
 function normalize_measure(value: unknown): jianpu_measure {
   const record = as_record(value, "简谱小节格式无效");
+  const meter = record.meter === undefined
+    ? undefined : as_record(record.meter, "简谱小节拍号无效");
   return {
     index: as_positive_integer(record.index, "简谱小节序号无效"),
     number: as_string(record.number, "简谱小节编号无效"),
     directions: as_string_array(record.directions, "简谱小节提示无效"),
+    ...(meter ? { meter: {
+      beats: as_positive_integer(meter.beats, "简谱小节拍数无效"),
+      beat_unit: as_positive_integer(meter.beat_unit, "简谱小节拍值无效"),
+    } } : {}),
+    ...(record.key_signature === undefined ? {} : {
+      key_signature: as_string(record.key_signature, "简谱小节调性无效"),
+    }),
+    ...(record.tonic_midi === undefined ? {} : {
+      tonic_midi: as_nonnegative_integer(record.tonic_midi, "简谱小节主音无效"),
+    }),
     events: as_array(record.events, "简谱小节缺少音符").map(normalize_event),
   };
 }
@@ -268,6 +280,8 @@ function normalize_event(value: unknown): jianpu_event {
     duration_beats: as_positive_number(record.duration_beats, "简谱时值无效"),
     right_notes: as_midi_notes(record.right_notes, "简谱右手音符无效"),
     left_notes: as_midi_notes(record.left_notes, "简谱左手音符无效"),
+    ...(record.right_rest === true ? { right_rest: true } : {}),
+    ...(record.left_rest === true ? { left_rest: true } : {}),
     right_fingerings: as_optional_jianpu_fingerings(record.right_fingerings, "简谱右手指法无效"),
     left_fingerings: as_optional_jianpu_fingerings(record.left_fingerings, "简谱左手指法无效"),
     right_slur: as_optional_jianpu_slur(record.right_slur, "简谱右手连线无效"),

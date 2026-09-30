@@ -1,0 +1,54 @@
+{
+  "beyer.segment.009": {
+    "source_pages": [15],
+    "evidence": "PDF 15（书页13）变奏1：单用左手；首行8小节，首三小节依次为G4 G4、B4 B4、A4 A4，均为二分音符。OMR把首三小节合并为G G F并误作三连音，后续二分/全音符 duration 也按错误比例放大。",
+    "hand": "left",
+    "retime_notation": true,
+    "remove_tuplets": true,
+    "replace_first_measure": [
+      [{"midi": 67, "quarters": 2}, {"midi": 67, "quarters": 2}],
+      [{"midi": 71, "quarters": 2}, {"midi": 71, "quarters": 2}],
+      [{"midi": 69, "quarters": 2}, {"midi": 69, "quarters": 2}]
+    ]
+  },
+  "beyer.segment.142": {
+    "source_pages": [91],
+    "evidence": "PDF 91（书页89）附录第4条，C拍号，每小节四组三个八分音符，按三连音记时。",
+    "eighth_triplets": true
+  },
+  "beyer.segment.153": {
+    "source_pages": [94],
+    "evidence": "PDF 94（书页92）附录第17条，C拍号，前三小节及第二行前三小节每小节四组三个八分音符；句末两个三连音组加二分音符。",
+    "eighth_triplets": true,
+    "hand": "left"
+  },
+  "beyer.segment.155": {
+    "source_pages": [94],
+    "evidence": "PDF 94（书页92）附录第19条，C拍号，每小节四组三个八分音符；末小节全音符不缩短。",
+    "eighth_triplets": true,
+    "hand": "left"
+  },
+  "beyer.segment.160": {
+    "source_pages": [96],
+    "evidence": "PDF 96（书页94）附录第25条，C拍号，双手八分音符每拍三音；句末保留二分音符。",
+    "eighth_triplets": true
+  },
+  "beyer.segment.163": {
+    "source_pages": [97],
+    "evidence": "PDF 97（书页95）附录第28条，2/4拍，每小节两组三个八分音符。第6小节左手E4 C4 A3 D4 B3 G3均为八分三连音，OMR把后三音拆为三个声部的四分音符。",
+    "eighth_triplets": true,
+    "rebuild_measure": [{
+      "part": "P1",
+      "number": "6",
+      "staves": [
+        {"staff": 1, "voice": 1, "midis": [76, 72, 69, 74, 71, 67], "type": "eighth"},
+        {"staff": 2, "voice": 5, "midis": [64, 60, 57, 62, 59, 55], "type": "eighth"}
+      ]
+    }]
+  },
+  "john-thompson-easiest-2.segment.011": {
+    "source_pages": [31],
+    "evidence": "PDF 31（书页29）《大家一起捉迷藏》3/4拍；当前片段前12小节属于该曲，原XML漏了起始拍号。第13小节在下一页开始4/4谱例，保留其显式拍号。",
+    "initial_meter": { "beats": 3, "beat_unit": 4 }
+  }
+}
