@@ -4,6 +4,7 @@
   "source_sha256": "85cbe6a5d6d52dde74688c8f3c3b7afb92baf6a3ce0f9bd934c8e7f060b216bd",
   "events": [
     {
+      "id": "score-beyer.segment.133-m1-step1",
       "measure_index": 1,
       "measure_number": "0",
       "onset_beats": 0,
@@ -17,57 +18,63 @@
       "notation": "第 1 小节",
       "hand": "right",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00001",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 64,
+          "id": "score-beyer.segment.133-m1-p1-e1",
           "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m2-step1",
       "measure_index": 2,
       "measure_number": "1",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 0.75,
       "notes": [
-        52,
         64,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
         "E4",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 2 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00002",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m2-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            64,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m2-p1-e5",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m2-step2",
       "measure_index": 2,
       "measure_number": "1",
       "onset_beats": 0.25,
@@ -81,17 +88,21 @@
       "notation": "第 2 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00003",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m2-p1-e6",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m2-step3",
       "measure_index": 2,
       "measure_number": "1",
       "onset_beats": 0.5,
@@ -100,102 +111,110 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 2 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00004",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m2-p1-e7",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m2-step4",
       "measure_index": 2,
       "measure_number": "1",
       "onset_beats": 0.75,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        59,
         66,
-        69
+        69,
+        59
       ],
       "note_names": [
-        "B3",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "B3"
       ],
       "notation": "第 2 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00005",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m2-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            66,
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m2-p1-e8",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m2-step5",
       "measure_index": 2,
       "measure_number": "1",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.75,
       "notes": [
-        52,
         66,
-        69
+        69,
+        52
       ],
       "note_names": [
-        "E3",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "E3"
       ],
       "notation": "第 2 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00006",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m2-p1-e3",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.75,
+          "notes": [
+            66,
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m2-p1-e9",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m2-step6",
       "measure_index": 2,
       "measure_number": "1",
       "onset_beats": 1.25,
@@ -209,17 +228,21 @@
       "notation": "第 2 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00007",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m2-p1-e10",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m2-step7",
       "measure_index": 2,
       "measure_number": "1",
       "onset_beats": 1.5,
@@ -228,102 +251,110 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 2 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00008",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m2-p1-e11",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m2-step8",
       "measure_index": 2,
       "measure_number": "1",
       "onset_beats": 1.75,
       "duration_beats": 0.5,
       "notes": [
-        59,
         68,
-        71
+        71,
+        59
       ],
       "note_names": [
-        "B3",
-        "G♯4",
-        "B4"
+        "G#4",
+        "B4",
+        "B3"
       ],
       "notation": "第 2 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00009",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m2-p1-e4",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.5,
+          "notes": [
+            68,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m2-p1-e12",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m3-step1",
       "measure_index": 3,
       "measure_number": "2",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        52,
         68,
-        71
+        71,
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯4",
-        "B4"
+        "G#4",
+        "B4",
+        "E3"
       ],
       "notation": "第 3 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00010",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m3-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            68,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m3-p1-e4",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m3-step2",
       "measure_index": 3,
       "measure_number": "2",
       "onset_beats": 0.25,
@@ -337,17 +368,21 @@
       "notation": "第 3 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00011",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m3-p1-e5",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m3-step3",
       "measure_index": 3,
       "measure_number": "2",
       "onset_beats": 0.5,
@@ -356,22 +391,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 3 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00012",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m3-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m3-step4",
       "measure_index": 3,
       "measure_number": "2",
       "onset_beats": 0.75,
@@ -385,57 +424,63 @@
       "notation": "第 3 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00013",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m3-p1-e7",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m3-step5",
       "measure_index": 3,
       "measure_number": "2",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        52,
         64,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
         "E4",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 3 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00014",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m3-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m3-p1-e8",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m3-step6",
       "measure_index": 3,
       "measure_number": "2",
       "onset_beats": 1.25,
@@ -449,57 +494,63 @@
       "notation": "第 3 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00015",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m3-p1-e9",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m3-step7",
       "measure_index": 3,
       "measure_number": "2",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        56,
         64,
-        71
+        71,
+        56
       ],
       "note_names": [
-        "G♯3",
         "E4",
-        "B4"
+        "B4",
+        "G#3"
       ],
       "notation": "第 3 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00016",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m3-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m3-p1-e10",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m3-step8",
       "measure_index": 3,
       "measure_number": "2",
       "onset_beats": 1.75,
@@ -513,57 +564,63 @@
       "notation": "第 3 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00017",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m3-p1-e11",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m4-step1",
       "measure_index": 4,
       "measure_number": "3",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 0.75,
       "notes": [
-        51,
         66,
-        69
+        69,
+        51
       ],
       "note_names": [
-        "D♯3",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "D#3"
       ],
       "notation": "第 4 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00018",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 51,
+          "id": "score-beyer.segment.133-m4-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            66,
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m4-p1-e5",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            51
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m4-step2",
       "measure_index": 4,
       "measure_number": "3",
       "onset_beats": 0.25,
@@ -577,17 +634,21 @@
       "notation": "第 4 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00019",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m4-p1-e6",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m4-step3",
       "measure_index": 4,
       "measure_number": "3",
       "onset_beats": 0.5,
@@ -601,97 +662,105 @@
       "notation": "第 4 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00020",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m4-p1-e7",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m4-step4",
       "measure_index": 4,
       "measure_number": "3",
       "onset_beats": 0.75,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        59,
         65,
-        68
+        68,
+        59
       ],
       "note_names": [
-        "B3",
         "F4",
-        "G♯4"
+        "G#4",
+        "B3"
       ],
       "notation": "第 4 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00021",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m4-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            65,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m4-p1-e8",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 65,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m4-step5",
       "measure_index": 4,
       "measure_number": "3",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        54,
         66,
-        69
+        69,
+        54
       ],
       "note_names": [
-        "F♯3",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "F#3"
       ],
       "notation": "第 4 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00022",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m4-p1-e3",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.5,
+          "notes": [
+            66,
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m4-p1-e9",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m4-step6",
       "measure_index": 4,
       "measure_number": "3",
       "onset_beats": 1.25,
@@ -705,57 +774,63 @@
       "notation": "第 4 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00023",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m4-p1-e10",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m4-step7",
       "measure_index": 4,
       "measure_number": "3",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        47,
         63,
-        66
+        66,
+        47
       ],
       "note_names": [
-        "B2",
-        "D♯4",
-        "F♯4"
+        "D#4",
+        "F#4",
+        "B2"
       ],
       "notation": "第 4 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00024",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 47,
+          "id": "score-beyer.segment.133-m4-p1-e4",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.5,
+          "notes": [
+            63,
+            66
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m4-p1-e11",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 63,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            47
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m4-step8",
       "measure_index": 4,
       "measure_number": "3",
       "onset_beats": 1.75,
@@ -769,57 +844,63 @@
       "notation": "第 4 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00025",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m4-p1-e12",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m5-step1",
       "measure_index": 5,
       "measure_number": "4",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        52,
         64,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
         "E4",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 5 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00026",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m5-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            64,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m5-p1-e4",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m5-step2",
       "measure_index": 5,
       "measure_number": "4",
       "onset_beats": 0.25,
@@ -833,17 +914,21 @@
       "notation": "第 5 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00027",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m5-p1-e5",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m5-step3",
       "measure_index": 5,
       "measure_number": "4",
       "onset_beats": 0.5,
@@ -852,22 +937,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 5 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00028",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m5-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m5-step4",
       "measure_index": 5,
       "measure_number": "4",
       "onset_beats": 0.75,
@@ -881,17 +970,21 @@
       "notation": "第 5 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00029",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m5-p1-e7",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m5-step5",
       "measure_index": 5,
       "measure_number": "4",
       "onset_beats": 1,
@@ -905,17 +998,21 @@
       "notation": "第 5 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00030",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m5-p1-e8",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m5-step6",
       "measure_index": 5,
       "measure_number": "4",
       "onset_beats": 1.25,
@@ -929,121 +1026,149 @@
       "notation": "第 5 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00031",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m5-p1-e9",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m5-step7",
       "measure_index": 5,
       "measure_number": "4",
       "onset_beats": 1.5,
       "duration_beats": 0.25,
       "notes": [
-        56,
-        64
+        64,
+        56
       ],
       "note_names": [
-        "G♯3",
-        "E4"
+        "E4",
+        "G#3"
       ],
       "notation": "第 5 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00032",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m5-p1-e2",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.25,
+          "notes": [
+            64
+          ]
         },
         {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m5-p1-e10",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m5-step8",
       "measure_index": 5,
       "measure_number": "4",
       "onset_beats": 1.75,
       "duration_beats": 0.25,
       "notes": [
-        59,
-        66
+        66,
+        59
       ],
       "note_names": [
-        "B3",
-        "F♯4"
+        "F#4",
+        "B3"
       ],
       "notation": "第 5 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00033",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
-          "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m5-p1-e3",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.25,
+          "notes": [
+            66
+          ]
         },
         {
-          "note": 66,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m5-p1-e11",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m6-step1",
       "measure_index": 6,
       "measure_number": "5",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        52,
+        68,
         64,
-        68
+        52
       ],
       "note_names": [
-        "E3",
+        "G#4",
         "E4",
-        "G♯4"
+        "E3"
       ],
       "notation": "第 6 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00034",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m6-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m6-p1-e3",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 1,
+          "notes": [
+            64
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m6-p1-e7",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m6-step2",
       "measure_index": 6,
       "measure_number": "5",
       "onset_beats": 0.25,
@@ -1057,17 +1182,21 @@
       "notation": "第 6 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00035",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m6-p1-e8",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m6-step3",
       "measure_index": 6,
       "measure_number": "5",
       "onset_beats": 0.5,
@@ -1076,94 +1205,115 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 6 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00036",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m6-p1-e9",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m6-step4",
       "measure_index": 6,
       "measure_number": "5",
       "onset_beats": 0.75,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        59,
-        69
+        69,
+        59
       ],
       "note_names": [
-        "B3",
-        "A4"
+        "A4",
+        "B3"
       ],
       "notation": "第 6 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00037",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
-          "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m6-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            69
+          ]
         },
         {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m6-p1-e10",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m6-step5",
       "measure_index": 6,
       "measure_number": "5",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        54,
         64,
-        69
+        69,
+        54
       ],
       "note_names": [
-        "F♯3",
         "E4",
-        "A4"
+        "A4",
+        "F#3"
       ],
       "notation": "第 6 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00038",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m6-p1-e4",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 1,
+          "notes": [
+            64
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m6-p1-e5",
+          "hand": "right",
+          "voice": 3,
+          "duration_beats": 0.75,
+          "notes": [
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m6-p1-e11",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m6-step6",
       "measure_index": 6,
       "measure_number": "5",
       "onset_beats": 1.25,
@@ -1177,17 +1327,21 @@
       "notation": "第 6 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00039",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m6-p1-e12",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m6-step7",
       "measure_index": 6,
       "measure_number": "5",
       "onset_beats": 1.5,
@@ -1201,89 +1355,110 @@
       "notation": "第 6 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00040",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m6-p1-e13",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m6-step8",
       "measure_index": 6,
       "measure_number": "5",
       "onset_beats": 1.75,
       "duration_beats": 0.5,
       "notes": [
-        54,
-        71
+        71,
+        54
       ],
       "note_names": [
-        "F♯3",
-        "B4"
+        "B4",
+        "F#3"
       ],
       "notation": "第 6 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00041",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
-          "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m6-p1-e6",
+          "hand": "right",
+          "voice": 3,
+          "duration_beats": 0.5,
+          "notes": [
+            71
+          ]
         },
         {
-          "note": 71,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m6-p1-e14",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m7-step1",
       "measure_index": 7,
       "measure_number": "6",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1.5,
       "notes": [
-        56,
+        71,
         64,
-        71
+        56
       ],
       "note_names": [
-        "G♯3",
+        "B4",
         "E4",
-        "B4"
+        "G#3"
       ],
       "notation": "第 7 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00042",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m7-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m7-p1-e4",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 1.5,
+          "notes": [
+            64
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m7-p1-e5",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m7-step2",
       "measure_index": 7,
       "measure_number": "6",
       "onset_beats": 0.25,
@@ -1297,17 +1472,21 @@
       "notation": "第 7 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00043",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m7-p1-e6",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m7-step3",
       "measure_index": 7,
       "measure_number": "6",
       "onset_beats": 0.5,
@@ -1316,22 +1495,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 7 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00044",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m7-p1-e7",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m7-step4",
       "measure_index": 7,
       "measure_number": "6",
       "onset_beats": 0.75,
@@ -1345,49 +1528,60 @@
       "notation": "第 7 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00045",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m7-p1-e8",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m7-step5",
       "measure_index": 7,
       "measure_number": "6",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        52,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 7 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00046",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
-          "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m7-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            68
+          ]
         },
         {
-          "note": 68,
-          "hand": "right",
-          "finger": 3,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m7-p1-e9",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m7-step6",
       "measure_index": 7,
       "measure_number": "6",
       "onset_beats": 1.25,
@@ -1401,57 +1595,63 @@
       "notation": "第 7 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00047",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m7-p1-e10",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m7-step7",
       "measure_index": 7,
       "measure_number": "6",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        56,
         64,
-        71
+        71,
+        56
       ],
       "note_names": [
-        "G♯3",
         "E4",
-        "B4"
+        "B4",
+        "G#3"
       ],
       "notation": "第 7 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00048",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m7-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m7-p1-e11",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m7-step8",
       "measure_index": 7,
       "measure_number": "6",
       "onset_beats": 1.75,
@@ -1465,57 +1665,63 @@
       "notation": "第 7 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00049",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m7-p1-e12",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m8-step1",
       "measure_index": 8,
       "measure_number": "7",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 0.75,
       "notes": [
-        54,
         66,
-        69
+        69,
+        54
       ],
       "note_names": [
-        "F♯3",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "F#3"
       ],
       "notation": "第 8 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00050",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m8-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            66,
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m8-p1-e5",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m8-step2",
       "measure_index": 8,
       "measure_number": "7",
       "onset_beats": 0.25,
@@ -1524,22 +1730,26 @@
         61
       ],
       "note_names": [
-        "C♯4"
+        "C#4"
       ],
       "notation": "第 8 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00051",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 61,
+          "id": "score-beyer.segment.133-m8-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m8-step3",
       "measure_index": 8,
       "measure_number": "7",
       "onset_beats": 0.5,
@@ -1553,97 +1763,105 @@
       "notation": "第 8 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00052",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m8-p1-e7",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m8-step4",
       "measure_index": 8,
       "measure_number": "7",
       "onset_beats": 0.75,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        54,
         64,
-        68
+        68,
+        54
       ],
       "note_names": [
-        "F♯3",
         "E4",
-        "G♯4"
+        "G#4",
+        "F#3"
       ],
       "notation": "第 8 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00053",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m8-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m8-p1-e8",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m8-step5",
       "measure_index": 8,
       "measure_number": "7",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        51,
         66,
-        69
+        69,
+        51
       ],
       "note_names": [
-        "D♯3",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "D#3"
       ],
       "notation": "第 8 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00054",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 51,
+          "id": "score-beyer.segment.133-m8-p1-e3",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.5,
+          "notes": [
+            66,
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m8-p1-e9",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            51
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m8-step6",
       "measure_index": 8,
       "measure_number": "7",
       "onset_beats": 1.25,
@@ -1657,57 +1875,63 @@
       "notation": "第 8 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00055",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m8-p1-e10",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m8-step7",
       "measure_index": 8,
       "measure_number": "7",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        57,
         63,
-        66
+        66,
+        57
       ],
       "note_names": [
-        "A3",
-        "D♯4",
-        "F♯4"
+        "D#4",
+        "F#4",
+        "A3"
       ],
       "notation": "第 8 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00056",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m8-p1-e4",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.5,
+          "notes": [
+            63,
+            66
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m8-p1-e11",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
-        },
-        {
-          "note": 63,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m8-step8",
       "measure_index": 8,
       "measure_number": "7",
       "onset_beats": 1.75,
@@ -1721,57 +1945,71 @@
       "notation": "第 8 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00057",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m8-p1-e12",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m9-step1",
       "measure_index": 9,
       "measure_number": "8",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1.5,
       "notes": [
-        52,
+        64,
         56,
-        64
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯3",
-        "E4"
+        "E4",
+        "G#3",
+        "E3"
       ],
       "notation": "第 9 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00058",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
-          "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 56,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
+          "id": "score-beyer.segment.133-m9-p1-e1",
           "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            64
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m9-p1-e4",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m9-p1-e10",
+          "hand": "left",
+          "voice": 6,
+          "duration_beats": 1.5,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m9-step2",
       "measure_index": 9,
       "measure_number": "8",
       "onset_beats": 0.25,
@@ -1785,17 +2023,21 @@
       "notation": "第 9 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00059",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m9-p1-e5",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m9-step3",
       "measure_index": 9,
       "measure_number": "8",
       "onset_beats": 0.5,
@@ -1804,22 +2046,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 9 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00060",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m9-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m9-step4",
       "measure_index": 9,
       "measure_number": "8",
       "onset_beats": 0.75,
@@ -1828,22 +2074,26 @@
         54
       ],
       "note_names": [
-        "F♯3"
+        "F#3"
       ],
       "notation": "第 9 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00061",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m9-p1-e7",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m9-step5",
       "measure_index": 9,
       "measure_number": "8",
       "onset_beats": 1,
@@ -1852,22 +2102,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 9 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00062",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m9-p1-e8",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m9-step6",
       "measure_index": 9,
       "measure_number": "8",
       "onset_beats": 1.25,
@@ -1881,57 +2135,63 @@
       "notation": "第 9 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00063",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m9-p1-e9",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m9-step7",
       "measure_index": 9,
       "measure_number": "8",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        54,
         69,
-        71
+        71,
+        54
       ],
       "note_names": [
-        "F♯3",
         "A4",
-        "B4"
+        "B4",
+        "F#3"
       ],
       "notation": "第 9 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00064",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m9-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            69,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m9-p1-e11",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m9-step8",
       "measure_index": 9,
       "measure_number": "8",
       "onset_beats": 1.75,
@@ -1945,57 +2205,71 @@
       "notation": "第 9 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00065",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m9-p1-e12",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 0.5,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m10-step1",
       "measure_index": 10,
       "measure_number": "9",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        52,
+        76,
         68,
-        76
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯4",
-        "E5"
+        "E5",
+        "G#4",
+        "E3"
       ],
       "notation": "第 10 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00066",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m10-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            76
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m10-p1-e5",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 1,
+          "notes": [
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m10-p1-e7",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 76,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m10-step2",
       "measure_index": 10,
       "measure_number": "9",
       "onset_beats": 0.25,
@@ -2009,17 +2283,21 @@
       "notation": "第 10 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00067",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m10-p1-e8",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m10-step3",
       "measure_index": 10,
       "measure_number": "9",
       "onset_beats": 0.5,
@@ -2028,94 +2306,115 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 10 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00068",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m10-p1-e9",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m10-step4",
       "measure_index": 10,
       "measure_number": "9",
       "onset_beats": 0.75,
       "duration_beats": 0.25,
       "notes": [
-        59,
-        75
+        75,
+        59
       ],
       "note_names": [
-        "B3",
-        "D♯5"
+        "D#5",
+        "B3"
       ],
       "notation": "第 10 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00069",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
-          "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m10-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.25,
+          "notes": [
+            75
+          ]
         },
         {
-          "note": 75,
-          "hand": "right",
-          "finger": 4,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m10-p1-e10",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m10-step5",
       "measure_index": 10,
       "measure_number": "9",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        52,
+        73,
         69,
-        73
+        52
       ],
       "note_names": [
-        "E3",
+        "C#5",
         "A4",
-        "C♯5"
+        "E3"
       ],
       "notation": "第 10 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00070",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m10-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            73
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m10-p1-e6",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 1,
+          "notes": [
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m10-p1-e11",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 73,
-          "hand": "right",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m10-step6",
       "measure_index": 10,
       "measure_number": "9",
       "onset_beats": 1.25,
@@ -2124,22 +2423,26 @@
         61
       ],
       "note_names": [
-        "C♯4"
+        "C#4"
       ],
       "notation": "第 10 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00071",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 61,
+          "id": "score-beyer.segment.133-m10-p1-e12",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m10-step7",
       "measure_index": 10,
       "measure_number": "9",
       "onset_beats": 1.5,
@@ -2153,89 +2456,102 @@
       "notation": "第 10 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00072",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m10-p1-e13",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m10-step8",
       "measure_index": 10,
       "measure_number": "9",
       "onset_beats": 1.75,
       "duration_beats": 0.5,
       "notes": [
-        61,
-        71
+        71,
+        61
       ],
       "note_names": [
-        "C♯4",
-        "B4"
+        "B4",
+        "C#4"
       ],
       "notation": "第 10 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00073",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 61,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m10-p1-e4",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            71
+          ]
         },
         {
-          "note": 71,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m10-p1-e14",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m11-step1",
       "measure_index": 11,
       "measure_number": "10",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        52,
         68,
-        71
+        71,
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯4",
-        "B4"
+        "G#4",
+        "B4",
+        "E3"
       ],
       "notation": "第 11 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00074",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m11-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            68,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m11-p1-e4",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m11-step2",
       "measure_index": 11,
       "measure_number": "10",
       "onset_beats": 0.25,
@@ -2249,17 +2565,21 @@
       "notation": "第 11 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00075",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m11-p1-e5",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m11-step3",
       "measure_index": 11,
       "measure_number": "10",
       "onset_beats": 0.5,
@@ -2268,22 +2588,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 11 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00076",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m11-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m11-step4",
       "measure_index": 11,
       "measure_number": "10",
       "onset_beats": 0.75,
@@ -2297,57 +2621,63 @@
       "notation": "第 11 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00077",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m11-p1-e7",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m11-step5",
       "measure_index": 11,
       "measure_number": "10",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        52,
         64,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
         "E4",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 11 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00078",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m11-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m11-p1-e8",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m11-step6",
       "measure_index": 11,
       "measure_number": "10",
       "onset_beats": 1.25,
@@ -2361,57 +2691,63 @@
       "notation": "第 11 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00079",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m11-p1-e9",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m11-step7",
       "measure_index": 11,
       "measure_number": "10",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        56,
         64,
-        71
+        71,
+        56
       ],
       "note_names": [
-        "G♯3",
         "E4",
-        "B4"
+        "B4",
+        "G#3"
       ],
       "notation": "第 11 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00080",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m11-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m11-p1-e10",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m11-step8",
       "measure_index": 11,
       "measure_number": "10",
       "onset_beats": 1.75,
@@ -2425,57 +2761,63 @@
       "notation": "第 11 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00081",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m11-p1-e11",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m12-step1",
       "measure_index": 12,
       "measure_number": "11",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 0.75,
       "notes": [
-        51,
         66,
-        69
+        69,
+        51
       ],
       "note_names": [
-        "D♯3",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "D#3"
       ],
       "notation": "第 12 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00082",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 51,
+          "id": "score-beyer.segment.133-m12-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            66,
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m12-p1-e5",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            51
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m12-step2",
       "measure_index": 12,
       "measure_number": "11",
       "onset_beats": 0.25,
@@ -2489,17 +2831,21 @@
       "notation": "第 12 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00083",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m12-p1-e6",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m12-step3",
       "measure_index": 12,
       "measure_number": "11",
       "onset_beats": 0.5,
@@ -2513,97 +2859,105 @@
       "notation": "第 12 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00084",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m12-p1-e7",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m12-step4",
       "measure_index": 12,
       "measure_number": "11",
       "onset_beats": 0.75,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        59,
         65,
-        68
+        68,
+        59
       ],
       "note_names": [
-        "B3",
         "F4",
-        "G♯4"
+        "G#4",
+        "B3"
       ],
       "notation": "第 12 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00085",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m12-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            65,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m12-p1-e8",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 65,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m12-step5",
       "measure_index": 12,
       "measure_number": "11",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        47,
         66,
-        69
+        69,
+        47
       ],
       "note_names": [
-        "B2",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "B2"
       ],
       "notation": "第 12 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00086",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 47,
+          "id": "score-beyer.segment.133-m12-p1-e3",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.5,
+          "notes": [
+            66,
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m12-p1-e9",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            47
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m12-step6",
       "measure_index": 12,
       "measure_number": "11",
       "onset_beats": 1.25,
@@ -2617,57 +2971,63 @@
       "notation": "第 12 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00087",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m12-p1-e10",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m12-step7",
       "measure_index": 12,
       "measure_number": "11",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        57,
         63,
-        66
+        66,
+        57
       ],
       "note_names": [
-        "A3",
-        "D♯4",
-        "F♯4"
+        "D#4",
+        "F#4",
+        "A3"
       ],
       "notation": "第 12 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00088",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m12-p1-e4",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.5,
+          "notes": [
+            63,
+            66
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m12-p1-e11",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
-        },
-        {
-          "note": 63,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m12-step8",
       "measure_index": 12,
       "measure_number": "11",
       "onset_beats": 1.75,
@@ -2681,57 +3041,63 @@
       "notation": "第 12 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00089",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m12-p1-e12",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m13-step1",
       "measure_index": 13,
       "measure_number": "12",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1.5,
       "notes": [
-        52,
         64,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
         "E4",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 13 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00090",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m13-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1.5,
+          "notes": [
+            64,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m13-p1-e3",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m13-step2",
       "measure_index": 13,
       "measure_number": "12",
       "onset_beats": 0.25,
@@ -2745,17 +3111,21 @@
       "notation": "第 13 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00091",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m13-p1-e4",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m13-step3",
       "measure_index": 13,
       "measure_number": "12",
       "onset_beats": 0.5,
@@ -2764,22 +3134,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 13 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00092",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m13-p1-e5",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m13-step4",
       "measure_index": 13,
       "measure_number": "12",
       "onset_beats": 0.75,
@@ -2793,17 +3167,21 @@
       "notation": "第 13 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00093",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m13-p1-e6",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m13-step5",
       "measure_index": 13,
       "measure_number": "12",
       "onset_beats": 1,
@@ -2817,17 +3195,21 @@
       "notation": "第 13 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00094",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m13-p1-e7",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m13-step6",
       "measure_index": 13,
       "measure_number": "12",
       "onset_beats": 1.25,
@@ -2841,49 +3223,60 @@
       "notation": "第 13 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00095",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m13-p1-e8",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m13-step7",
       "measure_index": 13,
       "measure_number": "12",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        56,
-        71
+        71,
+        56
       ],
       "note_names": [
-        "G♯3",
-        "B4"
+        "B4",
+        "G#3"
       ],
       "notation": "第 13 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00096",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m13-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            71
+          ]
         },
         {
-          "note": 71,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m13-p1-e9",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m13-step8",
       "measure_index": 13,
       "measure_number": "12",
       "onset_beats": 1.75,
@@ -2897,65 +3290,66 @@
       "notation": "第 13 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00097",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m13-p1-e10",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m14-step1",
       "measure_index": 14,
       "measure_number": "13",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 0.75,
       "notes": [
-        52,
         69,
         73,
-        76
+        76,
+        52
       ],
       "note_names": [
-        "E3",
         "A4",
-        "C♯5",
-        "E5"
+        "C#5",
+        "E5",
+        "E3"
       ],
       "notation": "第 14 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00098",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m14-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            69,
+            73,
+            76
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m14-p1-e5",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 73,
-          "hand": "right",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 76,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m14-step2",
       "measure_index": 14,
       "measure_number": "13",
       "onset_beats": 0.25,
@@ -2964,22 +3358,26 @@
         61
       ],
       "note_names": [
-        "C♯4"
+        "C#4"
       ],
       "notation": "第 14 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00099",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 61,
+          "id": "score-beyer.segment.133-m14-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m14-step3",
       "measure_index": 14,
       "measure_number": "13",
       "onset_beats": 0.5,
@@ -2993,97 +3391,105 @@
       "notation": "第 14 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00100",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m14-p1-e7",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m14-step4",
       "measure_index": 14,
       "measure_number": "13",
       "onset_beats": 0.75,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        61,
         71,
-        75
+        75,
+        61
       ],
       "note_names": [
-        "C♯4",
         "B4",
-        "D♯5"
+        "D#5",
+        "C#4"
       ],
       "notation": "第 14 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00101",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 61,
+          "id": "score-beyer.segment.133-m14-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            71,
+            75
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m14-p1-e8",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 75,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m14-step5",
       "measure_index": 14,
       "measure_number": "13",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.75,
       "notes": [
-        52,
         69,
-        73
+        73,
+        52
       ],
       "note_names": [
-        "E3",
         "A4",
-        "C♯5"
+        "C#5",
+        "E3"
       ],
       "notation": "第 14 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00102",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m14-p1-e3",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.75,
+          "notes": [
+            69,
+            73
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m14-p1-e9",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 73,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m14-step6",
       "measure_index": 14,
       "measure_number": "13",
       "onset_beats": 1.25,
@@ -3092,22 +3498,26 @@
         61
       ],
       "note_names": [
-        "C♯4"
+        "C#4"
       ],
       "notation": "第 14 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00103",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 61,
+          "id": "score-beyer.segment.133-m14-p1-e10",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m14-step7",
       "measure_index": 14,
       "measure_number": "13",
       "onset_beats": 1.5,
@@ -3121,97 +3531,105 @@
       "notation": "第 14 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00104",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m14-p1-e11",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m14-step8",
       "measure_index": 14,
       "measure_number": "13",
       "onset_beats": 1.75,
       "duration_beats": 0.5,
       "notes": [
-        61,
         68,
-        71
+        71,
+        61
       ],
       "note_names": [
-        "C♯4",
-        "G♯4",
-        "B4"
+        "G#4",
+        "B4",
+        "C#4"
       ],
       "notation": "第 14 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00105",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 61,
+          "id": "score-beyer.segment.133-m14-p1-e4",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 0.5,
+          "notes": [
+            68,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m14-p1-e12",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m15-step1",
       "measure_index": 15,
       "measure_number": "14",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        52,
         68,
-        71
+        71,
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯4",
-        "B4"
+        "G#4",
+        "B4",
+        "E3"
       ],
       "notation": "第 15 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00106",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m15-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            68,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m15-p1-e4",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m15-step2",
       "measure_index": 15,
       "measure_number": "14",
       "onset_beats": 0.25,
@@ -3225,17 +3643,21 @@
       "notation": "第 15 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00107",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m15-p1-e5",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m15-step3",
       "measure_index": 15,
       "measure_number": "14",
       "onset_beats": 0.5,
@@ -3244,22 +3666,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 15 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00108",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m15-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m15-step4",
       "measure_index": 15,
       "measure_number": "14",
       "onset_beats": 0.75,
@@ -3273,57 +3699,63 @@
       "notation": "第 15 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00109",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m15-p1-e7",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m15-step5",
       "measure_index": 15,
       "measure_number": "14",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        52,
         64,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
         "E4",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 15 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00110",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m15-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m15-p1-e8",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m15-step6",
       "measure_index": 15,
       "measure_number": "14",
       "onset_beats": 1.25,
@@ -3337,57 +3769,63 @@
       "notation": "第 15 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00111",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m15-p1-e9",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m15-step7",
       "measure_index": 15,
       "measure_number": "14",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        53,
         62,
-        71
+        71,
+        53
       ],
       "note_names": [
-        "F3",
         "D4",
-        "B4"
+        "B4",
+        "F3"
       ],
       "notation": "第 15 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00112",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 53,
+          "id": "score-beyer.segment.133-m15-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            62,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m15-p1-e10",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 62,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            53
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m15-step8",
       "measure_index": 15,
       "measure_number": "14",
       "onset_beats": 1.75,
@@ -3396,62 +3834,76 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 15 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00113",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m15-p1-e11",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m16-step1",
       "measure_index": 16,
       "measure_number": "15",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        54,
+        71,
         61,
-        71
+        54
       ],
       "note_names": [
-        "F♯3",
-        "C♯4",
-        "B4"
+        "B4",
+        "C#4",
+        "F#3"
       ],
       "notation": "第 16 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00114",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m16-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m16-p1-e4",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 1,
+          "notes": [
+            61
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m16-p1-e6",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
-        },
-        {
-          "note": 61,
-          "hand": "right",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m16-step2",
       "measure_index": 16,
       "measure_number": "15",
       "onset_beats": 0.25,
@@ -3465,49 +3917,60 @@
       "notation": "第 16 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00115",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m16-p1-e7",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m16-step3",
       "measure_index": 16,
       "measure_number": "15",
       "onset_beats": 0.5,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        54,
-        69
+        69,
+        54
       ],
       "note_names": [
-        "F♯3",
-        "A4"
+        "A4",
+        "F#3"
       ],
       "notation": "第 16 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00116",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
-          "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m16-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            69
+          ]
         },
         {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m16-p1-e8",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m16-step4",
       "measure_index": 16,
       "measure_number": "15",
       "onset_beats": 0.75,
@@ -3521,49 +3984,60 @@
       "notation": "第 16 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00117",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m16-p1-e9",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m16-step5",
       "measure_index": 16,
       "measure_number": "15",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        47,
-        63
+        63,
+        47
       ],
       "note_names": [
-        "B2",
-        "D♯4"
+        "D#4",
+        "B2"
       ],
       "notation": "第 16 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00118",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 47,
-          "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m16-p1-e5",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 1,
+          "notes": [
+            63
+          ]
         },
         {
-          "note": 63,
-          "hand": "right",
-          "finger": 4,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m16-p1-e10",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            47
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m16-step6",
       "measure_index": 16,
       "measure_number": "15",
       "onset_beats": 1.25,
@@ -3577,49 +4051,60 @@
       "notation": "第 16 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00119",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m16-p1-e11",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m16-step7",
       "measure_index": 16,
       "measure_number": "15",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        57,
-        66
+        66,
+        57
       ],
       "note_names": [
-        "A3",
-        "F♯4"
+        "F#4",
+        "A3"
       ],
       "notation": "第 16 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00120",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
-          "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m16-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            66
+          ]
         },
         {
-          "note": 66,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m16-p1-e12",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m16-step8",
       "measure_index": 16,
       "measure_number": "15",
       "onset_beats": 1.75,
@@ -3633,57 +4118,71 @@
       "notation": "第 16 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00121",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m16-p1-e13",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m17-step1",
       "measure_index": 17,
       "measure_number": "16",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 2,
       "notes": [
-        52,
+        64,
         56,
-        64
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯3",
-        "E4"
+        "E4",
+        "G#3",
+        "E3"
       ],
       "notation": "第 17 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00122",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
-          "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 56,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
+          "id": "score-beyer.segment.133-m17-p1-e1",
           "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "voice": 1,
+          "duration_beats": 2,
+          "notes": [
+            64
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m17-p1-e2",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m17-p1-e6",
+          "hand": "left",
+          "voice": 6,
+          "duration_beats": 1,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m17-step2",
       "measure_index": 17,
       "measure_number": "16",
       "onset_beats": 0.25,
@@ -3697,17 +4196,21 @@
       "notation": "第 17 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00123",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m17-p1-e3",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m17-step3",
       "measure_index": 17,
       "measure_number": "16",
       "onset_beats": 0.5,
@@ -3716,22 +4219,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 17 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00124",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m17-p1-e4",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m17-step4",
       "measure_index": 17,
       "measure_number": "16",
       "onset_beats": 0.75,
@@ -3740,22 +4247,26 @@
         54
       ],
       "note_names": [
-        "F♯3"
+        "F#3"
       ],
       "notation": "第 17 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00125",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m17-p1-e5",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m17-step5",
       "measure_index": 17,
       "measure_number": "16",
       "onset_beats": 1,
@@ -3769,49 +4280,60 @@
       "notation": "第 17 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00126",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m17-p1-e7",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 1,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m18-step1",
       "measure_index": 18,
       "measure_number": "17",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 2,
       "notes": [
-        56,
-        71
+        71,
+        56
       ],
       "note_names": [
-        "G♯3",
-        "B4"
+        "B4",
+        "G#3"
       ],
       "notation": "第 18 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00127",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m18-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 2,
+          "notes": [
+            71
+          ]
         },
         {
-          "note": 71,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m18-p1-e2",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m18-step2",
       "measure_index": 18,
       "measure_number": "17",
       "onset_beats": 0.25,
@@ -3825,17 +4347,21 @@
       "notation": "第 18 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00128",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m18-p1-e3",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m18-step3",
       "measure_index": 18,
       "measure_number": "17",
       "onset_beats": 0.5,
@@ -3849,17 +4375,21 @@
       "notation": "第 18 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00129",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 64,
+          "id": "score-beyer.segment.133-m18-p1-e4",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            64
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m18-step4",
       "measure_index": 18,
       "measure_number": "17",
       "onset_beats": 0.75,
@@ -3873,17 +4403,21 @@
       "notation": "第 18 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00130",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m18-p1-e5",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m18-step5",
       "measure_index": 18,
       "measure_number": "17",
       "onset_beats": 1,
@@ -3892,22 +4426,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 18 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00131",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m18-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m18-step6",
       "measure_index": 18,
       "measure_number": "17",
       "onset_beats": 1.25,
@@ -3921,17 +4459,21 @@
       "notation": "第 18 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00132",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m18-p1-e7",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m18-step7",
       "measure_index": 18,
       "measure_number": "17",
       "onset_beats": 1.5,
@@ -3940,22 +4482,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 18 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00133",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m18-p1-e8",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m18-step8",
       "measure_index": 18,
       "measure_number": "17",
       "onset_beats": 1.75,
@@ -3969,49 +4515,60 @@
       "notation": "第 18 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00134",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m18-p1-e9",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m19-step1",
       "measure_index": 19,
       "measure_number": "18",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        54,
-        69
+        69,
+        54
       ],
       "note_names": [
-        "F♯3",
-        "A4"
+        "A4",
+        "F#3"
       ],
       "notation": "第 19 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00135",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
-          "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m19-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            69
+          ]
         },
         {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m19-p1-e3",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m19-step2",
       "measure_index": 19,
       "measure_number": "18",
       "onset_beats": 0.25,
@@ -4025,21 +4582,25 @@
       "notation": "第 19 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00136",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m19-p1-e4",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.5,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m19-step3",
       "measure_index": 19,
       "measure_number": "18",
       "onset_beats": 0.75,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
         59
       ],
@@ -4049,49 +4610,60 @@
       "notation": "第 19 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00137",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m19-p1-e5",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.5,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m19-step4",
       "measure_index": 19,
       "measure_number": "18",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        57,
-        66
+        66,
+        57
       ],
       "note_names": [
-        "A3",
-        "F♯4"
+        "F#4",
+        "A3"
       ],
       "notation": "第 19 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00138",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
-          "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m19-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            66
+          ]
         },
         {
-          "note": 66,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m19-p1-e6",
+          "hand": "left",
+          "voice": 6,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m19-step5",
       "measure_index": 19,
       "measure_number": "18",
       "onset_beats": 1.25,
@@ -4105,17 +4677,21 @@
       "notation": "第 19 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00139",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m19-p1-e7",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 0.5,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m19-step6",
       "measure_index": 19,
       "measure_number": "18",
       "onset_beats": 1.75,
@@ -4129,17 +4705,21 @@
       "notation": "第 19 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00140",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m19-p1-e8",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m19-step7",
       "measure_index": 19,
       "measure_number": "18",
       "onset_beats": 2,
@@ -4148,54 +4728,65 @@
         54
       ],
       "note_names": [
-        "F♯3"
+        "F#3"
       ],
       "notation": "第 19 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00141",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m19-p1-e9",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m20-step1",
       "measure_index": 20,
       "measure_number": "19",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        59,
-        64
+        64,
+        59
       ],
       "note_names": [
-        "B3",
-        "E4"
+        "E4",
+        "B3"
       ],
       "notation": "第 20 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00142",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
-          "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m20-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            64
+          ]
         },
         {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m20-p1-e3",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m20-step2",
       "measure_index": 20,
       "measure_number": "19",
       "onset_beats": 0.25,
@@ -4204,22 +4795,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 20 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00143",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m20-p1-e4",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m20-step3",
       "measure_index": 20,
       "measure_number": "19",
       "onset_beats": 0.5,
@@ -4233,17 +4828,21 @@
       "notation": "第 20 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00144",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m20-p1-e5",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m20-step4",
       "measure_index": 20,
       "measure_number": "19",
       "onset_beats": 0.75,
@@ -4257,49 +4856,60 @@
       "notation": "第 20 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00145",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 47,
+          "id": "score-beyer.segment.133-m20-p1-e6",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            47
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m20-step5",
       "measure_index": 20,
       "measure_number": "19",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        59,
-        66
+        66,
+        59
       ],
       "note_names": [
-        "B3",
-        "F♯4"
+        "F#4",
+        "B3"
       ],
       "notation": "第 20 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00146",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
-          "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m20-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            66
+          ]
         },
         {
-          "note": 66,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m20-p1-e7",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m20-step6",
       "measure_index": 20,
       "measure_number": "19",
       "onset_beats": 1.25,
@@ -4308,22 +4918,26 @@
         54
       ],
       "note_names": [
-        "F♯3"
+        "F#3"
       ],
       "notation": "第 20 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00147",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m20-p1-e8",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m20-step7",
       "measure_index": 20,
       "measure_number": "19",
       "onset_beats": 1.5,
@@ -4332,22 +4946,26 @@
         51
       ],
       "note_names": [
-        "D♯3"
+        "D#3"
       ],
       "notation": "第 20 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00148",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 51,
+          "id": "score-beyer.segment.133-m20-p1-e9",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            51
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m20-step8",
       "measure_index": 20,
       "measure_number": "19",
       "onset_beats": 1.75,
@@ -4361,49 +4979,60 @@
       "notation": "第 20 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00149",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 47,
+          "id": "score-beyer.segment.133-m20-p1-e10",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            47
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m21-step1",
       "measure_index": 21,
       "measure_number": "20",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1.5,
       "notes": [
-        52,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 21 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00150",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
-          "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m21-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1.5,
+          "notes": [
+            68
+          ]
         },
         {
-          "note": 68,
-          "hand": "right",
-          "finger": 3,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m21-p1-e3",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m21-step2",
       "measure_index": 21,
       "measure_number": "20",
       "onset_beats": 0.25,
@@ -4417,17 +5046,21 @@
       "notation": "第 21 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00151",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 47,
+          "id": "score-beyer.segment.133-m21-p1-e4",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            47
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m21-step3",
       "measure_index": 21,
       "measure_number": "20",
       "onset_beats": 0.5,
@@ -4441,17 +5074,21 @@
       "notation": "第 21 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00152",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m21-p1-e5",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m21-step4",
       "measure_index": 21,
       "measure_number": "20",
       "onset_beats": 0.75,
@@ -4460,22 +5097,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 21 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00153",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m21-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m21-step5",
       "measure_index": 21,
       "measure_number": "20",
       "onset_beats": 1,
@@ -4489,17 +5130,21 @@
       "notation": "第 21 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00154",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m21-p1-e7",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m21-step6",
       "measure_index": 21,
       "measure_number": "20",
       "onset_beats": 1.25,
@@ -4513,49 +5158,60 @@
       "notation": "第 21 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00155",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m21-p1-e8",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m21-step7",
       "measure_index": 21,
       "measure_number": "20",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        56,
-        71
+        71,
+        56
       ],
       "note_names": [
-        "G♯3",
-        "B4"
+        "B4",
+        "G#3"
       ],
       "notation": "第 21 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00156",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m21-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            71
+          ]
         },
         {
-          "note": 71,
-          "hand": "right",
-          "finger": 2,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m21-p1-e9",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m21-step8",
       "measure_index": 21,
       "measure_number": "20",
       "onset_beats": 1.75,
@@ -4569,57 +5225,71 @@
       "notation": "第 21 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00157",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m21-p1-e10",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m22-step1",
       "measure_index": 22,
       "measure_number": "21",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        61,
+        76,
         69,
-        76
+        61
       ],
       "note_names": [
-        "C♯4",
+        "E5",
         "A4",
-        "E5"
+        "C#4"
       ],
       "notation": "第 22 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00158",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 61,
+          "id": "score-beyer.segment.133-m22-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            76
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m22-p1-e5",
+          "hand": "right",
+          "voice": 2,
+          "duration_beats": 1,
+          "notes": [
+            69
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m22-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 76,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m22-step2",
       "measure_index": 22,
       "measure_number": "21",
       "onset_beats": 0.25,
@@ -4633,17 +5303,21 @@
       "notation": "第 22 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00159",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m22-p1-e7",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m22-step3",
       "measure_index": 22,
       "measure_number": "21",
       "onset_beats": 0.5,
@@ -4657,89 +5331,102 @@
       "notation": "第 22 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00160",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m22-p1-e8",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m22-step4",
       "measure_index": 22,
       "measure_number": "21",
       "onset_beats": 0.75,
       "duration_beats": 0.5,
       "notes": [
-        59,
-        75
+        75,
+        59
       ],
       "note_names": [
-        "B3",
-        "D♯5"
+        "D#5",
+        "B3"
       ],
       "notation": "第 22 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00161",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
-          "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m22-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            75
+          ]
         },
         {
-          "note": 75,
-          "hand": "right",
-          "finger": 4,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m22-p1-e9",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.5,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m22-step5",
       "measure_index": 22,
       "measure_number": "21",
       "onset_beats": 1.25,
-      "duration_beats": 0.25,
+      "duration_beats": 0.75,
       "notes": [
-        57,
         69,
-        73
+        73,
+        57
       ],
       "note_names": [
-        "A3",
         "A4",
-        "C♯5"
+        "C#5",
+        "A3"
       ],
       "notation": "第 22 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00162",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m22-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.75,
+          "notes": [
+            69,
+            73
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m22-p1-e10",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
-        },
-        {
-          "note": 69,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 73,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m22-step6",
       "measure_index": 22,
       "measure_number": "21",
       "onset_beats": 1.5,
@@ -4753,17 +5440,21 @@
       "notation": "第 22 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00163",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m22-p1-e11",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m22-step7",
       "measure_index": 22,
       "measure_number": "21",
       "onset_beats": 1.75,
@@ -4777,97 +5468,105 @@
       "notation": "第 22 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00164",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m22-p1-e12",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m22-step8",
       "measure_index": 22,
       "measure_number": "21",
       "onset_beats": 2,
       "duration_beats": 0.5,
       "notes": [
-        59,
         68,
-        71
+        71,
+        59
       ],
       "note_names": [
-        "B3",
-        "G♯4",
-        "B4"
+        "G#4",
+        "B4",
+        "B3"
       ],
       "notation": "第 22 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00165",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m22-p1-e4",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            68,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m22-p1-e13",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m23-step1",
       "measure_index": 23,
       "measure_number": "22",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1,
       "notes": [
-        56,
         64,
-        71
+        71,
+        56
       ],
       "note_names": [
-        "G♯3",
         "E4",
-        "B4"
+        "B4",
+        "G#3"
       ],
       "notation": "第 23 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00166",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m23-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 1,
+          "notes": [
+            64,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m23-p1-e4",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m23-step2",
       "measure_index": 23,
       "measure_number": "22",
       "onset_beats": 0.25,
@@ -4881,17 +5580,21 @@
       "notation": "第 23 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00167",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m23-p1-e5",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m23-step3",
       "measure_index": 23,
       "measure_number": "22",
       "onset_beats": 0.5,
@@ -4900,22 +5603,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 23 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00168",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m23-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m23-step4",
       "measure_index": 23,
       "measure_number": "22",
       "onset_beats": 0.75,
@@ -4929,57 +5636,63 @@
       "notation": "第 23 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00169",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m23-p1-e7",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m23-step5",
       "measure_index": 23,
       "measure_number": "22",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        52,
         64,
-        68
+        68,
+        52
       ],
       "note_names": [
-        "E3",
         "E4",
-        "G♯4"
+        "G#4",
+        "E3"
       ],
       "notation": "第 23 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00170",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
+          "id": "score-beyer.segment.133-m23-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            68
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m23-p1-e8",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m23-step6",
       "measure_index": 23,
       "measure_number": "22",
       "onset_beats": 1.25,
@@ -4993,57 +5706,63 @@
       "notation": "第 23 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00171",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m23-p1-e9",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m23-step7",
       "measure_index": 23,
       "measure_number": "22",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        56,
         64,
-        71
+        71,
+        56
       ],
       "note_names": [
-        "G♯3",
         "E4",
-        "B4"
+        "B4",
+        "G#3"
       ],
       "notation": "第 23 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00172",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m23-p1-e3",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            64,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m23-p1-e10",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m23-step8",
       "measure_index": 23,
       "measure_number": "22",
       "onset_beats": 1.75,
@@ -5057,97 +5776,105 @@
       "notation": "第 23 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00173",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 62,
+          "id": "score-beyer.segment.133-m23-p1-e11",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            62
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m24-step1",
       "measure_index": 24,
       "measure_number": "23",
       "onset_beats": 0,
       "duration_beats": 0.5,
       "notes": [
-        59,
         65,
-        71
+        71,
+        59
       ],
       "note_names": [
-        "B3",
         "F4",
-        "B4"
+        "B4",
+        "B3"
       ],
       "notation": "第 24 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00174",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m24-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            65,
+            71
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m24-p1-e5",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 65,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 71,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.5,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m24-step2",
       "measure_index": 24,
       "measure_number": "23",
       "onset_beats": 0.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        56,
         68,
-        73
+        73,
+        56
       ],
       "note_names": [
-        "G♯3",
-        "G♯4",
-        "C♯5"
+        "G#4",
+        "C#5",
+        "G#3"
       ],
       "notation": "第 24 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00175",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m24-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            68,
+            73
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m24-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 68,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 73,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m24-step3",
       "measure_index": 24,
       "measure_number": "23",
       "onset_beats": 0.75,
@@ -5161,65 +5888,74 @@
       "notation": "第 24 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00176",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 53,
+          "id": "score-beyer.segment.133-m24-p1-e7",
           "hand": "left",
-          "finger": 5,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            53
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m24-step4",
       "measure_index": 24,
       "measure_number": "23",
       "onset_beats": 1,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        56,
-        61,
         66,
-        69
+        69,
+        56,
+        61
       ],
       "note_names": [
-        "G♯3",
-        "C♯4",
-        "F♯4",
-        "A4"
+        "F#4",
+        "A4",
+        "G#3",
+        "C#4"
       ],
       "notation": "第 24 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00177",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 61,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 66,
+          "id": "score-beyer.segment.133-m24-p1-e3",
           "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            66,
+            69
+          ]
         },
         {
-          "note": 69,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "id": "score-beyer.segment.133-m24-p1-e8",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m24-p1-e9",
+          "hand": "left",
+          "voice": 6,
+          "duration_beats": 0.25,
+          "notes": [
+            61
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m24-step5",
       "measure_index": 24,
       "measure_number": "23",
       "onset_beats": 1.25,
@@ -5228,62 +5964,68 @@
         54
       ],
       "note_names": [
-        "F♯3"
+        "F#3"
       ],
       "notation": "第 24 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00178",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m24-p1-e10",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m24-step6",
       "measure_index": 24,
       "measure_number": "23",
       "onset_beats": 1.5,
-      "duration_beats": 0.25,
+      "duration_beats": 0.5,
       "notes": [
-        59,
         63,
-        66
+        66,
+        59
       ],
       "note_names": [
-        "B3",
-        "D♯4",
-        "F♯4"
+        "D#4",
+        "F#4",
+        "B3"
       ],
       "notation": "第 24 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00179",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 59,
+          "id": "score-beyer.segment.133-m24-p1-e4",
+          "hand": "right",
+          "voice": 1,
+          "duration_beats": 0.5,
+          "notes": [
+            63,
+            66
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m24-p1-e11",
           "hand": "left",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 63,
-          "hand": "right",
-          "finger": 1,
-          "source": "generated"
-        },
-        {
-          "note": 66,
-          "hand": "right",
-          "finger": 5,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 0.25,
+          "notes": [
+            59
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m24-step7",
       "measure_index": 24,
       "measure_number": "23",
       "onset_beats": 1.75,
@@ -5297,57 +6039,71 @@
       "notation": "第 24 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00180",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m24-p1-e12",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 6,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m25-step1",
       "measure_index": 25,
       "measure_number": "24",
       "onset_beats": 0,
-      "duration_beats": 0.25,
+      "duration_beats": 1.5,
       "notes": [
-        52,
+        64,
         56,
-        64
+        52
       ],
       "note_names": [
-        "E3",
-        "G♯3",
-        "E4"
+        "E4",
+        "G#3",
+        "E3"
       ],
       "notation": "第 25 小节",
       "hand": "both",
       "match_mode": "chord",
-      "id": "beyer.segment.133.event.00181",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 52,
-          "hand": "left",
-          "finger": 5,
-          "source": "generated"
-        },
-        {
-          "note": 56,
-          "hand": "left",
-          "finger": 3,
-          "source": "generated"
-        },
-        {
-          "note": 64,
+          "id": "score-beyer.segment.133-m25-p1-e1",
           "hand": "right",
-          "finger": 1,
-          "source": "generated"
+          "voice": 1,
+          "duration_beats": 1.5,
+          "notes": [
+            64
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m25-p1-e2",
+          "hand": "left",
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
+        },
+        {
+          "id": "score-beyer.segment.133-m25-p1-e7",
+          "hand": "left",
+          "voice": 6,
+          "duration_beats": 1.5,
+          "notes": [
+            52
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m25-step2",
       "measure_index": 25,
       "measure_number": "24",
       "onset_beats": 0.25,
@@ -5361,17 +6117,21 @@
       "notation": "第 25 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00182",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 57,
+          "id": "score-beyer.segment.133-m25-p1-e3",
           "hand": "left",
-          "finger": 2,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            57
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m25-step3",
       "measure_index": 25,
       "measure_number": "24",
       "onset_beats": 0.5,
@@ -5380,22 +6140,26 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 25 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00183",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m25-p1-e4",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            56
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m25-step4",
       "measure_index": 25,
       "measure_number": "24",
       "onset_beats": 0.75,
@@ -5404,22 +6168,26 @@
         54
       ],
       "note_names": [
-        "F♯3"
+        "F#3"
       ],
       "notation": "第 25 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00184",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 54,
+          "id": "score-beyer.segment.133-m25-p1-e5",
           "hand": "left",
-          "finger": 4,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.25,
+          "notes": [
+            54
+          ]
         }
       ]
     },
     {
+      "id": "score-beyer.segment.133-m25-step5",
       "measure_index": 25,
       "measure_number": "24",
       "onset_beats": 1,
@@ -5428,18 +6196,21 @@
         56
       ],
       "note_names": [
-        "G♯3"
+        "G#3"
       ],
       "notation": "第 25 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "id": "beyer.segment.133.event.00185",
-      "fingerings": [
+      "fingerings": [],
+      "source_events": [
         {
-          "note": 56,
+          "id": "score-beyer.segment.133-m25-p1-e6",
           "hand": "left",
-          "finger": 3,
-          "source": "generated"
+          "voice": 5,
+          "duration_beats": 0.5,
+          "notes": [
+            56
+          ]
         }
       ]
     }

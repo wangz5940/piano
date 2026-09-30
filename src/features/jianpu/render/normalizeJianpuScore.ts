@@ -36,9 +36,9 @@ export function to_render_score_from_jianpu_score(
       normalize_measure(
         score,
         measure,
-        meter,
-        scale_intervals,
-        accidental_preference,
+        measure.meter ? parse_jianpu_meter(`${measure.meter.beats}/${measure.meter.beat_unit}`) : meter,
+        measure.key_signature ? get_scale_intervals(measure.key_signature) : scale_intervals,
+        measure.key_signature ? get_accidental_preference(measure.key_signature) : accidental_preference,
       )),
   };
   return validate_render_score(render_score);
@@ -118,19 +118,20 @@ function append_hand_event(
   scale_intervals: readonly number[],
   accidental_preference: "sharp" | "flat",
 ): void {
-  if (notes.length === 0) {
+  const rest = hand === "right" ? event.right_rest : event.left_rest;
+  if (notes.length === 0 && !rest) {
     return;
   }
   target.push({
     id: `${score.segment_id}-m${measure.index}-e${event_index}-${hand}`,
     hand,
-    kind: "note",
+    kind: notes.length ? "note" : "rest",
     onset_beats: event.onset_beats,
     duration_beats: event.duration_beats,
     notes: notes.map((midi, note_index) => {
       const note = midi_to_jianpu_note(
         midi,
-        score.tonic_midi,
+        measure.tonic_midi ?? score.tonic_midi,
         scale_intervals,
         accidental_preference,
       );

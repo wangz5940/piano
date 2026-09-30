@@ -1233,10 +1233,13 @@ export function score_document_to_jianpu_score(document, segment_id, event_metad
     tonic_midi: document.tonic_midi,
     time_signature: document.time_signature,
     measures: document.measures.map((measure, index) => ({
-      index: Number(measure.number) || index + 1,
+      index: index + 1,
       number: measure.number,
       directions: [],
-    events: score_events_to_jianpu_events(measure.events, event_metadata),
+      meter: measure.meter,
+      key_signature: measure.key_signature ?? document.key_signature,
+      tonic_midi: measure.tonic_midi ?? document.tonic_midi,
+      events: score_events_to_jianpu_events(measure.events, event_metadata),
     })),
   };
 }
@@ -1264,6 +1267,9 @@ function score_events_to_jianpu_events(events, event_metadata = {}) {
     const fingering_target = event.hand === "left"
       ? existing.left_fingerings
       : existing.right_fingerings;
+    if (event.notes.length === 0) {
+      existing[event.hand === "left" ? "left_rest" : "right_rest"] = true;
+    }
     const slur = normalize_jianpu_slur(event_metadata[event.id]?.slur);
     if (event.hand === "left") {
       existing.left_slur = merge_jianpu_slur(existing.left_slur, slur);
@@ -1289,6 +1295,8 @@ function score_events_to_jianpu_events(events, event_metadata = {}) {
       left_notes: unique_numbers(event.left_notes),
       right_fingerings: unique_fingerings(event.right_fingerings),
       left_fingerings: unique_fingerings(event.left_fingerings),
+      right_rest: event.right_rest && event.right_notes.length === 0 ? true : undefined,
+      left_rest: event.left_rest && event.left_notes.length === 0 ? true : undefined,
       ...(event.right_slur ? { right_slur: event.right_slur } : {}),
       ...(event.left_slur ? { left_slur: event.left_slur } : {}),
     }))

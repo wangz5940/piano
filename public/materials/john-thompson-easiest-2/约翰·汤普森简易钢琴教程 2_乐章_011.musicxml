@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 4.0.3 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="4.0.3">
   <identification>
     <encoding>
@@ -21,7 +20,7 @@
   </identification>
   <defaults>
     <scaling>
-      <millimeters>9.1440</millimeters>
+      <millimeters>9.144</millimeters>
       <tenths>40</tenths>
     </scaling>
     <page-layout>
@@ -62,9 +61,7 @@
       </midi-instrument>
     </score-part>
   </part-list>
-  <!--= = = = = = = = = = = = = = = = = = = = = = = = = = = = =-->
   <part id="P1">
-    <!--=======================================================-->
     <measure number="13" width="223">
       <print new-page="yes">
         <system-layout>
@@ -99,7 +96,7 @@
         <stem default-y="6">up</stem>
       </note>
       <note default-x="79">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -120,7 +117,7 @@
         <stem default-y="6">up</stem>
       </note>
       <note default-x="183">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -131,8 +128,8 @@
         <stem default-y="6">up</stem>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="14" width="76">
+      <attributes></attributes>
       <note default-x="17">
         <pitch>
           <step>E</step>
@@ -143,7 +140,7 @@
         <type>whole</type>
       </note>
       <note default-x="17">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>G</step>
           <octave>4</octave>
@@ -156,8 +153,8 @@
         <bar-style>light-light</bar-style>
       </barline>
     </measure>
-    <!--=======================================================-->
     <measure number="15" width="191">
+      <attributes></attributes>
       <note default-x="7">
         <pitch>
           <step>C</step>
@@ -185,7 +182,7 @@
         <stem default-y="-9">up</stem>
       </note>
       <note default-x="54">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>A</step>
           <octave>2</octave>
@@ -196,8 +193,8 @@
         <stem default-y="-9">up</stem>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="16" width="80">
+      <attributes></attributes>
       <note default-x="17">
         <pitch>
           <step>F</step>
@@ -208,7 +205,7 @@
         <type>whole</type>
       </note>
       <note default-x="17">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>A</step>
           <octave>2</octave>
@@ -221,8 +218,8 @@
         <bar-style>light-light</bar-style>
       </barline>
     </measure>
-    <!--=======================================================-->
     <measure number="17" width="182">
+      <attributes></attributes>
       <note default-x="7">
         <pitch>
           <step>G</step>
@@ -252,7 +249,7 @@
         <stem default-y="-58">down</stem>
       </note>
       <note default-x="59">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -273,7 +270,7 @@
         <stem default-y="-55">down</stem>
       </note>
       <note default-x="152">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -284,8 +281,8 @@
         <stem default-y="-55">down</stem>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="18" width="73">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>A</step>
@@ -296,7 +293,7 @@
         <type>whole</type>
       </note>
       <note default-x="16">
-        <chord/>
+        <chord></chord>
         <pitch>
           <step>C</step>
           <octave>5</octave>
@@ -310,9 +307,7 @@
       </barline>
     </measure>
   </part>
-  <!--= = = = = = = = = = = = = = = = = = = = = = = = = = = = =-->
   <part id="P2">
-    <!--=======================================================-->
     <measure number="1" width="183">
       <print>
         <system-layout>
@@ -339,6 +334,10 @@
           <line>4</line>
         </clef>
         <staff-details print-object="yes"></staff-details>
+        <time>
+          <beats>3</beats>
+          <beat-type>4</beat-type>
+        </time>
       </attributes>
       <note default-x="57">
         <pitch>
@@ -384,13 +383,13 @@
         <duration>9</duration>
         <voice>5</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-25">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="2" width="128">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>G</step>
@@ -424,13 +423,13 @@
         <duration>9</duration>
         <voice>5</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-25">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="3" width="100">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>D</step>
@@ -440,7 +439,7 @@
         <tie type="start"></tie>
         <voice>1</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-45">down</stem>
         <staff>1</staff>
         <notations>
@@ -459,7 +458,7 @@
         <tie type="start"></tie>
         <voice>5</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-30">down</stem>
         <staff>2</staff>
         <notations>
@@ -467,8 +466,8 @@
         </notations>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="4" width="128">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>D</step>
@@ -523,7 +522,6 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="5" width="186">
       <print new-system="yes">
         <system-layout>
@@ -584,13 +582,13 @@
         <duration>9</duration>
         <voice>5</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-26">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="6" width="130">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>G</step>
@@ -624,13 +622,13 @@
         <duration>9</duration>
         <voice>5</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-26">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="7" width="130">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>D</step>
@@ -664,13 +662,13 @@
         <duration>9</duration>
         <voice>5</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-32">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="8" width="101">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>F</step>
@@ -679,7 +677,7 @@
         <duration>9</duration>
         <voice>1</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="1">up</stem>
         <staff>1</staff>
       </note>
@@ -694,13 +692,13 @@
         <duration>9</duration>
         <voice>5</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-31">down</stem>
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="9" width="143">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>E</step>
@@ -760,8 +758,8 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="10" width="143">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>E</step>
@@ -866,8 +864,8 @@
         </notations>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="11" width="101">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>C</step>
@@ -877,7 +875,7 @@
         <tie type="start"></tie>
         <voice>1</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-52">down</stem>
         <staff>1</staff>
         <notations>
@@ -896,7 +894,7 @@
         <tie type="start"></tie>
         <voice>5</voice>
         <type>half</type>
-        <dot/>
+        <dot></dot>
         <stem default-y="-26">down</stem>
         <staff>2</staff>
         <notations>
@@ -904,8 +902,8 @@
         </notations>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="12" width="144">
+      <attributes></attributes>
       <note default-x="16">
         <pitch>
           <step>C</step>
@@ -963,7 +961,6 @@
         <bar-style>light-heavy</bar-style>
       </barline>
     </measure>
-    <!--=======================================================-->
     <measure number="13">
       <print new-page="yes">
         <measure-numbering>none</measure-numbering>
@@ -992,8 +989,8 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="14">
+      <attributes></attributes>
       <note>
         <rest measure="yes"></rest>
         <duration>4</duration>
@@ -1010,8 +1007,8 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="15">
+      <attributes></attributes>
       <note>
         <rest measure="yes"></rest>
         <duration>3</duration>
@@ -1028,8 +1025,8 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="16">
+      <attributes></attributes>
       <note>
         <rest measure="yes"></rest>
         <duration>4</duration>
@@ -1046,8 +1043,8 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="17">
+      <attributes></attributes>
       <note>
         <rest measure="yes"></rest>
         <duration>5</duration>
@@ -1064,8 +1061,8 @@
         <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
     <measure number="18">
+      <attributes></attributes>
       <note>
         <rest measure="yes"></rest>
         <duration>4</duration>
