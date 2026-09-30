@@ -21,9 +21,9 @@ describe("resolve_published_lessons", () => {
     expect(resolved.course_id).toBe(static_lesson.course_id);
     expect(resolved.week_number).toBe(static_lesson.week_number);
     expect(resolved.day_index).toBe(static_lesson.day_index);
-    expect(resolved.title).toBe("数据库发布诗歌 · 已发布教学谱");
-    expect(resolved.source_ref).toContain("score-371-v2");
-    expect(resolved.score.score_version_id).toBe("score-371-v2");
+    expect(resolved.title).toBe("数据库发布曲目 · 已发布教学谱");
+    expect(resolved.source_ref).toContain("score-demo-c-major-v2");
+    expect(resolved.score.score_version_id).toBe("score-demo-c-major-v2");
     expect(resolved.steps).toBe(resolved.score.steps);
   });
 
@@ -46,7 +46,7 @@ describe("resolve_published_lessons", () => {
     expect(resolve_published_lesson(static_lesson, curriculum).id)
       .toBe("w9-d1-sight");
     expect(resolve_published_lesson(static_lesson, curriculum).score
-      .score_version_id).toBe("score-371-v2");
+      .score_version_id).toBe("score-demo-c-major-v2");
   });
 });
 
@@ -85,7 +85,7 @@ function make_curriculum(
         revision_id: "revision-random",
         parent_id: "day-random-9-1",
         kind: "lesson",
-        title: "诗歌",
+        title: "曲目练习",
         position: 4,
         payload: { exercise_type },
         status: "active",
@@ -95,14 +95,14 @@ function make_curriculum(
     lesson_score_bindings: [{
       id: "binding",
       lesson_node_id: "lesson-random-primary",
-      score_version_id: "score-371-v2",
+      score_version_id: "score-demo-c-major-v2",
       role: "primary",
       position: 1,
       settings: {},
     }],
     score_versions: [{
-      id: "score-371-v2",
-      score_id: "hymn-371",
+      id: "score-demo-c-major-v2",
+      score_id: "score-demo-c-major",
       version_number: 2,
       source_sha256: "a".repeat(64),
       document: make_document(status, published_at),
@@ -118,20 +118,20 @@ function make_document(
 ): score_document_v2 {
   return {
     schema_version: 2,
-    id: "hymn-371",
-    number: "371",
-    title: "数据库发布诗歌",
+    id: "score-demo-c-major",
+    number: "demo-1",
+    title: "数据库发布曲目",
     key_signature: "C major",
     tonic_midi: 60,
     time_signature: "4/4",
     status,
     provenance: {
-      kind: "pptx",
-      source_id: "hymn-pptx-371",
-      source_file: "371.pptx",
+      kind: "manual",
+      source_id: "manual-demo",
+      source_file: null,
       source_sha256: "b".repeat(64),
-      font_config_version: "font-v1",
-      importer_version: "import-v1",
+      font_config_version: null,
+      importer_version: null,
       references: [],
     },
     lyrics: [],

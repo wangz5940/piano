@@ -17,7 +17,6 @@ import {
   type harmonized_measure,
 } from "./harmony";
 import { make_metered_steps, note_name } from "./scoreBuilders";
-import { get_hymn_repertoire_entry } from "@/features/repertoire/hymns";
 
 const major_scale = [0, 2, 4, 5, 7, 9, 11] as const;
 const natural_minor_scale = [0, 2, 3, 5, 7, 8, 10] as const;
@@ -466,13 +465,9 @@ function create_day_lessons(profile: week_profile, day_index: 1 | 2 | 3): lesson
   const method_steps = create_method_steps(profile, day_index);
   const technique_steps = create_technique_steps(profile, day_index);
   const repertoire_steps = create_repertoire_steps(profile);
-  const hymn_entry = get_hymn_for_week(profile.week_number);
-  const repertoire_score = hymn_entry?.score ?? create_score(`${base_id}-repertoire-score`, `${profile.repertoire_title} · 完整 ${get_measure_count(repertoire_steps)} 小节谱`, repertoire_steps, profile, {
+  const repertoire_score = create_score(`${base_id}-repertoire-score`, `${profile.repertoire_title} · 完整 ${get_measure_count(repertoire_steps)} 小节谱`, repertoire_steps, profile, {
     source: create_repertoire_source(profile),
   });
-  const is_hymn_ooxml_reference = Boolean(
-    hymn_entry && repertoire_score.steps.length === 0,
-  );
   const sight_steps = create_sight_steps(profile, day_index);
 
   return [
@@ -536,38 +531,18 @@ function create_day_lessons(profile: week_profile, day_index: 1 | 2 | 3): lesson
       }),
     }),
     make_lesson(`${base_id}-repertoire`, profile, day_index, {
-      title: hymn_entry
-        ? is_hymn_ooxml_reference
-          ? `${hymn_entry.title} · PPTX OOXML 来源核对 · ${focus}`
-          : `${hymn_entry.title} · 完整 ${get_measure_count(repertoire_score.steps)} 小节诗歌教学谱 · ${focus}`
-        : `${profile.repertoire_title} · 完整 ${get_measure_count(repertoire_steps)} 小节 · ${focus}`,
-      description: hymn_entry
-        ? is_hymn_ooxml_reference
-          ? "查看已接入的诗歌 PPTX OOXML 来源，等待校对后再进入跟弹。"
-          : "把今天的手位、节拍和左手伴奏带进一首熟悉诗歌。"
-        : "把今天的手位、节拍和左手伴奏带进一首固定曲目。",
-      guidance: hymn_entry
-        ? is_hymn_ooxml_reference
-          ? "先核对 PPTX OOXML 来源、歌词和待审核状态；发布 ScoreDocument v2 前不做实时判定。"
-          : "先看 PPTX 来源的歌词和分句，再用已发布教学谱练手位、指法与和弦。第三次要从第一小节连续到最后一小节。"
-        : "本周三次使用同一份完整谱；可以改变训练重点，但第三次要从第一小节连续到最后一小节。",
+      title: `${profile.repertoire_title} · 完整 ${get_measure_count(repertoire_steps)} 小节 · ${focus}`,
+      description: "把今天的手位、节拍和左手伴奏带进一首固定曲目。",
+      guidance: "本周三次使用同一份完整谱；可以改变训练重点，但第三次要从第一小节连续到最后一小节。",
       objective: "把技术应用到完整旋律。",
-      hand_mode: is_hymn_ooxml_reference
-        ? "both"
-        : get_steps_hand_mode(repertoire_score.steps),
+      hand_mode: get_steps_hand_mode(repertoire_score.steps),
       target_bpm: profile.week_number >= 21 ? 56 : 50,
-      pass_accuracy: is_hymn_ooxml_reference ? undefined : 0.78,
+      pass_accuracy: 0.78,
       estimated_minutes: 15,
       material_kind: "piece",
       exercise_type: "repertoire",
-      practice_mode: is_hymn_ooxml_reference
-        ? "manual_checklist"
-        : "guided_input",
-      source_ref: hymn_entry
-        ? is_hymn_ooxml_reference
-          ? `${hymn_entry.title} · PPTX OOXML 待审核来源`
-          : `${hymn_entry.title} · 已发布诗歌教学谱`
-        : get_repertoire_source_ref(profile),
+      practice_mode: "guided_input",
+      source_ref: get_repertoire_source_ref(profile),
       score: repertoire_score,
     }),
     make_lesson(`${base_id}-sight`, profile, day_index, {
@@ -657,21 +632,6 @@ function create_repertoire_steps(profile: week_profile): expected_step[] {
     measures: create_harmonized_measures(profile, measure_count, 0),
     style,
   });
-}
-
-function get_hymn_for_week(week_number: number) {
-  const hymn_by_week: Record<number, string> = {
-    9: "hymn-371-jesus-loves-me",
-    12: "hymn-240-tis-so-sweet-to-trust-in-jesus",
-    16: "hymn-285-what-a-friend-we-have-in-jesus",
-    20: "hymn-461-amazing-grace",
-    24: "hymn-037-jesus-lover-of-my-soul",
-    28: "hymn-200-trust-and-obey",
-    32: "hymn-496-how-great-thou-art",
-    36: "hymn-001-great-physician",
-  };
-  const hymn_id = hymn_by_week[week_number];
-  return hymn_id ? get_hymn_repertoire_entry(hymn_id) : undefined;
 }
 
 function create_sight_steps(profile: week_profile, day_index: 1 | 2 | 3): expected_step[] {

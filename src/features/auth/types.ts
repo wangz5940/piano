@@ -1,5 +1,5 @@
 import type { user_progress } from "@/features/course/types";
-import type { hymn_review_record, score_document } from "@/features/score";
+import type { score_document } from "@/features/score";
 import type { app_settings } from "@/features/settings/storage";
 
 export type {
@@ -117,7 +117,6 @@ export interface score_version_record {
   version_number: number;
   source_sha256: string;
   document: score_document;
-  hymn_review?: hymn_review_record;
   created_at: string;
   published_at?: string;
 }
@@ -127,7 +126,6 @@ export interface score_draft_record {
   score_id: string;
   base_version_id?: string;
   document: score_document;
-  hymn_review?: hymn_review_record;
   updated_at: string;
 }
 

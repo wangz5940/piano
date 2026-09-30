@@ -5,8 +5,8 @@ import type { score_document_v1 } from "./types";
 
 const v1_document: score_document_v1 = {
   schema_version: 1,
-  id: "score-legacy-hymn",
-  title: "Legacy hymn",
+  id: "score-legacy-piece",
+  title: "Legacy piece",
   key_signature: "G major",
   tonic_midi: 67,
   time_signature: "3/4",

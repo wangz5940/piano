@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { create_calibration_project } from "@/features/calibration/storage";
 import type { calibration_project } from "@/features/calibration/types";
 import { duration_beats_from_digit_key } from "@/features/calibration/keyboardShortcuts";
+import type { jianpu_catalog } from "@/features/jianpu/types";
 
 import { ScoreCalibration } from "./ScoreCalibration";
 
@@ -30,23 +31,27 @@ describe("通用乐谱校准台", () => {
     expect(markup).not.toContain("导出 Golden Score");
   });
 
-  it("提供已有内容选择、分层校验、事件编辑和三种预览", () => {
+  it("按教程进入对应教材细分，并提供分层校验、事件编辑和三种预览", () => {
     const markup = renderToStaticMarkup(
       <MemoryRouter>
         <ScoreCalibration
           user_override={admin}
           initial_projects={[create_project_fixture()]}
+          initial_catalog={create_catalog_fixture()}
         />
       </MemoryRouter>,
     );
 
     expect(markup).toContain("从原件证据到 Golden Score");
-    expect(markup).toContain("已有乐谱");
-    expect(markup).toContain("校准对象来自教材谱库");
-    expect(markup).toContain("《拜厄》标题特殊处理：共 98 条");
-    expect(markup).toContain("原谱第 22 页：第 12-15 条");
-    expect(markup).toContain("折叠教材片段");
-    expect(markup).toContain("折叠已有内容");
+    expect(markup).toContain('aria-label="教程选择"');
+    expect(markup).toContain("教程");
+    expect(markup).toContain("教材细分");
+    expect(markup).toContain("拜厄钢琴基本教程");
+    expect(markup).toContain("哈农钢琴练指法");
+    expect(markup).toContain("拜厄校准样本");
+    expect(markup).not.toContain("哈农校准样本");
+    expect(markup).toContain("折叠教材细分");
+    expect(markup).not.toContain("折叠已有内容");
     expect(markup).not.toContain("附加原始资料");
     expect(markup).not.toContain("导入 MusicXML");
     expect(markup).not.toContain("导入 Score JSON");
@@ -54,7 +59,8 @@ describe("通用乐谱校准台", () => {
     expect(markup).toContain("L1");
     expect(markup).toContain("L2");
     expect(markup).toContain("L3");
-    expect(markup).toContain("已有内容");
+    expect(markup).not.toContain("已有内容");
+    expect(markup).not.toContain("已有乐谱");
     expect(markup).toContain("数字乐谱");
     expect(markup).toContain("缩放");
     expect(markup).toContain("适屏");
@@ -117,6 +123,67 @@ describe("通用乐谱校准台", () => {
     expect(duration_beats_from_digit_key("ArrowRight")).toBeUndefined();
   });
 });
+
+function create_catalog_fixture(): jianpu_catalog {
+  return {
+    schema_version: "1.0",
+    generated_at: "2026-09-30T00:00:00.000Z",
+    materials: [
+      {
+        id: "beyer",
+        title: "拜厄钢琴基本教程",
+        description: "拜厄测试教程",
+        page_count: 102,
+        pages: [],
+        chapters: [],
+        segments: [{
+          id: "beyer.segment.012",
+          sequence: 12,
+          title: "拜厄校准样本",
+          source_pages: [22],
+          source_page_label: "PDF 第 22 页",
+          page_slices: [],
+          exercise_labels: ["第 12-15 条"],
+          jianpu_url: "/materials/beyer/example.jianpu.json",
+          musicxml_url: "/materials/beyer/example.musicxml",
+          measure_count: 1,
+          time_signature: "4/4",
+          key_signature: "C major",
+          tonic_midi: 60,
+          hand_mode: "both",
+          has_left_hand: true,
+          chord_count: 0,
+        }],
+      },
+      {
+        id: "hanon",
+        title: "哈农钢琴练指法",
+        description: "哈农测试教程",
+        page_count: 119,
+        pages: [],
+        chapters: [],
+        segments: [{
+          id: "hanon.segment.001",
+          sequence: 1,
+          title: "哈农校准样本",
+          source_pages: [1],
+          source_page_label: "PDF 第 1 页",
+          page_slices: [],
+          exercise_labels: ["练习 1"],
+          jianpu_url: "/materials/hanon/example.jianpu.json",
+          musicxml_url: "/materials/hanon/example.musicxml",
+          measure_count: 1,
+          time_signature: "4/4",
+          key_signature: "C major",
+          tonic_midi: 60,
+          hand_mode: "both",
+          has_left_hand: true,
+          chord_count: 0,
+        }],
+      },
+    ],
+  };
+}
 
 function create_project_fixture(): calibration_project {
   const project = create_calibration_project({

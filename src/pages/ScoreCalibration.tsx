@@ -15,7 +15,6 @@ import {
   CircleAlert,
   Download,
   FileMusic,
-  FolderOpen,
   Pause,
   Play,
   Plus,
@@ -76,10 +75,6 @@ import {
   load_jianpu_score,
 } from "@/features/jianpu/loadJianpuLibrary";
 import {
-  get_beyer_title_annotation_for_pages,
-  type beyer_title_annotation_summary,
-} from "@/features/jianpu/beyerTitleAnnotations";
-import {
   load_score_favorites,
   save_score_favorites,
   upsert_score_favorite,
@@ -104,6 +99,7 @@ import { use_auth_store } from "@/store/useAuthStore";
 interface score_calibration_props {
   user_override?: account_user | null;
   initial_projects?: calibration_project[];
+  initial_catalog?: jianpu_catalog;
 }
 
 type calibration_score_scale_mode = "fit" | "width" | "actual";
@@ -162,6 +158,7 @@ const level_copy: Record<
 export function ScoreCalibration({
   user_override,
   initial_projects,
+  initial_catalog,
 }: score_calibration_props = {}) {
   const [search_params] = useSearchParams();
   const stored_user = use_auth_store((state) => state.user);
@@ -180,15 +177,13 @@ export function ScoreCalibration({
   );
   const [preview_mode, set_preview_mode] =
     useState<calibration_preview_mode>("staff");
-  const [catalog, set_catalog] = useState<jianpu_catalog>();
+  const [catalog, set_catalog] = useState<jianpu_catalog | undefined>(initial_catalog);
   const [is_loading_catalog, set_is_loading_catalog] = useState(false);
   const [selected_segment_key, set_selected_segment_key] = useState("");
   const [selected_measure_id, set_selected_measure_id] = useState("");
   const [selected_event_id, set_selected_event_id] = useState("");
   const [selected_note_id, set_selected_note_id] = useState("");
   const [is_segment_panel_collapsed, set_is_segment_panel_collapsed] =
-    useState(false);
-  const [is_source_panel_collapsed, set_is_source_panel_collapsed] =
     useState(false);
   const [score_scale_mode, set_score_scale_mode] =
     useState<calibration_score_scale_mode>("fit");
@@ -228,6 +223,31 @@ export function ScoreCalibration({
   }, [projects]);
   const project = projects.find((candidate) =>
     candidate.id === selected_project_id) ?? projects[0];
+  const selected_segment_option = segment_options.find(({ material, segment }) =>
+    get_segment_key(material, segment) === selected_segment_key);
+  const selected_material_id =
+    selected_segment_option?.material.id ??
+    project?.material_catalog?.material_id ??
+    catalog?.materials[0]?.id;
+  const selected_material = catalog?.materials.find((material) =>
+    material.id === selected_material_id) ?? catalog?.materials[0];
+  const selected_material_segments = selected_material?.segments ?? [];
+
+  const select_segment = (material: jianpu_material, segment: jianpu_segment) => {
+    const segment_key = get_segment_key(material, segment);
+    const project_id = get_material_project_id(material, segment);
+    set_selected_segment_key(segment_key);
+    if (projects.some((candidate) => candidate.id === project_id)) {
+      set_selected_project_id(project_id);
+    }
+  };
+
+  const select_material = (material: jianpu_material) => {
+    const first_segment = material.segments[0];
+    if (first_segment) {
+      select_segment(material, first_segment);
+    }
+  };
   useCenteredActiveItem(
     project_list_ref,
     [
@@ -286,7 +306,7 @@ export function ScoreCalibration({
     const observer = new ResizeObserver(update);
     observer.observe(stage);
     return () => observer.disconnect();
-  }, [project?.id, preview_mode, inspector_layout, is_source_panel_collapsed]);
+  }, [project?.id, preview_mode, inspector_layout]);
 
   useEffect(() => {
     if (typeof ResizeObserver === "undefined") {
@@ -306,7 +326,7 @@ export function ScoreCalibration({
   }, [project?.id, preview_mode, score_scale_mode, score_viewport_size.width]);
 
   useEffect(() => {
-    if (initial_projects || user?.role !== "admin") {
+    if (initial_catalog || initial_projects || user?.role !== "admin") {
       return;
     }
     let active = true;
@@ -353,7 +373,7 @@ export function ScoreCalibration({
     return () => {
       active = false;
     };
-  }, [initial_projects, requested_segment_key, user?.role]);
+  }, [initial_catalog, initial_projects, requested_segment_key, user?.role]);
 
   useEffect(() => {
     if (!requested_segment_key || segment_options.length === 0) {
@@ -1158,6 +1178,27 @@ export function ScoreCalibration({
         tabIndex={-1}
         onKeyDown={handle_calibration_keydown}
       >
+        <aside className="calibration-tutorials" aria-label="教程选择">
+          <header>
+            <span>教程</span>
+            <strong>{catalog?.materials.length ?? 0}</strong>
+          </header>
+          <div className="calibration-tutorial-list">
+            {catalog?.materials.map((material) => (
+              <button
+                key={material.id}
+                type="button"
+                className={material.id === selected_material?.id ? "is-selected" : ""}
+                aria-pressed={material.id === selected_material?.id}
+                onClick={() => select_material(material)}
+              >
+                <strong>{material.title}</strong>
+                <span>{material.segments.length} 个细分</span>
+              </button>
+            ))}
+          </div>
+        </aside>
+
         <aside
           className={[
             "calibration-projects",
@@ -1169,8 +1210,8 @@ export function ScoreCalibration({
               type="button"
               className="calibration-collapse-button"
               aria-expanded={!is_segment_panel_collapsed}
-              aria-label={is_segment_panel_collapsed ? "展开教材片段" : "折叠教材片段"}
-              title={is_segment_panel_collapsed ? "展开教材片段" : "折叠教材片段"}
+              aria-label={is_segment_panel_collapsed ? "展开教材细分" : "折叠教材细分"}
+              title={is_segment_panel_collapsed ? "展开教材细分" : "折叠教材细分"}
               onClick={() => set_is_segment_panel_collapsed((value) => !value)}
             >
               {is_segment_panel_collapsed
@@ -1179,16 +1220,17 @@ export function ScoreCalibration({
             </button>
             {!is_segment_panel_collapsed && (
               <>
-                <span>教材片段</span>
-                <strong>{segment_options.length || projects.length}</strong>
+                <span>教材细分</span>
+                <strong>{selected_material_segments.length || projects.length}</strong>
               </>
             )}
           </header>
           {!is_segment_panel_collapsed && (
             <>
               <div className="calibration-project-list" ref={project_list_ref}>
-                {segment_options.length > 0
-                  ? segment_options.map(({ material, segment }) => {
+                {selected_material
+                  ? selected_material_segments.map((segment) => {
+                    const material = selected_material;
                     const project_id = get_material_project_id(material, segment);
                     const segment_key = get_segment_key(material, segment);
                     const display_title =
@@ -1198,10 +1240,10 @@ export function ScoreCalibration({
                         key={project_id}
                         type="button"
                         className={project_id === project.id ? "is-selected" : ""}
-                        onClick={() => set_selected_segment_key(segment_key)}
+                        onClick={() => select_segment(material, segment)}
                       >
                         <strong>{display_title}</strong>
-                        <span>{material.title} · {segment.source_page_label}</span>
+                        <span>{segment.source_page_label}</span>
                       </button>
                     );
                   })
@@ -1244,71 +1286,21 @@ export function ScoreCalibration({
               type="button"
               className="calibration-collapsed-rail"
               onClick={() => set_is_segment_panel_collapsed(false)}
-              aria-label="展开教材片段"
-              title="展开教材片段"
+              aria-label="展开教材细分"
+              title="展开教材细分"
             >
-              教材
+              细分
             </button>
           )}
         </aside>
 
         <div className="calibration-main">
-          <section className="calibration-import-bar">
-            <FileMusic size={16} />
-            <label>
-              <span>已有乐谱</span>
-              <select
-                value={selected_segment_key || project.id}
-                onChange={(event) => {
-                  if (segment_options.length > 0) {
-                    set_selected_segment_key(event.target.value);
-                  } else {
-                    set_selected_project_id(event.target.value);
-                  }
-                }}
-              >
-                {segment_options.length > 0
-                  ? segment_options.map(({ material, segment }) => {
-                    const segment_key = get_segment_key(material, segment);
-                    const display_title =
-                      calibrated_title_by_segment_key.get(segment_key) ?? segment.title;
-                    return (
-                      <option
-                        key={get_material_project_id(material, segment)}
-                        value={segment_key}
-                      >
-                        {material.title} · {display_title}
-                      </option>
-                    );
-                  })
-                  : projects.map((candidate) => (
-                    <option key={candidate.id} value={candidate.id}>
-                      {candidate.title} · {candidate.work.edition || "当前版本"}
-                    </option>
-                  ))}
-              </select>
-            </label>
-            <span>
-              {is_loading_catalog
-                ? "正在同步教材谱库"
-                : `${segment_options.length || projects.length} 个教材片段`}
-            </span>
-          </section>
-
           <section
             className={[
               "calibration-workbench",
-              is_source_panel_collapsed ? "is-source-panel-collapsed" : "",
               `is-inspector-${inspector_layout}`,
             ].filter(Boolean).join(" ")}
           >
-            <SourcePane
-              project={project}
-              is_collapsed={is_source_panel_collapsed}
-              on_toggle_collapsed={() =>
-                set_is_source_panel_collapsed((value) => !value)}
-            />
-
             <section className="calibration-score-pane">
               <header className="calibration-pane-head">
                 <div>
@@ -1537,102 +1529,6 @@ export function ScoreCalibration({
       </section>
       </div>
     </AppShell>
-  );
-}
-
-function SourcePane({
-  project,
-  is_collapsed,
-  on_toggle_collapsed,
-}: {
-  project: calibration_project;
-  is_collapsed: boolean;
-  on_toggle_collapsed: () => void;
-}) {
-  const beyer_title_annotation = get_project_beyer_title_annotation(project);
-  return (
-    <section
-      className={[
-        "calibration-source-pane",
-        is_collapsed ? "is-collapsed" : "",
-      ].filter(Boolean).join(" ")}
-    >
-      <header className="calibration-pane-head">
-        {!is_collapsed && (
-          <div>
-            <span>已有内容</span>
-            <strong>{project.source.file_name ?? project.title}</strong>
-          </div>
-        )}
-        <button
-          type="button"
-          className="calibration-collapse-button"
-          aria-expanded={!is_collapsed}
-          aria-label={is_collapsed ? "展开已有内容" : "折叠已有内容"}
-          title={is_collapsed ? "展开已有内容" : "折叠已有内容"}
-          onClick={on_toggle_collapsed}
-        >
-          {is_collapsed ? <ChevronRight size={15} /> : <ChevronDown size={15} />}
-        </button>
-      </header>
-      {is_collapsed && (
-        <button
-          type="button"
-          className="calibration-collapsed-rail"
-          onClick={on_toggle_collapsed}
-          aria-label="展开已有内容"
-          title="展开已有内容"
-        >
-          已有
-        </button>
-      )}
-      {!is_collapsed && (
-        <div className="calibration-source-stage">
-          <div className="calibration-empty-source">
-            <FolderOpen size={28} />
-            <strong>校准对象来自教材谱库</strong>
-            <span>{project.document.provenance.source_file ?? project.document.id}</span>
-            <span>{project.work.source || "不会在此处上传新资料"}</span>
-            {beyer_title_annotation && (
-              <BeyerTitleAnnotation annotation={beyer_title_annotation} />
-            )}
-          </div>
-        </div>
-      )}
-    </section>
-  );
-}
-
-function BeyerTitleAnnotation({
-  annotation,
-}: {
-  annotation: beyer_title_annotation_summary;
-}) {
-  const selected_label = annotation.selected_pages.length > 0
-    ? annotation.selected_pages
-        .map((entry) => `原谱第 ${entry.page} 页：${entry.label}`)
-        .join("；")
-    : "当前片段不在第 12-109 条标题覆盖范围内";
-  return (
-    <div className="calibration-title-annotation">
-      <strong>
-        《拜厄》标题特殊处理：共 {annotation.total_count} 条
-      </strong>
-      <span>
-        覆盖第 {annotation.first_title_number}-{annotation.last_title_number} 条标题
-      </span>
-      <span>{selected_label}</span>
-      <details>
-        <summary>查看第 22 页起全部页码对应关系</summary>
-        <div>
-          {annotation.pages.map((entry) => (
-            <span key={entry.page}>
-              原谱第 {entry.page} 页：{entry.label}
-            </span>
-          ))}
-        </div>
-      </details>
-    </div>
   );
 }
 
@@ -2713,20 +2609,6 @@ function create_jianpu_event_metadata(
     }
   }
   return metadata;
-}
-
-function get_project_beyer_title_annotation(
-  project: calibration_project,
-): beyer_title_annotation_summary | undefined {
-  if (!project.id.startsWith("material:beyer:")) {
-    return undefined;
-  }
-  const source_pages = [...new Set(
-    Object.values(project.event_metadata)
-      .map((metadata) => metadata.source_page)
-      .filter((page): page is number => typeof page === "number" && page > 0),
-  )].sort((a, b) => a - b);
-  return get_beyer_title_annotation_for_pages(source_pages);
 }
 
 function merge_material_projects(

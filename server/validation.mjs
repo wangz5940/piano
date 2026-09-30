@@ -26,15 +26,6 @@ const score_annotation_statuses = new Set([
 const score_provenance_kinds = new Set(["pptx", "manual", "legacy"]);
 const score_hand_position_movements = new Set(["stay", "move", "return"]);
 const score_ties = new Set(["start", "continue", "stop"]);
-const hymn_review_states = new Set(["candidate", "needs_review", "reviewed"]);
-const hymn_review_issue_kinds = new Set([
-  "unknown_glyph",
-  "structural",
-  "source",
-  "other",
-]);
-const hymn_review_issue_severities = new Set(["warning", "error"]);
-const hymn_review_issue_statuses = new Set(["unresolved", "resolved"]);
 const sha256_pattern = /^[a-f0-9]{64}$/i;
 const calibration_fields = [
   "pitch_name",
@@ -302,41 +293,6 @@ export function validate_score_draft_create(value) {
   };
 }
 
-export function validate_hymn_candidate_create(value) {
-  const candidate = as_record(value, "诗歌候选必须是对象");
-  const score = as_record(candidate.score, "诗歌候选缺少乐谱信息");
-  const document = candidate.document;
-  validate_score_document(document);
-  const score_id = identifier(score.id, "乐谱 ID");
-  if (document.id !== score_id) {
-    throw new validation_error("候选乐谱 ID 与 ScoreDocument 不一致");
-  }
-  if (document.provenance.kind !== "pptx") {
-    throw new validation_error("诗歌候选必须具有 PPTX 来源");
-  }
-  if (document.status === "published") {
-    throw new validation_error("不能把已发布文档创建为候选");
-  }
-  return {
-    score: {
-      id: score_id,
-      slug: identifier(score.slug, "乐谱 slug"),
-      title: required_string(score.title, "乐谱标题", 1, 200),
-    },
-    document: structuredClone(document),
-    review: validate_hymn_review_create(candidate.review),
-  };
-}
-
-export function validate_score_draft_save(value) {
-  const input = as_record(value, "乐谱草稿修订必须是对象");
-  validate_score_document(input.document);
-  return {
-    document: structuredClone(input.document),
-    review: validate_hymn_review_save(input.review),
-  };
-}
-
 export function validate_score_calibration_save(value, options = {}) {
   const input = as_record(value, "校准保存内容必须是对象");
   const project = normalize_score_calibration_project(
@@ -479,133 +435,6 @@ export function validate_score_event_patch(value) {
     throw new validation_error("修改音高或指法时必须提供音符 ID");
   }
   return result;
-}
-
-function validate_hymn_review_create(value) {
-  const review = as_record(value, "诗歌校对信息必须是对象");
-  if (!Array.isArray(review.slides) || review.slides.length === 0 || review.slides.length > 100) {
-    throw new validation_error("诗歌校对必须包含 1—100 张 SVG 幻灯片");
-  }
-  const slide_numbers = new Set();
-  const slides = review.slides.map((raw_slide) => {
-    const slide = as_record(raw_slide, "诗歌 SVG 幻灯片必须是对象");
-    const slide_number = bounded_integer(slide.slide_number, "幻灯片序号", 1, 100_000);
-    if (slide_numbers.has(slide_number)) {
-      throw new validation_error("诗歌 SVG 幻灯片序号不能重复");
-    }
-    slide_numbers.add(slide_number);
-    return {
-      slide_number,
-      source_svg: validate_svg(
-        slide.source_svg,
-        "来源忠实 SVG",
-        "pptx-source-svg",
-      ),
-      normalized_svg: validate_svg(
-        slide.normalized_svg,
-        "规范教学 SVG",
-        "normalized-teaching-svg",
-      ),
-      source_refs: validate_score_source_references(
-        slide.source_refs,
-        "SVG 来源引用",
-      ).map((reference) => structuredClone(reference)),
-    };
-  });
-  return {
-    review_state: valid_set_value(
-      review.review_state,
-      hymn_review_states,
-      "诗歌审核状态",
-    ),
-    font_config_version: required_string(
-      review.font_config_version,
-      "字体配置版本",
-      1,
-      160,
-    ),
-    slides,
-    issues: validate_hymn_review_issues(review.issues),
-  };
-}
-
-function validate_hymn_review_save(value) {
-  const review = as_record(value, "诗歌校对修订必须是对象");
-  if (
-    !Array.isArray(review.normalized_slides) ||
-    review.normalized_slides.length === 0 ||
-    review.normalized_slides.length > 100
-  ) {
-    throw new validation_error("规范教学预览必须包含 1—100 张幻灯片");
-  }
-  const slide_numbers = new Set();
-  const normalized_slides = review.normalized_slides.map((raw_slide) => {
-    const slide = as_record(raw_slide, "规范教学预览必须是对象");
-    const slide_number = bounded_integer(slide.slide_number, "幻灯片序号", 1, 100_000);
-    if (slide_numbers.has(slide_number)) {
-      throw new validation_error("规范教学预览序号不能重复");
-    }
-    slide_numbers.add(slide_number);
-    return {
-      slide_number,
-      svg: validate_svg(
-        slide.svg,
-        "规范教学 SVG",
-        "normalized-teaching-svg",
-      ),
-    };
-  });
-  return {
-    review_state: valid_set_value(
-      review.review_state,
-      new Set(["needs_review", "reviewed"]),
-      "诗歌审核状态",
-    ),
-    issues: validate_hymn_review_issues(review.issues),
-    normalized_slides,
-  };
-}
-
-function validate_hymn_review_issues(value) {
-  if (!Array.isArray(value) || value.length > 100_000) {
-    throw new validation_error("诗歌问题清单无效");
-  }
-  const issue_ids = new Set();
-  return value.map((raw_issue) => {
-    const issue = as_record(raw_issue, "诗歌问题必须是对象");
-    const id = identifier(issue.id, "问题 ID");
-    if (issue_ids.has(id)) {
-      throw new validation_error("诗歌问题 ID 不能重复");
-    }
-    issue_ids.add(id);
-    return {
-      id,
-      code: identifier(issue.code, "问题代码"),
-      kind: valid_set_value(issue.kind, hymn_review_issue_kinds, "问题类型"),
-      severity: valid_set_value(
-        issue.severity,
-        hymn_review_issue_severities,
-        "问题严重度",
-      ),
-      status: valid_set_value(issue.status, hymn_review_issue_statuses, "问题状态"),
-      message: required_string(issue.message, "问题说明", 1, 2_000),
-      source_refs: validate_score_source_references(
-        issue.source_refs,
-        "问题来源引用",
-      ).map((reference) => structuredClone(reference)),
-    };
-  });
-}
-
-function validate_svg(value, label, document_type) {
-  const svg = required_string(value, label, 16, 2_000_000, false);
-  if (!/^\s*<svg[\s>]/iu.test(svg) || !svg.includes(`data-document-type="${document_type}"`)) {
-    throw new validation_error(`${label}类型无效`);
-  }
-  if (/<script|<foreignObject|\son[a-z]+\s*=/iu.test(svg)) {
-    throw new validation_error(`${label}包含不安全内容`);
-  }
-  return svg;
 }
 
 export function validate_score_document(value, { for_publish = false } = {}) {

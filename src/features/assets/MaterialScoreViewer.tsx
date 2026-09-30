@@ -56,7 +56,7 @@ export function MaterialScoreViewer({
   return (
     <section className="material-score-viewer" aria-label={`${display_title}教材对照谱`}>
       <header className="material-score-head">
-        <div>
+        <div className="material-score-title">
           <p className="section-kicker"><FileMusic size={15} /> 教材对照谱</p>
           <h2>{display_title}</h2>
         </div>

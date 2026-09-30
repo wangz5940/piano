@@ -9,13 +9,11 @@ import type {
   fingering_guide,
   practice_score,
 } from "@/features/course/types";
-import { hymn_repertoire_entries } from "./hymns";
 
 import { imported_jianpu_structured_entries } from "./importedJianpuStructuredData";
 
 export { imported_jianpu_entries } from "./importedJianpuData";
 export type { imported_jianpu_entry } from "./importedJianpuData";
-export { hymn_repertoire_entries };
 
 export interface repertoire_entry {
   id: string;

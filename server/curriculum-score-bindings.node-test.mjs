@@ -79,14 +79,14 @@ test("课程修订只绑定已发布乐谱并保留旧 revision 历史", async (
         score_version_id: "score-demo-c-major-v1",
         role: "primary",
         position: 1,
-        settings: { source: "published-hymn" },
+        settings: { source: "published-score" },
       },
     },
   );
   assert.equal(saved.status, 200);
   assert.equal(
     saved.data.lesson_score_binding.settings.source,
-    "published-hymn",
+    "published-score",
   );
 
   const published = await fixture.request(

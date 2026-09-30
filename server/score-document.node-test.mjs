@@ -120,8 +120,8 @@ test("v2 校验覆盖 PPTX 来源、歌词、手位、指法和标注状态", ()
   const document = migrate_score_document(legacy_document);
   document.provenance = {
     kind: "pptx",
-    source_id: "hymn-001",
-    source_file: "001 hymn.pptx",
+    source_id: "score-import-001",
+    source_file: "001 score.pptx",
     source_sha256: "b".repeat(64),
     font_config_version: "simpmusic-v1",
     importer_version: "pptx-importer-v1",

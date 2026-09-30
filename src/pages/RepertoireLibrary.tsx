@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BookOpenText,
   ChevronDown,
@@ -12,8 +12,6 @@ import {
 
 import { AppShell } from "@/components/AppShell";
 import { PracticeScore } from "@/components/PracticeScore";
-import { resolve_published_hymn_entries } from "@/features/curriculum/resolvePublishedHymns";
-import { usePublishedCurriculum } from "@/features/curriculum/usePublishedCurriculum";
 import {
   imported_jianpu_entries,
   imported_teaching_entries,
@@ -30,11 +28,6 @@ import {
 } from "@/features/repertoire/favorites";
 
 export function RepertoireLibrary() {
-  const published_curriculum = usePublishedCurriculum();
-  const hymn_entries = useMemo(
-    () => resolve_published_hymn_entries(published_curriculum),
-    [published_curriculum],
-  );
   const imported_teaching_source_urls = new Set(
     imported_teaching_entries
       .map((entry) => entry.source_url)
@@ -42,15 +35,19 @@ export function RepertoireLibrary() {
   );
   const imported_preview_entries = imported_jianpu_entries.filter((entry) =>
     !imported_teaching_source_urls.has(entry.source_url));
-  const all_teaching_entries = useMemo(
-    () => [...repertoire_entries, ...hymn_entries, ...imported_teaching_entries],
-    [hymn_entries],
-  );
+  const all_teaching_entries = [...repertoire_entries, ...imported_teaching_entries];
   const [favorite_entries_state, set_favorite_entries_state] = useState(load_score_favorites);
+  const [expanded_entry_ids, set_expanded_entry_ids] = useState<Set<string>>(
+    get_initial_expanded_entry_ids,
+  );
   const [collapse_all_token, set_collapse_all_token] = useState(0);
   const [expand_all_token, set_expand_all_token] = useState(0);
   const favorite_entries = all_teaching_entries.filter((entry) =>
     is_score_favorite(favorite_entries_state, get_repertoire_favorite_id(entry.id)));
+  const all_card_ids = [
+    ...all_teaching_entries.map((entry) => get_structured_card_id(entry.id)),
+    ...imported_preview_entries.map((entry) => get_imported_card_id(entry.id)),
+  ];
 
   useEffect(() => {
     save_score_favorites(favorite_entries_state);
@@ -62,20 +59,41 @@ export function RepertoireLibrary() {
   };
 
   const handle_collapse_all = () => {
+    set_expanded_entry_ids(new Set());
     set_collapse_all_token((token) => token + 1);
   };
 
   const handle_expand_all = () => {
+    set_expanded_entry_ids(new Set(all_card_ids));
     set_expand_all_token((token) => token + 1);
   };
 
-  const scroll_to_repertoire = (id: string) => {
-    const target = document.getElementById(`repertoire-${id}`);
-    if (!target) {
-      return;
-    }
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", `#repertoire-${id}`);
+  const toggle_card = (card_id: string) => {
+    set_expanded_entry_ids((current) => {
+      const next = new Set(current);
+      if (next.has(card_id)) {
+        next.delete(card_id);
+      } else {
+        next.add(card_id);
+      }
+      return next;
+    });
+  };
+
+  const open_and_scroll_to_repertoire = (id: string) => {
+    set_expanded_entry_ids((current) => {
+      const next = new Set(current);
+      next.add(get_structured_card_id(id));
+      return next;
+    });
+    window.requestAnimationFrame(() => {
+      const target = document.getElementById(`repertoire-${id}`);
+      if (!target) {
+        return;
+      }
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", `#repertoire-${id}`);
+    });
   };
 
   return (
@@ -86,8 +104,7 @@ export function RepertoireLibrary() {
           <h1>认识的旋律，<br />也要学会独立读谱。</h1>
           <p className="intro-copy">
             这里现在分成两层：公版教学谱可以直接练，
-            授权导入曲目已经按原始数据整理成整首教学谱，
-            诗歌 PPTX 已先进入 OOXML 来源核对流程。
+            授权导入曲目已经按原始数据整理成整首教学谱。
           </p>
         </div>
         <div className="repertoire-rights-note">
@@ -111,7 +128,7 @@ export function RepertoireLibrary() {
                 className="repertoire-toc-song"
                 onClick={(event) => {
                   event.preventDefault();
-                  scroll_to_repertoire(entry.id);
+                  open_and_scroll_to_repertoire(entry.id);
                 }}
               >
                 {entry.title}
@@ -159,7 +176,7 @@ export function RepertoireLibrary() {
                   href={`#repertoire-${entry.id}`}
                   onClick={(event) => {
                     event.preventDefault();
-                    scroll_to_repertoire(entry.id);
+                    open_and_scroll_to_repertoire(entry.id);
                   }}
                 >
                   查看详情 <ChevronDown size={13} />
@@ -197,37 +214,8 @@ export function RepertoireLibrary() {
                 get_repertoire_favorite_id(entry.id),
               )}
               on_toggle_favorite={handle_toggle_favorite}
-              collapse_all_token={collapse_all_token}
-              expand_all_token={expand_all_token}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section id="repertoire-hymns" className="repertoire-section" aria-label="诗歌练习">
-        <div className="section-heading repertoire-section-heading">
-          <div>
-            <p className="section-kicker"><BookOpenText size={15} /> 诗歌练习</p>
-            <h2>从熟悉诗歌进入手位、指法与和弦分析。</h2>
-          </div>
-          <p className="repertoire-section-count">{hymn_entries.length} 首</p>
-        </div>
-        <p className="repertoire-section-copy">
-          这部分来自 <code>712首-文字</code> 的 SimpMusic PPTX。
-          当前先作为 OOXML 待审核来源展示；发布 ScoreDocument v2 后才进入正式跟弹判定。
-        </p>
-        <div className="repertoire-list">
-          {hymn_entries.map((entry, index) => (
-            <StructuredRepertoireCard
-              key={entry.id}
-              entry={entry}
-              index={index}
-              badge_label="诗歌教学谱"
-              is_favorite={is_score_favorite(
-                favorite_entries_state,
-                get_repertoire_favorite_id(entry.id),
-              )}
-              on_toggle_favorite={handle_toggle_favorite}
+              is_expanded={expanded_entry_ids.has(get_structured_card_id(entry.id))}
+              on_toggle={() => toggle_card(get_structured_card_id(entry.id))}
               collapse_all_token={collapse_all_token}
               expand_all_token={expand_all_token}
             />
@@ -259,6 +247,8 @@ export function RepertoireLibrary() {
                 get_repertoire_favorite_id(entry.id),
               )}
               on_toggle_favorite={handle_toggle_favorite}
+              is_expanded={expanded_entry_ids.has(get_structured_card_id(entry.id))}
+              on_toggle={() => toggle_card(get_structured_card_id(entry.id))}
               collapse_all_token={collapse_all_token}
               expand_all_token={expand_all_token}
             />
@@ -284,6 +274,8 @@ export function RepertoireLibrary() {
                 key={entry.id}
                 entry={entry}
                 index={index}
+                is_expanded={expanded_entry_ids.has(get_imported_card_id(entry.id))}
+                on_toggle={() => toggle_card(get_imported_card_id(entry.id))}
                 collapse_all_token={collapse_all_token}
                 expand_all_token={expand_all_token}
               />
@@ -301,6 +293,8 @@ function StructuredRepertoireCard({
   badge_label,
   is_favorite,
   on_toggle_favorite,
+  is_expanded,
+  on_toggle,
   collapse_all_token,
   expand_all_token,
 }: {
@@ -309,18 +303,35 @@ function StructuredRepertoireCard({
   badge_label: string;
   is_favorite: boolean;
   on_toggle_favorite: (entry: repertoire_entry) => void;
+  is_expanded: boolean;
+  on_toggle: () => void;
   collapse_all_token: number;
   expand_all_token: number;
 }) {
+  const details_id = `repertoire-details-${entry.id}`;
+
   return (
-    <article id={`repertoire-${entry.id}`} className="repertoire-card">
+    <article
+      id={`repertoire-${entry.id}`}
+      className={`repertoire-card ${is_expanded ? "is-expanded" : ""}`}
+    >
       <header>
-        <span className="repertoire-number">{String(index + 1).padStart(2, "0")}</span>
-        <div>
-          <p className="section-kicker">{entry.level} · 建议 {entry.recommended_weeks}</p>
-          <h2>{entry.title}</h2>
-          <p>{entry.attribution}</p>
-        </div>
+        <button
+          type="button"
+          className="repertoire-card-summary"
+          aria-expanded={is_expanded}
+          aria-controls={details_id}
+          aria-label={is_expanded ? `收起${entry.title}` : `展开${entry.title}`}
+          onClick={on_toggle}
+        >
+          <span className="repertoire-number">{String(index + 1).padStart(2, "0")}</span>
+          <span className="repertoire-card-summary-copy">
+            <span className="section-kicker">{entry.level} · 建议 {entry.recommended_weeks}</span>
+            <span className="repertoire-card-title">{entry.title}</span>
+            <span className="repertoire-card-attribution">{entry.attribution}</span>
+          </span>
+          {is_expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </button>
         <div className="repertoire-card-header-actions">
           <span className="public-domain-badge">{badge_label}</span>
           <button
@@ -334,21 +345,25 @@ function StructuredRepertoireCard({
           </button>
         </div>
       </header>
-      <div className="repertoire-learning-goal">
-        <BookOpenText size={16} />
-        <div>
-          <strong>本曲学什么</strong>
-          <p>{entry.learning_goal}</p>
+      {is_expanded && (
+        <div id={details_id} className="repertoire-card-details">
+          <div className="repertoire-learning-goal">
+            <BookOpenText size={16} />
+            <div>
+              <strong>本曲学什么</strong>
+              <p>{entry.learning_goal}</p>
+            </div>
+          </div>
+          <PracticeScore
+            score={entry.score}
+            collapse_all_token={collapse_all_token}
+            expand_all_token={expand_all_token}
+          />
+          <footer>
+            <p>{entry.rights_note}</p>
+          </footer>
         </div>
-      </div>
-      <PracticeScore
-        score={entry.score}
-        collapse_all_token={collapse_all_token}
-        expand_all_token={expand_all_token}
-      />
-      <footer>
-        <p>{entry.rights_note}</p>
-      </footer>
+      )}
     </article>
   );
 }
@@ -370,18 +385,44 @@ function get_repertoire_favorite_id(id: string): string {
   return `repertoire:${id}`;
 }
 
+function get_structured_card_id(id: string): string {
+  return `structured:${id}`;
+}
+
+function get_imported_card_id(id: string): string {
+  return `imported:${id}`;
+}
+
+function get_initial_expanded_entry_ids(): Set<string> {
+  if (typeof window === "undefined") {
+    return new Set();
+  }
+  const prefix = "#repertoire-";
+  if (!window.location.hash.startsWith(prefix)) {
+    return new Set();
+  }
+  return new Set([
+    get_structured_card_id(decodeURIComponent(window.location.hash.slice(prefix.length))),
+  ]);
+}
+
 function ImportedJianpuCard({
   entry,
   index,
+  is_expanded,
+  on_toggle,
   collapse_all_token,
   expand_all_token,
 }: {
   entry: imported_jianpu_entry;
   index: number;
+  is_expanded: boolean;
+  on_toggle: () => void;
   collapse_all_token: number;
   expand_all_token: number;
 }) {
   const [gallery_open, set_gallery_open] = useState(false);
+  const details_id = `repertoire-imported-details-${entry.id}`;
 
   useEffect(() => {
     set_gallery_open(false);
@@ -392,94 +433,114 @@ function ImportedJianpuCard({
   }, [expand_all_token]);
 
   return (
-    <article className="repertoire-card imported-repertoire-card">
+    <article
+      id={`repertoire-imported-${entry.id}`}
+      className={`repertoire-card imported-repertoire-card ${is_expanded ? "is-expanded" : ""}`}
+    >
       <header>
-        <span className="repertoire-number">J{String(index + 1).padStart(2, "0")}</span>
-        <div>
-          <p className="section-kicker">授权导入 · 共 {entry.page_count} 页</p>
-          <h2>{entry.title}</h2>
-          <p>{entry.attribution}</p>
-        </div>
-        <span className="public-domain-badge imported-repertoire-badge">原谱预览</span>
-      </header>
-      <div className="repertoire-learning-goal">
-        <BookOpenText size={16} />
-        <div>
-          <strong>当前先做什么</strong>
-          <p>先看原谱的旋律走向、分句和双手排布；后续会继续整理成可跟弹的教学谱。</p>
-        </div>
-      </div>
-      <div className="imported-jianpu-preview">
-        <div className="imported-jianpu-preview-copy">
-          <div>
-            <p className="section-kicker"><ImageIcon size={15} /> 原谱第一页</p>
-            <h3>{entry.title}</h3>
-          </div>
-          <p>
-            当前已成功采集 {entry.page_count} 页原谱截图，并同步进热门曲库。
-            这一版先作为浏览、选曲和人工整理入口。
-          </p>
-          <a
-            href={entry.preview_image.url}
-            target="_blank"
-            rel="noreferrer"
-            className="material-reference-link"
-          >
-            查看第一页
-          </a>
-        </div>
-        <a
-          href={entry.preview_image.url}
-          target="_blank"
-          rel="noreferrer"
-          className="imported-jianpu-preview-main"
-          aria-label={entry.preview_image.alt}
+        <button
+          type="button"
+          className="repertoire-card-summary"
+          aria-expanded={is_expanded}
+          aria-controls={details_id}
+          aria-label={is_expanded ? `收起${entry.title}` : `展开${entry.title}`}
+          onClick={on_toggle}
         >
-          <img
-            className="imported-jianpu-preview-image"
-            src={entry.preview_image.url}
-            alt={entry.preview_image.alt}
-            width={entry.preview_image.width}
-            height={entry.preview_image.height}
-            loading="lazy"
-          />
-        </a>
-      </div>
-      <details
-        className="imported-jianpu-gallery"
-        onToggle={(event) => set_gallery_open(event.currentTarget.open)}
-      >
-        <summary>
-          <span><ImageIcon size={16} /> 展开查看全部 {entry.page_count} 页原谱</span>
-            <small>用于来源核对与后续补充</small>
-        </summary>
-        {gallery_open && (
-          <div className="imported-jianpu-gallery-grid">
-            {entry.pages.map((page) => (
+          <span className="repertoire-number">J{String(index + 1).padStart(2, "0")}</span>
+          <span className="repertoire-card-summary-copy">
+            <span className="section-kicker">授权导入 · 共 {entry.page_count} 页</span>
+            <span className="repertoire-card-title">{entry.title}</span>
+            <span className="repertoire-card-attribution">{entry.attribution}</span>
+          </span>
+          {is_expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </button>
+        <div className="repertoire-card-header-actions">
+          <span className="public-domain-badge imported-repertoire-badge">原谱预览</span>
+        </div>
+      </header>
+      {is_expanded && (
+        <div id={details_id} className="repertoire-card-details">
+          <div className="repertoire-learning-goal">
+            <BookOpenText size={16} />
+            <div>
+              <strong>当前先做什么</strong>
+              <p>先看原谱的旋律走向、分句和双手排布；后续会继续整理成可跟弹的教学谱。</p>
+            </div>
+          </div>
+          <div className="imported-jianpu-preview">
+            <div className="imported-jianpu-preview-copy">
+              <div>
+                <p className="section-kicker"><ImageIcon size={15} /> 原谱第一页</p>
+                <h3>{entry.title}</h3>
+              </div>
+              <p>
+                当前已成功采集 {entry.page_count} 页原谱截图，并同步进热门曲库。
+                这一版先作为浏览、选曲和人工整理入口。
+              </p>
               <a
-                key={page.url}
-                href={page.url}
+                href={entry.preview_image.url}
                 target="_blank"
                 rel="noreferrer"
-                className="imported-jianpu-page"
-                aria-label={`${entry.title} 第 ${page.index} 页`}
+                className="material-reference-link"
               >
-                <img
-                  src={page.url}
-                  alt={`${entry.title} 第 ${page.index} 页`}
-                  width={page.width}
-                  height={page.height}
-                  loading="lazy"
-                />
-                <span>第 {page.index} 页</span>
+                查看第一页
               </a>
-            ))}
+            </div>
+            <a
+              href={entry.preview_image.url}
+              target="_blank"
+              rel="noreferrer"
+              className="imported-jianpu-preview-main"
+              aria-label={entry.preview_image.alt}
+            >
+              <img
+                className="imported-jianpu-preview-image"
+                src={entry.preview_image.url}
+                alt={entry.preview_image.alt}
+                width={entry.preview_image.width}
+                height={entry.preview_image.height}
+                loading="lazy"
+              />
+            </a>
           </div>
-        )}
-      </details>
-      <footer>
-        <p>{entry.rights_note}</p>
-      </footer>
+          <details
+            className="imported-jianpu-gallery"
+            open={gallery_open}
+            onToggle={(event) => set_gallery_open(event.currentTarget.open)}
+          >
+            <summary>
+              <span><ImageIcon size={16} /> 展开查看全部 {entry.page_count} 页原谱</span>
+            <small>用于来源核对与后续补充</small>
+            </summary>
+            {gallery_open && (
+              <div className="imported-jianpu-gallery-grid">
+                {entry.pages.map((page) => (
+                  <a
+                    key={page.url}
+                    href={page.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="imported-jianpu-page"
+                    aria-label={`${entry.title} 第 ${page.index} 页`}
+                  >
+                    <img
+                      src={page.url}
+                      alt={`${entry.title} 第 ${page.index} 页`}
+                      width={page.width}
+                      height={page.height}
+                      loading="lazy"
+                    />
+                    <span>第 {page.index} 页</span>
+                  </a>
+                ))}
+              </div>
+            )}
+          </details>
+          <footer>
+            <p>{entry.rights_note}</p>
+          </footer>
+        </div>
+      )}
     </article>
   );
 }
