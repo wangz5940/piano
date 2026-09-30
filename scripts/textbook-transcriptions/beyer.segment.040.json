@@ -1,0 +1,14 @@
+{
+  "evidence":"PDF26末行及PDF27首行练习22完整16小节4/4，跨页保留同一曲。核对首小节右手全休止、第5小节左手半休止，第二段指号及双手长句、末尾C4二分。",
+  "reviewed_pages":[26,27],"excluded_regions":[],
+  "sections":[
+    {"page":26,"title":"练习22","meter":[4,4],"left_clef":"treble","continues":true,"lines":[[
+      {"right":"R/4","left":"C4/1/5^start E4/1/3 G4/1/1 E4/1/3"},{"right":"C5/1/1^start E5/1/3 G5/1/5 E5/1/3","left":"C4/2 E4/2"},{"right":"D5/1/2 F5/1/4 E5/1/3 D5/1/2","left":"F4/2/2 G4/2/1"},{"right":"E5/4","left":"C4/1 E4/1 G4/1 E4/1"},
+      {"right":"C5/1^continue E5/1 G5/1 E5/1","left":"C4/2^stop r/2"},{"right":"C5/2 E5/2","left":"C4/1^start E4/1 G4/1 E4/1"},{"right":"D5/1 F5/1 E5/1 D5/1","left":"F4/2 G4/2"},{"right":"C5/1 E5/1 C5/2^stop","left":"C4/3^stop E4/1^start"}
+    ]]},
+    {"page":27,"title":"练习22（续）","meter":[4,4],"left_clef":"treble","lines":[[
+      {"right":"D5/1/2^start E5/1/3 C5/2/1","left":"F4/1/2^continue G4/1/1 E4/1/3 C4/1/5","repeat_start":true},{"right":"D5/1 E5/1 C5/2","left":"F4/1 G4/1 E4/1 C4/1"},{"right":"D5/1/2 E5/1/3 F5/1/4 G5/1/5","left":"D4/1/4 E4/1/3 F4/1/2 G4/1/1"},{"right":"F5/1 E5/1 D5/1 C5/1^stop","left":"F4/1 E4/1 D4/1 C4/1^stop"},
+      {"right":"D5/1^start E5/1 C5/2","left":"F4/1/2^start G4/1 E4/1 C4/1"},{"right":"D5/1 E5/1 C5/2","left":"F4/1 G4/1 E4/1 C4/1"},{"right":"D5/1/2 F5/1/4 E5/1/3 D5/1/2","left":"F4/1/2 D4/1/4 G4/1/1 F4/1/2"},{"right":"C5/1/1 E5/1/3 C5/2/1^stop","left":"E4/1/3 G4/1/1 C4/2/5^stop","repeat_end":true}
+    ]]}
+  ]
+}

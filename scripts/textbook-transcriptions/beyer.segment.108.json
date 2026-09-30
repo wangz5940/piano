@@ -1,0 +1,67 @@
+{
+  "title": "练习82",
+  "evidence": "逐小节核对PDF63五行主谱；恢复32个记谱小节（含三段弱起），去掉转调谱号误识别的两个伪小节。中段转为A大调，D5/D6为自然音；保留八分节奏、高八度音型、分句及双音伴奏，首尾短小节保持实际长度。",
+  "reviewed_pages": [63],
+  "excluded_regions": [],
+  "sections": [
+    {
+      "page": 63, "title": "练习82 · Allegretto", "meter": [3, 4], "fifths": 4,
+      "lines": [
+        [
+          {"right": "E4/0.5/1^start F#4/0.5", "left": "r/1", "quarters": 1},
+          {"right": "G#4/0.5 A4/0.5/4 B4/1 A4/0.5 G#4/0.5", "left": "E3/1^start G#3/1 B3/1"},
+          {"right": "F#4/2^stop F#4/0.5^start G#4/0.5", "left": "E3/1 A3/1 B3/1"},
+          {"right": "A4/0.5/1 B4/0.5 C#5/0.5 D#5/0.5 E5/0.5/1 F#5/0.5", "left": "E3/1 A3/1 B3/1"},
+          {"right": "G#5/2^stop E5/0.5^start F#5/0.5", "left": "E3/1 G#3/1 B3/1"},
+          {"right": "G#5/0.5 A5/0.5 B5/1 A5/0.5 G#5/0.5", "left": "E3/1^continue G#3/1 B3/1"}
+        ],
+        [
+          {"right": "F#5/2^stop F#5/0.5/2^start E5/0.5/1", "left": "E3/1 A3/1 B3/1"},
+          {"right": "D#5/0.5/4 C#5/0.5 B4/0.5 A4/0.5 G#4/0.5/3 F#4/0.5", "left": "E3/1 A3/1 B3/1"},
+          {"right": "E4/2^stop", "left": "E3+G#3/1!staccato^stop E3+G#3/1!staccato", "quarters": 2, "repeat_end": true}
+        ]
+      ]
+    },
+    {
+      "page": 63, "title": "练习82 · 中段", "meter": [3, 4], "fifths": 3,
+      "lines": [
+        [
+          {"right": "C#5/0.5/2^start D5/0.5/1", "left": "r/1", "quarters": 1, "repeat_start": true},
+          {"right": "E5/0.5/2!accent F#5/0.5/3 E5/0.5/2!staccato^stop r/0.5 C#6/0.5/2^start D6/0.5/1", "left": "A3/1!staccato C#4+E4/1!staccato C#4+E4/1!staccato"},
+          {"right": "E6/0.5!accent F#6/0.5 E6/0.5!staccato^stop r/0.5 E5/0.5/2^start F#5/0.5/3", "left": "A3/1!staccato C#4+E4/1!staccato C#4+E4/1!staccato"}
+        ],
+        [
+          {"right": "G#5/0.5/4 F#5/0.5 E5/0.5 D5/0.5 C#5/0.5/3 B4/0.5", "left": "E3/1!staccato D4+E4/1!staccato D4+E4/1!staccato"},
+          {"right": "A4/0.5 B4/0.5 C#5/1^stop C#5/0.5/2^start D5/0.5/1", "left": "A3/1!staccato C#4+E4/1!staccato C#4+E4/1!staccato"},
+          {"right": "E5/0.5!accent F#5/0.5 E5/0.5!staccato^stop r/0.5 C#6/0.5/2^start D6/0.5/1", "left": "A3/1!staccato C#4+E4/1!staccato C#4+E4/1!staccato"},
+          {"right": "E6/0.5!accent F#6/0.5 E6/0.5!staccato^stop r/0.5 E6/0.5/2^start F#6/0.5", "left": "A3/1!staccato C#4+E4/1!staccato C#4+E4/1!staccato"},
+          {"right": "G#6/0.5 F#6/0.5 E6/0.5 D6/0.5 C#6/0.5/3 B5/0.5", "left": "E3/1!staccato D4+E4/1!staccato D4+E4/1!staccato"},
+          {"right": "A5/1^stop r/1", "left": "A3+C#4/1!staccato A3+C#4/1!staccato", "quarters": 2, "repeat_end": true}
+        ]
+      ]
+    },
+    {
+      "page": 63, "title": "练习82 · 再现与结束", "meter": [3, 4], "fifths": 4,
+      "lines": [
+        [
+          {"right": "E4/0.5^start F#4/0.5", "left": "r/1", "quarters": 1},
+          {"right": "G#4/0.5 A4/0.5 B4/1 A4/0.5 G#4/0.5", "left": "E3/1^start G#3/1 B3/1"},
+          {"right": "F#4/2^stop F#4/0.5^start G#4/0.5", "left": "E3/1 A3/1 B3/1"},
+          {"right": "A4/0.5 B4/0.5 C#5/0.5 D#5/0.5 E5/0.5 F#5/0.5", "left": "E3/1 A3/1 B3/1"},
+          {"right": "G#5/2^stop E5/0.5^start F#5/0.5", "left": "E3/1 G#3/1 B3/1"},
+          {"right": "G#5/0.5 A5/0.5 B5/1 A5/0.5 G#5/0.5", "left": "E3/1^continue G#3/1 B3/1"},
+          {"right": "F#5/2^stop F#5/0.5/2^start E5/0.5/1", "left": "A3+C#4/1/4,2!staccato^stop A3+C#4/1!staccato r/1"}
+        ],
+        [
+          {"right": "D#5/0.5/4 C#5/0.5 B4/0.5 A4/0.5 G#4/0.5/3 F#4/0.5^stop", "left": "B3+D#4/1/4,2!staccato B3+D#4/1!staccato r/1"},
+          {"right": "E4/0.5^start F#4/0.5 G#4/0.5 A4/0.5 B4/0.5 C#5/0.5", "left": "E3/1/5^start G#3/1/3 B3/1/1"},
+          {"right": "D#5/0.5 C#5/0.5 B4/0.5 A4/0.5 G#4/0.5 F#4/0.5", "left": "E3/1 A3/1 B3/1"},
+          {"right": "E4/0.5^continue F#4/0.5 G#4/0.5 A4/0.5 B4/0.5 C#5/0.5", "left": "E3/1^continue G#3/1 B3/1"},
+          {"right": "D#5/0.5 C#5/0.5 B4/0.5 A4/0.5 G#4/0.5 F#4/0.5", "left": "E3/1 A3/1 B3/1"},
+          {"right": "E4/0.5^continue F#4/0.5 G#4/0.5 A4/0.5 B4/0.5 G#4/0.5", "left": "E3/0.5^continue F#3/0.5 G#3/0.5 A3/0.5 B3/0.5 G#3/0.5"},
+          {"right": "E4/2^stop", "left": "E3/2^stop", "quarters": 2}
+        ]
+      ]
+    }
+  ]
+}

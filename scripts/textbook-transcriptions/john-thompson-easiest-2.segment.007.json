@@ -1,0 +1,105 @@
+{
+  "evidence": "逐小节查看PDF27–30。PDF28按“左手跨越”把高音C5归入左手；PDF29为书面题。PDF30主曲另存008，本片段只保留该页手指操。",
+  "reviewed_pages": [27, 28, 29, 30],
+  "excluded_regions": [
+    {"page": 27, "reason": "大声读谱是无拍号、无小节线的认音示例。"},
+    {"page": 29, "reason": "键盘音名说明、写音名与八度移调填空，不是双手演奏曲。"},
+    {"page": 30, "reason": "大声读谱是认音示例；《五月的花柱舞》学生旋律另存008。"}
+  ],
+  "sections": [
+    {
+      "page": 27, "title": "手指操练习（右手）", "meter": [4, 4], "right_clef": "bass",
+      "lines": [[
+        {"right": "C3/1/1 E3/1/3 G3/1/5 F3/1/4"},
+        {"right": "E3/1/3 F3/1 D3/1/2 E3/1"},
+        {"right": "C3/1/1 G3/1/5 E3/1/3 G3/1"},
+        {"right": "C3/4"}
+      ]]
+    },
+    {
+      "page": 27, "title": "手指操练习（左手）", "meter": [4, 4],
+      "lines": [[
+        {"left": "C3/1/5 E3/1/3 G3/1/1 F3/1/2"},
+        {"left": "E3/1/3 F3/1 D3/1/4 E3/1"},
+        {"left": "C3/1/5 G3/1/1 E3/1/3 G3/1"},
+        {"left": "C3/4"}
+      ]]
+    },
+    {
+      "page": 27, "title": "祝愿星", "meter": [2, 4],
+      "lines": [
+        [
+          {"right": "C4/1/1 E4/1/3", "left": "R/2"},
+          {"right": "G4/2", "left": "R/2"},
+          {"right": "G4/0.5 F4/0.5 E4/0.5 D4/0.5", "left": "R/2"},
+          {"right": "C4/2", "left": "R/2"},
+          {"right": "R/2", "left": "D4/0.5/1 D4/0.5 B3/0.5/3 G3/0.5"},
+          {"right": "G4/0.5 G4/0.5 E4/0.5 C4/0.5", "left": "R/2"}
+        ],
+        [
+          {"right": "R/2", "left": "D4/0.5 D4/0.5 B3/0.5 G3/0.5"},
+          {"right": "G4/0.5 G4/0.5 E4/0.5 C4/0.5", "left": "R/2"},
+          {"right": "C4/0.5 D4/0.5 E4/0.5 F4/0.5", "left": "C3/0.5/5 D3/0.5 E3/0.5 F3/0.5"},
+          {"right": "G4/2", "left": "G3/2"},
+          {"right": "G4/0.5 F4/0.5 E4/0.5 D4/0.5", "left": "G3/0.5 F3/0.5 E3/0.5 D3/0.5"},
+          {"right": "C4/2", "left": "C3/2"}
+        ]
+      ]
+    },
+    {
+      "page": 28, "title": "分解和弦手指操（左手跨越）", "meter": [3, 4],
+      "lines": [[
+        {"right": "R/3", "left": "C3/1/5 Eb3/1/3 G3/1/1"},
+        {"right": "C4/1/1 Eb4/1/3 G4/1/5", "left": "R/3"},
+        {"right": "s/1 G4/1/5 Eb4/1/3", "left": "C5/1/2 s/2"},
+        {"right": "C4/1/1 r/1 r/1", "left": "r/1 G3/1/1 Eb3/1/3"},
+        {"right": "R/3", "left": "C3/3/5"}
+      ]]
+    },
+    {
+      "page": 28, "title": "登山（左手跨越）", "meter": [3, 4],
+      "lines": [
+        [
+          {"right": "R/3", "left": "C3/1/5 Eb3/1/3 G3/1"},
+          {"right": "C4/1/1 Eb4/1/3 G4/1", "left": "R/3"},
+          {"left": "C5/3/2"},
+          {"right": "G4/3/5", "left": "R/3"}
+        ],
+        [
+          {"right": "Eb4/1/3 D4/1 C4/1", "left": "G3/3"},
+          {"right": "Eb4/1 D4/1 C4/1", "left": "F#3/3"},
+          {"right": "G4/3", "left": "G3/3~start"},
+          {"right": "C4/3", "left": "G3/3~stop"},
+          {"right": "R/3", "left": "C3/1 E3/1 G3/1"},
+          {"right": "C4/1 E4/1 G4/1", "left": "R/3"}
+        ],
+        [
+          {"left": "C5/3/2"},
+          {"right": "G4/3", "left": "R/3"},
+          {"right": "E4/1 G4/1 E4/1", "left": "G3/3"},
+          {"right": "D4/1 G4/1 D4/1", "left": "F3/3"},
+          {"right": "C4/3~start", "left": "E3/3"},
+          {"right": "C4/1~stop r/1 r/1", "left": "C3/1 r/1 r/1"}
+        ]
+      ]
+    },
+    {
+      "page": 30, "title": "手指操练习（右手）", "meter": [4, 4],
+      "lines": [[
+        {"right": "C5/1/1 G5/1/5 F5/1/4 G5/1"},
+        {"right": "E5/1/3 G5/1 D5/1/2 G5/1"},
+        {"right": "C5/1 G5/1 E5/1 G5/1"},
+        {"right": "C5/4"}
+      ]]
+    },
+    {
+      "page": 30, "title": "手指操练习（左手）", "meter": [4, 4], "left_clef": "treble",
+      "lines": [[
+        {"left": "C5/1/5 G5/1/1 F5/1/2 G5/1"},
+        {"left": "E5/1/3 G5/1 D5/1/4 G5/1"},
+        {"left": "C5/1 G5/1 E5/1 G5/1"},
+        {"left": "C5/4"}
+      ]]
+    }
+  ]
+}

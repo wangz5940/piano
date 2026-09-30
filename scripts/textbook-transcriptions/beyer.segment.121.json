@@ -1,0 +1,69 @@
+{
+  "title": "练习93 · 俄罗斯民歌与F大调音阶",
+  "evidence": "逐小节核对PDF76练习93及两条F大调音阶（PDF76–77）。恢复第8小节左手附点四分和右手半小节休止；第11小节最后右手双音低音为C4而非D4。保留持续低音与活动旋律的独立声部、第13至14小节左手A3延音、升G/升F/升D及印刷指号。音阶降B、两手交替与全音符双音逐音核对。",
+  "reviewed_pages": [76, 77],
+  "excluded_regions": [],
+  "sections": [
+    {
+      "page": 76, "title": "练习93 · 俄罗斯民歌 · Andante", "meter": [4, 4],
+      "lines": [
+        [
+          {"right": "A4/1.5/3^start G#4/0.5 A4/1.5 G#4/0.5", "left": "A3/4/4", "voices": [{"staff": 2, "voice": 6, "notes": "C4/1/2^start E4/0.5/1 B3/0.5/3 C4/1 E4/0.5 B3/0.5^stop"}]},
+          {"right": "A4/1 C5/1 B4/1/3 A4/1/1^stop", "left": "A3/2 G#3+D4/1/5,1^start A3+C4/1/4,2^stop", "voices": [{"staff": 2, "voice": 6, "notes": "C4/1^start E4/1^stop s/2"}]},
+          {"right": "G#4/1.5/3^start F#4/0.5 G#4/1.5 F#4/0.5", "left": "E3/4/5", "voices": [{"staff": 2, "voice": 6, "notes": "B3/1/2^start D4/0.5 A3/0.5 B3/1 D4/0.5 A3/0.5^stop"}]},
+          {"right": "G#4/1 B4/1/5 A4/1/3 G#4/1^stop", "left": "E3/2/5 E3/2/1", "voices": [{"staff": 2, "voice": 6, "notes": "B3/1/2^start D4/1/1^stop C4/1/1^start B3/1/2^stop"}]},
+          {"right": "A4/1.5^start G#4/0.5 A4/1.5 G#4/0.5", "left": "A3/4/4", "voices": [{"staff": 2, "voice": 6, "notes": "C4/1/2^start E4/0.5 B3/0.5 C4/1 E4/0.5 B3/0.5^stop"}]}
+        ],
+        [
+          {"right": "A4/1^continue C5/1 B4/1/3 A4/1/1^stop", "left": "A3/2 G#3+D4/1/5,1^start A3+C4/1/4,2^stop", "voices": [{"staff": 2, "voice": 6, "notes": "C4/1^start E4/1^stop s/2"}]},
+          {"right": "G#4/0.5/2^start B4/0.5/4^stop B4/0.5/2^start E5/0.5/5^stop G#4+E5/1.5/1,5!accent G#4/0.5/3", "left": "E3+B3/2/5,1 E3/0.5^start B3/0.5/2^stop B3/0.5/3^start D4/0.5/1^stop"},
+          {"right": "A4/2 r/2", "left": "A3+C4/1.5/4,2^start B3/0.5/3 A3/1/4^stop E3/1/3"},
+          {"right": "E4+C5/1.5/1,5 D4+B4/0.5/1,5 E4+C5/1.5/1,5 D4+B4/0.5/1,5", "left": "C3/1/5 G3/1/2 C4/1/1 G3/1"},
+          {"right": "E4+C5/1/1,5 G4+E5/1/1,5 F4+D5/1/1,5 E4+C5/1/1,5", "left": "C3/1 G3/1/3^start B3/1/2 C4/1/1^stop"}
+        ],
+        [
+          {"right": "D4+B4/1.5/1,5 C4+A4/0.5/1,5 D4+B4/1.5/1,5 C4+A4/0.5/1,5", "left": "G2/1/5 D3/1/2 G3/1 D3/1"},
+          {"right": "D4+B4/1/1,5 F4+D5/1/1,5 E4+C5/1/1,5 D4+B4/1/1,5", "left": "G2/1/5 G3/1/1 G#2/1/5 G#3/1/1"},
+          {"right": "A4/1.5/3^start G#4/0.5 A4/1.5 G#4/0.5", "left": "A3/4/4~start", "voices": [{"staff": 2, "voice": 6, "notes": "C4/1/2^start E4/0.5 B3/0.5 C4/1 E4/0.5 B3/0.5"}]},
+          {"right": "A4/1^stop E4+C5/1/1,5!tenuto F4+B4/1/1,5!tenuto F#4+A4/1/2,4!tenuto", "left": "A3/1~stop A3/1/1!tenuto D3/1/5!tenuto D#3/1/4!tenuto", "voices": [{"staff": 2, "voice": 6, "notes": "C4/1^stop s/3"}]},
+          {"right": "E4+G#4/0.5/1,3^start B4/0.5^stop B4/0.5/2^start E5/0.5^stop G#4+E5/1.5/1,5!accent G#4/0.5/3", "left": "E3/2/3 E3/0.5/5^start B3/0.5/2^stop B3/0.5/3^start D4/0.5/1^stop"},
+          {"right": "A4/3 r/1", "left": "A3+C4/1.5^start B3/0.5 A3/1^stop r/1"}
+        ]
+      ]
+    },
+    {
+      "page": 76, "title": "F大调音阶", "meter": [4, 4], "fifths": -1,
+      "lines": [
+        [
+          {"right": "F4/1/1!accent^start G4/0.5/2 A4/0.5/3 Bb4/0.5/4 C5/0.5/1 D5/0.5/2 E5/0.5/3", "left": "R/4"},
+          {"right": "F5/1/4!accent E5/0.5/3 D5/0.5/2 C5/0.5/1 Bb4/0.5/4 A4/0.5/3 G4/0.5/2", "left": "R/4"},
+          {"right": "F4/1/1^stop r/1 r/2", "left": "F3/1/5!accent^start G3/0.5 A3/0.5 Bb3/0.5 C4/0.5/1 D4/0.5/3 E4/0.5"},
+          {"right": "R/4", "left": "F4/1!accent E4/0.5 D4/0.5 C4/0.5/1 Bb3/0.5 A3/0.5 G3/0.5"}
+        ],
+        [
+          {"right": "F4/1/1^start G4/0.5 A4/0.5 Bb4/0.5/4 C5/0.5 D5/0.5 E5/0.5", "left": "F3/1/5^stop G3/0.5 A3/0.5 Bb3/0.5 C4/0.5 D4/0.5/3 E4/0.5"},
+          {"right": "F5/1 E5/0.5 D5/0.5 C5/0.5 Bb4/0.5/4 A4/0.5 G4/0.5", "left": "F4/1 E4/0.5 D4/0.5 C4/0.5/1 Bb3/0.5 A3/0.5 G3/0.5"},
+          {"right": "F4/1/1^continue G4/0.5 A4/0.5 Bb4/0.5/4 C5/0.5/1 D5/0.5 E5/0.5", "left": "F3/1 G3/0.5 A3/0.5 Bb3/0.5 C4/0.5 D4/0.5 E4/0.5"},
+          {"right": "F5/4^stop", "left": "F4/4"}
+        ]
+      ]
+    },
+    {
+      "page": 77, "title": "F大调音阶 · Allegro moderato", "meter": [4, 4], "fifths": -1,
+      "lines": [
+        [
+          {"right": "F4/0.5^start G4/0.5 A4/0.5 Bb4/0.5 C5/0.5/1 D5/0.5 E5/0.5 F5/0.5", "left": "A3+C4/4/3,1"},
+          {"right": "G5/0.5/5 F5/0.5 E5/0.5 D5/0.5 C5/0.5/1 Bb4/0.5/4 A4/0.5 G4/0.5", "left": "Bb3+C4/4"},
+          {"right": "F4/0.5/1^continue G4/0.5 A4/0.5 Bb4/0.5 C5/0.5/1 D5/0.5 E5/0.5 F5/0.5", "left": "A3+C4/4"},
+          {"right": "G5/0.5 F5/0.5 E5/0.5 D5/0.5 C5/0.5 Bb4/0.5/4 A4/0.5 G4/0.5", "left": "Bb3+C4/4"}
+        ],
+        [
+          {"right": "F4/1/1!accent^continue G4/0.5 A4/0.5 Bb4/0.5 C5/0.5/1 D5/0.5 E5/0.5", "left": "A3+C4/4"},
+          {"right": "F5/4/4^continue", "left": "F3/1/5!accent^start G3/0.5 A3/0.5 Bb3/0.5 C4/0.5 D4/0.5/3 E4/0.5"},
+          {"right": "F5/1 E5/0.5 D5/0.5 C5/0.5 Bb4/0.5 A4/0.5 G4/0.5^stop", "left": "F4/1!accent E4/0.5 D4/0.5 C4/0.5/1 Bb3/0.5 A3/0.5 G3/0.5"},
+          {"right": "F4/4", "left": "F3/4^stop"}
+        ]
+      ]
+    }
+  ]
+}

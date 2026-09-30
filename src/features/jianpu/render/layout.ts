@@ -329,18 +329,20 @@ function layout_hand_events(
   layout_beats: number,
 ): jianpu_event_box[] {
   const stacked_note_counts = new Map<string, number>();
-  return events.map((event) => {
+  return events.map((event, index) => {
     const onset_key = event.onset_beats.toFixed(4);
-    const stack_offset = stacked_note_counts.get(onset_key) ?? 0;
+    const stack_offset = event.grace ? 0 : stacked_note_counts.get(onset_key) ?? 0;
+    const grace_offset = event.grace ? events.slice(index).filter((candidate) =>
+      candidate.grace && candidate.onset_beats === event.onset_beats).length * 20 : 0;
     const box = layout_event(
       event,
       row,
-      content_x,
+      content_x - grace_offset,
       content_width,
       layout_beats,
       stack_offset,
     );
-    stacked_note_counts.set(
+    if (!event.grace) stacked_note_counts.set(
       onset_key,
       stack_offset + Math.max(1, event.notes.length),
     );

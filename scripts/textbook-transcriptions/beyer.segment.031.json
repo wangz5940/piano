@@ -1,0 +1,20 @@
+{
+  "title":"练习11 布谷鸟 · 练习13–14",
+  "evidence":"逐小节核对PDF23《布谷鸟》24小节3/4及PDF24练习13、14各8小节4/4。现人工校准032已保存练习12，完整保护并作为手位参考，本片段不重复该曲；原OMR分段漏掉的练习14补齐。高音谱表双手、跨手旋律、整小节休止与反复均按原图。",
+  "reviewed_pages":[23,24],"excluded_regions":[{"page":23,"reason":"手位图不混入演奏"},{"page":24,"reason":"练习12已在人工校准032中保存，保护原记录；左侧手位图不混入演奏"}],
+  "sections":[
+    {"page":23,"title":"练习11 布谷鸟（四手联弹学生声部）","meter":[3,4],"left_clef":"treble","lines":[
+      [{"right":"D5/2/5 B4/1/3","left":"r/1 G4/2/2"},{"right":"D5/2 B4/1","left":"r/1 G4/2"},{"right":"A4/1 G4/1 A4/1","left":"r/1 D4/2/5"},{"right":"G4/3","left":"R/3"},{"right":"A4/1/2 A4/1 B4/1","left":"r/1 D4/1 D4/1"},{"right":"C5/2 A4/1","left":"r/1 D4/1 D4/1"}],
+      [{"right":"B4/1 B4/1 C5/1","left":"r/1 G4/1 G4/1"},{"right":"D5/2 B4/1","left":"r/1 G4/1 G4/1"},{"right":"D5/2 B4/1","left":"r/1 G4/2"},{"right":"D5/2 B4/1","left":"r/1 G4/2"},{"right":"A4/1 G4/1 A4/1","left":"r/1 D4/2"},{"right":"G4/3","left":"R/3"},{"right":"r/1 G5/1/5 G5/1","left":"D5/2/1 B4/1/3"},{"right":"r/1 G5/1 G5/1","left":"D5/2 B4/1"},{"right":"r/1 D5/1/2 D5/1","left":"A4/1/4 G4/1/5 A4/1"}],
+      [{"right":"r/1 D5/1^start G5/1^stop","left":"G4/3"},{"right":"r/1 D5/1 D5/1","left":"A4/1/4 A4/1 B4/1"},{"right":"r/1 D5/1 D5/1","left":"C5/2 A4/1"},{"right":"r/1 G5/1 G5/1","left":"B4/1 B4/1 C5/1"},{"right":"r/1 G5/1 G5/1","left":"D5/2 B4/1"},{"right":"r/1 G5/1 G5/1","left":"D5/2 B4/1"},{"right":"r/1 G5/1 G5/1","left":"D5/2 B4/1"},{"right":"r/1 D5/1 D5/1","left":"A4/1 G4/1 A4/1"},{"right":"r/1 D5/1^start G5/1^stop","left":"G4/3"}]
+    ]},
+    {"page":24,"title":"练习13（双手练习）","meter":[4,4],"left_clef":"treble","lines":[[
+      {"right":"C5/4/1^start","left":"C4/1/5^start D4/1/4 E4/1/3 F4/1/2"},{"right":"G5/4/5","left":"G4/1/1 F4/1 E4/1 D4/1"},{"right":"C5/4","left":"C4/1 D4/1 E4/1 F4/1"},{"right":"G5/4","left":"G4/1 F4/1 E4/1 D4/1"},
+      {"right":"C5/4","left":"C4/1 D4/1 E4/1 F4/1"},{"right":"G5/4","left":"G4/1 F4/1 E4/1 D4/1"},{"right":"C5/2 G5/2","left":"E4/1/3 G4/1/1 E4/1 G4/1"},{"right":"C5/4^stop","left":"C4/4^stop"}
+    ]]},
+    {"page":24,"title":"练习14（双手练习）","meter":[4,4],"left_clef":"treble","lines":[[
+      {"right":"C5/1^start D5/1 E5/1 F5/1","left":"C4/4^start"},{"right":"G5/1 F5/1 E5/1 D5/1","left":"G4/4"},{"right":"C5/4^continue","left":"C4/1^continue D4/1 E4/1 F4/1"},{"right":"G5/4^stop","left":"G4/1 F4/1 E4/1 D4/1^stop","repeat_end":true},
+      {"right":"C5/1^start D5/1 E5/1 F5/1","left":"C4/1^start D4/1 E4/1 F4/1"},{"right":"G5/1 F5/1 E5/1 D5/1^stop","left":"G4/1 F4/1 E4/1 D4/1"},{"right":"C5/1^start G5/1 C5/1 G5/1","left":"C4/1 G4/1 C4/1 G4/1"},{"right":"C5/4^stop","left":"C4/4^stop"}
+    ]]}
+  ]
+}

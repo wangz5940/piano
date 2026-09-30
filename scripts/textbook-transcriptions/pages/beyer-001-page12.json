@@ -1,0 +1,53 @@
+{
+  "evidence": "PDF12（书页10）主题1变奏7–11教师伴奏。补变奏7漏失的中声部休止、G3重复音和低音C3；变奏8首小节双音恢复附点二分；变奏11第7小节独立内声部与右手第三拍双音对齐。",
+  "reviewed_pages": [12],
+  "excluded_regions": [{"page":12,"reason":"底部变奏12在片段002中独立保留。"}],
+  "sections": [
+    {"page":12,"title":"主题1变奏7（教师伴奏）","meter":[4,4],"right_clef":"bass","lines":[[
+      {"right":"C4+E4/4","left":"C2+C3/4","voices":[{"staff":1,"voice":2,"notes":"r/1 G3/1 G3/1 G3/1"}]},
+      {"right":"D4+F4/4","left":"B1+B2/4","voices":[{"staff":1,"voice":2,"notes":"r/1 G3/1 G3/1 G3/1"}]},
+      {"right":"C4+E4/4","left":"C2+C3/4","voices":[{"staff":1,"voice":2,"notes":"r/1 G3/1 G3/1 G3/1"}]},
+      {"right":"B3+D4/4","left":"G1+G2/4","voices":[{"staff":1,"voice":2,"notes":"r/1 G3/1 G3/1 G3/1"}]},
+      {"right":"D4+F4/4","left":"B1+B2/4","voices":[{"staff":1,"voice":2,"notes":"r/1 G3/1 G3/1 G3/1"}]},
+      {"right":"C4+E4/4","left":"C2+C3/4","voices":[{"staff":1,"voice":2,"notes":"r/1 G3/1 G3/1 G3/1"}]},
+      {"right":"B3+D4/3 B3+D4/1","left":"G1+G2/3 G1+G2/1","voices":[{"staff":1,"voice":2,"notes":"r/1 G3/1 G3/1 F3/1"}]},
+      {"right":"E3+C4/1 E3+C4/1 E3+C4/2","left":"C2+C3/1 C2+C3/1 C2+C3/2"}
+    ]]},
+    {"page":12,"title":"主题1变奏8（教师伴奏）","meter":[3,4],"right_clef":"bass","lines":[[
+      {"right":"C4+E4/3","left":"C3+G3/3"},{"right":"C4+E4/3","left":"C3+G3/3"},
+      {"right":"D4+F4/3","left":"B2+G3/3"},{"right":"D4+F4/3","left":"B2+G3/3"},
+      {"right":"C4+E4/3","left":"C3+G3/3"},{"right":"C4+E4/3","left":"C3+G3/3"},
+      {"right":"B3+D4+G4/3","left":"G2+F3/3"},{"right":"C4/3","left":"C3+E3/3"}
+    ]]},
+    {"page":12,"title":"主题1变奏9（教师伴奏）","meter":[4,4],"right_clef":"bass","lines":[[
+      {"right":"G3+C4+E4/3 G3+C4+E4/1","left":"C2+C3/3 C2+C3/1"},
+      {"right":"G3+B3+D4/3 G3+D4+F4/1","left":"B1+B2/3 B1+B2/1"},
+      {"right":"G3+C4+E4/3 G3+C4+E4/1","left":"C2+C3/3 E2+E3/1"},
+      {"right":"G3+B3+D4/1 G3+B3+D4/0.75 G3+C4+E4/0.25 G3+B3+D4/2","left":"G1+G2/3 G1+G2/1"},
+      {"right":"G3+D4+F4/3 G3+D4+F4/1","left":"B1+B2/3 B1+B2/1"},
+      {"right":"G3+C4+E4/3 A3+C4+E4/1","left":"C2+C3/3 A1+A2/1"},
+      {"right":"A3+C4+D4/1^start Ab3+F4/1 G3+E4/1 F3+D4/1","left":"F1+F2/2 G1+G2/2"},
+      {"right":"E3+C4/2^stop E3+C4/2","left":"C2+C3/2 C2+C3/2"}
+    ]]},
+    {"page":12,"title":"主题1变奏10（教师伴奏）","meter":[4,4],"right_clef":"bass","lines":[[
+      {"right":"G3+C4+E4/2 G3+C4+E4/1 G3+C4+E4/1","left":"C3/2 C3/1 C3/1"},
+      {"right":"G3+D4+F4/2 G3+D4+F4/1 G3+D4+F4/1","left":"B2/2 B2/1 B2/1"},
+      {"right":"G3+C4+E4/2 G3+C4+E4/1 G3+C4+E4/1^start","left":"C3/2 E3/1 C3/1^start"},
+      {"right":"G3+B3+D4/4^stop","left":"G2/1^stop D3/1 B2/1 G2/1"},
+      {"right":"G3+D4+F4/2 G3+D4+F4/1 G3+D4+F4/1","left":"B2/2 B2/1 B2/1"},
+      {"right":"G3+C4+E4/2 A3+C4+E4/1 A3+C4+E4/1","left":"C3/2 A2/1 A2/1"},
+      {"right":"A3+C4+D4/1 A3+C4+D4/1 F3+B3+D4/2","left":"F2/1 F2/1 G2/2"},
+      {"right":"E3+G3+C4/1 E3+G3+C4/1 E3+G3+C4/2","left":"C3/1 G2/1 C2/2"}
+    ]]},
+    {"page":12,"title":"主题1变奏11（教师伴奏）","meter":[4,4],"right_clef":"bass","lines":[[
+      {"right":"E4/1^start D4/1 C4/2","left":"C2+C3/3 G2+G3/1"},
+      {"right":"F4/1 E4/1 D4/2","left":"G1+G2/3 G2+G3/1"},
+      {"right":"C4/1 D4/1 E4/1 C4/1","left":"C2+C3/3 E2+E3/1"},
+      {"right":"B3+D4/4^stop","left":"G1+G2/1 B1+B2/1 D2+D3/1 G2+G3/1"},
+      {"right":"B3/1^start C4/1 D4/2","left":"G1+G2/3 G2+G3/1"},
+      {"right":"C4/1 D4/1 E4/1 C4/1","left":"C2+C3/3 E2+E3/1"},
+      {"right":"C4+D4/2 G3+E4/1 F3+D4/1","left":"F1+F2/2 G1+G2/2","voices":[{"staff":1,"voice":2,"notes":"A3/1 Ab3/1 s/2"}]},
+      {"right":"E3+C4/4^stop","left":"C2+C3/1 G1+G2/1 C2+C3/2"}
+    ]]}
+  ]
+}

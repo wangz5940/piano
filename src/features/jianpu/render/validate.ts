@@ -30,13 +30,13 @@ function validate_render_measure(
   measure: jianpu_render_measure,
 ): jianpu_render_warning[] {
   const warnings: jianpu_render_warning[] = [];
-  if (measure.content_beats > measure.meter.beats + timing_epsilon) {
+  if (!measure.meter.unmetered && measure.content_beats > measure.meter.beats + timing_epsilon) {
     warnings.push({
       code: "measure_content_exceeds_declared_beats",
       measure_index: measure.index,
       message: `第 ${measure.number} 小节内容延伸到 ${format_beats(measure.content_beats)} 拍，超过 ${measure.meter.beats}/${measure.meter.beat_unit} 拍声明。`,
     });
-  } else if (measure.content_beats + timing_epsilon < measure.meter.beats) {
+  } else if (!measure.meter.unmetered && measure.content_beats + timing_epsilon < measure.meter.beats) {
     warnings.push({
       code: "measure_content_shorter_than_declared_beats",
       measure_index: measure.index,

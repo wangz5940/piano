@@ -1,0 +1,299 @@
+{
+  "evidence": "按小汤2原PDF学生演奏谱逐音核对，教师伴奏和键盘音名图不纳入学生双手。第6页补回漏识别的中央C全音符。",
+  "reviewed_pages": [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+  "excluded_regions": [
+    {"page": 6, "reason": "页首键盘/音名图；每行最上方标注教师的伴奏声部。"},
+    {"page": 8, "reason": "页首标明伴奏谱的单行低音谱。"},
+    {"page": 10, "reason": "页首键盘音名说明；页底两组无拍号、无小节线的请大声读谱。"},
+    {"page": 12, "reason": "全页画一画写一写：改写八分音符及补画小节线书面题，不混入演奏曲。"},
+    {"page": 13, "reason": "页首升号键盘音名图。"},
+    {"page": 14, "reason": "页首降号键盘音名图。"},
+    {"page": 15, "reason": "页底标明伴奏谱的教师声部。"},
+    {"page": 18, "reason": "全页画一画写一写，音名、写音及八度移位书面题。"},
+    {"page": 19, "reason": "页首大声读谱无节拍示例；下方教师伴奏。保留学生主旋律与左右手分奏的手指操。"}
+  ],
+  "sections": [
+    {
+      "page": 6, "title": "上学的日子", "meter": [4, 4],
+      "lines": [
+        [
+          {"right": "R/4", "left": "F3/2/5 G3/1 A3/1"},
+          {"right": "R/4", "left": "C4/4"},
+          {"right": "F4/3/4 D4/1", "left": "R/4"},
+          {"right": "C4/4", "left": "R/4"},
+          {"right": "G4/2/5 F4/1 D4/1", "left": "R/4"},
+          {"right": "R/4", "left": "C4/1/1 A3/1 F3/2"},
+          {"right": "r/2 r/1 D4/1/2", "left": "A3/2 G3/1 r/1"},
+          {"right": "C4/4", "left": "R/4"}
+        ],
+        [
+          {"right": "R/4", "left": "F3/2/5 G3/1 A3/1"},
+          {"right": "R/4", "left": "C4/4"},
+          {"right": "F4/3/4 D4/1", "left": "R/4"},
+          {"right": "C4/4", "left": "R/4"},
+          {"right": "G4/2/5 F4/1 D4/1", "left": "R/4"},
+          {"right": "R/4", "left": "C4/1 A3/1 F3/2"},
+          {"right": "R/4", "left": "A3/2 F3/1 G3/1"},
+          {"right": "R/4", "left": "F3/4"}
+        ]
+      ]
+    },
+    {
+      "page": 7, "title": "捉人游戏", "meter": [2, 4],
+      "lines": [
+        [
+          {"right": "C4/0.5/1 D4/0.5 E4/0.5 D4/0.5", "left": "R/2"},
+          {"right": "C4/1 r/1", "left": "r/1 G3/1/4"},
+          {"right": "R/2", "left": "A3/1/3 C4/1"},
+          {"right": "R/2", "left": "G3/2"}
+        ],
+        [
+          {"right": "C4/0.5 D4/0.5 E4/0.5 F4/0.5", "left": "R/2"},
+          {"right": "G4/1 C4/1", "left": "R/2"},
+          {"right": "E4/0.5/3 D4/0.5 r/1", "left": "r/1 C4/0.5/1 B3/0.5/2"},
+          {"right": "R/2", "left": "C4/2"}
+        ]
+      ]
+    },
+    {
+      "page": 8, "title": "穿过森林", "meter": [3, 4],
+      "lines": [
+        [
+          {"quarters": 1, "right": "r/1", "left": "G3/1/4"},
+          {"right": "r/1 E4/1/3 G4/0.5/5 F4/0.5", "left": "C4/1/1 r/1 r/1"},
+          {"right": "E4/1 C4/1 r/1", "left": "r/1 r/1 C4/1"},
+          {"right": "D4/1/2 F4/0.5 E4/0.5 D4/0.5 C4/0.5", "left": "R/3"},
+          {"right": "R/3", "left": "B3/1/2 G3/1 G3/1"}
+        ],
+        [
+          {"right": "r/1 E4/0.5/3 D4/0.5 r/1", "left": "C4/1 r/1 C4/0.5/1 B3/0.5"},
+          {"right": "R/3", "left": "A3/1/3 F3/1 A3/1"},
+          {"right": "r/1 C4/1 r/1", "left": "G3/1 r/1 B3/1"},
+          {"quarters": 2, "right": "C4/2", "left": "r/1 r/1"}
+        ]
+      ]
+    },
+    {
+      "page": 9, "title": "长号手", "meter": [4, 4],
+      "lines": [
+        [
+          {"right": "E4/4/3", "left": "C4/0.5/1 C4/0.5 B3/1/2 A3/1/3 G3/1/4"},
+          {"right": "E4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "E4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "D4+F4/4/2,4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "D4+F4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "D4+F4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"}
+        ],
+        [
+          {"right": "D4+F4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "E4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "E4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "E4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "E4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "D4+F4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"}
+        ],
+        [
+          {"right": "D4+F4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "D4+F4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "D4+F4/4", "left": "C4/0.5 C4/0.5 B3/1 A3/1 G3/1"},
+          {"right": "E4/4", "left": "C4/4"}
+        ]
+      ]
+    },
+    {
+      "page": 10, "title": "噢，苏珊娜", "meter": [4, 4],
+      "lines": [
+        [
+          {"right": "r/1 s/3", "left": "G3/0.5/5 A3/0.5 r/1 r/2"},
+          {"right": "r/2 D4/1/2 E4/1", "left": "B3/1/3 D4/1 r/2"},
+          {"right": "D4/1/2 B3/1/1 r/2", "left": "r/2 G3/1/5 A3/1"},
+          {"right": "R/4", "left": "B3/1 B3/1 A3/1 G3/1"},
+          {"right": "R/4", "left": "A3/3 G3/0.5 A3/0.5"}
+        ],
+        [
+          {"right": "r/2 D4/1/2 E4/1", "left": "B3/1/3 D4/1 r/2"},
+          {"right": "D4/1 B3/1 r/2", "left": "r/2 G3/1 A3/1"},
+          {"right": "R/4", "left": "B3/1 B3/1 A3/1 A3/1"},
+          {"quarters": 3, "right": "r/2 r/1", "left": "G3/3"}
+        ]
+      ]
+    },
+    {
+      "page": 11, "title": "十个小印第安人", "meter": [4, 4],
+      "lines": [
+        [
+          {"right": "C4/1/1 C4/0.5 C4/0.5 C4/1 C4/0.5 C4/0.5", "left": "R/4"},
+          {"right": "E4/1/3 G4/0.5/5 G4/0.5 E4/1 C4/1", "left": "R/4"},
+          {"right": "R/4", "left": "D4/1/1 D4/0.5 D4/0.5 D4/1 D4/0.5 D4/0.5"},
+          {"right": "R/4", "left": "B3/1/3 D4/0.5 D4/0.5 B3/1 G3/1"}
+        ],
+        [
+          {"right": "C4/1 C4/0.5 C4/0.5 C4/1 C4/0.5 C4/0.5", "left": "R/4"},
+          {"right": "E4/1 G4/0.5 G4/0.5 E4/1 C4/1", "left": "R/4"},
+          {"right": "R/4", "left": "D4/1 D4/0.5 D4/0.5 G3/1 G3/1"},
+          {"right": "R/4", "left": "C4/4"}
+        ]
+      ]
+    },
+    {
+      "page": 13, "title": "钟声响了", "meter": [4, 4],
+      "lines": [
+        [
+          {"right": "r/1 G4/1/5 F#4/1 E4/1", "left": "G3/1/5 r/1 r/2"},
+          {"right": "D4/1 C4/1 r/2", "left": "r/2 B3/1/3 A3/1"},
+          {"right": "r/1 G4/1 F#4/1 E4/1", "left": "G3/1 r/1 r/2"},
+          {"right": "D4/1 C4/1 r/2", "left": "r/2 B3/1 A3/1"}
+        ],
+        [
+          {"right": "r/1 G4/1/5 E4/1/3 r/1", "left": "G3/1 r/1 r/1 C4/1/2"},
+          {"right": "r/1 F#4/1/4 D4/1 r/1", "left": "A3/1/4 r/1 r/1 B3/1/3"},
+          {"right": "r/1 G4/1 E4/1 r/1", "left": "G3/1 r/1 r/1 C4/1"},
+          {"right": "r/1 F#4/1 D4/1 r/1", "left": "A3/1 r/1 r/1 B3/1"}
+        ],
+        [
+          {"right": "R/4", "left": "G3/4"},
+          {"right": "E4/4/3", "left": "C4/4/2"},
+          {"right": "D4/4~start", "left": "B3/4~start"},
+          {"right": "D4/1~stop r/1 r/2", "left": "B3/1~stop r/1 r/2"}
+        ]
+      ]
+    },
+    {
+      "page": 14, "title": "看日出", "meter": [4, 4],
+      "lines": [
+        [
+          {"right": "r/2 C4/1/1 F4/1/4", "left": "F3/1/5 A3/1/3 r/2"},
+          {"right": "D4/0.5 E4/0.5 F4/0.5 D4/0.5 C4/2", "left": "R/4"},
+          {"right": "r/1 D4/1/2 r/1 C4/1", "left": "Bb3/1/2 r/1 A3/1 r/1"},
+          {"right": "r/1 E4/1 F4/2", "left": "G3/1 r/1 F3/2"}
+        ],
+        [
+          {"right": "r/2 C4/1 F4/1", "left": "F3/1 A3/1 r/2"},
+          {"right": "D4/0.5 E4/0.5 F4/0.5 D4/0.5 C4/2", "left": "Bb3/2 A3/2"},
+          {"right": "D4/1 F4/1 C4/1 F4/1", "left": "Bb3/2 A3/2"},
+          {"right": "E4/0.5 F4/0.5 G4/1 F4/2", "left": "G3/2 F3/2"}
+        ]
+      ]
+    },
+    {
+      "page": 15, "title": "芭蕾舞演员", "meter": [3, 4], "fifths": -1,
+      "lines": [
+        [
+          {"right": "F4/1/4 D4/1/2 F4/1/3", "left": "A3/3"},
+          {"right": "E4/1 D4/1 C4/1", "left": "Bb3/3"},
+          {"right": "F4/1 D4/1 F4/1", "left": "A3/3"},
+          {"right": "E4/1 D4/1 C4/1", "left": "Bb3/3"},
+          {"right": "F4/1 D4/1 F4/1", "left": "A3/3"},
+          {"right": "G4/1 F4/1 D4/1", "left": "Bb3/3"},
+          {"right": "C4/3~start", "left": "A3/3~start"},
+          {"right": "C4/2~stop F4/1", "left": "A3/2~stop r/1"}
+        ],
+        [
+          {"right": "D4/1 Eb4/1 D4/1", "left": "R/3"},
+          {"right": "R/3", "left": "G3/1/4 A3/1 Bb3/1"},
+          {"right": "C4/1 D4/1 C4/1", "left": "R/3"},
+          {"right": "R/3", "left": "F3/1/5 G3/1 A3/1"},
+          {"right": "C4/1 F4/1/4 D4/1", "left": "R/3"},
+          {"right": "E4/1 F4/1 G4/1", "left": "Bb3/3/2"},
+          {"right": "F4/3~start", "left": "A3/3~start"},
+          {"right": "F4/3~stop", "left": "A3/3~stop"}
+        ]
+      ]
+    },
+    {
+      "page": 16, "title": "三只瞎老鼠（上）", "meter": [3, 4], "fifths": 1, "continues": true,
+      "lines": [
+        [
+          {"right": "R/3", "left": "B3/3/3"},
+          {"right": "R/3", "left": "A3/3"},
+          {"right": "R/3", "left": "G3/3~start"},
+          {"right": "R/3", "left": "G3/3~stop"},
+          {"right": "R/3", "left": "B3/3"},
+          {"right": "R/3", "left": "A3/2 A3/1"},
+          {"right": "R/3", "left": "G3/3~start"},
+          {"right": "R/3", "left": "G3/3~stop"}
+        ],
+        [
+          {"right": "D4/3/3", "left": "B3/3/3"},
+          {"right": "C4/3", "left": "A3/3"},
+          {"right": "B3/3~start", "left": "G3/3~start"},
+          {"right": "B3/3~stop", "left": "G3/3~stop"},
+          {"right": "D4/3", "left": "B3/3"},
+          {"right": "C4/2 C4/1", "left": "A3/2 A3/1"},
+          {"right": "B3/3~start", "left": "G3/3~start"},
+          {"right": "B3/2~stop D4/1/1", "left": "G3/2~stop r/1"}
+        ]
+      ]
+    },
+    {
+      "page": 17, "title": "三只瞎老鼠（下）", "meter": [3, 4], "fifths": 1,
+      "lines": [
+        [
+          {"right": "G4/2/4 G4/1", "left": "B3/3"},
+          {"right": "F#4/1/3 E4/1 F#4/1", "left": "C4/3/3"},
+          {"right": "G4/2 G4/1", "left": "B3/3/2"},
+          {"right": "D4/2 D4/1", "left": "R/3"},
+          {"right": "G4/2 G4/1", "left": "B3/3"}
+        ],
+        [
+          {"right": "F#4/1 E4/1 F#4/1", "left": "C4/3"},
+          {"right": "G4/2 G4/1", "left": "B3/3"},
+          {"right": "D4/2 D4/1", "left": "R/3"},
+          {"right": "G4/2 G4/1", "left": "B3/3"},
+          {"right": "F#4/1 E4/1 F#4/1", "left": "C4/3"}
+        ],
+        [
+          {"right": "G4/2 G4/1", "left": "B3/3"},
+          {"right": "D4/2 E4/1", "left": "R/3"},
+          {"right": "R/3", "left": "B3/3"},
+          {"right": "R/3", "left": "A3/3"},
+          {"right": "R/3", "left": "G3/3~start"},
+          {"right": "R/3", "left": "G3/3~stop"}
+        ]
+      ]
+    },
+    {
+      "page": 19, "title": "手指操练习（右手）", "meter": [4, 4],
+      "lines": [[
+        {"right": "C5/1/4 B4/1/3 A4/1 G4/1"},
+        {"right": "C5/1 B4/1 A4/1 G4/1"},
+        {"right": "A4/1 G4/1 A4/1 B4/1"},
+        {"right": "C5/4"}
+      ]]
+    },
+    {
+      "page": 19, "title": "手指操练习（左手）", "meter": [4, 4], "left_clef": "treble",
+      "lines": [[
+        {"left": "C5/1/1 B4/1/2 A4/1 G4/1"},
+        {"left": "C5/1 B4/1 A4/1 G4/1"},
+        {"left": "A4/1 G4/1 A4/1 B4/1"},
+        {"left": "C5/4"}
+      ]]
+    },
+    {
+      "page": 19, "title": "在跳舞的小袋鼠", "meter": [3, 4],
+      "lines": [
+        [
+          {"right": "C5/1/4 B4/1 A4/1"},
+          {"right": "G4/3"},
+          {"right": "G4/3"},
+          {"right": "G4/3"},
+          {"right": "C5/1 B4/1 A4/1"},
+          {"right": "G4/3"},
+          {"right": "G4/3"}
+        ],
+        [
+          {"right": "G4/3"},
+          {"right": "C5/1 B4/1 A4/1"},
+          {"right": "G4/3"},
+          {"right": "C5/3"},
+          {"right": "C5/3"},
+          {"right": "C5/1 B4/1 A4/1"},
+          {"right": "G4/3"},
+          {"right": "B4/3"},
+          {"right": "C5/3"}
+        ]
+      ]
+    }
+  ]
+}

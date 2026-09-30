@@ -68,6 +68,14 @@ export function validate_calibration_project(
       }
       event_ids.add(event.id);
       validate_event(measure.id, event, note_ids, issue);
+      if (event.grace && !measure.events.some((principal) =>
+        !principal.grace && principal.notes.length &&
+        principal.hand === event.hand && principal.voice === event.voice &&
+        Math.abs(principal.onset_beats - event.onset_beats) < epsilon)) {
+        issue("L2", "error", "orphan_grace", "倚音缺少同拍位、同声部的主音。", {
+          measure_id: measure.id, event_id: event.id,
+        });
+      }
     }
     validate_measure_rhythm(measure, issue);
   }
@@ -185,7 +193,8 @@ function validate_event(
   if (event.onset_beats < 0) {
     issue("L1", "error", "negative_onset", "事件起拍不能小于 0。", context);
   }
-  if (event.duration_beats <= 0) {
+  if (event.grace ? event.duration_beats !== 0 || event.notes.length === 0 ||
+    !(event.grace.written_quarters > 0) : event.duration_beats <= 0) {
     issue("L1", "error", "invalid_duration", "事件时值必须大于 0。", context);
   }
   if (!Number.isInteger(event.voice) || event.voice < 1) {
@@ -212,6 +221,7 @@ function validate_measure_rhythm(
 ): void {
   const streams = new Map<string, score_document_event[]>();
   for (const event of measure.events) {
+    if (event.grace) continue;
     const key = `${event.hand}:${event.voice}`;
     const stream = streams.get(key) ?? [];
     stream.push(event);
@@ -243,6 +253,7 @@ function validate_measure_rhythm(
       }
       cursor = Math.max(cursor, event.onset_beats + event.duration_beats);
     }
+    if (measure.meter.unmetered) continue;
     if (cursor > measure.meter.beats + epsilon) {
       issue(
         "L2",

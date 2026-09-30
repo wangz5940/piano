@@ -8,6 +8,7 @@ export type jianpu_annotation_status = "candidate" | "needs_review" | "confirmed
 export interface jianpu_meter {
   beats: number;
   beat_unit: number;
+  unmetered?: boolean;
 }
 
 export interface jianpu_render_note {
@@ -49,6 +50,7 @@ export interface jianpu_render_hand_event {
   kind: jianpu_event_kind;
   onset_beats: number;
   duration_beats: number;
+  grace?: { slash: boolean; written_quarters: number };
   notes: jianpu_render_note[];
   voice?: number;
   tie?: jianpu_tie_info;

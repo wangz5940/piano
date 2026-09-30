@@ -11,12 +11,14 @@ import {
 import { synchronize_project_notation_metadata } from "../src/features/calibration/notationSync.ts";
 import { validate_calibration_project } from "../src/features/calibration/validation.ts";
 import type { calibration_project } from "../src/features/calibration/types.ts";
-import type { jianpu_catalog, jianpu_score } from "../src/features/jianpu/types.ts";
+import type { jianpu_catalog, jianpu_page_slice, jianpu_score } from "../src/features/jianpu/types.ts";
 import type { score_document } from "../src/features/score/types.ts";
+import { with_grace_performance_timing } from "../src/features/score/graceTiming.ts";
 import { score_document_to_jianpu_score } from "../server/app.mjs";
 import { apply_source_correction, type SourceCorrection } from "./lib/textbookCorrections.ts";
 import { apply_reference_fingerings } from "./lib/referenceFingerings.ts";
 import { preserve_chord_labels } from "./lib/preserveChordLabels.ts";
+import { read_source_transcription, render_source_transcription, type SourceTranscription } from "./lib/sourceTranscription.ts";
 
 type Row = Record<string, string | null>;
 interface Segment {
@@ -37,12 +39,14 @@ interface Catalog {
 const root = resolve(import.meta.dirname, "..");
 const option = (name: string, fallback: string) =>
   process.argv.find((arg) => arg.startsWith(`--${name}=`))?.slice(name.length + 3) ?? fallback;
-const output = resolve(root, option("output", ".generated/textbook-recalibration"));
+const output = resolve(root, option("output", ".generated/textbook-pdf-calibration"));
+const report_base = resolve(root, option("report", "reports/textbook-pdf-calibration"));
 const selected_materials = new Set(option("materials",
   "beyer,john-thompson-easiest-1,john-thompson-easiest-2").split(","));
 const write = process.argv.includes("--write");
 const now = new Date().toISOString();
-const version = "textbook-recalibration/v2";
+const version = "textbook-recalibration/v3";
+const previous_versions = ["textbook-recalibration/v2", version];
 const db = new DatabaseSync(resolve(root, "data/panio.sqlite"));
 const rows = db.prepare("SELECT * FROM score_calibrations ORDER BY id").all() as Row[];
 const deletions = db.prepare("SELECT * FROM material_deletions ORDER BY segment_id").all() as Row[];
@@ -91,12 +95,12 @@ try {
       const export_path = resolve(root, "public/materials/calibration", material.id,
         `${String(segment.sequence).padStart(3, "0")}.json`);
       const previous_export = existsSync(export_path) ? JSON.parse(read(export_path)) : undefined;
-      const expected_xml_hash = generated === version
+      const expected_xml_hash = previous_versions.includes(generated)
         ? previous_export?.musicxml_sha256 : segment.sha256;
       let reason = "";
       if (deleted.has(segment.id)) reason = "soft_deleted";
       else if (row && (row.updated_by || manual_audits.has(row.id!) ||
-        !["beyer-batch-calibration/v1", version].includes(generated))) reason = "human_calibration";
+        !["beyer-batch-calibration/v1", ...previous_versions].includes(generated))) reason = "human_calibration";
       else if (hash(public_xml) !== expected_xml_hash) reason = "modified_musicxml";
       else if (row?.original_data_sha256 && jianpu_segment &&
         hash(read(asset(jianpu_segment.jianpu_url))) !== row.original_data_sha256) reason = "modified_jianpu";
@@ -113,7 +117,23 @@ try {
       }
       const normalized = normalize_musicxml_divisions(source_xml);
       const correction = corrections[segment.id];
-      const corrected_xml = apply_source_correction(normalized.xml, correction);
+      const transcription_path = resolve(root, "scripts/textbook-transcriptions", `${segment.id}.json`);
+      const transcription: SourceTranscription | undefined = existsSync(transcription_path)
+        ? read_source_transcription(transcription_path) : undefined;
+      if (write && !transcription) {
+        throw new Error(`${segment.id}: PDF transcription is required before writing.`);
+      }
+      const corrected_xml = transcription
+        ? render_source_transcription(source_xml, transcription)
+        : apply_source_correction(normalized.xml, correction);
+      if (transcription) {
+        segment.source_pages = [...new Set(transcription.sections.map((section) => section.page))];
+        segment.source_page_label = `原谱第 ${segment.source_pages.join("、")} 页`;
+        jianpu_segment.source_pages = segment.source_pages;
+        jianpu_segment.source_page_label = segment.source_page_label;
+        jianpu_segment.title = transcription.title ?? transcription.sections.map((section) => section.title).join(" · ");
+        segment.title = `${material.title} · ${jianpu_segment.title}`;
+      }
       const work = {
         composer: material.id === "beyer" ? "Ferdinand Beyer" : "John Thompson",
         opus: String(segment.sequence),
@@ -134,7 +154,9 @@ try {
         source_sha256: segment.sha256,
         importer_version: version,
       };
-      document.review.note = "从原始识谱重新校准结构；未将自动校验冒充人工逐音确认。";
+      document.review.note = transcription
+        ? `按原PDF演奏谱逐小节转录：${transcription.evidence}`
+        : "从原始识谱重新校准结构；未将自动校验冒充人工逐音确认。";
       const project: calibration_project = {
         schema_version: 1,
         id: `material:${material.id}:${segment.id}`,
@@ -162,8 +184,11 @@ try {
         },
         updated_at: now,
       };
+      const imported_pages = transcription
+        ? [...new Set(transcription.sections.map((section) => section.page))]
+        : segment.source_pages;
       for (const metadata of Object.values(project.event_metadata)) {
-        metadata.source_page = segment.source_pages[(metadata.source_page ?? 1) - 1] ?? null;
+        metadata.source_page = imported_pages[(metadata.source_page ?? 1) - 1] ?? null;
       }
       const jianpu_path = asset(jianpu_segment.jianpu_url);
       const before = JSON.parse(read(jianpu_path));
@@ -187,7 +212,20 @@ try {
           document: JSON.parse(candidate.document_json!) as score_document,
         }));
       const generated_fingerings = apply_reference_fingerings(project, references);
+      // The editor's sync uses its default treble staff and MIDI spelling.
+      // Import retains the PDF clefs and enharmonic spelling from MusicXML.
+      const source_notation = Object.fromEntries(Object.entries(project.event_metadata)
+        .map(([id, metadata]) => [id, {
+          clef: metadata.clef,
+          pitch_name: metadata.pitch_name,
+          accidental: metadata.accidental,
+          duration_label: metadata.duration_label,
+          rest: metadata.rest,
+        }]));
       synchronize_project_notation_metadata(project);
+      for (const [id, notation] of Object.entries(source_notation)) {
+        Object.assign(project.event_metadata[id], notation);
+      }
       preserve_chord_labels(document, before,
         score_document_to_jianpu_score(document, segment.id, project.event_metadata) as jianpu_score);
       const validation = validate_calibration_project(project);
@@ -204,7 +242,7 @@ try {
         notes: events.reduce((sum, event) => sum + event.notes.length, 0),
         rests: events.filter((event) => !event.notes.length).length,
         generated_fingerings,
-        source_correction: correction?.evidence,
+        source_correction: transcription?.evidence ?? correction?.evidence,
         changes: {
           measure_count: score.measures.length - before.measures.length,
           event_count: after_events.length - before_events.length,
@@ -230,6 +268,7 @@ try {
         }, null, 2) + "\n");
       }
       jianpu_segment.measure_count = score.measures.length;
+      if (transcription) segment.measure_count = score.measures.length;
       jianpu_segment.time_signature = score.time_signature;
       jianpu_segment.key_signature = score.key_signature;
       jianpu_segment.tonic_midi = score.tonic_midi;
@@ -240,7 +279,18 @@ try {
         sum + measure.events.filter((event) => event.chord).length, 0);
       // Rebuild page ranges from aligned measures; leave the original page text.
       let next_measure = 1;
-      jianpu_segment.page_slices = jianpu_segment.page_slices.map((slice, slice_index, slices) => {
+      jianpu_segment.page_slices = transcription
+        ? transcription.sections.map((section) => {
+          const previous = jianpu_segment.page_slices.find((slice) =>
+            slice.source_pages.includes(section.page)) ?? jianpu_segment.page_slices[0];
+          const start = next_measure;
+          next_measure += section.lines.reduce((sum, line) => sum + line.length, 0);
+          return {
+            ...previous, source_pages: [section.page], title: section.title,
+            measure_start: start, measure_end: next_measure - 1, mapping: "verified" as const,
+          };
+        })
+        : jianpu_segment.page_slices.map((slice, slice_index, slices) => {
         const indices = document.measures.flatMap((measure, index) =>
           measure.events.some((event) =>
             slice.source_pages.includes(project.event_metadata[event.id]?.source_page ?? -1))
@@ -255,11 +305,23 @@ try {
           measure_end: end,
         };
       });
+      if (transcription) {
+        const merged: jianpu_page_slice[] = [];
+        for (const slice of jianpu_segment.page_slices) {
+          const previous = merged.at(-1);
+          if (previous?.source_pages[0] === slice.source_pages[0]) {
+            previous.measure_end = slice.measure_end;
+            previous.title += `、${slice.title}`;
+          } else merged.push(slice);
+        }
+        jianpu_segment.page_slices = merged;
+      }
     }
   }
+  stage(catalog_path, JSON.stringify(catalog, null, 2) + "\n");
   stage(jianpu_catalog_path, JSON.stringify(jianpu_catalog, null, 2) + "\n");
   const report = {
-    schema: "textbook-recalibration-report/v2",
+    schema: "textbook-recalibration-report/v3",
     generated_at: now,
     protected_segments,
     results: results.map((item) => ({
@@ -290,6 +352,10 @@ try {
     output,
   }, null, 2));
   if (write) {
+    if (!results.length || results.some((item) =>
+      item.issues.some((issue) => issue.severity === "error"))) {
+      throw new Error("No writable results or unresolved validation errors; inspect the staged report.");
+    }
     const backup_dir = resolve(root, ".trae/backups", `textbook-write-${Date.now()}`);
     mkdirSync(backup_dir, { recursive: true });
     execFileSync("sqlite3", [resolve(root, "data/panio.sqlite"),
@@ -343,8 +409,8 @@ try {
       }
       throw error;
     }
-    atomic(resolve(root, "reports/textbook-recalibration-2026-09-30.json"), JSON.stringify(report, null, 2) + "\n");
-    atomic(resolve(root, "reports/textbook-recalibration-2026-09-30.md"), format_report());
+    atomic(`${report_base}.json`, JSON.stringify(report, null, 2) + "\n");
+    atomic(`${report_base}.md`, format_report());
     console.log(`Written ${results.length} calibrations; backup: ${backup_dir}`);
   } else {
     console.log("Staged only. Use --write to apply with concurrency checks and a database backup.");
@@ -386,17 +452,17 @@ function format_report(): string {
   const protected_by_reason = (reason: string) =>
     protected_segments.filter((item) => item.reason === reason).map((item) => item.id);
   return [
-    "# 小汤1、小汤2、拜厄重新校准记录",
+    "# 小汤1、小汤2、拜厄 PDF 校准数据报告",
     "",
     `生成时间：${now}；流程：${version}。`,
     "",
     `本轮更新 ${results.length} 个教材片段，共 ${results.reduce((sum, item) => sum + item.notes, 0)} 个音符。`,
-    `其中 ${error_segments.length} 个片段仍有 ${error_segments.reduce((sum, item) => sum + count_errors(item), 0)} 条节拍或连线错误；所有输出保留 needs_review，L0–L3 未标记为人工确认。无 error 也不代表已逐音校对。`,
+    `其中 ${error_segments.length} 个片段有 ${error_segments.reduce((sum, item) => sum + count_errors(item), 0)} 条节拍或连线错误；所有输出保留 needs_review，L0–L3 未标记为用户人工确认。PDF核对依据、排除范围及局限见 reports/pdf-source-review-2026-10-01.md。`,
     "",
     "## 已完成的修正",
     "",
     "- 按小节号和重复次数对齐声部，左右手按局部谱表与明确手别识别；忽略隐藏的占位休止。",
-    `- 恢复 ${results.reduce((sum, item) => sum + item.divisions_repaired, 0)} 个 part/measure 中可唯一推导的零 divisions 时间刻度，保留原 XML 版式、连线与其他记谱信息。`,
+    "- 按 scripts/textbook-transcriptions/ 中逐小节PDF转录重建演奏数据，保留原页码与来源信息；原始OMR文件不修改。",
     "- 恢复原谱拍号，保留中途换拍和换调；不扩大拍数或截断时值来隐藏识谱错误。",
     "- 简谱保留左右手休止、逐小节调性和拍号；跟弹按同时起音分组，并在 source_events 中保留各声部时值。",
     `- 仅从人工样本中提取一致的固定五指手位，按整句音域与已有指号唯一匹配，生成 ${results.reduce((sum, item) => sum + item.generated_fingerings, 0)} 个待复核指号。已有和弦标签仅在小节、时值和双手音高完全匹配时保留。`,
@@ -412,7 +478,7 @@ function format_report(): string {
     "",
     "## 仍需复核的范围",
     "",
-    "自由节奏的认音谱例暂按旧模型表示，可能触发超拍提示；原 OMR 的漏音、误休止、错分声部和装饰音仍须结合原页处理。完整 issues（含小节和事件 ID）见同名 JSON 报告与逐段校准快照。",
+    "无拍号认音谱例、三连音、复附点、短倚音及小节内换谱号均按转录表示。原图遮挡空拍与未逐音标印的指法仍保留复核提示，自动推导指法不等于印刷指法。完整 issues（含小节和事件 ID）见同名 JSON 报告与逐段校准快照。",
     "",
     "| 片段 | PDF页 | 小节 | 音符 | error | 其他提示 |",
     "| --- | --- | ---: | ---: | ---: | ---: |",
@@ -425,7 +491,8 @@ function format_report(): string {
     "",
     "```sh",
     "npm run calibrate:textbooks",
-    "npm run verify:textbooks -- --output=.generated/textbook-recalibration",
+    "python3 scripts/verify-source-transcriptions.py --output .generated/textbook-pdf-calibration",
+    "npm run verify:textbooks -- --output=.generated/textbook-pdf-calibration",
     "npm run calibrate:textbooks:write",
     "npm run verify:textbooks",
     "npm test",
@@ -444,7 +511,8 @@ function format_report(): string {
 function practice_events(document: score_document) {
   return document.measures.flatMap((measure, index) => {
     const groups = new Map<number, typeof measure.events>();
-    for (const event of measure.events.filter((event) => event.notes.length)) {
+    const performed = with_grace_performance_timing(measure.events, measure.meter.beat_unit);
+    for (const event of performed.filter((event) => event.notes.length)) {
       const onset = Number(event.onset_beats.toFixed(9));
       const group = groups.get(onset) ?? [];
       group.push(event);
@@ -471,10 +539,14 @@ function practice_events(document: score_document) {
           }))),
         // The guided-input contract groups simultaneous keys. Retain original
         // voice durations as well, so this grouping does not erase sustain.
-        source_events: events.map((event) => ({
+        source_events: events.map((performed_event) => {
+          const event = measure.events.find((candidate) => candidate.id === performed_event.id)!;
+          return {
           id: event.id, hand: event.hand, voice: event.voice,
+          onset_beats: event.onset_beats,
           duration_beats: event.duration_beats, notes: event.notes.map((note) => note.midi),
-        })),
+          ...(event.grace ? { grace: event.grace } : {}),
+        }; }),
       };
     });
   });

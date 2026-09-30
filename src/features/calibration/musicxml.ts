@@ -104,7 +104,7 @@ export function parse_musicxml_to_score_document(
   const measure_map = new Map<number, score_document_measure>();
   const event_metadata: Record<string, calibration_event_metadata> = {};
   let first_key = "C major";
-  let first_meter = { beats: 4, beat_unit: 4 };
+  let first_meter: score_document_measure["meter"] = { beats: 4, beat_unit: 4 };
   for (const [index, entry] of structure.entries.entries()) {
     first_key = entry.key ?? first_key;
     first_meter = entry.meter ?? first_meter;
@@ -237,7 +237,12 @@ export function parse_musicxml_to_score_document(
           continue;
         }
         const is_chord = note_nodes.some((candidate) => has_child(candidate, "chord"));
-        const duration_quarters =
+        const grace_node = note_nodes.find((candidate) => has_child(candidate, "grace"));
+        const grace = grace_node ? {
+          slash: attribute(grace_node, "slash") === "yes",
+          written_quarters: notated_duration(note_nodes),
+        } : undefined;
+        const duration_quarters = grace ? 0 :
           (effective_divisions
             ? numeric_text(note_nodes, "duration", 0) / effective_divisions
             : 0) ||
@@ -271,6 +276,7 @@ export function parse_musicxml_to_score_document(
           ? [...target.events].reverse().find((event) =>
               event.voice === voice &&
               event.hand === hand &&
+              Boolean(event.grace) === Boolean(grace) &&
               Math.abs(event.onset_beats - onset_beats) < 0.0001)
           : undefined;
         if (chord_target && note) {
@@ -293,7 +299,8 @@ export function parse_musicxml_to_score_document(
           const event: score_document_event = {
             id: event_id,
             onset_beats,
-            duration_beats: Math.max(duration_beats, 0.0625),
+            duration_beats: grace ? 0 : Math.max(duration_beats, 0.0625),
+            ...(grace ? { grace } : {}),
             hand,
             voice,
             notes: note ? [note] : [],
@@ -331,6 +338,12 @@ export function parse_musicxml_to_score_document(
     });
   });
 
+  for (const measure of measure_map.values()) {
+    if (measure.meter.unmetered) {
+      measure.meter.beats = Math.max(1, ...measure.events.map((event) =>
+        event.onset_beats + event.duration_beats));
+    }
+  }
   const tonic_name = first_key.split(" ")[0];
   const document: score_document = {
     schema_version: 2,
@@ -339,7 +352,7 @@ export function parse_musicxml_to_score_document(
     title,
     key_signature: first_key,
     tonic_midi: key_to_tonic_midi.get(tonic_name) ?? 60,
-    time_signature: `${first_meter.beats}/${first_meter.beat_unit}`,
+    time_signature: first_meter.unmetered ? "无拍号" : `${first_meter.beats}/${first_meter.beat_unit}`,
     status: "needs_review",
     provenance: {
       kind: "manual",
@@ -609,6 +622,7 @@ function index_measures(parts: xml_node[]) {
         entry.meter = {
           beats: numeric_text(time, "beats", 4),
           beat_unit: numeric_text(time, "beat-type", 4),
+          ...(time.some((node) => has_child(node, "senza-misura")) ? { unmetered: true } : {}),
         };
       }
       const key_nodes = first_children(attrs, "key");

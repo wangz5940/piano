@@ -1,0 +1,34 @@
+{
+  "evidence": "PDF24右下《小夜曲》伴奏谱逐音核对；此独立片段明确标记教师伴奏。恢复原谱每小节第1/3拍的休止、二连八分音符、跳音、圆滑线与末行降A。原OMR把休止漏掉并把第二个八分音符误记为附点四分。",
+  "reviewed_pages": [24],
+  "excluded_regions": [{"page": 24, "reason": "学生左手主旋律在004单独保留。"}],
+  "sections": [{
+    "page": 24, "title": "小夜曲（教师伴奏）", "meter": [4, 4],
+    "lines": [
+      [
+        {"right": "r/1 G3+C4+E4/1!staccato r/1 G3+B3+E4/1!staccato"},
+        {"right": "r/1 C4+G4/0.5^start G3/0.5 C4+G4/1!staccato^stop G3+C4+G4/1!staccato"},
+        {"right": "r/1 G3+B3+F4/1!staccato r/1 G3+C4+E4/1!staccato"},
+        {"right": "r/1 C4+D4/0.5^start A3/0.5 C4+D4/1!staccato^stop A3+C4+D4/1!staccato"}
+      ],
+      [
+        {"right": "r/1 A3+C4+D4/1!staccato r/1 A3+C4+E4/1!staccato"},
+        {"right": "r/1 C4+D4+F4/0.5^start A3/0.5 C4+D4+F4/1!staccato^stop A3+C4+D4+F4/1!staccato"},
+        {"right": "r/1 B3+E4/1!staccato r/1 B3+D4/1!staccato"},
+        {"right": "r/1 G3+C4+G4/1!staccato r/1 G3+B3+F4/1!staccato"}
+      ],
+      [
+        {"right": "r/1 G3+C4+E4/1!staccato r/1 G3+B3+F4/1!staccato"},
+        {"right": "r/1 C4+G4/0.5!staccato^start G3/0.5!staccato C4+G4/1!staccato^stop G3+C4+G4/1!staccato"},
+        {"right": "r/1 G3+B3+F4/1!staccato r/1 G3+C4+E4/1!staccato"},
+        {"right": "r/1 C4+D4/0.5^start Ab3/0.5 C4+D4/1!staccato^stop Ab3+C4+D4/1!staccato"}
+      ],
+      [
+        {"right": "r/1 Ab3+C4+D4/1!staccato r/1 Ab3+C4+E4/1!staccato"},
+        {"right": "r/1 C4+F4/0.5^start Ab3/0.5 C4+F4/1!staccato^stop Ab3+C4+F4/1!staccato"},
+        {"right": "r/1 B3+E4/1!staccato r/1 B3+F4+G4/1!staccato"},
+        {"right": "r/1 E4+C5/0.5^start C4/0.5 E4+C5/1!staccato^stop C4+E4+C5/1!staccato"}
+      ]
+    ]
+  }]
+}

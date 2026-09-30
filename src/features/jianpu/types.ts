@@ -71,6 +71,7 @@ export interface jianpu_catalog {
 export interface jianpu_event {
   onset_beats: number;
   duration_beats: number;
+  grace?: { slash: boolean; written_quarters: number };
   right_notes: number[];
   left_notes: number[];
   right_rest?: boolean;
@@ -94,7 +95,7 @@ export interface jianpu_measure {
   index: number;
   number: string;
   directions: string[];
-  meter?: { beats: number; beat_unit: number };
+  meter?: { beats: number; beat_unit: number; unmetered?: boolean };
   key_signature?: string;
   tonic_midi?: number;
   events: jianpu_event[];

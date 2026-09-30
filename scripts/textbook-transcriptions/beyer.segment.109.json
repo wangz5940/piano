@@ -1,0 +1,41 @@
+{
+  "title": "练习83",
+  "evidence": "逐小节核对PDF64五行20小节。恢复左手第7、14小节高音谱号的G4及C4至B4音阶；第8、15小节先弹高音C5再换低音谱号弹G3+B3。去除伪三连音，核对交替音阶、长音延音及末段低音C2。",
+  "reviewed_pages": [64],
+  "excluded_regions": [],
+  "sections": [{
+    "page": 64, "title": "练习83 · Allegretto", "meter": [4, 4],
+    "lines": [
+      [
+        {"right": "E4/0.5/3^start C4/0.5/1 D4/0.5 E4/0.5 F4/0.5/1 G4/0.5 A4/0.5 B4/0.5", "left": "R/4"},
+        {"right": "C5/4~start^stop", "left": "E3/0.5/3^start C3/0.5/5 D3/0.5 E3/0.5 F3/0.5 G3/0.5 A3/0.5/3 B3/0.5"},
+        {"right": "C5/0.5~stop E4/0.5/1^start F4/0.5 G4/0.5 A4/0.5/1 B4/0.5 C5/0.5 D5/0.5", "left": "C4/4~start^stop"},
+        {"right": "E5/4~start^stop", "left": "C4/0.5~stop E3/0.5/5^start F3/0.5 G3/0.5 A3/0.5 B3/0.5 C4/0.5/3 D4/0.5"}
+      ],
+      [
+        {"right": "E5/0.5~stop G4/0.5/1^start A4/0.5 B4/0.5 C5/0.5/1 D5/0.5 E5/0.5 F5/0.5", "left": "E4/4~start^stop"},
+        {"right": "G5/4~start^stop", "left": "E4/0.5~stop G3/0.5/5^start A3/0.5 B3/0.5 C4/0.5 D4/0.5 E4/0.5/3 F4/0.5"},
+        {"right": "G5/0.5~stop C5/0.5/1^start D5/0.5 E5/0.5 F5/0.5/1 G5/0.5 A5/0.5 B5/0.5", "left": "G4/0.5^stop C4/0.5/5^start D4/0.5 E4/0.5 F4/0.5 G4/0.5 A4/0.5/3 B4/0.5", "left_clef": "treble"},
+        {"right": "C6/0.5/5^continue G5/0.5/2 B5/0.5/4 A5/0.5/3 G5/0.5/2 F5/0.5/1 E5/0.5/3 D5/0.5/2", "left": "C5/1^stop r/1 @bass G3+B3/2/4,2!accent^start"}
+      ],
+      [
+        {"right": "C5/2/1^stop r/2", "left": "C4/0.5^stop C3/0.5/5^start D3/0.5 E3/0.5 F3/0.5 G3/0.5 A3/0.5/3 B3/0.5"},
+        {"right": "r/0.5 E4/0.5/1^start F4/0.5 G4/0.5 A4/0.5/1 B4/0.5 C5/0.5 D5/0.5", "left": "C4/4~start^stop"},
+        {"right": "E5/4~start^stop", "left": "C4/0.5~stop E3/0.5/5^start F3/0.5 G3/0.5 A3/0.5 B3/0.5 C4/0.5/3 D4/0.5"},
+        {"right": "E5/0.5~stop G4/0.5/1^start A4/0.5 B4/0.5 C5/0.5/1 D5/0.5 E5/0.5 F5/0.5", "left": "E4/4~start^stop"}
+      ],
+      [
+        {"right": "G5/4~start^stop", "left": "E4/0.5~stop G3/0.5/5^start A3/0.5 B3/0.5 C4/0.5 D4/0.5 E4/0.5/3 F4/0.5"},
+        {"right": "G5/0.5~stop C5/0.5/1^start D5/0.5 E5/0.5 F5/0.5/1 G5/0.5 A5/0.5 B5/0.5", "left": "G4/0.5^stop C4/0.5/5^start D4/0.5 E4/0.5 F4/0.5 G4/0.5 A4/0.5/3 B4/0.5", "left_clef": "treble"},
+        {"right": "C6/0.5^continue G5/0.5 B5/0.5 A5/0.5 G5/0.5 F5/0.5 E5/0.5 D5/0.5", "left": "C5/1^stop r/1 @bass G3+B3/2!accent^start"},
+        {"right": "C5/1^stop r/1 B4+G5/2/1,5^start", "left": "C4/0.5/1^continue G3/0.5/4 B3/0.5/2 A3/0.5/3 G3/0.5/1 F3/0.5 E3/0.5 D3/0.5"}
+      ],
+      [
+        {"right": "C5/1/2^stop r/1 G4/0.5/5^start F4/0.5 E4/0.5 D4/0.5", "left": "C3/0.5^continue D3/0.5 E3/0.5 F3/0.5 G3/0.5 F3/0.5 E3/0.5 D3/0.5"},
+        {"right": "C4/0.5 D4/0.5 E4/0.5 F4/0.5 G4/0.5 F4/0.5 E4/0.5 D4/0.5", "left": "C3/0.5 D3/0.5 E3/0.5 F3/0.5 G3/0.5 F3/0.5 E3/0.5 D3/0.5"},
+        {"right": "C4/1/1^continue D4/0.5 E4/0.5 F4/0.5/1 G4/0.5 A4/0.5 B4/0.5", "left": "C3/0.5/5!staccatissimo^stop C3/0.5/1^start B2/0.5 A2/0.5 G2/0.5/1 F2/0.5 E2/0.5 D2/0.5"},
+        {"right": "C5/4^stop", "left": "C2/4^stop"}
+      ]
+    ]
+  }]
+}

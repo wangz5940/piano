@@ -1,0 +1,46 @@
+{
+  "evidence": "PDF11（书页9）主题1及变奏1–6，学生单用右手。主题8个全音符逐一核对；变奏5第1、7小节去除误识别的三连音时值。核对每条8小节、附点时值、印刷指号和圆滑线，不把legato讲解的三个二分音符混入练习。",
+  "reviewed_pages": [11],
+  "excluded_regions": [
+    {"page":11,"reason":"页首手位五音图及主题下方legato连线讲解图仅为示例，不并入学生曲的演奏顺序。"}
+  ],
+  "sections": [
+    {"page":11,"title":"三手练习主题1（学生右手）","meter":[4,4],"lines":[[
+      {"right":"C5/4/1"},{"right":"D5/4/2"},{"right":"E5/4/3"},{"right":"D5/4/2"},
+      {"right":"F5/4/4"},{"right":"E5/4/3"},{"right":"D5/4/2"},{"right":"C5/4/1"}
+    ]]},
+    {"page":11,"title":"主题1变奏1（学生右手）","meter":[4,4],"lines":[[
+      {"right":"C5/2/1 C5/2/1^start"},{"right":"D5/2/2^stop D5/2/2^start"},
+      {"right":"E5/2/3^stop E5/2/3^start"},{"right":"D5/2/2^stop D5/2/2^start"},
+      {"right":"F5/2/4^stop F5/2/4^start"},{"right":"E5/2^stop E5/2^start"},
+      {"right":"D5/2^stop D5/2^start"},{"right":"C5/4^stop"}
+    ]]},
+    {"page":11,"title":"主题1变奏2（学生右手）","meter":[4,4],"lines":[[
+      {"right":"C5/3/1 C5/1/1^start"},{"right":"D5/3^stop D5/1^start"},
+      {"right":"E5/3^stop E5/1^start"},{"right":"D5/3^stop D5/1^start"},
+      {"right":"F5/3 D5/1"},{"right":"E5/3 C5/1"},{"right":"D5/2/2 E5/1/3 D5/1/2"},{"right":"C5/4/1^stop"}
+    ]]},
+    {"page":11,"title":"主题1变奏3（学生右手）","meter":[3,4],"lines":[[
+      {"right":"C5/2/1^start D5/1/2"},{"right":"E5/2 C5/1"},{"right":"D5/2 E5/1"},{"right":"F5/2 D5/1"},
+      {"right":"E5/2 C5/1/1"},{"right":"G5/2/5 C5/1/1"},{"right":"D5/1/2 E5/1/3 D5/1"},{"right":"C5/3^stop"}
+    ]]},
+    {"page":11,"title":"主题1变奏4（学生右手）","meter":[4,4],"lines":[[
+      {"right":"C5/1/1 C5/1/1^start E5/2/3"},{"right":"D5/1/2^stop D5/1/2^start F5/2/4"},
+      {"right":"E5/1^stop E5/1^start C5/2"},{"right":"D5/4^stop"},
+      {"right":"F5/1/4 F5/1^start D5/2^stop"},{"right":"E5/1 E5/1^start C5/2^stop"},
+      {"right":"D5/2^start E5/1 D5/1"},{"right":"C5/4^stop"}
+    ]]},
+    {"page":11,"title":"主题1变奏5（学生右手）","meter":[4,4],"lines":[[
+      {"right":"C5/1/1 C5/2/1^start E5/1/3"},{"right":"D5/1/2^stop D5/2/2^start F5/1/4"},
+      {"right":"E5/1^stop E5/2^start C5/1"},{"right":"D5/4^stop"},
+      {"right":"F5/1/4 F5/2^start D5/1"},{"right":"E5/1^stop E5/2^start C5/1"},
+      {"right":"D5/1^stop D5/1^start E5/1 D5/1"},{"right":"C5/4^stop"}
+    ]]},
+    {"page":11,"title":"主题1变奏6（学生右手）","meter":[4,4],"lines":[[
+      {"right":"C5/1/1 D5/1/2^start E5/2/3"},{"right":"D5/1 E5/1 F5/2"},
+      {"right":"E5/1 D5/1 C5/2"},{"right":"D5/4^stop"},
+      {"right":"D5/1/2^start E5/1 F5/2"},{"right":"E5/1 D5/1 C5/2"},
+      {"right":"D5/2 E5/1 D5/1"},{"right":"C5/4^stop"}
+    ]]}
+  ]
+}

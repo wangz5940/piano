@@ -1,0 +1,49 @@
+{
+  "evidence":"PDF46–47练习62，完整32小节3/4。逐音核对八分音型、句末跳音、双手交替与高八度；第10/12小节右手8va恢复C6–G6、D6–A6，第18/22小节左手高音谱号恢复G4–D5。第14小节原页左手仅G3四分，无后两拍休止，保留不可见空拍。",
+  "reviewed_pages":[46,47],"excluded_regions":[{"page":47,"reason":"页脚跳音奏法示例为演奏说明，不重复加入主曲"}],
+  "sections":[{"page":46,"title":"练习62","meter":[3,4],"left_clef":"bass","continues":true,"lines":[
+    [
+      {"right":"C5/0.5/1^start D5/0.5/2 E5/0.5/3 F5/0.5/4 G5/0.5/5!staccato^stop r/0.5","left":"C4/1/5^start E4/1/3 G4/1/1"},
+      {"right":"C6/0.5/1^start D6/0.5 E6/0.5 F6/0.5 G6/0.5!staccato^stop r/0.5","left":"C4/1/5^stop r/1 r/1"},
+      {"right":"D5/0.5/1^start E5/0.5 F5/0.5 G5/0.5 A5/0.5!staccato^stop r/0.5","left":"F3/1/5^start A3/1/3 D4/1/1"},
+      {"right":"D6/0.5/1^start E6/0.5 F6/0.5 G6/0.5 A6/0.5!staccato^stop r/0.5","left":"F3/1/5^stop r/1 r/1"}
+    ],[
+      {"right":"G4/0.5/1^start A4/0.5 B4/0.5 C5/0.5 D5/0.5!staccato^stop r/0.5","left":"G3/1/5^start B3/1 D4/1"},
+      {"right":"G5/0.5/1^start A5/0.5 B5/0.5 C6/0.5 D6/0.5!staccato^stop r/0.5","left":"G3/1/5^stop r/1 r/1"},
+      {"right":"C5/0.5/1^start D5/0.5 E5/0.5 F5/0.5 G5/0.5 E5/0.5/3","left":"C4/1/5^start E4/1 G4/1"},
+      {"right":"C5/3^stop","left":"C4/0.5^continue D4/0.5 E4/0.5 F4/0.5 G4/0.5 E4/0.5"}
+    ]
+  ]},{"page":47,"title":"练习62（续）","meter":[3,4],"left_clef":"bass","lines":[
+    [
+      {"right":"C5/0.5^start D5/0.5 E5/0.5 F5/0.5 G5/0.5!staccato^stop r/0.5","left":"C4/1^continue E4/1 G4/1"},
+      {"right":"C6/0.5^start D6/0.5 E6/0.5 F6/0.5 G6/0.5!staccato^stop r/0.5","left":"C4/1^stop r/1 r/1"},
+      {"right":"D5/0.5^start E5/0.5 F5/0.5 G5/0.5 A5/0.5!staccato^stop r/0.5","left":"F3/1^start A3/1 D4/1"},
+      {"right":"D6/0.5^start E6/0.5 F6/0.5 G6/0.5 A6/0.5!staccato^stop r/0.5","left":"F3/1^stop r/1 r/1"}
+    ],[
+      {"right":"G4/0.5^start A4/0.5 B4/0.5 C5/0.5 D5/0.5!staccato^stop r/0.5","left":"G3/1^start B3/1 D4/1"},
+      {"right":"G5/0.5^start A5/0.5 B5/0.5 C6/0.5 D6/0.5!staccato^stop r/0.5","left":"G3/1^stop s/2"},
+      {"right":"C5/0.5^start D5/0.5 E5/0.5 F5/0.5 G5/0.5 E5/0.5","left":"C4/1^start E4/1 G4/1"},
+      {"right":"C5/3^stop","left":"C4/0.5^continue D4/0.5 E4/0.5 F4/0.5 G4/0.5!staccato^stop r/0.5"}
+    ],[
+      {"right":"D5/3/2^start","left":"G3/0.5^start A3/0.5 B3/0.5 C4/0.5 D4/0.5!staccato^stop r/0.5","repeat_start":true},
+      {"right":"G5/3/5","left":"G4/0.5/5^start A4/0.5 B4/0.5 C5/0.5 D5/0.5!staccato^stop r/0.5","left_clef":"treble"},
+      {"right":"E5/3/3","left":"C3/0.5/5^start D3/0.5 E3/0.5 F3/0.5 G3/0.5!staccato^stop r/0.5","left_clef":"bass"},
+      {"right":"C5/3/1^stop","left":"C4/0.5/5^start D4/0.5 E4/0.5 F4/0.5 G4/0.5!staccato^stop r/0.5"}
+    ],[
+      {"right":"D5/3^start","left":"G3/0.5^start A3/0.5 B3/0.5 C4/0.5 D4/0.5!staccato^stop r/0.5"},
+      {"right":"G5/3","left":"G4/0.5^start A4/0.5 B4/0.5 C5/0.5 D5/0.5!staccato^stop r/0.5","left_clef":"treble"},
+      {"right":"E5/3","left":"C3/0.5^start D3/0.5 E3/0.5 F3/0.5 G3/0.5!staccato^stop r/0.5","left_clef":"bass"},
+      {"right":"C5/3^stop","left":"C4/0.5^start D4/0.5 E4/0.5 F4/0.5 G4/0.5 E4/0.5"}
+    ],[
+      {"right":"C5/0.5^start D5/0.5 E5/0.5 F5/0.5 G5/0.5!staccato^stop r/0.5","left":"C4/1^continue E4/1 G4/1"},
+      {"right":"C6/0.5^start D6/0.5 E6/0.5 F6/0.5 G6/0.5!staccato^stop r/0.5","left":"C4/1^stop r/1 r/1"},
+      {"right":"D5/0.5^start E5/0.5 F5/0.5 G5/0.5 A5/0.5!staccato^stop r/0.5","left":"F3/1^start A3/1 D4/1"},
+      {"right":"D6/0.5^start E6/0.5 F6/0.5 G6/0.5 A6/0.5!staccato^stop r/0.5","left":"F3/1^stop r/1 r/1"}
+    ],[
+      {"right":"G4/0.5^start A4/0.5 B4/0.5 C5/0.5 D5/0.5!staccato^stop r/0.5","left":"G3/1^start B3/1 D4/1"},
+      {"right":"G5/0.5^start A5/0.5 B5/0.5 C6/0.5 D6/0.5!staccato^stop r/0.5","left":"G3/1^stop r/1 r/1"},
+      {"right":"C5/0.5^start D5/0.5 E5/0.5 F5/0.5 G5/0.5 E5/0.5","left":"C4/3/5^start"},
+      {"right":"C5/2^stop r/1","left":"C4/0.5^continue E4/0.5 G4/0.5 E4/0.5 C4/0.5!staccato^stop r/0.5","repeat_end":true}
+    ]
+  ]}]
+}

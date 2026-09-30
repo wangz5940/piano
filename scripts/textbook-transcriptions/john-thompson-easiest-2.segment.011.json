@@ -1,0 +1,28 @@
+{
+  "evidence": "PDF32页首三组音程示例按C/G/F调分别恢复，纠正原OMR将谱号、调号识别为音符及G调八度错误；原片段含PDF31的旋律已合并到010。",
+  "reviewed_pages": [31, 32],
+  "excluded_regions": [],
+  "sections": [
+    {
+      "page": 32, "title": "音程（C调）", "meter": [4, 4],
+      "lines": [[
+        {"right": "E4+G4/2/1,3 F4+G4/2/2,3"},
+        {"right": "E4+G4/4"}
+      ]]
+    },
+    {
+      "page": 32, "title": "音程（G调）", "meter": [4, 4], "fifths": 1,
+      "lines": [[
+        {"right": "B3+D4/2/1,3 C4+D4/2/2,3"},
+        {"right": "B3+D4/4"}
+      ]]
+    },
+    {
+      "page": 32, "title": "音程（F调）", "meter": [4, 4], "fifths": -1,
+      "lines": [[
+        {"right": "A4+C5/2/1,3 Bb4+C5/2/2,3"},
+        {"right": "A4+C5/4"}
+      ]]
+    }
+  ]
+}

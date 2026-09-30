@@ -1,0 +1,14 @@
+{
+  "reviewed_pages": [27, 28],
+  "evidence": "PDF27（书页23）《排钟》12小节，PDF28《滑稽面孔》首行4小节。逐音核对：排钟第7小节首拍左手G3，后两拍右手D4 E4，末四小节右手C4与左手G3同时弹。用不可见空拍保留空白谱表，不伪造休止符。指号按纸面补3、4、1。",
+  "excluded_regions": [{"page":27,"reason":"认音图及大声读谱另有教学用途，不混入演奏曲；大声读谱对应006。"},{"page":28,"reason":"后两行位于008。"}],
+  "sections": [
+    {"page":27,"title":"排钟","meter":[3,4],"lines":[
+      [{"right":"E4/1/3 C4/1 D4/1"},{"left":"G3/3/4"},{"right":"C4/1 D4/1 E4/1"},{"right":"C4/3"}],
+      [{"right":"E4/1 D4/1 C4/1"},{"left":"G3/3"},{"right":"s/1 D4/1 E4/1","left":"G3/1 s/2"},{"right":"C4/3"},{"right":"C4/3/1","left":"G3/3/4"},{"right":"C4/3","left":"G3/3"},{"right":"C4/3","left":"G3/3"},{"right":"C4/3","left":"G3/3"}]
+    ]},
+    {"page":28,"title":"滑稽面孔（第一行）","meter":[3,4],"lines":[
+      [{"right":"s/2 E4/1/3","left":"C4/2/1 s/1"},{"right":"C4/2 s/1","left":"s/2 G3/1/4"},{"right":"s/2 E4/1","left":"C4/2 s/1"},{"right":"C4/2 s/1","left":"s/2 G3/1"}]
+    ]}
+  ]
+}

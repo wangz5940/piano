@@ -1,0 +1,80 @@
+{
+  "title": "练习90与a小调音阶",
+  "evidence": "逐小节核对PDF72的6/8双音练习与PDF73完整16小节a小调音阶。恢复第2、18小节附点四分双音、第9、11、13小节左手附点时值、第15小节六个重复八分音和第16小节右手休止。保留D5及左手G3+D4延音、两个弱起与互补结束。音阶下降显式还原F/G；第12小节左手中途改低音谱号。",
+  "reviewed_pages": [72, 73],
+  "excluded_regions": [],
+  "sections": [
+    {
+      "page": 72, "title": "练习90 · Allegretto", "meter": [6, 8],
+      "lines": [
+        [
+          {"quarters": 0.5, "right": "E4+G4/0.5/3,5!staccato", "left": "r/0.5"},
+          {"right": "E4+G4/1 E4+G4/0.5 E4+G4/1 E4+G4/0.5", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"},
+          {"right": "E4+G4/1.5^start C4+E4/0.5/1,3^stop r/0.5 E4+C5/0.5/1,5!staccato", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"},
+          {"right": "E4+C5/1 E4+C5/0.5 E4+C5/1 E4+C5/0.5", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"},
+          {"right": "E4+C5/1.5^start E4+G4/0.5/1,2^stop r/0.5 E5/0.5/5!accent^start", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"}
+        ],
+        [
+          {"right": "D5/1.5/4~start!accent^continue D5/0.5~stop A4/0.5/1 B4/0.5/2", "left": "C3/0.5 F3/0.5 G3/0.5 C3/0.5 F3/0.5 G3/0.5"},
+          {"right": "C5/0.5/3 D5/0.5/4 E5/0.5/5^stop G4/0.5!staccato r/0.5 E5/0.5!accent^start", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"},
+          {"right": "D5/1.5~start D5/0.5~stop A4/0.5 B4/0.5", "left": "C3/0.5 F3/0.5 G3/0.5 C3/0.5 F3/0.5 G3/0.5"},
+          {"quarters": 2.5, "repeat_end": true, "right": "C5/1.5^stop r/1", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5!staccato r/0.5"},
+          {"quarters": 0.5, "repeat_start": true, "right": "G4/0.5", "left": "r/0.5"},
+          {"right": "G4/0.5/3 G4/0.5/2 G4/0.5/1 G4/0.5/3 G4/0.5/2 G4/0.5/1", "left": "G3+D4/1.5/5,1 C4+E4/1.5/3,1"}
+        ],
+        [
+          {"right": "G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5", "left": "D4+F4/1.5/3,1 B3+D4/1.5/5,3"},
+          {"right": "G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5", "left": "C4+E4/1.5/4,2 E3+C4/1.5/5,1"},
+          {"right": "G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5", "left": "G3+D4/3/5,1!strong-accent"},
+          {"right": "G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5", "left": "G3+D4/1.5 C4+E4/1.5"},
+          {"right": "G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5", "left": "D4+F4/1.5 B3+D4/1.5"}
+        ],
+        [
+          {"right": "G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5 G4/0.5", "left": "C4+E4/1.5 E3+C4/1.5"},
+          {"right": "G4/0.5/3 G4/0.5/2 G4/0.5/1 G4/0.5/3 r/0.5 E4+G4/0.5/3,5!staccato", "left": "G3+D4/1.5~start!strong-accent G3+D4/1~stop r/0.5"},
+          {"right": "E4+G4/1 E4+G4/0.5 E4+G4/1 E4+G4/0.5", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"},
+          {"right": "E4+G4/1.5^start C4+E4/0.5^stop r/0.5 E4+C5/0.5!staccato", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"},
+          {"right": "E4+C5/1 E4+C5/0.5 E4+C5/1 E4+C5/0.5", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"}
+        ],
+        [
+          {"right": "E4+C5/1.5^start E4+G4/0.5^stop r/0.5 E5/0.5!accent^start", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"},
+          {"right": "D5/1.5~start!accent D5/0.5~stop A4/0.5 B4/0.5", "left": "C3/0.5 F3/0.5 G3/0.5 C3/0.5 F3/0.5 G3/0.5"},
+          {"right": "C5/0.5 D5/0.5 E5/0.5^stop G4/0.5!staccato r/0.5 E5/0.5!accent^start", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5 E3/0.5 G3/0.5"},
+          {"right": "D5/1.5~start!accent D5/0.5~stop A4/0.5 B4/0.5", "left": "C3/0.5 F3/0.5 G3/0.5 C3/0.5 F3/0.5 G3/0.5"},
+          {"quarters": 2.5, "repeat_end": true, "right": "C5/1.5^stop r/1", "left": "C3/0.5 E3/0.5 G3/0.5 C3/0.5!staccato r/0.5"}
+        ]
+      ]
+    },
+    {
+      "page": 73, "title": "a小调音阶", "meter": [4, 4], "left_clef": "treble",
+      "lines": [
+        [
+          {"right": "R/4", "left": "A3/1/5^start B3/0.5 C4/0.5 D4/0.5 E4/0.5/3 F#4/0.5 G#4/0.5"},
+          {"right": "R/4", "left": "A4/1 Gn4/0.5 Fn4/0.5/1 E4/0.5 D4/0.5 C4/0.5 B3/0.5"},
+          {"right": "A4/1/1^start B4/0.5 C5/0.5 D5/0.5/1 E5/0.5 F#5/0.5 G#5/0.5", "left": "A3/4~start^stop"}
+        ],
+        [
+          {"right": "A5/1 Gn5/0.5 Fn5/0.5 E5/0.5 D5/0.5 C5/0.5/3 B4/0.5", "left": "A3/4~stop"},
+          {"right": "A4/0.5/1^continue B4/0.5 C5/0.5 D5/0.5/1 E5/0.5 F#5/0.5 G#5/0.5 A5/0.5", "left": "A3/0.5/5 B3/0.5 C4/0.5 D4/0.5 E4/0.5 F#4/0.5/3 G#4/0.5 A4/0.5"},
+          {"right": "G#5/0.5 A5/0.5/5 Gn5/0.5/4 Fn5/0.5/3 E5/0.5/2 D5/0.5/1 C5/0.5/3 B4/0.5/2", "left": "G#4/0.5 A4/0.5 Gn4/0.5 Fn4/0.5/3 E4/0.5/1 D4/0.5 C4/0.5 B3/0.5"}
+        ],
+        [
+          {"right": "A4/0.5^continue B4/0.5 C5/0.5 D5/0.5 E5/0.5 F#5/0.5 G#5/0.5 A5/0.5", "left": "A3/0.5 B3/0.5 C4/0.5 D4/0.5 E4/0.5 F#4/0.5 G#4/0.5 A4/0.5"},
+          {"right": "G#5/0.5 A5/0.5 Gn5/0.5 Fn5/0.5 E5/0.5 D5/0.5 C5/0.5 B4/0.5", "left": "G#4/0.5 A4/0.5 Gn4/0.5 Fn4/0.5 E4/0.5 D4/0.5 C4/0.5 B3/0.5"}
+        ],
+        [
+          {"right": "A4/0.5^stop A5/0.5/5^start G5/0.5 F5/0.5 E5/0.5 F5/0.5 E5/0.5 D5/0.5", "left": "A3/2 D4/2/2"},
+          {"right": "C5/0.5/3 E5/0.5 D5/0.5 C5/0.5 B4/0.5 D5/0.5 C5/0.5 B4/0.5", "left": "E4/4"},
+          {"right": "A4/0.5/1^continue B4/0.5 C5/0.5 D5/0.5/1 E5/0.5 F#5/0.5 G#5/0.5 A5/0.5", "left": "A3/2^start D4/2"},
+          {"right": "E5/1/2^stop r/1 D4+G#4/2/1,4", "left": "E4/1^stop r/1 @bass E3/2/1"}
+        ],
+        [
+          {"right": "C4+A4/2/1,5 C4+A4/1 C4+A4/1", "left": "A2+E3/2/5,1 A2+E3/1 A2+E3/1"},
+          {"right": "C4+A4/2 C4+A4/2", "left": "A2+E3/2 A2+E3/2"},
+          {"right": "C4+A4/4~start", "left": "A2+E3/4~start"},
+          {"right": "C4+A4/4~stop", "left": "A2+E3/4~stop"}
+        ]
+      ]
+    }
+  ]
+}

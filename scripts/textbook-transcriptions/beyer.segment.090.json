@@ -1,0 +1,39 @@
+{
+  "evidence":"PDF49练习64《啊！苏珊娜》，保留双高音谱表、1拍弱起与两处3拍收束。PDF50页首右手上下换指及C大调音阶逐音核对，原OMR错拆的占位休止不保留。",
+  "reviewed_pages":[49,50],"excluded_regions":[],
+  "sections":[{"page":49,"title":"练习64 啊！苏珊娜","meter":[4,4],"left_clef":"treble","lines":[
+    [
+      {"right":"G5/0.5/1 A5/0.5","left":"G4/0.5/5 A4/0.5","quarters":1},
+      {"right":"B5/1 D6/1/5 D6/1/4 E6/1","left":"B4/1 D5/1/1 D5/1/2 E5/1"},
+      {"right":"D6/1 B5/1/2 G5/1.5 A5/0.5/2","left":"D5/1 B4/1/3 G4/1.5 A4/0.5"},
+      {"right":"B5/1 B5/1 A5/1 G5/1","left":"B4/1 B4/1 A4/1 G4/1"},
+      {"right":"A5/3 G5/0.5 A5/0.5","left":"A4/3 G4/0.5 A4/0.5"},
+      {"right":"B5/1 D6/1 D6/1/4 E6/1","left":"B4/1 D5/1 D5/1/2 E5/1"}
+    ],[
+      {"right":"D6/1 B5/1 G5/1.5 A5/0.5","left":"D5/1 B4/1/3 G4/1.5 A4/0.5"},
+      {"right":"B5/1 B5/1 A5/1 A5/1","left":"B4/1 B4/1 A4/1 A4/1"},
+      {"right":"G5/2 r/1","left":"G4/2 r/1","quarters":3,"repeat_end":true},
+      {"right":"r/1","left":"r/1","quarters":1},
+      {"right":"C6/2/3 C6/2","left":"C5/2/3 C5/2"},
+      {"right":"E6/1 E6/2 E6/1","left":"E5/1 E5/2 E5/1"}
+    ],[
+      {"right":"D6/1/4 D6/1/5 B5/1 G5/1","left":"D5/1/2 D5/1/1 B4/1 G4/1"},
+      {"right":"A5/3 G5/0.5 A5/0.5","left":"A4/3 G4/0.5 A4/0.5"},
+      {"right":"B5/1 D6/1 D6/1/4 E6/1","left":"B4/1 D5/1 D5/1/2 E5/1"},
+      {"right":"D6/1 B5/1 G5/1.5 A5/0.5","left":"D5/1 B4/1/3 G4/1.5 A4/0.5"},
+      {"right":"B5/1 B5/1 A5/1 A5/1","left":"B4/1 B4/1 A4/1 A4/1"},
+      {"right":"G5/2 r/1","left":"G4/2 r/1","quarters":3}
+    ]
+  ]},{"page":50,"title":"右手上下换指练习（每条至少反复八次）","meter":[4,4],"lines":[[
+    {"right":"B4/1/2 C5/1/1 D5/1/2 C5/1/1","repeat_end":true},
+    {"right":"B4/1/3 C5/1/1 D5/1/3 C5/1/1","repeat_end":true},
+    {"right":"B4/1/4 C5/1/1 D5/1/4 C5/1/1","repeat_end":true},
+    {"right":"C6/4/5"}
+  ]]},{"page":50,"title":"右手C大调音阶","meter":[4,4],"lines":[[
+    {"right":"C5/1/1 D5/1/2 E5/2/3"},
+    {"right":"F5/1/1 G5/1/2 A5/1/3 B5/1/4"},
+    {"right":"C6/1/5 B5/1/4 A5/1/3 G5/1/2"},
+    {"right":"F5/2/1 E5/1/3 D5/1/2","repeat_end":true},
+    {"right":"C5/4/1"}
+  ]]}]
+}

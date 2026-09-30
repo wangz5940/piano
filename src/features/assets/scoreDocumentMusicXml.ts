@@ -39,7 +39,7 @@ export function score_document_to_musicxml(
     "  </part-list>",
     '  <part id="P1">',
   ];
-  let previous_time: { beats: number; beat_unit: number } | undefined;
+  let previous_time: { beats: number; beat_unit: number; unmetered?: boolean } | undefined;
   let previous_fifths: number | undefined;
   for (const [measure_index, measure] of document.measures.entries()) {
     lines.push(`    <measure number="${xml_escape(measure.number || String(measure_index + 1))}">`);
@@ -49,6 +49,7 @@ export function score_document_to_musicxml(
       measure.tonic_midi ?? document.tonic_midi,
     );
     const time_changed = !previous_time ||
+      previous_time.unmetered !== measure_time.unmetered ||
       previous_time.beats !== measure_time.beats ||
       previous_time.beat_unit !== measure_time.beat_unit;
     const key_changed = previous_fifths === undefined ||
@@ -65,8 +66,12 @@ export function score_document_to_musicxml(
       }
       if (time_changed) {
         lines.push("        <time>");
-        lines.push(`          <beats>${measure_time.beats}</beats>`);
-        lines.push(`          <beat-type>${measure_time.beat_unit}</beat-type>`);
+        if (measure_time.unmetered) {
+          lines.push("          <senza-misura/>");
+        } else {
+          lines.push(`          <beats>${measure_time.beats}</beats>`);
+          lines.push(`          <beat-type>${measure_time.beat_unit}</beat-type>`);
+        }
         lines.push("        </time>");
       }
       if (measure_index === 0) {
@@ -109,6 +114,9 @@ export function score_document_to_musicxml(
         ));
       }
     }
+    if (measure_time.unmetered) {
+      lines.push('      <barline location="right"><bar-style>none</bar-style></barline>');
+    }
     lines.push("    </measure>");
   }
   lines.push("  </part>");
@@ -130,6 +138,9 @@ function score_event_to_musicxml_notes(
       ...musicxml_event_directions(event, metadata, note_index),
       "      <note>",
     ];
+    if (event.grace) {
+      lines.push(`        <grace slash="${event.grace.slash ? "yes" : "no"}"/>`);
+    }
     if (note_index > 0) {
       lines.push("        <chord/>");
     }
@@ -148,9 +159,9 @@ function score_event_to_musicxml_notes(
     for (const tie_type of note ? musicxml_tie_types(event.tie) : []) {
       lines.push(`        <tie type="${tie_type}"/>`);
     }
-    lines.push(`        <duration>${duration}</duration>`);
+    if (!event.grace) lines.push(`        <duration>${duration}</duration>`);
     lines.push(`        <voice>${event.voice ?? staff}</voice>`);
-    lines.push(`        <type>${duration_to_musicxml_type(event.duration_beats)}</type>`);
+    lines.push(`        <type>${duration_to_musicxml_type(event.grace?.written_quarters ?? event.duration_beats)}</type>`);
     lines.push(`        <staff>${staff}</staff>`);
     lines.push(...musicxml_notations(event, note, note_index, metadata, slur_entries));
     lines.push("      </note>");
@@ -370,12 +381,13 @@ function parse_time_signature(value: string) {
 }
 
 function parse_measure_meter(
-  meter: { beats: number; beat_unit: number } | undefined,
+  meter: { beats: number; beat_unit: number; unmetered?: boolean } | undefined,
   fallback: { beats: number; beat_unit: number },
 ) {
   return {
     beats: Number.isFinite(meter?.beats) ? Number(meter?.beats) : fallback.beats,
     beat_unit: Number.isFinite(meter?.beat_unit) ? Number(meter?.beat_unit) : fallback.beat_unit,
+    ...(meter?.unmetered ? { unmetered: true } : {}),
   };
 }
 
