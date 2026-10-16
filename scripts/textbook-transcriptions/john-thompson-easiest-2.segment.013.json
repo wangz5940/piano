@@ -1,0 +1,33 @@
+{
+  "evidence": "PDF33明确写出符干向下左手、向上右手。手指操及《黄昏的歌》学生行据此分手，核对每个双音与印刷指号，教师两行不混入学生双音。",
+  "reviewed_pages": [33],
+  "excluded_regions": [{"page": 33, "reason": "教师双谱表伴奏不混入标为学生的演奏行。"}],
+  "sections": [
+    {
+      "page": 33, "title": "双音手指操（双手交替）", "meter": [4, 4], "left_clef": "treble",
+      "lines": [[
+        {"right": "r/2 E5+G5/2/1,3", "left": "E4+G4/2/3,1 r/2"},
+        {"right": "r/2 E5+G5/2", "left": "E4+G4/2 r/2"},
+        {"right": "r/2 F5+G5/2/2,3", "left": "F4+G4/2/2,1 r/2"},
+        {"right": "r/2 E5+G5/2/1,3", "left": "E4+G4/2/3,1 r/2"}
+      ]]
+    },
+    {
+      "page": 33, "title": "黄昏的歌（学生双音）", "meter": [4, 4], "left_clef": "treble",
+      "lines": [
+        [
+          {"right": "s/1 E5+G5/1/1,3 s/1 F5+G5/1/2,3", "left": "E4+G4/1/3,1 s/1 F4+G4/1/2,1 s/1"},
+          {"right": "s/1 E5+G5/1 s/1 E5+G5/1", "left": "E4+G4/1 s/1 E4+G4/1 s/1"},
+          {"right": "s/1 F5+G5/1 s/1 F5+G5/1", "left": "F4+G4/1 s/1 F4+G4/1 s/1"},
+          {"right": "s/1 E5+G5/1 s/1 E5+G5/1", "left": "E4+G4/1 s/1 E4+G4/1 s/1"}
+        ],
+        [
+          {"right": "s/1 E5+G5/1 s/1 F5+G5/1", "left": "E4+G4/1 s/1 F4+G4/1 s/1"},
+          {"right": "s/1 E5+G5/1 s/1 E5+G5/1", "left": "E4+G4/1 s/1 E4+G4/1 s/1"},
+          {"right": "s/1 F5+G5/1 s/1 F5+G5/1", "left": "F4+G4/1 s/1 F4+G4/1 s/1"},
+          {"right": "s/1 E5+G5/1 s/2", "left": "E4+G4/1 s/1 E4+G4/2"}
+        ]
+      ]
+    }
+  ]
+}

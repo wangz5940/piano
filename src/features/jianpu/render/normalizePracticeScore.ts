@@ -334,6 +334,7 @@ function get_measure_meter(
   return {
     beats: score.measure_beats?.[measure_index] ?? default_meter.beats,
     beat_unit: score.measure_beat_units?.[measure_index] ?? default_meter.beat_unit,
+    ...(default_meter.unmetered ? { unmetered: true } : {}),
   };
 }
 

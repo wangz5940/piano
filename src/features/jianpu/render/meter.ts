@@ -10,6 +10,7 @@ export function parse_jianpu_meter(
   const beat_unit = Number(match?.[2] ?? fallback_beat_unit);
 
   return {
+    ...(time_signature === "无拍号" ? { unmetered: true } : {}),
     beats: Number.isFinite(beats) && beats > 0 ? beats : fallback_beats,
     beat_unit: Number.isFinite(beat_unit) && beat_unit > 0
       ? beat_unit

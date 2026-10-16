@@ -1,0 +1,26 @@
+{
+  "reviewed_pages":[40,41,42,43],
+  "evidence":"PDF40《乘黄包车》第二行4小节；PDF41《班卓琴手》16小节，补第6小节C4二分、第13小节C4四分。PDF42《公主圆舞曲》16小节：第13小节右手补首拍四分休止和第二拍C4；末四小节左手依次G3、G3 B3、C4、C4，纠正原OMR的B3、B3 D4、E4、E4。PDF43下两行明确要求在钢琴上弹奏，各8小节；4/4练习第1小节左手补末拍C4。所有指号只录纸面标注；教材要求学生自行标指的练习不伪造来源指号。",
+  "excluded_regions":[{"page":40,"reason":"第一行位于013；键盘图和写音练习不混入演奏曲。"},{"page":41,"reason":"教师伴奏不混入学生主谱。"},{"page":42,"reason":"教师伴奏不混入学生主谱。"},{"page":43,"reason":"页首写音名题不混入演奏序列；下两行的正文明确要求钢琴演奏，完整保留。"}],
+  "sections":[
+    {"page":40,"title":"乘黄包车（第二行）","meter":[4,4],"lines":[
+      [{"right":"F4/1 F4/1 D4/1 D4/1","left":"R/4"},{"right":"C4/1 C4/1 r/2","left":"r/2 A3/1 A3/1"},{"right":"r/2 C4/1 D4/1","left":"F3/1 A3/1 r/2"},{"right":"R/4","left":"A3/1/3 F3/1/5 F3/2"}]
+    ]},
+    {"page":41,"title":"班卓琴手","meter":[4,4],"lines":[
+      [{"right":"R/4","left":"F3/1/5 F3/1 A3/1/3 C4/1/1"},{"right":"F4/4/4","left":"R/4"},{"right":"D4/1/2 D4/1 F4/1 D4/1","left":"R/4"},{"right":"C4/4","left":"R/4"},{"right":"F4/1 F4/1 F4/1 C4/1","left":"R/4"},{"right":"D4/1 D4/1 C4/2","left":"R/4"}],
+      [{"right":"R/4","left":"A3/1/3 A3/1 G3/1 F3/1"},{"right":"R/4","left":"G3/4"},{"right":"R/4","left":"F3/1 F3/1 A3/1 C4/1"},{"right":"F4/4","left":"R/4"},{"right":"D4/1 D4/1 F4/1 D4/1","left":"R/4"},{"right":"C4/4","left":"R/4"}],
+      [{"right":"F4/1 F4/1 F4/1 C4/1","left":"R/4"},{"right":"D4/1 D4/1 C4/2","left":"R/4"},{"right":"R/4","left":"A3/1 A3/1 G3/1 G3/1"},{"right":"R/4","left":"F3/4"}]
+    ]},
+    {"page":42,"title":"公主圆舞曲","meter":[3,4],"lines":[
+      [{"right":"r/1 E4/1/3 G4/1/5","left":"C4/1/1 r/1 r/1"},{"right":"r/1 E4/1 G4/1","left":"G3/1/4 r/1 r/1"},{"right":"r/1 F4/1/4 G4/1","left":"B3/1/2 r/1 r/1"},{"right":"r/1 F4/1 G4/1","left":"G3/1 r/1 r/1"},{"right":"r/1 F4/1 G4/1","left":"B3/1 r/1 r/1"},{"right":"r/1 F4/1 G4/1","left":"G3/1 r/1 r/1"}],
+      [{"right":"r/1 E4/1 G4/1","left":"C4/1 r/1 r/1"},{"right":"r/1 E4/1 G4/1","left":"G3/1 r/1 r/1"},{"right":"r/1 E4/1 G4/1","left":"C4/1 r/1 r/1"},{"right":"r/1 E4/1 G4/1","left":"C4/1 r/1 r/1"},{"right":"r/1 C4/1 F4/1/4","left":"F3/1 r/1 r/1"},{"right":"r/1 D4/1/2 F4/1","left":"F3/1 r/1 r/1"}],
+      [{"right":"r/1 C4/1 E4/1","left":"G3/1 r/1 r/1"},{"right":"r/1 r/1 F4/1/4","left":"G3/1/4 B3/1/2 r/1"},{"right":"r/1 E4/1 G4/1","left":"C4/1 r/1 r/1"},{"right":"R/3","left":"C4/1 r/1 r/1"}]
+    ]},
+    {"page":43,"title":"综合演奏练习（3/4）","meter":[3,4],"lines":[
+      [{"right":"G4/1 E4/1 C4/1","left":"R/3"},{"right":"R/3","left":"G3/3"},{"right":"G4/1 F4/1 r/1","left":"r/1 r/1 B3/1"},{"right":"R/3","left":"G3/3"},{"right":"R/3","left":"B3/1 A3/1 G3/1"},{"right":"F4/1 E4/1 D4/1","left":"R/3"},{"right":"C4/1 r/1 E4/1","left":"r/1 G3/1 r/1"},{"right":"C4/3","left":"R/3"}]
+    ]},
+    {"page":43,"title":"综合演奏练习（4/4）","meter":[4,4],"lines":[
+      [{"right":"R/4","left":"G3/1 A3/1 B3/1 C4/1"},{"right":"D4/2 D4/2","left":"R/4"},{"right":"E4/1 G4/1 E4/1 G4/1","left":"R/4"},{"right":"D4/2 r/2","left":"r/2 B3/2"},{"right":"D4/1 F4/1 D4/1 F4/1","left":"R/4"},{"right":"E4/2 r/2","left":"r/2 A3/2"},{"right":"D4/1 C4/1 r/2","left":"r/2 B3/1 A3/1"},{"right":"R/4","left":"G3/4"}]
+    ]}
+  ]
+}

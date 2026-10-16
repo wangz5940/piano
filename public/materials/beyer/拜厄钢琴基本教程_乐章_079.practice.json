@@ -25,7 +25,13 @@
           "note": 72,
           "finger": 1,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
+        },
+        {
+          "note": 60,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -33,6 +39,7 @@
           "id": "score-beyer.segment.079-m1-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             72
@@ -42,6 +49,7 @@
           "id": "score-beyer.segment.079-m1-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -64,12 +72,20 @@
       "notation": "第 1 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 67,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m1-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -92,12 +108,20 @@
       "notation": "第 1 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 64,
+          "finger": 3,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m1-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -127,7 +151,13 @@
           "note": 74,
           "finger": 2,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
+        },
+        {
+          "note": 67,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -135,6 +165,7 @@
           "id": "score-beyer.segment.079-m1-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -144,6 +175,7 @@
           "id": "score-beyer.segment.079-m1-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -173,7 +205,7 @@
           "note": 76,
           "finger": 3,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
         }
       ],
       "source_events": [
@@ -181,6 +213,7 @@
           "id": "score-beyer.segment.079-m1-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             76
@@ -190,6 +223,7 @@
           "id": "score-beyer.segment.079-m1-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -218,6 +252,7 @@
           "id": "score-beyer.segment.079-m1-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -246,6 +281,7 @@
           "id": "score-beyer.segment.079-m1-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -283,6 +319,7 @@
           "id": "score-beyer.segment.079-m1-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             72
@@ -292,6 +329,7 @@
           "id": "score-beyer.segment.079-m1-p1-e12",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -321,7 +359,13 @@
           "note": 74,
           "finger": 2,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
+        },
+        {
+          "note": 59,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -329,6 +373,7 @@
           "id": "score-beyer.segment.079-m2-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             74
@@ -338,6 +383,7 @@
           "id": "score-beyer.segment.079-m2-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -366,6 +412,7 @@
           "id": "score-beyer.segment.079-m2-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -394,6 +441,7 @@
           "id": "score-beyer.segment.079-m2-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -406,7 +454,7 @@
       "measure_index": 2,
       "measure_number": "2",
       "onset_beats": 1.5,
-      "duration_beats": 1,
+      "duration_beats": 0.5,
       "notes": [
         76,
         67
@@ -431,6 +479,7 @@
           "id": "score-beyer.segment.079-m2-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -440,7 +489,8 @@
           "id": "score-beyer.segment.079-m2-p1-e8",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 1.5,
+          "duration_beats": 0.5,
           "notes": [
             67
           ]
@@ -477,6 +527,7 @@
           "id": "score-beyer.segment.079-m2-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             77
@@ -485,7 +536,8 @@
         {
           "id": "score-beyer.segment.079-m2-p1-e9",
           "hand": "left",
-          "voice": 6,
+          "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -513,7 +565,8 @@
         {
           "id": "score-beyer.segment.079-m2-p1-e10",
           "hand": "left",
-          "voice": 6,
+          "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -541,7 +594,8 @@
         {
           "id": "score-beyer.segment.079-m2-p1-e11",
           "hand": "left",
-          "voice": 6,
+          "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -579,6 +633,7 @@
           "id": "score-beyer.segment.079-m2-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -587,7 +642,8 @@
         {
           "id": "score-beyer.segment.079-m2-p1-e12",
           "hand": "left",
-          "voice": 6,
+          "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -618,6 +674,12 @@
           "finger": 3,
           "hand": "right",
           "source": "generated"
+        },
+        {
+          "note": 60,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -625,6 +687,7 @@
           "id": "score-beyer.segment.079-m3-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             76
@@ -634,6 +697,7 @@
           "id": "score-beyer.segment.079-m3-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -662,6 +726,7 @@
           "id": "score-beyer.segment.079-m3-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -690,6 +755,7 @@
           "id": "score-beyer.segment.079-m3-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -727,6 +793,7 @@
           "id": "score-beyer.segment.079-m3-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             72
@@ -736,6 +803,7 @@
           "id": "score-beyer.segment.079-m3-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -773,6 +841,7 @@
           "id": "score-beyer.segment.079-m3-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             79
@@ -782,6 +851,7 @@
           "id": "score-beyer.segment.079-m3-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -810,6 +880,7 @@
           "id": "score-beyer.segment.079-m3-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -838,6 +909,7 @@
           "id": "score-beyer.segment.079-m3-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -873,6 +945,7 @@
           "id": "score-beyer.segment.079-m3-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -903,6 +976,12 @@
           "finger": 2,
           "hand": "right",
           "source": "generated"
+        },
+        {
+          "note": 55,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -910,6 +989,7 @@
           "id": "score-beyer.segment.079-m4-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
             74
@@ -919,6 +999,7 @@
           "id": "score-beyer.segment.079-m4-p1-e2",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             55
@@ -941,12 +1022,20 @@
       "notation": "第 4 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 62,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m4-p1-e3",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -969,12 +1058,20 @@
       "notation": "第 4 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 59,
+          "finger": 3,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m4-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -997,12 +1094,20 @@
       "notation": "第 4 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 62,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m4-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -1031,6 +1136,7 @@
           "id": "score-beyer.segment.079-m4-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             55
@@ -1059,6 +1165,7 @@
           "id": "score-beyer.segment.079-m4-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -1087,6 +1194,7 @@
           "id": "score-beyer.segment.079-m4-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -1115,6 +1223,7 @@
           "id": "score-beyer.segment.079-m4-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -1152,6 +1261,7 @@
           "id": "score-beyer.segment.079-m5-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             77
@@ -1161,7 +1271,8 @@
           "id": "score-beyer.segment.079-m5-p1-e5",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 0,
+          "duration_beats": 0.5,
           "notes": [
             55
           ]
@@ -1172,7 +1283,7 @@
       "id": "score-beyer.segment.079-m5-step2",
       "measure_index": 5,
       "measure_number": "5",
-      "onset_beats": 1,
+      "onset_beats": 0.5,
       "duration_beats": 0.5,
       "notes": [
         62
@@ -1189,6 +1300,7 @@
           "id": "score-beyer.segment.079-m5-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -1200,7 +1312,7 @@
       "id": "score-beyer.segment.079-m5-step3",
       "measure_index": 5,
       "measure_number": "5",
-      "onset_beats": 1.5,
+      "onset_beats": 1,
       "duration_beats": 0.5,
       "notes": [
         59
@@ -1217,6 +1329,7 @@
           "id": "score-beyer.segment.079-m5-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -1228,7 +1341,7 @@
       "id": "score-beyer.segment.079-m5-step4",
       "measure_index": 5,
       "measure_number": "5",
-      "onset_beats": 2,
+      "onset_beats": 1.5,
       "duration_beats": 0.5,
       "notes": [
         76,
@@ -1253,7 +1366,8 @@
         {
           "id": "score-beyer.segment.079-m5-p1-e2",
           "hand": "right",
-          "voice": 2,
+          "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -1263,6 +1377,7 @@
           "id": "score-beyer.segment.079-m5-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -1274,7 +1389,7 @@
       "id": "score-beyer.segment.079-m5-step5",
       "measure_index": 5,
       "measure_number": "5",
-      "onset_beats": 2.5,
+      "onset_beats": 2,
       "duration_beats": 1.5,
       "notes": [
         74,
@@ -1299,7 +1414,8 @@
         {
           "id": "score-beyer.segment.079-m5-p1-e3",
           "hand": "right",
-          "voice": 2,
+          "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             74
@@ -1309,6 +1425,7 @@
           "id": "score-beyer.segment.079-m5-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             55
@@ -1320,7 +1437,7 @@
       "id": "score-beyer.segment.079-m5-step6",
       "measure_index": 5,
       "measure_number": "5",
-      "onset_beats": 3,
+      "onset_beats": 2.5,
       "duration_beats": 0.5,
       "notes": [
         62
@@ -1337,6 +1454,7 @@
           "id": "score-beyer.segment.079-m5-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -1348,8 +1466,8 @@
       "id": "score-beyer.segment.079-m5-step7",
       "measure_index": 5,
       "measure_number": "5",
-      "onset_beats": 3.5,
-      "duration_beats": 1,
+      "onset_beats": 3,
+      "duration_beats": 0.5,
       "notes": [
         59
       ],
@@ -1365,7 +1483,8 @@
           "id": "score-beyer.segment.079-m5-p1-e11",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 3,
+          "duration_beats": 0.5,
           "notes": [
             59
           ]
@@ -1376,7 +1495,7 @@
       "id": "score-beyer.segment.079-m5-step8",
       "measure_index": 5,
       "measure_number": "5",
-      "onset_beats": 4.5,
+      "onset_beats": 3.5,
       "duration_beats": 0.5,
       "notes": [
         79,
@@ -1401,7 +1520,8 @@
         {
           "id": "score-beyer.segment.079-m5-p1-e4",
           "hand": "right",
-          "voice": 3,
+          "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             79
@@ -1411,6 +1531,7 @@
           "id": "score-beyer.segment.079-m5-p1-e12",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -1441,6 +1562,12 @@
           "finger": 3,
           "hand": "right",
           "source": "generated"
+        },
+        {
+          "note": 55,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -1448,6 +1575,7 @@
           "id": "score-beyer.segment.079-m6-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             76
@@ -1457,6 +1585,7 @@
           "id": "score-beyer.segment.079-m6-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             55
@@ -1479,12 +1608,20 @@
       "notation": "第 6 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 64,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m6-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -1507,12 +1644,20 @@
       "notation": "第 6 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 60,
+          "finger": 2,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m6-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -1543,6 +1688,12 @@
           "finger": 2,
           "hand": "right",
           "source": "generated"
+        },
+        {
+          "note": 64,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -1550,6 +1701,7 @@
           "id": "score-beyer.segment.079-m6-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -1559,6 +1711,7 @@
           "id": "score-beyer.segment.079-m6-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -1596,6 +1749,7 @@
           "id": "score-beyer.segment.079-m6-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             72
@@ -1605,6 +1759,7 @@
           "id": "score-beyer.segment.079-m6-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             55
@@ -1633,6 +1788,7 @@
           "id": "score-beyer.segment.079-m6-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -1661,6 +1817,7 @@
           "id": "score-beyer.segment.079-m6-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -1698,6 +1855,7 @@
           "id": "score-beyer.segment.079-m6-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -1707,6 +1865,7 @@
           "id": "score-beyer.segment.079-m6-p1-e12",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -1736,7 +1895,13 @@
           "note": 74,
           "finger": 2,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
+        },
+        {
+          "note": 55,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -1744,15 +1909,17 @@
           "id": "score-beyer.segment.079-m7-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             74
           ]
         },
         {
-          "id": "score-beyer.segment.079-m7-p1-e8",
+          "id": "score-beyer.segment.079-m7-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 2,
           "notes": [
             55
@@ -1780,7 +1947,7 @@
           "note": 79,
           "finger": 5,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
         }
       ],
       "source_events": [
@@ -1788,6 +1955,7 @@
           "id": "score-beyer.segment.079-m7-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             79
@@ -1802,28 +1970,20 @@
       "onset_beats": 1,
       "duration_beats": 0.5,
       "notes": [
-        77,
-        79
+        77
       ],
       "note_names": [
-        "F5",
-        "G5"
+        "F5"
       ],
       "notation": "第 7 小节",
       "hand": "right",
-      "match_mode": "chord",
+      "match_mode": "single_note",
       "fingerings": [
         {
           "note": 77,
           "finger": 4,
           "hand": "right",
-          "source": "generated"
-        },
-        {
-          "note": 79,
-          "finger": 5,
-          "hand": "right",
-          "source": "generated"
+          "source": "score"
         }
       ],
       "source_events": [
@@ -1831,10 +1991,10 @@
           "id": "score-beyer.segment.079-m7-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
-            77,
-            79
+            77
           ]
         }
       ]
@@ -1844,6 +2004,42 @@
       "measure_index": 7,
       "measure_number": "7",
       "onset_beats": 1.5,
+      "duration_beats": 0.5,
+      "notes": [
+        79
+      ],
+      "note_names": [
+        "G5"
+      ],
+      "notation": "第 7 小节",
+      "hand": "right",
+      "match_mode": "single_note",
+      "fingerings": [
+        {
+          "note": 79,
+          "finger": 5,
+          "hand": "right",
+          "source": "generated"
+        }
+      ],
+      "source_events": [
+        {
+          "id": "score-beyer.segment.079-m7-p1-e4",
+          "hand": "right",
+          "voice": 1,
+          "onset_beats": 1.5,
+          "duration_beats": 0.5,
+          "notes": [
+            79
+          ]
+        }
+      ]
+    },
+    {
+      "id": "score-beyer.segment.079-m7-step5",
+      "measure_index": 7,
+      "measure_number": "7",
+      "onset_beats": 2,
       "duration_beats": 2,
       "notes": [
         76,
@@ -1861,23 +2057,31 @@
           "note": 76,
           "finger": 3,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
+        },
+        {
+          "note": 67,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m7-p1-e4",
+          "id": "score-beyer.segment.079-m7-p1-e5",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             76
           ]
         },
         {
-          "id": "score-beyer.segment.079-m7-p1-e9",
+          "id": "score-beyer.segment.079-m7-p1-e10",
           "hand": "left",
-          "voice": 6,
+          "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
             67
@@ -1886,10 +2090,10 @@
       ]
     },
     {
-      "id": "score-beyer.segment.079-m7-step5",
+      "id": "score-beyer.segment.079-m7-step6",
       "measure_index": 7,
       "measure_number": "7",
-      "onset_beats": 2,
+      "onset_beats": 2.5,
       "duration_beats": 0.5,
       "notes": [
         79
@@ -1910,9 +2114,10 @@
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m7-p1-e5",
+          "id": "score-beyer.segment.079-m7-p1-e6",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             79
@@ -1921,10 +2126,10 @@
       ]
     },
     {
-      "id": "score-beyer.segment.079-m7-step6",
+      "id": "score-beyer.segment.079-m7-step7",
       "measure_index": 7,
       "measure_number": "7",
-      "onset_beats": 2.5,
+      "onset_beats": 3,
       "duration_beats": 0.5,
       "notes": [
         74
@@ -1940,14 +2145,15 @@
           "note": 74,
           "finger": 2,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
         }
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m7-p1-e6",
+          "id": "score-beyer.segment.079-m7-p1-e7",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -1956,10 +2162,10 @@
       ]
     },
     {
-      "id": "score-beyer.segment.079-m7-step7",
+      "id": "score-beyer.segment.079-m7-step8",
       "measure_index": 7,
       "measure_number": "7",
-      "onset_beats": 3,
+      "onset_beats": 3.5,
       "duration_beats": 0.5,
       "notes": [
         79
@@ -1980,9 +2186,10 @@
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m7-p1-e7",
+          "id": "score-beyer.segment.079-m7-p1-e8",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             79
@@ -2012,7 +2219,13 @@
           "note": 72,
           "finger": 1,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
+        },
+        {
+          "note": 60,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -2020,6 +2233,7 @@
           "id": "score-beyer.segment.079-m8-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
             72
@@ -2029,6 +2243,7 @@
           "id": "score-beyer.segment.079-m8-p1-e2",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -2057,6 +2272,7 @@
           "id": "score-beyer.segment.079-m8-p1-e3",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -2085,6 +2301,7 @@
           "id": "score-beyer.segment.079-m8-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -2113,6 +2330,7 @@
           "id": "score-beyer.segment.079-m8-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -2141,6 +2359,7 @@
           "id": "score-beyer.segment.079-m8-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -2169,6 +2388,7 @@
           "id": "score-beyer.segment.079-m8-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -2197,6 +2417,7 @@
           "id": "score-beyer.segment.079-m8-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -2225,6 +2446,7 @@
           "id": "score-beyer.segment.079-m8-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -2255,6 +2477,12 @@
           "finger": 1,
           "hand": "right",
           "source": "generated"
+        },
+        {
+          "note": 60,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -2262,6 +2490,7 @@
           "id": "score-beyer.segment.079-m9-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             72
@@ -2271,6 +2500,7 @@
           "id": "score-beyer.segment.079-m9-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -2293,12 +2523,20 @@
       "notation": "第 9 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 69,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m9-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             69
@@ -2321,12 +2559,20 @@
       "notation": "第 9 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 65,
+          "finger": 2,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m9-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             65
@@ -2357,6 +2603,12 @@
           "finger": 2,
           "hand": "right",
           "source": "generated"
+        },
+        {
+          "note": 69,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -2364,6 +2616,7 @@
           "id": "score-beyer.segment.079-m9-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -2373,6 +2626,7 @@
           "id": "score-beyer.segment.079-m9-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             69
@@ -2410,6 +2664,7 @@
           "id": "score-beyer.segment.079-m9-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             72
@@ -2419,6 +2674,7 @@
           "id": "score-beyer.segment.079-m9-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -2447,6 +2703,7 @@
           "id": "score-beyer.segment.079-m9-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             69
@@ -2475,6 +2732,7 @@
           "id": "score-beyer.segment.079-m9-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             65
@@ -2487,7 +2745,7 @@
       "measure_index": 9,
       "measure_number": "9",
       "onset_beats": 3.5,
-      "duration_beats": 1,
+      "duration_beats": 0.5,
       "notes": [
         77,
         69
@@ -2504,7 +2762,7 @@
           "note": 77,
           "finger": 4,
           "hand": "right",
-          "source": "generated"
+          "source": "score"
         }
       ],
       "source_events": [
@@ -2512,6 +2770,7 @@
           "id": "score-beyer.segment.079-m9-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             77
@@ -2521,7 +2780,8 @@
           "id": "score-beyer.segment.079-m9-p1-e12",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 3.5,
+          "duration_beats": 0.5,
           "notes": [
             69
           ]
@@ -2551,6 +2811,12 @@
           "finger": 3,
           "hand": "right",
           "source": "generated"
+        },
+        {
+          "note": 60,
+          "finger": 5,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -2558,6 +2824,7 @@
           "id": "score-beyer.segment.079-m10-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             76
@@ -2567,6 +2834,7 @@
           "id": "score-beyer.segment.079-m10-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -2589,12 +2857,20 @@
       "notation": "第 10 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 67,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m10-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -2617,12 +2893,20 @@
       "notation": "第 10 小节",
       "hand": "left",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 64,
+          "finger": 3,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-beyer.segment.079-m10-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -2653,6 +2937,12 @@
           "finger": 2,
           "hand": "right",
           "source": "generated"
+        },
+        {
+          "note": 67,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
         }
       ],
       "source_events": [
@@ -2660,6 +2950,7 @@
           "id": "score-beyer.segment.079-m10-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -2669,6 +2960,7 @@
           "id": "score-beyer.segment.079-m10-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -2706,6 +2998,7 @@
           "id": "score-beyer.segment.079-m10-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
             72
@@ -2715,6 +3008,7 @@
           "id": "score-beyer.segment.079-m10-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -2743,6 +3037,7 @@
           "id": "score-beyer.segment.079-m10-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -2771,6 +3066,7 @@
           "id": "score-beyer.segment.079-m10-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -2799,6 +3095,7 @@
           "id": "score-beyer.segment.079-m10-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -2836,6 +3133,7 @@
           "id": "score-beyer.segment.079-m11-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             72
@@ -2845,6 +3143,7 @@
           "id": "score-beyer.segment.079-m11-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -2873,6 +3172,7 @@
           "id": "score-beyer.segment.079-m11-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             69
@@ -2901,6 +3201,7 @@
           "id": "score-beyer.segment.079-m11-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             65
@@ -2938,6 +3239,7 @@
           "id": "score-beyer.segment.079-m11-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -2947,6 +3249,7 @@
           "id": "score-beyer.segment.079-m11-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             69
@@ -2984,6 +3287,7 @@
           "id": "score-beyer.segment.079-m11-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             72
@@ -2993,6 +3297,7 @@
           "id": "score-beyer.segment.079-m11-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -3021,6 +3326,7 @@
           "id": "score-beyer.segment.079-m11-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             69
@@ -3049,6 +3355,7 @@
           "id": "score-beyer.segment.079-m11-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             65
@@ -3086,6 +3393,7 @@
           "id": "score-beyer.segment.079-m11-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             77
@@ -3095,6 +3403,7 @@
           "id": "score-beyer.segment.079-m11-p1-e12",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             69
@@ -3132,6 +3441,7 @@
           "id": "score-beyer.segment.079-m12-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             76
@@ -3141,6 +3451,7 @@
           "id": "score-beyer.segment.079-m12-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -3169,6 +3480,7 @@
           "id": "score-beyer.segment.079-m12-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3197,6 +3509,7 @@
           "id": "score-beyer.segment.079-m12-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -3234,6 +3547,7 @@
           "id": "score-beyer.segment.079-m12-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -3243,6 +3557,7 @@
           "id": "score-beyer.segment.079-m12-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3280,6 +3595,7 @@
           "id": "score-beyer.segment.079-m12-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
             72
@@ -3289,6 +3605,7 @@
           "id": "score-beyer.segment.079-m12-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -3317,6 +3634,7 @@
           "id": "score-beyer.segment.079-m12-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3345,6 +3663,7 @@
           "id": "score-beyer.segment.079-m12-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -3373,6 +3692,7 @@
           "id": "score-beyer.segment.079-m12-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3410,6 +3730,7 @@
           "id": "score-beyer.segment.079-m13-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             72
@@ -3419,6 +3740,7 @@
           "id": "score-beyer.segment.079-m13-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -3447,6 +3769,7 @@
           "id": "score-beyer.segment.079-m13-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3475,6 +3798,7 @@
           "id": "score-beyer.segment.079-m13-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -3512,6 +3836,7 @@
           "id": "score-beyer.segment.079-m13-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -3521,6 +3846,7 @@
           "id": "score-beyer.segment.079-m13-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3558,6 +3884,7 @@
           "id": "score-beyer.segment.079-m13-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             76
@@ -3567,6 +3894,7 @@
           "id": "score-beyer.segment.079-m13-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -3595,6 +3923,7 @@
           "id": "score-beyer.segment.079-m13-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3623,6 +3952,7 @@
           "id": "score-beyer.segment.079-m13-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -3660,6 +3990,7 @@
           "id": "score-beyer.segment.079-m13-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             72
@@ -3669,6 +4000,7 @@
           "id": "score-beyer.segment.079-m13-p1-e12",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3706,6 +4038,7 @@
           "id": "score-beyer.segment.079-m14-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             74
@@ -3715,6 +4048,7 @@
           "id": "score-beyer.segment.079-m14-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -3743,6 +4077,7 @@
           "id": "score-beyer.segment.079-m14-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3771,6 +4106,7 @@
           "id": "score-beyer.segment.079-m14-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -3808,6 +4144,7 @@
           "id": "score-beyer.segment.079-m14-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -3817,6 +4154,7 @@
           "id": "score-beyer.segment.079-m14-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3854,6 +4192,7 @@
           "id": "score-beyer.segment.079-m14-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             77
@@ -3863,6 +4202,7 @@
           "id": "score-beyer.segment.079-m14-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -3891,6 +4231,7 @@
           "id": "score-beyer.segment.079-m14-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -3919,6 +4260,7 @@
           "id": "score-beyer.segment.079-m14-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -3931,7 +4273,7 @@
       "measure_index": 14,
       "measure_number": "14",
       "onset_beats": 3.5,
-      "duration_beats": 1,
+      "duration_beats": 0.5,
       "notes": [
         74,
         67
@@ -3956,6 +4298,7 @@
           "id": "score-beyer.segment.079-m14-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -3965,7 +4308,8 @@
           "id": "score-beyer.segment.079-m14-p1-e12",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 3.5,
+          "duration_beats": 0.5,
           "notes": [
             67
           ]
@@ -4002,15 +4346,17 @@
           "id": "score-beyer.segment.079-m15-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             76
           ]
         },
         {
-          "id": "score-beyer.segment.079-m15-p1-e4",
+          "id": "score-beyer.segment.079-m15-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -4036,9 +4382,10 @@
       "fingerings": [],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m15-p1-e5",
+          "id": "score-beyer.segment.079-m15-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             67
@@ -4064,9 +4411,10 @@
       "fingerings": [],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m15-p1-e6",
+          "id": "score-beyer.segment.079-m15-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -4079,15 +4427,61 @@
       "measure_index": 15,
       "measure_number": "15",
       "onset_beats": 1.5,
+      "duration_beats": 0.5,
+      "notes": [
+        72,
+        67
+      ],
+      "note_names": [
+        "C5",
+        "G4"
+      ],
+      "notation": "第 15 小节",
+      "hand": "both",
+      "match_mode": "chord",
+      "fingerings": [
+        {
+          "note": 72,
+          "finger": 1,
+          "hand": "right",
+          "source": "generated"
+        }
+      ],
+      "source_events": [
+        {
+          "id": "score-beyer.segment.079-m15-p1-e2",
+          "hand": "right",
+          "voice": 1,
+          "onset_beats": 1.5,
+          "duration_beats": 0.5,
+          "notes": [
+            72
+          ]
+        },
+        {
+          "id": "score-beyer.segment.079-m15-p1-e8",
+          "hand": "left",
+          "voice": 5,
+          "onset_beats": 1.5,
+          "duration_beats": 0.5,
+          "notes": [
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "id": "score-beyer.segment.079-m15-step5",
+      "measure_index": 15,
+      "measure_number": "15",
+      "onset_beats": 2,
       "duration_beats": 1.5,
       "notes": [
         79,
-        67,
         60
       ],
       "note_names": [
         "G5",
-        "G4",
         "C4"
       ],
       "notation": "第 15 小节",
@@ -4103,27 +4497,20 @@
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m15-p1-e2",
+          "id": "score-beyer.segment.079-m15-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             79
           ]
         },
         {
-          "id": "score-beyer.segment.079-m15-p1-e7",
-          "hand": "left",
-          "voice": 5,
-          "duration_beats": 0.5,
-          "notes": [
-            67
-          ]
-        },
-        {
           "id": "score-beyer.segment.079-m15-p1-e9",
           "hand": "left",
-          "voice": 6,
+          "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -4132,38 +4519,28 @@
       ]
     },
     {
-      "id": "score-beyer.segment.079-m15-step5",
+      "id": "score-beyer.segment.079-m15-step6",
       "measure_index": 15,
       "measure_number": "15",
-      "onset_beats": 2,
-      "duration_beats": 2,
+      "onset_beats": 2.5,
+      "duration_beats": 0.5,
       "notes": [
-        67,
         64
       ],
       "note_names": [
-        "G4",
         "E4"
       ],
       "notation": "第 15 小节",
       "hand": "left",
-      "match_mode": "chord",
+      "match_mode": "single_note",
       "fingerings": [],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m15-p1-e8",
-          "hand": "left",
-          "voice": 5,
-          "duration_beats": 2,
-          "notes": [
-            67
-          ]
-        },
-        {
           "id": "score-beyer.segment.079-m15-p1-e10",
           "hand": "left",
-          "voice": 6,
-          "duration_beats": 1,
+          "voice": 5,
+          "onset_beats": 2.5,
+          "duration_beats": 0.5,
           "notes": [
             64
           ]
@@ -4171,10 +4548,39 @@
       ]
     },
     {
-      "id": "score-beyer.segment.079-m15-step6",
+      "id": "score-beyer.segment.079-m15-step7",
       "measure_index": 15,
       "measure_number": "15",
       "onset_beats": 3,
+      "duration_beats": 0.5,
+      "notes": [
+        67
+      ],
+      "note_names": [
+        "G4"
+      ],
+      "notation": "第 15 小节",
+      "hand": "left",
+      "match_mode": "single_note",
+      "fingerings": [],
+      "source_events": [
+        {
+          "id": "score-beyer.segment.079-m15-p1-e11",
+          "hand": "left",
+          "voice": 5,
+          "onset_beats": 3,
+          "duration_beats": 0.5,
+          "notes": [
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "id": "score-beyer.segment.079-m15-step8",
+      "measure_index": 15,
+      "measure_number": "15",
+      "onset_beats": 3.5,
       "duration_beats": 0.5,
       "notes": [
         76
@@ -4195,9 +4601,10 @@
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m15-p1-e3",
+          "id": "score-beyer.segment.079-m15-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -4235,6 +4642,7 @@
           "id": "score-beyer.segment.079-m16-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
             74
@@ -4244,7 +4652,8 @@
           "id": "score-beyer.segment.079-m16-p1-e2",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 0,
+          "duration_beats": 0.5,
           "notes": [
             55
           ]
@@ -4255,7 +4664,7 @@
       "id": "score-beyer.segment.079-m16-step2",
       "measure_index": 16,
       "measure_number": "16",
-      "onset_beats": 1,
+      "onset_beats": 0.5,
       "duration_beats": 0.5,
       "notes": [
         62
@@ -4272,6 +4681,7 @@
           "id": "score-beyer.segment.079-m16-p1-e3",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -4283,8 +4693,8 @@
       "id": "score-beyer.segment.079-m16-step3",
       "measure_index": 16,
       "measure_number": "16",
-      "onset_beats": 1.5,
-      "duration_beats": 1,
+      "onset_beats": 1,
+      "duration_beats": 0.5,
       "notes": [
         59
       ],
@@ -4300,7 +4710,8 @@
           "id": "score-beyer.segment.079-m16-p1-e4",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 1,
+          "duration_beats": 0.5,
           "notes": [
             59
           ]
@@ -4311,7 +4722,7 @@
       "id": "score-beyer.segment.079-m16-step4",
       "measure_index": 16,
       "measure_number": "16",
-      "onset_beats": 2.5,
+      "onset_beats": 1.5,
       "duration_beats": 0.5,
       "notes": [
         62
@@ -4328,6 +4739,7 @@
           "id": "score-beyer.segment.079-m16-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -4339,8 +4751,8 @@
       "id": "score-beyer.segment.079-m16-step5",
       "measure_index": 16,
       "measure_number": "16",
-      "onset_beats": 3,
-      "duration_beats": 1,
+      "onset_beats": 2,
+      "duration_beats": 0.5,
       "notes": [
         55
       ],
@@ -4356,7 +4768,8 @@
           "id": "score-beyer.segment.079-m16-p1-e6",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 2,
+          "duration_beats": 0.5,
           "notes": [
             55
           ]
@@ -4367,7 +4780,7 @@
       "id": "score-beyer.segment.079-m16-step6",
       "measure_index": 16,
       "measure_number": "16",
-      "onset_beats": 4,
+      "onset_beats": 2.5,
       "duration_beats": 0.5,
       "notes": [
         62
@@ -4384,6 +4797,7 @@
           "id": "score-beyer.segment.079-m16-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -4395,7 +4809,7 @@
       "id": "score-beyer.segment.079-m16-step7",
       "measure_index": 16,
       "measure_number": "16",
-      "onset_beats": 4.5,
+      "onset_beats": 3,
       "duration_beats": 0.5,
       "notes": [
         59
@@ -4412,6 +4826,7 @@
           "id": "score-beyer.segment.079-m16-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -4423,7 +4838,7 @@
       "id": "score-beyer.segment.079-m16-step8",
       "measure_index": 16,
       "measure_number": "16",
-      "onset_beats": 5,
+      "onset_beats": 3.5,
       "duration_beats": 0.5,
       "notes": [
         62
@@ -4440,6 +4855,7 @@
           "id": "score-beyer.segment.079-m16-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -4477,6 +4893,7 @@
           "id": "score-beyer.segment.079-m17-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             77
@@ -4486,6 +4903,7 @@
           "id": "score-beyer.segment.079-m17-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             55
@@ -4514,6 +4932,7 @@
           "id": "score-beyer.segment.079-m17-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -4542,6 +4961,7 @@
           "id": "score-beyer.segment.079-m17-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             59
@@ -4579,6 +4999,7 @@
           "id": "score-beyer.segment.079-m17-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -4588,6 +5009,7 @@
           "id": "score-beyer.segment.079-m17-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             62
@@ -4603,11 +5025,11 @@
       "duration_beats": 1.5,
       "notes": [
         74,
-        62
+        55
       ],
       "note_names": [
         "D5",
-        "D4"
+        "G3"
       ],
       "notation": "第 17 小节",
       "hand": "both",
@@ -4625,6 +5047,7 @@
           "id": "score-beyer.segment.079-m17-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             74
@@ -4634,9 +5057,10 @@
           "id": "score-beyer.segment.079-m17-p1-e9",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 2,
+          "duration_beats": 0.5,
           "notes": [
-            62
+            55
           ]
         }
       ]
@@ -4645,8 +5069,37 @@
       "id": "score-beyer.segment.079-m17-step6",
       "measure_index": 17,
       "measure_number": "17",
+      "onset_beats": 2.5,
+      "duration_beats": 0.5,
+      "notes": [
+        62
+      ],
+      "note_names": [
+        "D4"
+      ],
+      "notation": "第 17 小节",
+      "hand": "left",
+      "match_mode": "single_note",
+      "fingerings": [],
+      "source_events": [
+        {
+          "id": "score-beyer.segment.079-m17-p1-e10",
+          "hand": "left",
+          "voice": 5,
+          "onset_beats": 2.5,
+          "duration_beats": 0.5,
+          "notes": [
+            62
+          ]
+        }
+      ]
+    },
+    {
+      "id": "score-beyer.segment.079-m17-step7",
+      "measure_index": 17,
+      "measure_number": "17",
       "onset_beats": 3,
-      "duration_beats": 1,
+      "duration_beats": 0.5,
       "notes": [
         59
       ],
@@ -4659,10 +5112,11 @@
       "fingerings": [],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m17-p1-e10",
+          "id": "score-beyer.segment.079-m17-p1-e11",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 3,
+          "duration_beats": 0.5,
           "notes": [
             59
           ]
@@ -4670,11 +5124,11 @@
       ]
     },
     {
-      "id": "score-beyer.segment.079-m17-step7",
+      "id": "score-beyer.segment.079-m17-step8",
       "measure_index": 17,
       "measure_number": "17",
       "onset_beats": 3.5,
-      "duration_beats": 1,
+      "duration_beats": 0.5,
       "notes": [
         79,
         62
@@ -4699,16 +5153,18 @@
           "id": "score-beyer.segment.079-m17-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             79
           ]
         },
         {
-          "id": "score-beyer.segment.079-m17-p1-e11",
+          "id": "score-beyer.segment.079-m17-p1-e12",
           "hand": "left",
-          "voice": 6,
-          "duration_beats": 1,
+          "voice": 5,
+          "onset_beats": 3.5,
+          "duration_beats": 0.5,
           "notes": [
             62
           ]
@@ -4745,6 +5201,7 @@
           "id": "score-beyer.segment.079-m18-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 1.5,
           "notes": [
             76
@@ -4754,6 +5211,7 @@
           "id": "score-beyer.segment.079-m18-p1-e5",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             55
@@ -4782,6 +5240,7 @@
           "id": "score-beyer.segment.079-m18-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -4810,6 +5269,7 @@
           "id": "score-beyer.segment.079-m18-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -4847,6 +5307,7 @@
           "id": "score-beyer.segment.079-m18-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             74
@@ -4856,6 +5317,7 @@
           "id": "score-beyer.segment.079-m18-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -4893,6 +5355,7 @@
           "id": "score-beyer.segment.079-m18-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1.5,
           "notes": [
             72
@@ -4902,6 +5365,7 @@
           "id": "score-beyer.segment.079-m18-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 0.5,
           "notes": [
             55
@@ -4930,6 +5394,7 @@
           "id": "score-beyer.segment.079-m18-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             64
@@ -4958,6 +5423,7 @@
           "id": "score-beyer.segment.079-m18-p1-e11",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3,
           "duration_beats": 0.5,
           "notes": [
             60
@@ -4970,16 +5436,14 @@
       "measure_index": 18,
       "measure_number": "18",
       "onset_beats": 3.5,
-      "duration_beats": 2,
+      "duration_beats": 0.5,
       "notes": [
         76,
-        64,
-        48
+        64
       ],
       "note_names": [
         "E5",
-        "E4",
-        "C3"
+        "E4"
       ],
       "notation": "第 18 小节",
       "hand": "both",
@@ -4997,6 +5461,7 @@
           "id": "score-beyer.segment.079-m18-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -5006,18 +5471,10 @@
           "id": "score-beyer.segment.079-m18-p1-e12",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             64
-          ]
-        },
-        {
-          "id": "score-beyer.segment.079-m18-p1-e13",
-          "hand": "left",
-          "voice": 6,
-          "duration_beats": 2,
-          "notes": [
-            48
           ]
         }
       ]
@@ -5030,11 +5487,11 @@
       "duration_beats": 2,
       "notes": [
         74,
-        35
+        55
       ],
       "note_names": [
         "D5",
-        "B1"
+        "G3"
       ],
       "notation": "第 19 小节",
       "hand": "both",
@@ -5052,18 +5509,20 @@
           "id": "score-beyer.segment.079-m19-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             74
           ]
         },
         {
-          "id": "score-beyer.segment.079-m19-p1-e8",
+          "id": "score-beyer.segment.079-m19-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 2,
           "notes": [
-            35
+            55
           ]
         }
       ]
@@ -5096,6 +5555,7 @@
           "id": "score-beyer.segment.079-m19-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             79
@@ -5110,26 +5570,18 @@
       "onset_beats": 1,
       "duration_beats": 0.5,
       "notes": [
-        77,
-        79
+        77
       ],
       "note_names": [
-        "F5",
-        "G5"
+        "F5"
       ],
       "notation": "第 19 小节",
       "hand": "right",
-      "match_mode": "chord",
+      "match_mode": "single_note",
       "fingerings": [
         {
           "note": 77,
           "finger": 4,
-          "hand": "right",
-          "source": "generated"
-        },
-        {
-          "note": 79,
-          "finger": 5,
           "hand": "right",
           "source": "generated"
         }
@@ -5139,10 +5591,10 @@
           "id": "score-beyer.segment.079-m19-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
-            77,
-            79
+            77
           ]
         }
       ]
@@ -5152,14 +5604,50 @@
       "measure_index": 19,
       "measure_number": "19",
       "onset_beats": 1.5,
+      "duration_beats": 0.5,
+      "notes": [
+        79
+      ],
+      "note_names": [
+        "G5"
+      ],
+      "notation": "第 19 小节",
+      "hand": "right",
+      "match_mode": "single_note",
+      "fingerings": [
+        {
+          "note": 79,
+          "finger": 5,
+          "hand": "right",
+          "source": "generated"
+        }
+      ],
+      "source_events": [
+        {
+          "id": "score-beyer.segment.079-m19-p1-e4",
+          "hand": "right",
+          "voice": 1,
+          "onset_beats": 1.5,
+          "duration_beats": 0.5,
+          "notes": [
+            79
+          ]
+        }
+      ]
+    },
+    {
+      "id": "score-beyer.segment.079-m19-step5",
+      "measure_index": 19,
+      "measure_number": "19",
+      "onset_beats": 2,
       "duration_beats": 2,
       "notes": [
         76,
-        47
+        67
       ],
       "note_names": [
         "E5",
-        "B2"
+        "G4"
       ],
       "notation": "第 19 小节",
       "hand": "both",
@@ -5174,27 +5662,29 @@
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m19-p1-e4",
+          "id": "score-beyer.segment.079-m19-p1-e5",
           "hand": "right",
           "voice": 1,
-          "duration_beats": 1,
+          "onset_beats": 2,
+          "duration_beats": 0.5,
           "notes": [
             76
           ]
         },
         {
-          "id": "score-beyer.segment.079-m19-p1-e9",
+          "id": "score-beyer.segment.079-m19-p1-e10",
           "hand": "left",
-          "voice": 6,
+          "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
-            47
+            67
           ]
         }
       ]
     },
     {
-      "id": "score-beyer.segment.079-m19-step5",
+      "id": "score-beyer.segment.079-m19-step6",
       "measure_index": 19,
       "measure_number": "19",
       "onset_beats": 2.5,
@@ -5218,9 +5708,10 @@
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m19-p1-e5",
+          "id": "score-beyer.segment.079-m19-p1-e6",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2.5,
           "duration_beats": 0.5,
           "notes": [
             79
@@ -5229,11 +5720,11 @@
       ]
     },
     {
-      "id": "score-beyer.segment.079-m19-step6",
+      "id": "score-beyer.segment.079-m19-step7",
       "measure_index": 19,
       "measure_number": "19",
       "onset_beats": 3,
-      "duration_beats": 1,
+      "duration_beats": 0.5,
       "notes": [
         74
       ],
@@ -5253,10 +5744,11 @@
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m19-p1-e6",
+          "id": "score-beyer.segment.079-m19-p1-e7",
           "hand": "right",
           "voice": 1,
-          "duration_beats": 1,
+          "onset_beats": 3,
+          "duration_beats": 0.5,
           "notes": [
             74
           ]
@@ -5264,10 +5756,10 @@
       ]
     },
     {
-      "id": "score-beyer.segment.079-m19-step7",
+      "id": "score-beyer.segment.079-m19-step8",
       "measure_index": 19,
       "measure_number": "19",
-      "onset_beats": 4,
+      "onset_beats": 3.5,
       "duration_beats": 0.5,
       "notes": [
         79
@@ -5288,9 +5780,10 @@
       ],
       "source_events": [
         {
-          "id": "score-beyer.segment.079-m19-p1-e7",
+          "id": "score-beyer.segment.079-m19-p1-e8",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 3.5,
           "duration_beats": 0.5,
           "notes": [
             79
@@ -5306,11 +5799,11 @@
       "duration_beats": 0.5,
       "notes": [
         72,
-        40
+        60
       ],
       "note_names": [
         "C5",
-        "E2"
+        "C4"
       ],
       "notation": "第 20 小节",
       "hand": "both",
@@ -5328,6 +5821,7 @@
           "id": "score-beyer.segment.079-m20-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
             72
@@ -5337,9 +5831,10 @@
           "id": "score-beyer.segment.079-m20-p1-e6",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 0.5,
           "notes": [
-            40
+            60
           ]
         }
       ]
@@ -5352,11 +5847,11 @@
       "duration_beats": 0.5,
       "notes": [
         76,
-        43
+        64
       ],
       "note_names": [
         "E5",
-        "G2"
+        "E4"
       ],
       "notation": "第 20 小节",
       "hand": "both",
@@ -5374,6 +5869,7 @@
           "id": "score-beyer.segment.079-m20-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -5383,9 +5879,10 @@
           "id": "score-beyer.segment.079-m20-p1-e7",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0.5,
           "duration_beats": 0.5,
           "notes": [
-            43
+            64
           ]
         }
       ]
@@ -5398,11 +5895,11 @@
       "duration_beats": 0.5,
       "notes": [
         79,
-        47
+        67
       ],
       "note_names": [
         "G5",
-        "B2"
+        "G4"
       ],
       "notation": "第 20 小节",
       "hand": "both",
@@ -5420,6 +5917,7 @@
           "id": "score-beyer.segment.079-m20-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
             79
@@ -5429,9 +5927,10 @@
           "id": "score-beyer.segment.079-m20-p1-e8",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1,
           "duration_beats": 0.5,
           "notes": [
-            47
+            67
           ]
         }
       ]
@@ -5444,11 +5943,11 @@
       "duration_beats": 0.5,
       "notes": [
         76,
-        43
+        64
       ],
       "note_names": [
         "E5",
-        "G2"
+        "E4"
       ],
       "notation": "第 20 小节",
       "hand": "both",
@@ -5466,6 +5965,7 @@
           "id": "score-beyer.segment.079-m20-p1-e4",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
             76
@@ -5475,9 +5975,10 @@
           "id": "score-beyer.segment.079-m20-p1-e9",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 1.5,
           "duration_beats": 0.5,
           "notes": [
-            43
+            64
           ]
         }
       ]
@@ -5490,11 +5991,11 @@
       "duration_beats": 2,
       "notes": [
         72,
-        40
+        60
       ],
       "note_names": [
         "C5",
-        "E2"
+        "C4"
       ],
       "notation": "第 20 小节",
       "hand": "both",
@@ -5512,6 +6013,7 @@
           "id": "score-beyer.segment.079-m20-p1-e5",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
             72
@@ -5521,9 +6023,10 @@
           "id": "score-beyer.segment.079-m20-p1-e10",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
-            40
+            60
           ]
         }
       ]

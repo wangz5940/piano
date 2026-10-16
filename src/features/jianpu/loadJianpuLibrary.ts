@@ -262,6 +262,7 @@ function normalize_measure(value: unknown): jianpu_measure {
     ...(meter ? { meter: {
       beats: as_positive_integer(meter.beats, "简谱小节拍数无效"),
       beat_unit: as_positive_integer(meter.beat_unit, "简谱小节拍值无效"),
+      ...(meter.unmetered === true ? { unmetered: true } : {}),
     } } : {}),
     ...(record.key_signature === undefined ? {} : {
       key_signature: as_string(record.key_signature, "简谱小节调性无效"),
@@ -275,9 +276,17 @@ function normalize_measure(value: unknown): jianpu_measure {
 
 function normalize_event(value: unknown): jianpu_event {
   const record = as_record(value, "简谱音符格式无效");
+  const grace_record = record.grace === undefined ? undefined :
+    as_record(record.grace, "简谱倚音格式无效");
+  const grace = grace_record ? {
+    slash: grace_record.slash === true,
+    written_quarters: as_positive_number(grace_record.written_quarters, "倚音记谱时值无效"),
+  } : undefined;
+  if (grace && record.duration_beats !== 0) throw new Error("倚音不占记谱拍数");
   return {
     onset_beats: as_nonnegative_number(record.onset_beats, "简谱起拍无效"),
-    duration_beats: as_positive_number(record.duration_beats, "简谱时值无效"),
+    duration_beats: grace ? 0 : as_positive_number(record.duration_beats, "简谱时值无效"),
+    ...(grace ? { grace } : {}),
     right_notes: as_midi_notes(record.right_notes, "简谱右手音符无效"),
     left_notes: as_midi_notes(record.left_notes, "简谱左手音符无效"),
     ...(record.right_rest === true ? { right_rest: true } : {}),

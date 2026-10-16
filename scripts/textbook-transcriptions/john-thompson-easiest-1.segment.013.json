@@ -1,0 +1,19 @@
+{
+  "reviewed_pages":[38,39,40],
+  "evidence":"PDF38《划小船》后12小节：补第6小节漏掉的C4四分音符，第12与15小节G3恢复附点二分，保留D4/G3延音线并明确承接3/4拍。PDF39《我的忧愁谁知道》16小节逐音核对，保留第7至8小节左手G3延音，右手F4+G4全音双音标4+5指。PDF40《乘黄包车》第一行4小节，恢复原谱指号；第3小节右手前两拍被插画遮挡，仅保留不可见空拍。",
+  "excluded_regions":[{"page":38,"reason":"第一行位于012。"},{"page":39,"reason":"教师伴奏不混入学生主谱。"},{"page":40,"reason":"键盘图和写音练习不混入主谱；第二行位于014。"}],
+  "sections":[
+    {"page":38,"title":"划小船（第二、三行）","meter":[3,4],"lines":[
+      [{"right":"R/3","left":"B3/2 A3/1"},{"right":"R/3","left":"B3/2 C4/1"},{"right":"D4/3/2~start","left":"R/3"},{"right":"D4/3~stop","left":"R/3"}],
+      [{"right":"G4/1/5 G4/1 G4/1","left":"R/3"},{"right":"D4/1/2 D4/1 D4/1","left":"R/3"},{"right":"R/3","left":"B3/1/2 B3/1 B3/1"},{"right":"R/3","left":"G3/3"},{"right":"D4/2/2 C4/1","left":"R/3"},{"right":"R/3","left":"B3/2 A3/1"},{"right":"R/3","left":"G3/3~start"},{"right":"R/3","left":"G3/3~stop"}]
+    ]},
+    {"page":39,"title":"我的忧愁谁知道","meter":[4,4],"lines":[
+      [{"right":"E4/1/3 r/1 r/2","left":"r/1 G3/2/4 A3/1"},{"right":"r/2 r/1 D4/1/2","left":"C4/3 r/1"},{"right":"E4/1 E4/1 E4/2","left":"R/4"},{"right":"E4/4","left":"R/4"}],
+      [{"right":"E4/1 r/1 r/2","left":"r/1 G3/2 A3/1"},{"right":"R/4","left":"C4/3 C4/1"},{"right":"R/4","left":"A3/2 G3/2~start"},{"right":"F4+G4/4/4,5","left":"G3/4~stop"}],
+      [{"right":"E4/1/3 r/1 r/2","left":"r/1 G3/2/4 A3/1"},{"right":"r/2 r/1 D4/1/2","left":"C4/3 r/1"},{"right":"E4/1 E4/1 E4/2","left":"R/4"},{"right":"E4/4","left":"R/4"},{"right":"G4/3/5 E4/1","left":"R/4"},{"right":"D4/2 E4/2","left":"R/4"},{"right":"C4/4","left":"R/4"},{"right":"R/4","left":"C4/4"}]
+    ]},
+    {"page":40,"title":"乘黄包车（第一行）","meter":[4,4],"lines":[
+      [{"right":"F4/1/4 F4/1 D4/1/2 D4/1","left":"R/4"},{"right":"C4/1 C4/1 r/2","left":"r/2 A3/1/3 A3/1"},{"right":"s/2 C4/1 F4/1","left":"F3/1/5 A3/1 r/2"},{"right":"D4/1 D4/1 D4/2","left":"R/4"}]
+    ]}
+  ]
+}

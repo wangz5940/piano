@@ -1,0 +1,14 @@
+{
+  "reviewed_pages":[37,38],
+  "evidence":"PDF37（书页33）《军号响》后两行12小节，PDF38《划小船》首行4小节。核对全部音符、休止和换拍：军号响4/4转划小船3/4。补军号响第二行第2小节左手G3的4指及划小船首音G3的4指。",
+  "excluded_regions":[{"page":37,"reason":"首行位于011。"},{"page":38,"reason":"后两行位于013。"}],
+  "sections":[
+    {"page":37,"title":"军号响（第二、三行）","meter":[4,4],"lines":[
+      [{"right":"G4/2 E4/1 C4/1","left":"R/4"},{"right":"r/2 G4/2","left":"G3/2/4 r/2"},{"right":"E4/2 G4/1 E4/1","left":"R/4"},{"right":"C4/4","left":"R/4"}],
+      [{"right":"G4/2 E4/1 C4/1","left":"R/4"},{"right":"G4/4","left":"R/4"},{"right":"G4/2 E4/1 C4/1","left":"R/4"},{"right":"G4/4","left":"R/4"},{"right":"G4/2 E4/1 C4/1","left":"R/4"},{"right":"R/4","left":"G3/2 G3/2"},{"right":"r/2 E4/1 r/1","left":"C4/2 r/1 G3/1"},{"right":"C4/4","left":"R/4"}]
+    ]},
+    {"page":38,"title":"划小船（第一行）","meter":[3,4],"lines":[
+      [{"right":"R/3","left":"G3/3/4"},{"right":"R/3","left":"G3/3"},{"right":"R/3","left":"G3/2 A3/1"},{"right":"R/3","left":"B3/3"}]
+    ]}
+  ]
+}

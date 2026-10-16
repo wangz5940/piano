@@ -1,0 +1,113 @@
+{
+  "title": "练习81 · E大调音阶",
+  "evidence": "逐小节核对PDF61练习81及PDF62两条E大调音阶练习。修正练习81第10小节拆错的八分音符、第19小节D升5伪和弦；保留弱起、互补收尾、转调、反复及房子；高音重复音确为A5、A6。音阶逐音核对四个升号与左手E3/E4延音。",
+  "reviewed_pages": [61, 62],
+  "excluded_regions": [],
+  "sections": [
+    {
+      "page": 61, "title": "练习81 · Allegretto", "meter": [3, 4], "fifths": 3, "continues": true,
+      "lines": [
+        [
+          {"right": "A4/0.5/1^start B4/0.5", "left": "r/1", "quarters": 1},
+          {"right": "C#5/0.5 D5/0.5/1 E5/0.5 F#5/0.5 G#5/0.5 A5/0.5", "left": "A3/1 C#4+E4/1 C#4+E4/1"},
+          {"right": "E5/2/1^stop D#5/0.5/2^start E5/0.5/1", "left": "A3/1 C#4+E4/1 C#4+E4/1"},
+          {"right": "G#5/1.5/4 F#5/0.5/3 E5/0.5/2 Dn5/0.5/1", "left": "E3/1/5 D4+E4/1/2,1 D4+E4/1"},
+          {"right": "C#5/2/3^stop A4/0.5^start B4/0.5", "left": "A3/1 C#4+E4/1 C#4+E4/1"}
+        ],
+        [
+          {"right": "C#5/0.5 D5/0.5/1 E5/0.5 F#5/0.5 G#5/0.5 A5/0.5", "left": "A3/1 C#4+E4/1 C#4+E4/1"},
+          {"right": "E5/2/1^stop D#5/0.5/2^start E5/0.5/1", "left": "A3/1 C#4+E4/1 C#4+E4/1"},
+          {"right": "G#5/0.5/4 F#5/0.5 E5/0.5 Dn5/0.5 C#5/0.5/3 B4/0.5", "left": "E3/1 D4+E4/1 D4+E4/1"},
+          {"right": "A4/0.5/1^stop A4/0.5/3 A4/0.5/2 A4/0.5/1 A4/0.5/3 A4/0.5/2", "left": "A3+C#4+E4/1 r/1 r/1"}
+        ]
+      ]
+    },
+    {
+      "page": 61, "title": "练习81 · 中段", "meter": [3, 4], "fifths": 2, "continues": true,
+      "lines": [
+        [
+          {"right": "A4/0.5/1!accent^start B4/0.5/2 C#5/0.5/3 D5/0.5/4 E5/0.5/5 D5/0.5/4^stop", "left": "D3/1 F#3+A3/1 F#3+A3/1", "repeat_start": true}
+        ],
+        [
+          {"right": "A4/0.5!accent^start B4/0.5 C#5/0.5 D5/0.5 E5/0.5 D5/0.5^stop", "left": "D3/1 F#3+A3/1 F#3+A3/1"},
+          {"right": "B4/0.5/1!accent^start C#5/0.5 D5/0.5/2 D#5/0.5/3 F#5/0.5/4 E5/0.5/3^stop", "left": "D3/1 G3+B3/1 G3+B3/1"},
+          {"right": "B4/0.5!accent^start C#5/0.5 D5/0.5 D#5/0.5 F#5/0.5 E5/0.5^stop", "left": "D3/1 G3+B3/1 G3+B3/1"},
+          {"right": "r/0.5 A5/0.5/3 A5/0.5/2 A5/0.5/1 A5/0.5/2 A5/0.5/1", "left": "D3/1 G3+A3/1 G3+A3/1"},
+          {"right": "r/0.5 A6/0.5/3 A6/0.5/2 A6/0.5/1 A6/0.5/2 A6/0.5/1", "left": "D3/1 F#3+A3/1 F#3+A3/1"}
+        ],
+        [
+          {"right": "r/0.5 A4/0.5/3 A4/0.5/2 A4/0.5/1 A4/0.5/2 A4/0.5/1", "left": "D3/1 G3+A3/1 G3+A3/1"},
+          {"right": "D5/1/5!staccatissimo D4/1/2!staccatissimo r/1", "left": "D3/1 F#3+A3/1!accent F#3+A3/1", "ending_start": "1", "ending_stop": "1", "repeat_end": true},
+          {"right": "D5/1/5!accent r/1 A4/0.5/1^start B4/0.5", "left": "F#3+A3/1/3,1!accent D3/1/5!accent r/1", "ending_start": "2", "ending_stop": "2"}
+        ]
+      ]
+    },
+    {
+      "page": 61, "title": "练习81 · 再现", "meter": [3, 4], "fifths": 3,
+      "lines": [
+        [
+          {"right": "C#5/0.5 D5/0.5/1 E5/0.5 F#5/0.5 G#5/0.5 A5/0.5", "left": "A3/1 C#4+E4/1 C#4+E4/1"},
+          {"right": "E5/2/1^stop D#5/0.5/2^start E5/0.5/1", "left": "A3/1 C#4+E4/1 C#4+E4/1"}
+        ],
+        [
+          {"right": "G#5/1.5/4 F#5/0.5 E5/0.5 Dn5/0.5", "left": "E3/1 D4+E4/1 D4+E4/1"},
+          {"right": "C#5/2/3^stop A4/0.5/1^start B4/0.5", "left": "A3/1 C#4+E4/1 C#4+E4/1"},
+          {"right": "C#5/0.5 D5/0.5/1 E5/0.5 F#5/0.5 G#5/0.5 A5/0.5", "left": "A3/1 C#4+E4/1 C#4+E4/1"},
+          {"right": "E5/2/1^stop D#5/0.5/2^start E5/0.5/1", "left": "A3/1 C#4+E4/1 C#4+E4/1"},
+          {"right": "G#5/0.5/4 F#5/0.5 E5/0.5 Dn5/0.5 C#5/0.5/3 B4/0.5", "left": "E3/1 D4+E4/1 D4+E4/1"},
+          {"right": "A4/1/1!staccatissimo^stop A4/1/2!staccatissimo", "left": "A3+C#4+E4/1!staccatissimo A3+C#4+E4/1!staccatissimo", "quarters": 2}
+        ]
+      ]
+    },
+    {
+      "page": 62, "title": "E大调音阶", "meter": [4, 4], "fifths": 4,
+      "lines": [
+        [
+          {"right": "R/4", "left": "E3/1/5^start F#3/0.5 G#3/0.5 A3/0.5 B3/0.5 C#4/0.5/3 D#4/0.5"},
+          {"right": "R/4", "left": "E4/1 D#4/0.5 C#4/0.5 B3/0.5/1 A3/0.5 G#3/0.5 F#3/0.5"},
+          {"right": "E4/1/1^start F#4/0.5 G#4/0.5 A4/0.5/1 B4/0.5 C#5/0.5 D#5/0.5", "left": "E3/4~start^stop"},
+          {"right": "E5/1 D#5/0.5 C#5/0.5 B4/0.5 A4/0.5 G#4/0.5/3 F#4/0.5^stop", "left": "E3/4~stop"},
+          {"right": "E4/0.5^start F#4/0.5 G#4/0.5 A4/0.5/1 B4/0.5 C#5/0.5 D#5/0.5 E5/0.5", "left": "E3/0.5^start F#3/0.5 G#3/0.5 A3/0.5 B3/0.5 C#4/0.5/3 D#4/0.5 E4/0.5"}
+        ],
+        [
+          {"right": "D#5/0.5 E5/0.5 D#5/0.5 C#5/0.5 B4/0.5 A4/0.5 G#4/0.5/3 F#4/0.5^stop", "left": "D#4/0.5 E4/0.5 D#4/0.5 C#4/0.5 B3/0.5/1 A3/0.5 G#3/0.5 F#3/0.5^stop"},
+          {"right": "E4/0.5^start F#4/0.5 G#4/0.5 A4/0.5 B4/0.5 C#5/0.5 D#5/0.5 E5/0.5", "left": "E3/0.5^start F#3/0.5 G#3/0.5 A3/0.5 B3/0.5 C#4/0.5 D#4/0.5 E4/0.5"},
+          {"right": "D#5/0.5 E5/0.5 D#5/0.5 C#5/0.5 B4/0.5 A4/0.5 G#4/0.5 F#4/0.5^stop", "left": "D#4/0.5 E4/0.5 D#4/0.5 C#4/0.5 B3/0.5 A3/0.5 G#3/0.5 F#3/0.5^stop"},
+          {"right": "E4/1/1^start F#4/0.5 G#4/0.5 A4/0.5/1 B4/0.5 C#5/0.5 D#5/0.5", "left": "E3/1^start F#3/0.5 G#3/0.5 A3/0.5 B3/0.5 C#4/0.5/3 D#4/0.5"},
+          {"right": "E5/4^stop", "left": "E4/4^stop"}
+        ]
+      ]
+    },
+    {
+      "page": 62, "title": "E大调音阶 · Allegretto", "meter": [3, 4], "fifths": 4,
+      "lines": [
+        [
+          {"right": "E4/0.5/1^start F#4/0.5 G#4/0.5 A4/0.5/1 B4/0.5 C#5/0.5", "left": "E3/3/5"},
+          {"right": "D#5/3/4^stop", "left": "F#3/0.5^start G#3/0.5 A3/0.5 B3/0.5 C#4/0.5/3 D#4/0.5"},
+          {"right": "E5/0.5/5^start D#5/0.5 C#5/0.5 B4/0.5 A4/0.5/3 G#4/0.5", "left": "E4/3^stop"},
+          {"right": "F#4/3^stop", "left": "D#4/0.5^start C#4/0.5 B3/0.5/1 A3/0.5 G#3/0.5 F#3/0.5"},
+          {"right": "E4/0.5^start F#4/0.5 G#4/0.5 A4/0.5/1 B4/0.5 C#5/0.5", "left": "E3/3^stop"},
+          {"right": "D#5/3^stop", "left": "F#3/0.5^start G#3/0.5 A3/0.5 B3/0.5 C#4/0.5/3 D#4/0.5"}
+        ],
+        [
+          {"right": "E5/0.5^start D#5/0.5 C#5/0.5 B4/0.5 A4/0.5/3 G#4/0.5", "left": "E4/3^stop"},
+          {"right": "F#4/3^stop", "left": "D#4/0.5^start C#4/0.5 B3/0.5/1 A3/0.5 G#3/0.5 F#3/0.5"},
+          {"right": "E4/0.5/1^start F#4/0.5 G#4/0.5 A4/0.5/1 B4/0.5 C#5/0.5", "left": "E3/0.5^stop F#3/0.5 G#3/0.5 A3/0.5 B3/0.5 C#4/0.5/3"},
+          {"right": "D#5/3!accent^stop", "left": "D#4/3"},
+          {"right": "E5/0.5^start D#5/0.5 C#5/0.5 B4/0.5 A4/0.5/3 G#4/0.5", "left": "E4/0.5 D#4/0.5 C#4/0.5 B3/0.5/1 A3/0.5 G#3/0.5"},
+          {"right": "F#4/3!accent^stop", "left": "F#3/3"},
+          {"right": "E4/0.5^start F#4/0.5 G#4/0.5 A4/0.5 B4/0.5 C#5/0.5", "left": "E3/0.5 F#3/0.5 G#3/0.5 A3/0.5 B3/0.5 C#4/0.5"}
+        ],
+        [
+          {"right": "D#5/3!accent^stop", "left": "D#4/3"},
+          {"right": "E5/0.5^start D#5/0.5 C#5/0.5 B4/0.5 A4/0.5 G#4/0.5", "left": "E4/0.5 D#4/0.5 C#4/0.5 B3/0.5 A3/0.5 G#3/0.5"},
+          {"right": "F#4/3!accent^stop", "left": "F#3/3"},
+          {"right": "E4/0.5/1 G#4/0.5/3 A4/0.5/1 B4/0.5/2 C#5/0.5/3 D#5/0.5/4", "left": "E3/0.5/5 G#3/0.5/3 A3/0.5/2 B3/0.5/1 C#4/0.5/3 D#4/0.5/2"},
+          {"right": "E5/0.5/5^start C#5/0.5/3 B4/0.5/2 A4/0.5/1 G#4/0.5/3 F#4/0.5/2", "left": "E4/0.5/1 C#4/0.5/3 B3/0.5/1 A3/0.5/2 G#3/0.5/3 F#3/0.5/4"},
+          {"right": "E4/1!staccatissimo^stop G#4/1!staccatissimo B4/1!staccatissimo", "left": "E3/1!staccatissimo G#3/1!staccatissimo B3/1!staccatissimo"},
+          {"right": "E4/2 r/1", "left": "E3/2 r/1"}
+        ]
+      ]
+    }
+  ]
+}

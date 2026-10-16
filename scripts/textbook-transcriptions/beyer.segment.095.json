@@ -1,0 +1,36 @@
+{
+  "evidence":"PDF52练习67与PDF53练习68，双音逐音核对；保留八分弱起、互补收尾、左手延音和独立分句。页52倒三角为极短顿音，记作staccatissimo。",
+  "reviewed_pages":[52,53],"excluded_regions":[{"page":52,"reason":"页脚顿音解释及奏法示意不重复混入练习"}],
+  "sections":[{"page":52,"title":"练习67","meter":[2,4],"lines":[
+    [
+      {"right":"G4/0.5/2","left":"r/0.5","quarters":0.5},
+      {"right":"E4+C5/0.5/1,5 G4/0.5/2 E4+C5/0.5/1,5 F4+D5/0.5/1,5","left":"C4/2~start"},
+      {"right":"G4+E5/1.5/1,5 A4+F5/0.5/1,5","left":"C4/0.5~stop G3/0.5/4^start C4/1/1^stop"},
+      {"right":"G4+E5/0.5 F4+D5/0.5 E4+C5/0.5 D4+B4/0.5","left":"G3/2/4^start"},
+      {"right":"F4+D5/0.5 E4+C5/0.5 E4+C5/0.5 G4/0.5/2","left":"C4/2^stop"},
+      {"right":"E4+C5/0.5/1,5 G4/0.5/2 E4+C5/0.5/1,5 F4+D5/0.5","left":"C4/2~start"},
+      {"right":"G4+E5/1.5 A4+F5/0.5","left":"C4/0.5~stop G3/0.5^start C4/1^stop"},
+      {"right":"G4+E5/0.5 F4+D5/0.5 E4+C5/0.5 D4+B4/0.5","left":"G3/2^start"},
+      {"right":"E4+C5/1 r/0.5","left":"C4/0.5/1!staccatissimo^stop C3/0.5/5!staccatissimo C4/0.5/1!staccatissimo","quarters":1.5}
+    ],[
+      {"right":"G4/0.5/3","left":"r/0.5","quarters":0.5,"repeat_start":true},
+      {"right":"D4+B4/0.5/1,5 G4/0.5/3 D4+B4/0.5/1,5 E4+C5/0.5","left":"G3/2/5~start^start"},
+      {"right":"F4+D5/1.5 G4/0.5/2","left":"G3/0.5~stop A3/0.5 B3/1"},
+      {"right":"E4+C5/0.5/1,5 G4/0.5/2 E4+C5/0.5/1,5 F4+D5/0.5/1,5","left":"C4/2/2^continue"},
+      {"right":"G4+E5/2/1,5","left":"C4/0.5^continue E4/0.5/1 C4/0.5/2 G3/0.5/5"},
+      {"right":"r/0.5 E4+C5/0.5 E4+C5/0.5 F4+D5/0.5","left":"C4/2/2~start^continue"},
+      {"right":"G4+E5/1.5 A4+F5/0.5","left":"C4/0.5~stop^stop G3/0.5^start C4/1^stop"},
+      {"right":"G4+E5/0.5 F4+D5/0.5 E4+C5/0.5 D4+B4/0.5","left":"G3/2^start"},
+      {"right":"E4+C5/1 r/0.5","left":"C4/0.5!staccatissimo^stop C3/0.5!staccatissimo C4/0.5!staccatissimo","quarters":1.5,"repeat_end":true}
+    ]
+  ]},{"page":53,"title":"练习68","meter":[4,4],"lines":[[
+    {"right":"G4+B4/2/1,3^start A4+C5/2/2,4","left":"R/4"},
+    {"right":"B4+D5/4/3,5^stop","left":"r/1 G3/0.5/5^start B3/0.5/3 D4/2/1^stop"},
+    {"right":"B4+D5/2^start A4+C5/2","left":"R/4"},
+    {"right":"G4+B4/4^stop","left":"r/1 D4/0.5^start B3/0.5 G3/2^stop"},
+    {"right":"A4+C5/2/2,4^start G4+B4/1 A4+C5/1","left":"R/4"},
+    {"right":"B4+D5/4^stop","left":"r/1 G3/0.5^start B3/0.5 D4/2^stop"},
+    {"right":"A4+C5/2^start B4+D5/1 A4+C5/1","left":"R/4"},
+    {"right":"G4+B4/4^stop","left":"r/1 D4/0.5^start B3/0.5 G3/2^stop","repeat_end":true}
+  ]]}]
+}

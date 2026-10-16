@@ -195,10 +195,10 @@ function StaffSystem({
           <text className="staff-key-signature" x={left_margin} y={top + 12}>
             {key_signature}
           </text>
-          <text className="staff-time-signature" x="56" y={staff_top + 24}>
+          {!measures[0]?.meter.unmetered && <text className="staff-time-signature" x="56" y={staff_top + 24}>
             {measures[0]?.meter.beats}
             <tspan x="56" dy="17">{measures[0]?.meter.beat_unit}</tspan>
-          </text>
+          </text>}
         </>
       )}
       {has_treble && (
@@ -520,14 +520,14 @@ function StaffMeasure({
           </text>
         </g>
       )}
-      <line
+      {!measure.meter.unmetered && <line
         className="staff-barline"
         x1={x}
         y1={staff_top}
         x2={x}
         y2={bar_bottom}
-      />
-      {is_last && (
+      />}
+      {is_last && !measure.meter.unmetered && (
         <line
           className="staff-barline is-final"
           x1={x + width}
@@ -625,7 +625,7 @@ function StaffEvent({
     event.onset_beats,
   );
   const duration_kind = get_staff_duration_kind(
-    event.duration_beats,
+    event.grace ? event.grace.written_quarters * measure.meter.beat_unit / 4 : event.duration_beats,
     measure.meter.beat_unit,
   );
   const class_name = [
@@ -676,9 +676,16 @@ function StaffEvent({
   }
   const ys = event.notes.map((note) => staff_y(note.midi, top, staff));
   const stem_y = Math.min(...ys);
+  const hand_events = event.hand === "right" ? measure.right : measure.left;
+  const grace_offset = event.grace ? hand_events.slice(hand_events.indexOf(event))
+    .filter((candidate) => candidate.grace && candidate.onset_beats === event.onset_beats).length * 17 : 0;
   return (
     <g
       className={class_name}
+      transform={event.grace
+        ? `translate(${note_x - grace_offset} ${stem_y}) scale(0.65) translate(${-note_x} ${-stem_y})`
+        : undefined}
+      data-grace={event.grace ? "true" : undefined}
       data-event-id={event.id}
       data-hand={event.hand}
       data-staff={staff}
@@ -715,6 +722,10 @@ function StaffEvent({
           x2={note_x + 4}
           y2={stem_y - 31}
         />
+      )}
+      {event.grace?.slash && (
+        <line className="staff-stem" x1={note_x - 2} y1={stem_y - 13}
+          x2={note_x + 11} y2={stem_y - 25} />
       )}
       {(duration_kind === "eighth" || duration_kind === "sixteenth") && (
         <g className="staff-flags" aria-hidden="true">

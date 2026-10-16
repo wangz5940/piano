@@ -391,7 +391,8 @@ export function validate_notation_sync(
   }
 
   const meter = parse_time_signature_optional(project.document.time_signature);
-  if (!meter) {
+  if (!meter && !(project.document.time_signature === "无拍号" &&
+    project.document.measures[0]?.meter.unmetered)) {
     discrepancies.push({
       code: "notation_invalid_time_signature",
       message: `拍号 ${project.document.time_signature} 无法映射到简谱和五线谱。`,

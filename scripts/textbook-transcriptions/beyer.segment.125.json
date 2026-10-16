@@ -1,0 +1,41 @@
+{
+  "title": "练习97",
+  "evidence": "逐小节核对PDF79下半页24小节双音练习，左手高音谱号、持续低音与内声部分开保存，删去对同一持续C4/B3的重复落键。补第4、11、15小节右手漏掉的附点；第16小节升F转显式还原F保留。末小节右手仅C5，左手三次双音和极短顿音按原图。",
+  "reviewed_pages": [79],
+  "excluded_regions": [],
+  "sections": [{
+    "page": 79, "title": "练习97 · Allegretto", "meter": [3, 8], "left_clef": "treble",
+    "lines": [
+      [
+        {"right": "C5+E5/0.25/1,3!accent^start D5+F5/0.25/2,4 E5+G5/0.5/3,5!staccato^stop E5+G5/0.5!staccato", "left": "C4/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "r/0.5 E4+G4/0.5 E4+G4/0.5"}]},
+        {"right": "E5+G5/0.25!accent^start D5+F5/0.25 C5+E5/0.5!staccato^stop C5+E5/0.5!staccato", "left": "C4/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 E4+G4/0.5 E4+G4/0.5"}]},
+        {"right": "D5+F5/0.5/2,4!staccato D5+F5/0.5!staccato D5+F5/0.5!staccato", "left": "B3/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 D4+G4/0.5 D4+G4/0.5"}]},
+        {"right": "D5+F5/1.5!strong-accent", "left": "B3/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 D4+G4/0.5 D4+G4/0.5"}]},
+        {"right": "C5+E5/0.25!accent^start D5+F5/0.25 E5+G5/0.5!staccato^stop E5+G5/0.5!staccato", "left": "C4/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 E4+G4/0.5 E4+G4/0.5"}]},
+        {"right": "E5+G5/0.25!accent^start D5+F5/0.25 C5+E5/0.5!staccato^stop C5+E5/0.5!staccato", "left": "C4/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 E4+G4/0.5 E4+G4/0.5"}]},
+        {"right": "D5+F5/0.5/3,5^start C5+E5/0.5/2,4 B4+D5/0.5/1,3", "left": "F4/0.25^start D4/0.25/4 G4/1/1"},
+        {"right": "C5+E5/1.5/2,4^stop", "left": "C4/0.5/5!staccato^stop E4/0.5/3!staccato C4/0.5/5!staccato"}
+      ],
+      [
+        {"repeat_start": true, "right": "B4+D5/1.5/1,3^start", "left": "G4/0.25/1^start F#4/0.25/2 G4/0.5/1!staccato^stop G3/0.5!staccato"},
+        {"right": "C5+E5/1.5/2,4", "left": "G4/0.25^start F#4/0.25 G4/0.5!staccato^stop G3/0.5!staccato"},
+        {"right": "D5+F5/1.5/3,5", "left": "G4/0.25^start F#4/0.25 G4/0.5!staccato^stop G3/0.5!staccato"},
+        {"right": "C5+E5/1.5^stop", "left": "G4/0.25^start F#4/0.25 G4/0.5!staccato^stop G3/0.5!staccato"},
+        {"right": "B4+D5/1.5^start", "left": "G4/0.25^start F#4/0.25 G4/0.5!staccato^stop G3/0.5!staccato"},
+        {"right": "C5+E5/1.5", "left": "G4/0.25^start F#4/0.25 G4/0.5!staccato^stop G3/0.5!staccato"},
+        {"right": "B4+D5/1.5^stop", "left": "G4/0.25^start F#4/0.25 G4/0.5!staccato^stop G3/0.5!staccato"},
+        {"right": "R/1.5", "left": "G4/0.25/1^start F#4/0.25/2 G4/0.25/1 Fn4/0.25/2 E4/0.25/3 D4/0.25/4"}
+      ],
+      [
+        {"right": "C5+E5/0.25!accent^start D5+F5/0.25 E5+G5/0.5!staccato^stop E5+G5/0.5!staccato", "left": "C4/1.5^stop", "voices": [{"staff": 2, "voice": 6, "notes": "r/0.5 E4+G4/0.5 E4+G4/0.5"}]},
+        {"right": "E5+G5/0.25!accent^start D5+F5/0.25 C5+E5/0.5!staccato^stop C5+E5/0.5!staccato", "left": "C4/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 E4+G4/0.5 E4+G4/0.5"}]},
+        {"right": "D5+F5/0.5!staccato D5+F5/0.5!staccato D5+F5/0.5!staccato", "left": "B3/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 D4+G4/0.5 D4+G4/0.5"}]},
+        {"right": "D5+F5/1.5!strong-accent", "left": "B3/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 D4+G4/0.5 D4+G4/0.5"}]},
+        {"right": "C5+E5/0.25!accent^start D5+F5/0.25 E5+G5/0.5!staccato^stop E5+G5/0.5!staccato", "left": "C4/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 E4+G4/0.5 E4+G4/0.5"}]},
+        {"right": "E5+G5/0.25!accent^start D5+F5/0.25 C5+E5/0.5!staccato^stop C5+E5/0.5!staccato", "left": "C4/1.5", "voices": [{"staff": 2, "voice": 6, "notes": "s/0.5 E4+G4/0.5 E4+G4/0.5"}]},
+        {"right": "D5+F5/0.5^start C5+E5/0.5 B4+D5/0.5", "left": "F4/0.25^start D4/0.25 G4/1"},
+        {"right": "C5/1.5^stop", "left": "C4+E4/0.5/5,3!staccatissimo^stop E4+G4/0.5/3,1!staccatissimo C4+E4/0.5/5,3!staccatissimo", "repeat_end": true}
+      ]
+    ]
+  }]
+}

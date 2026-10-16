@@ -116,6 +116,8 @@ export interface score_document_note extends score_document_note_v1 {
 
 export interface score_document_event extends Omit<score_document_event_v1, "notes"> {
   notes: score_document_note[];
+  /** Grace notes have zero metrical duration; written value is in quarters. */
+  grace?: { slash: boolean; written_quarters: number };
   chord_annotation?: score_annotation;
   teaching_role?: "left_hand_suggestion";
   tie?: "start" | "continue" | "stop";
@@ -126,7 +128,8 @@ export interface score_document_event extends Omit<score_document_event_v1, "not
 export interface score_document_measure {
   id: string;
   number: string;
-  meter: { beats: number; beat_unit: number };
+  /** For unmetered notation, beats is the content span, not a time signature. */
+  meter: { beats: number; beat_unit: number; unmetered?: boolean };
   key_signature?: string;
   tonic_midi?: number;
   events: score_document_event[];

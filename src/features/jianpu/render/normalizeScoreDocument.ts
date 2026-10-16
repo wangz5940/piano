@@ -128,6 +128,7 @@ function normalize_event(
     kind: event.notes.length === 0 ? "rest" : "note",
     onset_beats: event.onset_beats,
     duration_beats: event.duration_beats,
+    grace: event.grace,
     notes: event.notes.map((note) => {
       const render_note = midi_to_jianpu_note(
         note.midi,

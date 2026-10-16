@@ -15,7 +15,7 @@ const argument = process.argv.find((arg) => arg.startsWith("--output="))?.slice(
 const directory = argument ? resolve(root, argument, "staged/public") : resolve(root, "public");
 const report_path = argument
   ? resolve(root, argument, "report.json")
-  : resolve(root, "reports/textbook-recalibration-2026-09-30.json");
+  : resolve(root, "reports/textbook-pdf-calibration.json");
 const report = JSON.parse(readFileSync(report_path, "utf8")) as { results: Array<{ id: string }> };
 const expected = new Set(report.results.map((item) => item.id));
 const asset = (url: string) => {
@@ -66,11 +66,11 @@ for (const material of catalog.materials) {
       /\.musicxml$/u, ".practice.json",
     )), "utf8")) as { events: Array<{
       onset_beats: number;
-      source_events: Array<{ id: string; hand: string; voice: number; duration_beats: number; notes: number[] }>;
+      source_events: Array<{ id: string; hand: string; voice: number; onset_beats?: number; duration_beats: number; notes: number[] }>;
     }> };
     const actual_events = practice.events.flatMap((group) =>
       group.source_events.map((event) => [
-        event.id, event.hand, event.voice, rounded(group.onset_beats),
+        event.id, event.hand, event.voice, rounded(event.onset_beats ?? group.onset_beats),
         rounded(event.duration_beats), event.notes,
       ])).sort();
     const expected_events = document.measures.flatMap((measure) =>
@@ -98,6 +98,7 @@ function timeline(document: score_document) {
     events: measure.events.map((event) => [
       rounded(event.onset_beats), rounded(event.duration_beats), event.voice,
       event.notes.map((note) => note.midi).sort((a, b) => a - b),
+      event.grace ?? null,
     ]).sort(),
   }));
 }

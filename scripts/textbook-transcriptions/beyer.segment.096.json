@@ -1,0 +1,37 @@
+{
+  "evidence":"PDF53练习69和两条G大调音阶。纠正左手首和弦重复G3、音阶漏音、伪和弦及错误时值；保留所有F升号、G音延音、圆滑线、重音与末音极短顿音。",
+  "reviewed_pages":[53],"excluded_regions":[],
+  "sections":[{"page":53,"title":"练习69","meter":[4,4],"lines":[[
+    {"right":"R/4","left":"G3+B3/2/5,3^start A3+C4/2/4,2"},
+    {"right":"r/1 G4/0.5/1^start B4/0.5/3 D5/2/5^stop","left":"B3+D4/4/3,1^stop"},
+    {"right":"R/4","left":"B3+D4/2^start A3+C4/2"},
+    {"right":"r/1 D5/0.5^start B4/0.5 G4/2^stop","left":"G3+B3/4^stop"},
+    {"right":"R/4","left":"A3+C4/2/4,2^start G3+B3/1 A3+C4/1"},
+    {"right":"r/1 G4/0.5^start B4/0.5 D5/2^stop","left":"B3+D4/4^stop"},
+    {"right":"R/4","left":"A3+C4/2^start B3+D4/1 A3+C4/1"},
+    {"right":"r/1 B4/0.5/1^start D5/0.5/2 G5/2/5^stop","left":"G3+B3/4^stop","repeat_end":true}
+  ]]},{"page":53,"title":"G大调音阶 练习一","meter":[4,4],"fifths":1,"lines":[[
+    {"right":"R/4","left":"G2/1/5!accent^start A2/0.5 B2/0.5 C3/0.5 D3/0.5 E3/0.5/3 F#3/0.5"},
+    {"right":"G4/1/1!accent^start A4/0.5 B4/0.5 C5/0.5/1 D5/0.5 E5/0.5 F#5/0.5","left":"G3/4~start!strong-accent^stop"},
+    {"right":"G5/4~start!strong-accent^stop","left":"G3/1~stop^start F#3/0.5 E3/0.5 D3/0.5/1 C3/0.5 B2/0.5 A2/0.5"},
+    {"right":"G5/1~stop^start F#5/0.5 E5/0.5 D5/0.5 C5/0.5/3 B4/0.5 A4/0.5","left":"G2/4~start!strong-accent^stop"},
+    {"right":"G4/4~start!strong-accent^stop","left":"G2/1~stop^start A2/0.5 B2/0.5 C3/0.5 D3/0.5 E3/0.5/3 F#3/0.5"},
+    {"right":"G4/1~stop^start A4/0.5 B4/0.5 C5/0.5/1 D5/0.5 E5/0.5 F#5/0.5","left":"G3/4~start!strong-accent^stop"},
+    {"right":"G5/1!accent F#5/0.5 E5/0.5 D5/0.5 C5/0.5/3 B4/0.5 A4/0.5","left":"G3/1~stop^start F#3/0.5 E3/0.5 D3/0.5/1 C3/0.5 B2/0.5 A2/0.5"},
+    {"right":"G4/4^stop","left":"G2/4^stop"}
+  ]]},{"page":53,"title":"G大调音阶 练习二","meter":[4,4],"fifths":1,"lines":[
+    [
+      {"right":"R/4","left":"G3/1/5^start A3/0.5 B3/0.5 C4/0.5 D4/0.5 E4/0.5/3 F#4/0.5"},
+      {"right":"R/4","left":"G4/1 F#4/0.5 E4/0.5 D4/0.5/1 C4/0.5 B3/0.5 A3/0.5"},
+      {"right":"G4/1/1^start A4/0.5 B4/0.5 C5/0.5/1 D5/0.5 E5/0.5 F#5/0.5","left":"G3/4~start^stop"},
+      {"right":"G5/1 F#5/0.5 E5/0.5 D5/0.5 C5/0.5/3 B4/0.5 A4/0.5","left":"G3/4~stop"},
+      {"right":"G4/0.5^continue A4/0.5 G4/0.5 A4/0.5 B4/0.5 C5/0.5/1 D5/0.5 E5/0.5","left":"G3/0.5 A3/0.5 G3/0.5 A3/0.5 B3/0.5 C4/0.5 D4/0.5 E4/0.5/3"}
+    ],[
+      {"right":"F#5/0.5 G5/0.5 F#5/0.5 E5/0.5 D5/0.5 C5/0.5/3 B4/0.5 A4/0.5","left":"F#4/0.5 G4/0.5 F#4/0.5 E4/0.5 D4/0.5/1 C4/0.5 B3/0.5 A3/0.5"},
+      {"right":"G4/0.5^continue A4/0.5 G4/0.5 A4/0.5 B4/0.5 C5/0.5/1 D5/0.5 E5/0.5","left":"G3/0.5 A3/0.5 G3/0.5 A3/0.5 B3/0.5 C4/0.5 D4/0.5 E4/0.5/3"},
+      {"right":"F#5/0.5 G5/0.5 F#5/0.5 E5/0.5 D5/0.5 C5/0.5/3 B4/0.5 A4/0.5","left":"F#4/0.5 G4/0.5 F#4/0.5 E4/0.5 D4/0.5/1 C4/0.5 B3/0.5 A3/0.5"},
+      {"right":"G4/1^continue A4/0.5 B4/0.5 C5/0.5 D5/0.5 E5/0.5 F#5/0.5","left":"G3/1 A3/0.5 B3/0.5 C4/0.5 D4/0.5 E4/0.5 F#4/0.5"},
+      {"right":"G5/1!staccatissimo^stop r/1 r/2","left":"G4/1!staccatissimo r/1 r/2"}
+    ]
+  ]}]
+}

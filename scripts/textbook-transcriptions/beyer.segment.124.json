@@ -1,0 +1,72 @@
+{
+  "title": "练习96",
+  "evidence": "核对PDF78–79跨页40小节3/8练习，两手交替十六分、三音和弦、降B和显式还原B均按原谱；保留跨小节分句、跳音与反复。第24小节左手低音C3后接四个十六分音符，首音强重音，不误为延音。",
+  "reviewed_pages": [78, 79],
+  "excluded_regions": [],
+  "sections": [
+    {
+      "page": 78, "title": "练习96 · Allegro", "meter": [3, 8], "fifths": -1, "continues": true,
+      "lines": [
+        [
+          {"right": "F4/0.25/1^start G4/0.25/2 A4/0.25/3 Bb4/0.25/4 C5/0.25/5 A4/0.25/3", "left": "F3/0.5 A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/1.5/1^stop", "left": "F3/0.25^start G3/0.25 A3/0.25 Bb3/0.25 C4/0.25 A3/0.25"},
+          {"right": "F4/0.25^start G4/0.25 A4/0.25 Bb4/0.25 C5/0.25 A4/0.25", "left": "F3/0.5^stop A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/1.5^stop", "left": "F3/0.25^start G3/0.25 A3/0.25 Bb3/0.25 C4/0.25 A3/0.25"},
+          {"right": "F4/0.25/1^start G4/0.25/2 F4/0.5/1 Bb4/0.5/4^stop", "left": "F3/0.5^stop Bb3+D4/0.5/2,1 Bb3+D4/0.5"}
+        ],
+        [
+          {"right": "F4/0.25^start G4/0.25 F4/0.5 A4/0.5/3^stop", "left": "F3/0.5 A3+C4/0.5/3,1 A3+C4/0.5"},
+          {"right": "F4/0.25^start G4/0.25 F4/0.5 D5/0.5/5^stop", "left": "F3/0.5 Bb3+D4/0.5 Bb3+D4/0.5"},
+          {"right": "F4/0.25^start G4/0.25 F4/0.5 C5/0.5/5^stop", "left": "F3/0.5 A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/0.25^start G4/0.25 A4/0.25 Bb4/0.25 C5/0.25 A4/0.25", "left": "F3/0.5 A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/1.5^stop", "left": "F3/0.25^start G3/0.25 A3/0.25 Bb3/0.25 C4/0.25 A3/0.25"}
+        ],
+        [
+          {"right": "F4/0.25^start G4/0.25 A4/0.25 Bb4/0.25 C5/0.25 A4/0.25", "left": "F3/0.5^stop A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/1.5^stop", "left": "F3/0.25^start G3/0.25 A3/0.25 Bb3/0.25 C4/0.25 A3/0.25/3"},
+          {"right": "G4/0.25/2^start A4/0.25 C5/0.25 Bb4/0.25 A4/0.25 G4/0.25", "left": "Bb3+C4/0.5/2,1^stop Bb3+C4/0.5 Bb3+C4/0.5"},
+          {"right": "F4/0.25/1 A4/0.25/2 D5/0.25/5 C5/0.25 Bb4/0.25 A4/0.25", "left": "A3+C4/0.5 A3+C4/0.5 A3+C4/0.5"},
+          {"right": "G4/0.25/1 A4/0.25 Bb4/0.25 C5/0.25/1 D5/0.25 E5/0.25", "left": "C3/0.5/5 Bb3+C4/0.5/2,1 Bb3+C4/0.5"},
+          {"right": "F5/1^stop r/0.5", "left": "F3+A3+C4/1/5,3,1 r/0.5"}
+        ],
+        [
+          {"repeat_start": true, "right": "E4+G4+C5/0.5/1,2,5 E4+G4+C5/0.5 E4+G4+C5/0.5", "left": "C3/0.25/5^start D3/0.25 E3/0.25 F3/0.25 G3/0.5/1!staccato^stop"},
+          {"right": "E4+G4+C5/0.5 E4+G4+C5/0.5 E4+G4+C5/0.5", "left": "G3/0.25^start F3/0.25 E3/0.25 D3/0.25 C3/0.5!staccato^stop"},
+          {"right": "F4+G4+Bn4/0.5/1,2,4 F4+G4+B4/0.5 F4+G4+B4/0.5", "left": "G3/1.5^start"},
+          {"right": "E4+G4+C5/0.5/1,2,5 E4+G4+C5/0.5 E4+G4+C5/0.5", "left": "C3/1.5^stop"},
+          {"right": "E4+G4+C5/0.5 E4+G4+C5/0.5 E4+G4+C5/0.5", "left": "C3/0.25^start D3/0.25 E3/0.25 F3/0.25 G3/0.5!staccato^stop"},
+          {"right": "E4+G4+C5/0.5 E4+G4+C5/0.5 E4+G4+C5/0.5", "left": "G3/0.25^start F3/0.25 E3/0.25 D3/0.25 C3/0.5!staccato^stop"}
+        ]
+      ]
+    },
+    {
+      "page": 79, "title": "练习96 · 续", "meter": [3, 8], "fifths": -1,
+      "lines": [
+        [
+          {"right": "F4+G4+Bn4/0.5 F4+G4+B4/0.5 F4+G4+B4/0.5", "left": "G3/1.5^start"},
+          {"right": "E4+G4+C5/0.5!strong-accent r/0.5 r/0.5", "left": "C3/0.5!strong-accent^stop C4/0.25/1^start Bb3/0.25/2 A3/0.25/3 G3/0.25/4"},
+          {"right": "F4/0.25^start G4/0.25 A4/0.25 Bb4/0.25 C5/0.25 A4/0.25", "left": "F3/0.5^stop A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/1.5^stop", "left": "F3/0.25^start G3/0.25 A3/0.25 Bb3/0.25 C4/0.25 A3/0.25"},
+          {"right": "F4/0.25^start G4/0.25 A4/0.25 Bb4/0.25 C5/0.25 A4/0.25", "left": "F3/0.5^stop A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/1.5^stop", "left": "F3/0.25^start G3/0.25 A3/0.25 Bb3/0.25 C4/0.25 A3/0.25"}
+        ],
+        [
+          {"right": "F4/0.25^start G4/0.25 F4/0.5 Bb4/0.5^stop", "left": "F3/0.5^stop Bb3+D4/0.5 Bb3+D4/0.5"},
+          {"right": "F4/0.25^start G4/0.25 F4/0.5 A4/0.5^stop", "left": "F3/0.5 A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/0.25^start G4/0.25 F4/0.5 D5/0.5^stop", "left": "F3/0.5 Bb3+D4/0.5 Bb3+D4/0.5"},
+          {"right": "F4/0.25^start G4/0.25 F4/0.5 C5/0.5^stop", "left": "F3/0.5 A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/0.25^start G4/0.25 A4/0.25 Bb4/0.25 C5/0.25 A4/0.25", "left": "F3/0.5 A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/1.5^stop", "left": "F3/0.25^start G3/0.25 A3/0.25 Bb3/0.25 C4/0.25 A3/0.25"}
+        ],
+        [
+          {"right": "F4/0.25^start G4/0.25 A4/0.25 Bb4/0.25 C5/0.25 A4/0.25", "left": "F3/0.5^stop A3+C4/0.5 A3+C4/0.5"},
+          {"right": "F4/1.5^stop", "left": "F3/0.25^start G3/0.25 A3/0.25 Bb3/0.25 C4/0.25 A3/0.25/3"},
+          {"right": "G4/0.25^start A4/0.25 C5/0.25 Bb4/0.25 A4/0.25 G4/0.25", "left": "Bb3+C4/0.5/2,1^stop Bb3+C4/0.5 Bb3+C4/0.5"},
+          {"right": "F4/0.25 A4/0.25 D5/0.25 C5/0.25 Bb4/0.25 A4/0.25", "left": "A3+C4/0.5 A3+C4/0.5 A3+C4/0.5"},
+          {"right": "G4/0.25 A4/0.25 Bb4/0.25 C5/0.25 D5/0.25 E5/0.25", "left": "C3/0.5 Bb3+C4/0.5 Bb3+C4/0.5"},
+          {"right": "F5/1^stop r/0.5", "left": "F3+A3+C4/1 r/0.5", "repeat_end": true}
+        ]
+      ]
+    }
+  ]
+}

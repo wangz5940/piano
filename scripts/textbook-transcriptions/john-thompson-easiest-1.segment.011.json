@@ -1,0 +1,38 @@
+{
+  "reviewed_pages":[32,33,34,35,36,37],
+  "evidence":"逐页对照PDF32–37（书页28–33）：《教堂管风琴》8小节、《扬基歌》8小节、《弗吉尼，我的故乡》16小节、《摘棉花的老人》16小节；补回整页漏识别的PDF36《“自新大陆”交响曲》主题16小节；PDF37《军号响》首行4小节。恢复纸面首音指号和整小节休止，保留《摘棉花的老人》E4/C4跨小节延音线及《自新大陆》D4/C4延音线。PDF34第7小节和PDF35第4小节右手未印休止的位置保留空白。",
+  "excluded_regions":[
+    {"page":32,"reason":"大声读谱、键盘图、写音练习和教师伴奏不混入演奏曲。"},
+    {"page":33,"reason":"页首两组无拍号的大声读谱不混入演奏曲。"},
+    {"page":34,"reason":"教师伴奏不混入学生主谱。"},
+    {"page":35,"reason":"延音线示例与教师伴奏不混入学生主谱。"},
+    {"page":36,"reason":"键盘认音图、写音练习和教师伴奏不混入学生主谱。"},
+    {"page":37,"reason":"后两行《军号响》位于012。"}
+  ],
+  "sections":[
+    {"page":32,"title":"教堂管风琴","meter":[4,4],"lines":[
+      [{"right":"F4/2/4 E4/2","left":"R/4"},{"right":"D4/2 C4/2","left":"R/4"},{"right":"D4/2 E4/2","left":"R/4"},{"right":"F4/4","left":"R/4"}],
+      [{"right":"F4/2 E4/2","left":"R/4"},{"right":"D4/2 C4/2","left":"R/4"},{"right":"D4/2 E4/2","left":"R/4"},{"right":"F4/4","left":"R/4"}]
+    ]},
+    {"page":33,"title":"扬基歌","meter":[4,4],"lines":[
+      [{"right":"C4/1/1 C4/1 D4/1 E4/1","left":"R/4"},{"right":"C4/1 E4/1 D4/1 r/1","left":"r/2 r/1 G3/1/4"},{"right":"r/1 C4/1 D4/1 E4/1","left":"C4/1/1 r/1 r/2"},{"right":"C4/2 r/2","left":"r/2 B3/1/2 G3/1"}],
+      [{"right":"r/1 C4/1 D4/1 E4/1","left":"C4/1 r/1 r/2"},{"right":"F4/1 E4/1 D4/1 C4/1","left":"R/4"},{"right":"R/4","left":"B3/1 G3/1 A3/1 B3/1"},{"right":"r/2 C4/2","left":"C4/2 r/2"}]
+    ]},
+    {"page":34,"title":"弗吉尼，我的故乡","meter":[4,4],"lines":[
+      [{"right":"E4/1/3 E4/2 F4/1","left":"R/4"},{"right":"E4/3 D4/1","left":"R/4"},{"right":"C4/2 r/2","left":"r/2 A3/2/3"},{"right":"R/4","left":"G3/1 C4/3"}],
+      [{"right":"r/2 C4/1 D4/1","left":"G3/2 r/2"},{"right":"E4/1 E4/1 F4/1 E4/1","left":"R/4"},{"right":"E4/1 C4/1 s/2","left":"r/2 B3/1 C4/1"},{"right":"D4/4","left":"R/4"},{"right":"E4/2 F4/1 E4/1","left":"R/4"},{"right":"E4/2 D4/1 C4/1","left":"R/4"}],
+      [{"right":"D4/2 r/2","left":"r/2 C4/1 A3/1"},{"right":"R/4","left":"G3/1 C4/3"},{"right":"r/2 C4/1 D4/1","left":"G3/2 r/2"},{"right":"E4/2 F4/1 E4/1","left":"R/4"},{"right":"E4/1 D4/1 r/2","left":"r/2 C4/1 B3/1"},{"right":"C4/4","left":"R/4"}]
+    ]},
+    {"page":35,"title":"摘棉花的老人","meter":[4,4],"lines":[
+      [{"right":"R/4","left":"G3/2/4 G3/2"},{"right":"R/4","left":"A3/1 C4/2 A3/1"},{"right":"r/2 E4/2/3","left":"G3/2 r/2"},{"right":"D4/1 C4/2 s/1","left":"r/2 r/1 A3/1/3"},{"right":"R/4","left":"G3/2 G3/2"},{"right":"r/2 r/1 D4/1/2","left":"A3/1 C4/2 r/1"},{"right":"E4/4~start","left":"R/4"},{"right":"E4/4~stop","left":"R/4"}],
+      [{"right":"E4/2/3 E4/2","left":"R/4"},{"right":"C4/1 D4/2 C4/1","left":"R/4"},{"right":"E4/2 E4/2","left":"R/4"},{"right":"C4/1 D4/2 C4/1","left":"R/4"},{"right":"E4/2 E4/2","left":"R/4"},{"right":"D4/1 C4/1 D4/2","left":"R/4"},{"right":"C4/4~start","left":"R/4"},{"right":"C4/4~stop","left":"R/4"}]
+    ]},
+    {"page":36,"title":"《“自新大陆”交响曲》主题","meter":[4,4],"lines":[
+      [{"right":"E4/3/3 G4/1","left":"R/4"},{"right":"G4/4","left":"R/4"},{"right":"E4/3 D4/1","left":"R/4"},{"right":"C4/4","left":"R/4"},{"right":"D4/2 E4/2","left":"R/4"},{"right":"G4/3 E4/1","left":"R/4"},{"right":"D4/4~start","left":"R/4"},{"right":"D4/4~stop","left":"R/4"}],
+      [{"right":"E4/3 G4/1","left":"R/4"},{"right":"G4/4","left":"R/4"},{"right":"E4/3 D4/1","left":"R/4"},{"right":"C4/4","left":"R/4"},{"right":"D4/2 E4/2","left":"R/4"},{"right":"D4/3 C4/1","left":"R/4"},{"right":"C4/4~start","left":"R/4"},{"right":"C4/4~stop","left":"R/4"}]
+    ]},
+    {"page":37,"title":"军号响（第一行）","meter":[4,4],"lines":[
+      [{"right":"G4/2/5 E4/1/3 C4/1/1","left":"R/4"},{"right":"G4/4","left":"R/4"},{"right":"G4/2 E4/1 C4/1","left":"R/4"},{"right":"G4/4","left":"R/4"}]
+    ]}
+  ]
+}

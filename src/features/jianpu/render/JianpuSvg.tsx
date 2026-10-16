@@ -252,7 +252,7 @@ function MeasureSvg({
           </text>
         </g>
       )}
-      {is_first && (
+      {is_first && !measure.meter.unmetered && (
         <text
           className="jianpu-svg-system-measure-number"
           x="3"
@@ -261,7 +261,7 @@ function MeasureSvg({
           ({measure.number})
         </text>
       )}
-      {is_first && (
+      {is_first && !measure.meter.unmetered && (
         <line
           className="jianpu-svg-barline"
           x1={measure_box.x}
@@ -332,14 +332,14 @@ function MeasureSvg({
           </text>
         </g>
       ))}
-      <line
+      {!measure.meter.unmetered && <line
         className={`jianpu-svg-barline ${is_system_end ? "is-system-end" : ""}`}
         x1={measure_box.x + measure_box.width}
         y1={bar_top}
         x2={measure_box.x + measure_box.width}
         y2={bar_bottom}
-      />
-      {is_score_end && (
+      />}
+      {is_score_end && !measure.meter.unmetered && (
         <line
           className="jianpu-svg-barline is-final"
           x1={measure_box.x + measure_box.width - 4}
@@ -380,7 +380,7 @@ function EventSvg({
   const is_current = event.source_ref.source_id === view_state.current_event_id;
   const is_done = view_state.completed_event_ids.has(event.source_ref.source_id);
   const duration_line_count = get_duration_line_count(
-    event.duration_beats,
+    event.grace ? event.grace.written_quarters * beat_unit / 4 : event.duration_beats,
     beat_unit,
   );
   const event_label = get_event_label(event_box);
@@ -400,6 +400,10 @@ function EventSvg({
   return (
     <g
       className={class_name}
+      transform={event.grace
+        ? `translate(${event_box.x} ${event_box.y - 12}) scale(0.65) translate(${-event_box.x} ${-event_box.y})`
+        : undefined}
+      data-grace={event.grace ? "true" : undefined}
       data-event-id={event.id}
       data-source-id={event.source_ref.source_id}
       data-hand={event.hand}
@@ -744,6 +748,7 @@ function SustainSvg({ event_box }: { event_box: jianpu_event_box }) {
 
 function get_event_label(event_box: jianpu_event_box): string {
   const { event } = event_box;
+  if (event.grace) return `倚音 ${event.notes.map((note) => note.keyboard_label).join("、")}，不占记谱拍数`;
   const hand = event.hand === "right" ? "右手" : "左手";
   if (event.kind === "sustain") {
     return `${hand}延音保持 ${event.duration_beats} 拍`;

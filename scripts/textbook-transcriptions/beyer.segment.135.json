@@ -1,0 +1,69 @@
+{
+  "title": "苏萨尼（圣诞歌）· 练习107、半音音阶预备练习",
+  "evidence": "逐小节核对PDF86下部25小节及87上部四条半音音阶共20小节。苏萨尼恢复左手高音谱号实际音高和右手独立旋律，删除谱号误认的C3与伪休止；第17小节右手C4+G4二分与F4/E4四分分声部保留，左手仅C3二分。第24/25小节左手C3延音保留。半音阶按原图单用左右手分配，保留各条不同印刷指法及反复。",
+  "reviewed_pages": [86,87],
+  "excluded_regions": [],
+  "sections": [
+    {"page": 86, "title": "苏萨尼 · Moderato", "meter": [3,4], "fifths": -1, "lines": [
+      [
+        {"quarters": 1, "right": "F4+A4/1/1,3", "left": "F3+C4/1/5,1"},
+        {"right": "A4/1^start G4/1^stop F4/1/1", "left": "C4/1^start Bb3/1^stop A3/1", "voices": [{"staff": 1, "voice": 2, "notes": "F4/2 s/1"}, {"staff": 2, "voice": 6, "notes": "F3/3"}]},
+        {"right": "F4+C5/2/2,5 E4+A4/1/1,4", "left": "A3+C4/1 F3+A3/1/4,2 C3+C4/1"},
+        {"right": "F4/1/3^start G4/1^stop E4+A4/1/2,4", "left": "A3/3", "voices": [{"staff": 1, "voice": 2, "notes": "D4/2/1 s/1"}, {"staff": 2, "voice": 6, "notes": "D3/2/4 C3/1"}]},
+        {"right": "D4+F4/3", "left": "A3/3", "voices": [{"staff": 2, "voice": 6, "notes": "D3/1 E3/1 F3/1"}]},
+        {"right": "C5/3/5", "left": "A3/1/1^start G3/1/3 F3/1^stop", "voices": [{"staff": 1, "voice": 2, "notes": "F4/2/2^start D4/1^stop"}]},
+        {"right": "A4/3/4", "left": "C4/2 A3/1/3", "voices": [{"staff": 1, "voice": 2, "notes": "D4/1/1^start E4/1/2 F4/1/1^stop"}]},
+        {"right": "C5/3/5", "left": "A3/1^start G3/1 F3/1^stop", "voices": [{"staff": 1, "voice": 2, "notes": "F4/2/2^start D4/1^stop"}]}
+      ],
+      [
+        {"right": "A4/3/4", "left": "C4/2 A3/1", "voices": [{"staff": 1, "voice": 2, "notes": "D4/1/1^start E4/1/2 F4/1/1^stop"}]},
+        {"left_clef": "treble", "right": "C6/3/5", "left": "A3+F4/1/5,1 C4+G4/1/5,2 F4+A4/1/3,1", "voices": [{"staff": 1, "voice": 2, "notes": "D5/1/1 E5/1/2 F5/1/1"}]},
+        {"right": "A5/3/5", "left": "A4+C5/1/2,1 G4+Bb4/1/3,1 F4+A4/1/4,2", "voices": [{"staff": 1, "voice": 2, "notes": "D5/1/2 E5/1/1 F5/1"}]},
+        {"right": "C6/3/5", "left": "Bb3+F4/2/5,1 C4+E4/1", "voices": [{"staff": 1, "voice": 2, "notes": "D5/1/1 A5/1/4 G5/1/3"}]},
+        {"right": "A5/2/4 F4+C5/1/1,5", "left": "F4/2 @bass A3+C4/1/4,2", "voices": [{"staff": 1, "voice": 2, "notes": "F5/1/2 C5/1 s/1"}]},
+        {"right": "C5/2/5 E4+Bb4/1/1,5", "left": "Bb3+D4/2 G3+C4/1", "voices": [{"staff": 1, "voice": 2, "notes": "F4/1/2^start D4/1^stop s/1"}]},
+        {"right": "A4/2 E4+D5/1/1,5", "left": "F3+D4/2 G3+Bb3/1/4,2", "voices": [{"staff": 1, "voice": 2, "notes": "F4/1^start D4/1^stop s/1"}]},
+        {"right": "F4+C5/1/2,5 E4+Bb4/1/1,4 F4+A4/1/3,5", "left": "A3+C4/1/3,1 G3+C4/1 F3+C4/1"}
+      ],
+      [
+        {"right": "C4+G4/2/1,4 E4+C5/1", "left": "C3/2/5 A3+C4/1/3,1", "voices": [{"staff": 1, "voice": 2, "notes": "F4/1/3^start E4/1^stop s/1"}]},
+        {"right": "G4/1/2^start A4/1^stop D4+Bb4/1/1,4", "left": "Bb3+D4/1/2,1 A3+C4/1/3,1 G3+Bb3/1/4,2", "voices": [{"staff": 1, "voice": 2, "notes": "D4/2 s/1"}]},
+        {"right": "F4+C5/2/2,5 F4/1/2", "left": "F3+A3/1 G3+Bb3/1 A3+C4/1"},
+        {"right": "F4/2 E4/1", "left": "Bb3+D4/1/2,1 A3+C4/1 G3+Bb3/1"},
+        {"right": "D4+F4/2 F4+Bb4/1/2,5", "left": "A3/2 s/1", "voices": [{"staff": 2, "voice": 6, "notes": "D3/1/4 C3/1 D3+G3/1/5,2"}]},
+        {"right": "Bb4/1^start A4/1^stop C4+G4/1", "left": "E3+G3/1/4,2 F3+A3/1 G3+Bb3/1/4,2", "voices": [{"staff": 1, "voice": 2, "notes": "C4/2 s/1"}]},
+        {"right": "F4+A4/1/2,4 F4+Bb4/1/1,3 F4+C5/1/2,5", "left": "F3+C4/1 G3+C4/1 A3+C4/1"},
+        {"right": "D4+F4+A4/2/1,2,4 Bb3+E4+G4/1/1,3,5", "left": "Bb3/1^start Bb2/1/5^stop C3/1/2~start"},
+        {"right": "A3+F4/3/1,4", "left": "C3/3~stop", "voices": [{"staff": 2, "voice": 6, "notes": "F2/3"}]}
+      ]
+    ]},
+    {"page": 87, "title": "半音音阶 · 单用右手I", "meter": [3,4], "lines": [[
+      {"right": "G4/0.5/1 G#4/0.5/2 A4/0.5/1 A#4/0.5/2 B4/0.5/1 C5/0.5/2"},
+      {"right": "C#5/0.5/3 D5/0.5/1 D#5/0.5/2 E5/0.5/1 F5/0.5/2 F#5/0.5/3"},
+      {"right": "G5/0.5/4 Gb5/0.5/3 Fn5/0.5/2 E5/0.5/1 Eb5/0.5/2 D5/0.5/1"},
+      {"right": "Db5/0.5/3 Cn5/0.5/2 B4/0.5/1 Bb4/0.5/2 A4/0.5/1 Ab4/0.5/2", "repeat_end": true},
+      {"right": "G4/3/1"}
+    ]]},
+    {"page": 87, "title": "半音音阶 · 单用右手II", "meter": [3,4], "lines": [[
+      {"right": "G4/0.5/1 G#4/0.5/3 A4/0.5/1 A#4/0.5/3 B4/0.5/1 C5/0.5/2"},
+      {"right": "C#5/0.5/3 D5/0.5/1 D#5/0.5/3 E5/0.5/1 F5/0.5/2 F#5/0.5/3"},
+      {"right": "G5/0.5/4 Gb5/0.5/3 Fn5/0.5/2 E5/0.5/1 Eb5/0.5/3 D5/0.5/1"},
+      {"right": "Db5/0.5/3 C5/0.5/2 B4/0.5/1 Bb4/0.5/3 A4/0.5/1 Ab4/0.5/3", "repeat_end": true},
+      {"right": "G4/3/1"}
+    ]]},
+    {"page": 87, "title": "半音音阶 · 单用左手I", "meter": [3,4], "lines": [[
+      {"left": "G3/0.5/3 G#3/0.5/2 A3/0.5/1 A#3/0.5/3 B3/0.5/2 C4/0.5/1"},
+      {"left": "C#4/0.5/2 D4/0.5/1 D#4/0.5/3 E4/0.5/2 F4/0.5/1 F#4/0.5/2"},
+      {"left": "G4/0.5/1 Gb4/0.5/2 Fn4/0.5/1 E4/0.5/2 Eb4/0.5/3 D4/0.5/1"},
+      {"left": "Db4/0.5/2 Cn4/0.5/1 B3/0.5/2 Bb3/0.5/3 A3/0.5/1 Ab3/0.5/2", "repeat_end": true},
+      {"left": "G3/3/3"}
+    ]]},
+    {"page": 87, "title": "半音音阶 · 单用左手II", "meter": [3,4], "lines": [[
+      {"left": "G3/0.5/4 G#3/0.5/3 A3/0.5/1 A#3/0.5/3 B3/0.5/2 C4/0.5/1"},
+      {"left": "C#4/0.5/3 D4/0.5/1 D#4/0.5/3 E4/0.5/2 F4/0.5/1 F#4/0.5/3"},
+      {"left": "G4/0.5/1 Gb4/0.5/3 Fn4/0.5/1 E4/0.5/2 Eb4/0.5/3 D4/0.5/1"},
+      {"left": "Db4/0.5/3 C4/0.5/1 B3/0.5/2 Bb3/0.5/3 A3/0.5/1 Ab3/0.5/3", "repeat_end": true},
+      {"left": "G3/3/4"}
+    ]]}
+  ]
+}

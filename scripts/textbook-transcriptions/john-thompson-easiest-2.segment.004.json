@@ -1,0 +1,33 @@
+{
+  "evidence": "PDF24《小夜曲》明确只用左手弹奏，16小节；逐小节核对二分/全音符及印刷指号。删除混入开头的PDF23书面八度移位示例。页底伴奏保留为独立005片段。",
+  "reviewed_pages": [23, 24],
+  "excluded_regions": [
+    {"page": 23, "reason": "全页书面写音和八度移位题。"},
+    {"page": 24, "reason": "页底伴奏谱独立归于005，不与学生旋律并为双手。"}
+  ],
+  "sections": [{
+    "page": 24, "title": "小夜曲（学生左手）", "meter": [4, 4],
+    "lines": [
+      [
+        {"right": "R/4", "left": "C3/2/5 D3/2"},
+        {"right": "R/4", "left": "E3/4"},
+        {"right": "R/4", "left": "D3/2 C3/2"},
+        {"right": "R/4", "left": "F3/4/2"},
+        {"right": "R/4", "left": "F3/2 E3/2"},
+        {"right": "R/4", "left": "D3/4"},
+        {"right": "R/4", "left": "G3/2/1 F3/2/2"},
+        {"right": "R/4", "left": "E3/2 D3/2"}
+      ],
+      [
+        {"right": "R/4", "left": "C3/2 D3/2"},
+        {"right": "R/4", "left": "E3/4"},
+        {"right": "R/4", "left": "D3/2 C3/2"},
+        {"right": "R/4", "left": "F3/4"},
+        {"right": "R/4", "left": "F3/2 E3/2"},
+        {"right": "R/4", "left": "D3/4"},
+        {"right": "R/4", "left": "G3/2 G3/2"},
+        {"right": "R/4", "left": "C3/4"}
+      ]
+    ]
+  }]
+}

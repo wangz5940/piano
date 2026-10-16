@@ -8,7 +8,7 @@
       "measure_index": 1,
       "measure_number": "1",
       "onset_beats": 0,
-      "duration_beats": 3,
+      "duration_beats": 2,
       "notes": [
         64,
         67,
@@ -22,12 +22,32 @@
       "notation": "第 1 小节",
       "hand": "both",
       "match_mode": "chord",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 64,
+          "finger": 1,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 67,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 60,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m1-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 2,
           "notes": [
             64,
@@ -38,7 +58,8 @@
           "id": "score-john-thompson-easiest-2.segment.012-m1-p1-e3",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 3,
+          "onset_beats": 0,
+          "duration_beats": 2,
           "notes": [
             60
           ]
@@ -53,50 +74,54 @@
       "duration_beats": 2,
       "notes": [
         65,
-        67
+        67,
+        59
       ],
       "note_names": [
         "F4",
-        "G4"
+        "G4",
+        "B3"
       ],
       "notation": "第 1 小节",
-      "hand": "right",
+      "hand": "both",
       "match_mode": "chord",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 65,
+          "finger": 2,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 67,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 59,
+          "finger": 2,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m1-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
             65,
             67
           ]
-        }
-      ]
-    },
-    {
-      "id": "score-john-thompson-easiest-2.segment.012-m1-step3",
-      "measure_index": 1,
-      "measure_number": "1",
-      "onset_beats": 3,
-      "duration_beats": 2,
-      "notes": [
-        59
-      ],
-      "note_names": [
-        "B3"
-      ],
-      "notation": "第 1 小节",
-      "hand": "left",
-      "match_mode": "single_note",
-      "fingerings": [],
-      "source_events": [
+        },
         {
           "id": "score-john-thompson-easiest-2.segment.012-m1-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
             59
@@ -129,6 +154,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m2-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
             64,
@@ -139,6 +165,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m2-p1-e2",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
             60
@@ -153,26 +180,58 @@
       "onset_beats": 0,
       "duration_beats": 2,
       "notes": [
-        69,
-        76
+        59,
+        62,
+        55
       ],
       "note_names": [
-        "A4",
-        "E5"
+        "B3",
+        "D4",
+        "G3"
       ],
       "notation": "第 3 小节",
-      "hand": "right",
+      "hand": "both",
       "match_mode": "chord",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 59,
+          "finger": 1,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 62,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 55,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m3-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 2,
           "notes": [
-            69,
-            76
+            59,
+            62
+          ]
+        },
+        {
+          "id": "score-john-thompson-easiest-2.segment.012-m3-p1-e3",
+          "hand": "left",
+          "voice": 5,
+          "onset_beats": 0,
+          "duration_beats": 2,
+          "notes": [
+            55
           ]
         }
       ]
@@ -184,37 +243,58 @@
       "onset_beats": 2,
       "duration_beats": 2,
       "notes": [
-        59,
+        60,
         62,
-        56
+        54
       ],
       "note_names": [
-        "B3",
+        "C4",
         "D4",
-        "G#3"
+        "F#3"
       ],
       "notation": "第 3 小节",
       "hand": "both",
       "match_mode": "chord",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 60,
+          "finger": 2,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 62,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 54,
+          "finger": 2,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m3-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
-            59,
+            60,
             62
           ]
         },
         {
-          "id": "score-john-thompson-easiest-2.segment.012-m3-p1-e3",
+          "id": "score-john-thompson-easiest-2.segment.012-m3-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
-            56
+            54
           ]
         }
       ]
@@ -244,6 +324,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m4-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
             59,
@@ -254,6 +335,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m4-p1-e2",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
             55
@@ -266,25 +348,60 @@
       "measure_index": 5,
       "measure_number": "5",
       "onset_beats": 0,
-      "duration_beats": 1,
+      "duration_beats": 2,
       "notes": [
-        52
+        69,
+        72,
+        65
       ],
       "note_names": [
-        "E3"
+        "A4",
+        "C5",
+        "F4"
       ],
       "notation": "第 5 小节",
-      "hand": "left",
-      "match_mode": "single_note",
-      "fingerings": [],
+      "hand": "both",
+      "match_mode": "chord",
+      "fingerings": [
+        {
+          "note": 69,
+          "finger": 1,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 72,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 65,
+          "finger": 1,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
+        {
+          "id": "score-john-thompson-easiest-2.segment.012-m5-p1-e1",
+          "hand": "right",
+          "voice": 1,
+          "onset_beats": 0,
+          "duration_beats": 2,
+          "notes": [
+            69,
+            72
+          ]
+        },
         {
           "id": "score-john-thompson-easiest-2.segment.012-m5-p1-e3",
           "hand": "left",
           "voice": 5,
-          "duration_beats": 1,
+          "onset_beats": 0,
+          "duration_beats": 2,
           "notes": [
-            52
+            65
           ]
         }
       ]
@@ -293,30 +410,50 @@
       "id": "score-john-thompson-easiest-2.segment.012-m5-step2",
       "measure_index": 5,
       "measure_number": "5",
-      "onset_beats": 1,
+      "onset_beats": 2,
       "duration_beats": 2,
       "notes": [
-        68,
+        70,
         72,
-        45
+        64
       ],
       "note_names": [
-        "G#4",
+        "A#4",
         "C5",
-        "A2"
+        "E4"
       ],
       "notation": "第 5 小节",
       "hand": "both",
       "match_mode": "chord",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 70,
+          "finger": 2,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 72,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        },
+        {
+          "note": 64,
+          "finger": 2,
+          "hand": "left",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
-          "id": "score-john-thompson-easiest-2.segment.012-m5-p1-e1",
+          "id": "score-john-thompson-easiest-2.segment.012-m5-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
-            68,
+            70,
             72
           ]
         },
@@ -324,51 +461,10 @@
           "id": "score-john-thompson-easiest-2.segment.012-m5-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 2,
           "duration_beats": 2,
           "notes": [
-            45
-          ]
-        }
-      ]
-    },
-    {
-      "id": "score-john-thompson-easiest-2.segment.012-m5-step3",
-      "measure_index": 5,
-      "measure_number": "5",
-      "onset_beats": 3,
-      "duration_beats": 2,
-      "notes": [
-        71,
-        72,
-        43
-      ],
-      "note_names": [
-        "B4",
-        "C5",
-        "G2"
-      ],
-      "notation": "第 5 小节",
-      "hand": "both",
-      "match_mode": "chord",
-      "fingerings": [],
-      "source_events": [
-        {
-          "id": "score-john-thompson-easiest-2.segment.012-m5-p1-e2",
-          "hand": "right",
-          "voice": 1,
-          "duration_beats": 2,
-          "notes": [
-            71,
-            72
-          ]
-        },
-        {
-          "id": "score-john-thompson-easiest-2.segment.012-m5-p1-e5",
-          "hand": "left",
-          "voice": 5,
-          "duration_beats": 2,
-          "notes": [
-            43
+            64
           ]
         }
       ]
@@ -382,12 +478,12 @@
       "notes": [
         69,
         72,
-        45
+        65
       ],
       "note_names": [
         "A4",
         "C5",
-        "A2"
+        "F4"
       ],
       "notation": "第 6 小节",
       "hand": "both",
@@ -398,6 +494,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m6-p1-e1",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
             69,
@@ -408,9 +505,10 @@
           "id": "score-john-thompson-easiest-2.segment.012-m6-p1-e2",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 4,
           "notes": [
-            45
+            65
           ]
         }
       ]
@@ -436,6 +534,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m7-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 1,
           "notes": [
             60
@@ -458,12 +557,20 @@
       "notation": "第 7 小节",
       "hand": "right",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 64,
+          "finger": 1,
+          "hand": "right",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m7-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1,
           "duration_beats": 1,
           "notes": [
             64
@@ -486,12 +593,20 @@
       "notation": "第 7 小节",
       "hand": "right",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 67,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m7-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1,
           "notes": [
             67
@@ -520,6 +635,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m8-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 1,
           "notes": [
             59
@@ -542,12 +658,20 @@
       "notation": "第 8 小节",
       "hand": "right",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 65,
+          "finger": 2,
+          "hand": "right",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m8-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1,
           "duration_beats": 1,
           "notes": [
             65
@@ -570,12 +694,20 @@
       "notation": "第 8 小节",
       "hand": "right",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 67,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m8-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1,
           "notes": [
             67
@@ -604,6 +736,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m9-p1-e4",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 1,
           "notes": [
             60
@@ -626,12 +759,20 @@
       "notation": "第 9 小节",
       "hand": "right",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 64,
+          "finger": 1,
+          "hand": "right",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m9-p1-e2",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 1,
           "duration_beats": 1,
           "notes": [
             64
@@ -654,12 +795,20 @@
       "notation": "第 9 小节",
       "hand": "right",
       "match_mode": "single_note",
-      "fingerings": [],
+      "fingerings": [
+        {
+          "note": 67,
+          "finger": 3,
+          "hand": "right",
+          "source": "score"
+        }
+      ],
       "source_events": [
         {
           "id": "score-john-thompson-easiest-2.segment.012-m9-p1-e3",
           "hand": "right",
           "voice": 1,
+          "onset_beats": 2,
           "duration_beats": 1,
           "notes": [
             67
@@ -688,6 +837,7 @@
           "id": "score-john-thompson-easiest-2.segment.012-m10-p1-e2",
           "hand": "left",
           "voice": 5,
+          "onset_beats": 0,
           "duration_beats": 3,
           "notes": [
             60

@@ -102,16 +102,17 @@ describe("简谱教材资源", () => {
 
   it("所有索引片段都有可读的简谱、双手元数据与和弦信息", () => {
     const catalog = read_json<asset_catalog>("public/materials/jianpu-catalog.json");
-    const left_hand_beyer_segments = new Set([
-      "beyer.segment.008",
-      "beyer.segment.009",
-      "beyer.segment.010",
-      "beyer.segment.011",
-      "beyer.segment.012",
-      "beyer.segment.017",
-      "beyer.segment.018",
-      "beyer.segment.019",
-      "beyer.segment.136",
+    const beyer_hand_modes = new Map([
+      ["beyer.segment.008", "left"],
+      ["beyer.segment.009", "left"],
+      ["beyer.segment.010", "left"],
+      ["beyer.segment.011", "left"],
+      ["beyer.segment.012", "left"],
+      ["beyer.segment.017", "left"],
+      ["beyer.segment.018", "left"],
+      ["beyer.segment.019", "left"],
+      // PDF87（书页85）两八度半音阶明确标注“单用右手”。
+      ["beyer.segment.136", "right"],
     ]);
     let total_chord_event_count = 0;
 
@@ -169,8 +170,8 @@ describe("简谱教材资源", () => {
         expect(segment.hand_mode).toBe(
           has_right_hand && has_left_hand ? "both" : has_right_hand ? "right" : "left",
         );
-        if (left_hand_beyer_segments.has(segment.id)) {
-          expect(segment.hand_mode).toBe("left");
+        if (beyer_hand_modes.has(segment.id)) {
+          expect(segment.hand_mode).toBe(beyer_hand_modes.get(segment.id));
         }
         expect(score_chord_count).toBe(segment.chord_count);
 

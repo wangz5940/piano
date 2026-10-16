@@ -1,0 +1,36 @@
+{
+  "title": "民歌（可爱的五月）· 练习106",
+  "evidence": "逐小节核对PDF86上部19小节，核对弱起与三拍收尾；第6小节低音B2是指号误读音符，删去而保留G3+B3二分。中段三音和弦、左手独立内声部及第12小节D4+升F4持续二分均按原谱保存。",
+  "reviewed_pages": [86],
+  "excluded_regions": [],
+  "sections": [{
+    "page": 86, "title": "民歌（可爱的五月）· Allegro", "meter": [4,4], "fifths": 1,
+    "lines": [
+      [
+        {"quarters": 1, "right": "D4/1/2", "left": "r/1"},
+        {"right": "G4/1/4 A4/1/1 B4/1 C5/1", "left": "r/2 r/1 D3/1/5"},
+        {"right": "B4+D5/0.5^start E5/0.5 D5/0.5 C5/0.5^stop B4/1 A4/1", "left": "G3/1/3 A3/1 B3/1 C4/1/3"},
+        {"right": "B4/1 D5/1 D5/0.5^start C5/0.5^stop C5/1", "left": "D4/0.5^start E4/0.5 D4/0.5 C4/0.5^stop B3/1 A3/1/3"},
+        {"right": "B4/2 r/1 D4/1/2", "left": "G3+B3/1/4,2 B3+D4/1/3,1 A3/1/4 A3+C4/1/3,1", "voices": [{"staff": 2, "voice": 6, "notes": "s/2 D4/0.5/1^start C4/0.5^stop s/1"}]},
+        {"right": "G4/1 A4/1/1 B4/1 C5/1", "left": "G3+B3/2/4,2 r/1 D3/1/5"}
+      ],
+      [
+        {"right": "B4+D5/0.5^start E5/0.5 D5/0.5 C5/0.5^stop B4/1 A4/1", "left": "G3/1/3 A3/1 B3/1 C4/1/3"},
+        {"right": "B4/1 D5/1 D5/0.5^start C5/0.5^stop C5/1", "left": "D4/0.5^start E4/0.5 D4/0.5 C4/0.5^stop B3/1 A3/1/4"},
+        {"right": "B4/2 r/2", "left": "G3+B3/1/5,3 B3+D4/1/3,1 A3/1/4 A3+C4/1", "voices": [{"staff": 2, "voice": 6, "notes": "s/2 D4/0.5/1^start C4/0.5^stop s/1"}]},
+        {"right": "r/2 r/1 D4+G4+B4/1/1,2,4", "left": "G3+B3/2 r/1 G3/1/2"},
+        {"right": "D4+A4+D5/1/1,3,5 D4+G4+B4/1 D4+F#4+A4/1/1,3,5 B3+E4+G4/1/1,2,4", "left": "F#3/1 G3/1 D3/1 E3/1"},
+        {"right": "A4/1.5/4^start B4/0.5^stop D4+F#4+A4/1 D4+G4+B4/1", "left": "D3/3 G3/1", "voices": [{"staff": 1, "voice": 2, "notes": "D4+F#4/2/1,2 s/2"}]}
+      ],
+      [
+        {"right": "D4+A4+D5/1 D4+G4+B4/1 D4+F#4+A4/1 B3+E4+G4/1", "left": "F#3/1 G3/1 D3/1 E3/1"},
+        {"right": "D4+F#4+A4/2/1,3,5 r/1 D4/1/2", "left": "D3/2 r/2"},
+        {"right": "G4/1 A4/1/1 B4/1 C5/1", "left": "r/2 r/1 D3/1/5"},
+        {"right": "B4+D5/0.5^start E5/0.5 D5/0.5 C5/0.5^stop B4/1 A4/1", "left": "G3/1/3 A3/1 B3/1 C4/1/3"},
+        {"right": "B4/1 D5/1 D5/0.5^start C5/0.5^stop C5/1", "left": "D4/0.5^start E4/0.5 D4/0.5 C4/0.5^stop B3/1 A3/1"},
+        {"right": "B4/2 r/2", "left": "G3+B3/1/5,3 B3+D4/1 A3/1 A3+C4/1", "voices": [{"staff": 2, "voice": 6, "notes": "s/2 D4/0.5^start C4/0.5^stop s/1"}]},
+        {"quarters": 3, "right": "r/2 r/1", "left": "G3+B3/2 r/1"}
+      ]
+    ]
+  }]
+}

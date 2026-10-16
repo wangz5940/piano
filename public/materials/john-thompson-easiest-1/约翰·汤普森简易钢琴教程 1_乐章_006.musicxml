@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <score-partwise version="4.0.3">
   <identification>
     <encoding>
       <software>Audiveris 5.11.0</software>
+      <software>ProxyMusic 4.0.3</software>
       <supports type="yes" element="print" attribute="new-system" value="yes"></supports>
       <supports type="yes" element="print" attribute="new-page" value="yes"></supports>
       <supports type="yes" element="accidental"></supports>
       <supports type="yes" element="beam"></supports>
       <supports type="yes" element="stem"></supports>
-      <software>ProxyMusic 4.0.3</software>
       <encoding-date>2026-07-22</encoding-date>
     </encoding>
     <source>/Users/bytedance/program/panio/.trae/pdf/约翰·汤普森简易钢琴教程 1.pdf</source>
@@ -36,106 +37,108 @@
   </defaults>
   <part-list>
     <score-part id="P1">
-      <part-name>Voice</part-name>
-      <part-abbreviation>Voice</part-abbreviation>
-      <score-instrument id="P1-I1">
-        <instrument-name>Voice Oohs</instrument-name>
-      </score-instrument>
-      <midi-instrument id="P1-I1">
-        <midi-channel>1</midi-channel>
-        <midi-program>54</midi-program>
-        <volume>78</volume>
-      </midi-instrument>
+      <part-name>Piano</part-name>
     </score-part>
   </part-list>
   <part id="P1">
-    <measure number="1" width="338">
-      <print>
-        <system-layout>
-          <system-margins>
-            <left-margin>672</left-margin>
-            <right-margin>117</right-margin>
-          </system-margins>
-          <top-system-distance>135</top-system-distance>
-        </system-layout>
-        <measure-numbering>system</measure-numbering>
-      </print>
+    <measure number="1" implicit="yes">
+      <print></print>
       <attributes>
         <divisions>960</divisions>
-        <clef>
+        <key>
+          <fifths>0</fifths>
+        </key>
+        <time>
+          <senza-misura></senza-misura>
+        </time>
+        <staves>2</staves>
+        <clef number="1">
+          <sign>G</sign>
+          <line>2</line>
+        </clef>
+        <clef number="2">
           <sign>F</sign>
           <line>4</line>
         </clef>
-        <staff-details print-object="yes"></staff-details>
       </attributes>
-      <note default-x="49">
+      <direction>
+        <direction-type>
+          <words>大声读谱（无拍号）</words>
+        </direction-type>
+      </direction>
+      <note>
         <pitch>
           <step>B</step>
           <octave>3</octave>
         </pitch>
         <duration>3840</duration>
-        <voice>1</voice>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
       </note>
-      <note default-x="89">
+      <note>
         <pitch>
           <step>C</step>
           <octave>4</octave>
         </pitch>
         <duration>3840</duration>
-        <voice>1</voice>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
       </note>
-      <note default-x="130">
+      <note>
         <pitch>
           <step>G</step>
           <octave>3</octave>
         </pitch>
         <duration>3840</duration>
-        <voice>1</voice>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
       </note>
-      <note default-x="171">
+      <note>
         <pitch>
           <step>C</step>
           <octave>4</octave>
         </pitch>
         <duration>3840</duration>
-        <voice>1</voice>
+        <voice>5</voice>
         <type>whole</type>
-        <notations>
-          <articulations>
-            <staccato placement="above" default-y="33"></staccato>
-          </articulations>
-        </notations>
+        <staff>2</staff>
       </note>
-      <note default-x="213">
+      <note>
         <pitch>
           <step>A</step>
           <octave>3</octave>
         </pitch>
         <duration>3840</duration>
-        <voice>1</voice>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
       </note>
-      <note default-x="254">
+      <note>
         <pitch>
           <step>B</step>
           <octave>3</octave>
         </pitch>
         <duration>3840</duration>
-        <voice>1</voice>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
       </note>
-      <note default-x="295">
+      <note>
         <pitch>
           <step>G</step>
           <octave>3</octave>
         </pitch>
         <duration>3840</duration>
-        <voice>1</voice>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
       </note>
+      <barline location="right">
+        <bar-style>none</bar-style>
+      </barline>
     </measure>
   </part>
 </score-partwise>

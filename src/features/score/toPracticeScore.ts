@@ -1,4 +1,5 @@
 import { note_name } from "@/features/course/scoreBuilders";
+import { with_grace_performance_timing } from "./graceTiming";
 import type {
   expected_step,
   hand_mode,
@@ -26,7 +27,8 @@ export function to_practice_score(
 
   const document = version.document;
   const steps = document.measures.flatMap((measure, measure_index) =>
-    group_events_by_onset(measure.events).map(([onset, events], event_index) =>
+    group_events_by_onset(with_grace_performance_timing(measure.events, measure.meter.beat_unit))
+      .map(([onset, events], event_index) =>
       to_expected_step({
         document,
         events,

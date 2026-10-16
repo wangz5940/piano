@@ -36,7 +36,7 @@ export function to_render_score_from_jianpu_score(
       normalize_measure(
         score,
         measure,
-        measure.meter ? parse_jianpu_meter(`${measure.meter.beats}/${measure.meter.beat_unit}`) : meter,
+        measure.meter ? { ...measure.meter } : meter,
         measure.key_signature ? get_scale_intervals(measure.key_signature) : scale_intervals,
         measure.key_signature ? get_accidental_preference(measure.key_signature) : accidental_preference,
       )),
@@ -128,6 +128,7 @@ function append_hand_event(
     kind: notes.length ? "note" : "rest",
     onset_beats: event.onset_beats,
     duration_beats: event.duration_beats,
+    grace: event.grace,
     notes: notes.map((midi, note_index) => {
       const note = midi_to_jianpu_note(
         midi,

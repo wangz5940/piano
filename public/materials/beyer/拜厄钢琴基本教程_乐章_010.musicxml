@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 4.0.3 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+
 <score-partwise version="4.0.3">
   <identification>
     <encoding>
       <software>Audiveris 5.11.0</software>
+      <software>ProxyMusic 4.0.3</software>
       <supports type="yes" element="print" attribute="new-system" value="yes"></supports>
       <supports type="yes" element="print" attribute="new-page" value="yes"></supports>
       <supports type="yes" element="accidental"></supports>
       <supports type="yes" element="beam"></supports>
       <supports type="yes" element="stem"></supports>
-      <software>ProxyMusic 4.0.3</software>
       <encoding-date>2026-07-18</encoding-date>
     </encoding>
     <source>/Users/bytedance/program/panio/.trae/pdf/拜厄钢琴基本教程 (Beyer) (z-library.sk, 1lib.sk, z-lib.sk).pdf</source>
     <miscellaneous>
       <miscellaneous-field name="source-file">/Users/bytedance/program/panio/.trae/pdf/拜厄钢琴基本教程 (Beyer) (z-library.sk, 1lib.sk, z-lib.sk).pdf</miscellaneous-field>
-      <miscellaneous-field name="source-sheet-15">5 6</miscellaneous-field>
+      <miscellaneous-field name="source-sheet-15">1 2</miscellaneous-field>
     </miscellaneous>
   </identification>
   <defaults>
@@ -37,453 +37,439 @@
   </defaults>
   <part-list>
     <score-part id="P1">
-      <part-name>Voice</part-name>
-      <part-abbreviation>Voice</part-abbreviation>
-      <score-instrument id="P1-I1">
-        <instrument-name>Voice Oohs</instrument-name>
-      </score-instrument>
-      <midi-instrument id="P1-I1">
-        <midi-channel>1</midi-channel>
-        <midi-program>54</midi-program>
-        <volume>78</volume>
-      </midi-instrument>
+      <part-name>Piano</part-name>
     </score-part>
   </part-list>
-  <!--= = = = = = = = = = = = = = = = = = = = = = = = = = = = =-->
   <part id="P1">
-    <!--=======================================================-->
-    <measure number="1" width="157">
-      <print>
-        <system-layout>
-          <system-margins>
-            <left-margin>142</left-margin>
-            <right-margin>31</right-margin>
-          </system-margins>
-          <top-system-distance>697</top-system-distance>
-        </system-layout>
-        <measure-numbering>system</measure-numbering>
-      </print>
+    <measure number="1">
+      <print></print>
       <attributes>
-        <divisions>1</divisions>
-        <time symbol="common">
+        <divisions>960</divisions>
+        <key>
+          <fifths>0</fifths>
+        </key>
+        <time>
           <beats>4</beats>
           <beat-type>4</beat-type>
         </time>
-        <clef>
+        <staves>2</staves>
+        <clef number="1">
           <sign>G</sign>
           <line>2</line>
         </clef>
-        <staff-details print-object="yes"></staff-details>
+        <clef number="2">
+          <sign>G</sign>
+          <line>2</line>
+        </clef>
       </attributes>
-      <note default-x="67">
+      <direction>
+        <direction-type>
+          <words>主题2变奏2（学生左手）</words>
+        </direction-type>
+      </direction>
+      <note>
         <pitch>
           <step>G</step>
           <octave>4</octave>
         </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
+        <duration>2880</duration>
+        <voice>5</voice>
         <type>half</type>
-        <dot/>
-        <stem default-y="5">up</stem>
+        <dot></dot>
+        <staff>2</staff>
         <notations>
-          <slur type="start" number="1" placement="below" default-x="9" default-y="-41" bezier-x="50" bezier-y="-23"></slur>
+          <technical>
+            <fingering>3</fingering>
+          </technical>
+          <slur type="start" number="1"></slur>
         </notations>
       </note>
-      <note default-x="128">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="10">up</stem>
+        <staff>2</staff>
+        <notations>
+          <technical>
+            <fingering>2</fingering>
+          </technical>
+        </notations>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="2" width="96">
-      <note default-x="7">
+    <measure number="2">
+      <note>
         <pitch>
           <step>B</step>
           <octave>4</octave>
         </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
+        <duration>2880</duration>
+        <voice>5</voice>
         <type>half</type>
-        <dot/>
-        <stem default-y="15">up</stem>
+        <dot></dot>
+        <staff>2</staff>
+        <notations>
+          <technical>
+            <fingering>1</fingering>
+          </technical>
+        </notations>
       </note>
-      <note default-x="67">
+      <note>
         <pitch>
           <step>G</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="5">up</stem>
+        <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="3" width="96">
-      <note default-x="7">
+    <measure number="3">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
+        <duration>2880</duration>
+        <voice>5</voice>
         <type>half</type>
-        <dot/>
-        <stem default-y="10">up</stem>
+        <dot></dot>
+        <staff>2</staff>
         <notations>
-          <slur type="stop" number="1" default-x="-4" default-y="-36" bezier-x="-51" bezier-y="-26"></slur>
+          <slur type="stop" number="1"></slur>
         </notations>
       </note>
-      <note default-x="67">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="11">up</stem>
+        <staff>2</staff>
         <notations>
-          <slur type="start" number="1" placement="below" default-x="10" default-y="-34" bezier-x="10" bezier-y="-5"></slur>
+          <slur type="start" number="1"></slur>
         </notations>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="4" width="82">
-      <note default-x="7">
+    <measure number="4">
+      <note>
         <pitch>
           <step>B</step>
           <octave>4</octave>
         </pitch>
-        <duration>4</duration>
-        <voice>1</voice>
+        <duration>3840</duration>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
         <notations>
-          <slur type="stop" number="1" default-x="4" default-y="-30" bezier-x="-9" bezier-y="-7"></slur>
+          <slur type="stop" number="1"></slur>
         </notations>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="5" width="96">
-      <note default-x="7">
+    <measure number="5">
+      <note>
         <pitch>
           <step>G</step>
           <octave>4</octave>
         </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
+        <duration>2880</duration>
+        <voice>5</voice>
         <type>half</type>
-        <dot/>
-        <stem default-y="5">up</stem>
+        <dot></dot>
+        <staff>2</staff>
         <notations>
-          <slur type="start" number="1" placement="below" default-x="6" default-y="-40" bezier-x="64" bezier-y="-24"></slur>
+          <slur type="start" number="1"></slur>
         </notations>
       </note>
-      <note default-x="67">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="10">up</stem>
+        <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="6" width="96">
-      <note default-x="7">
+    <measure number="6">
+      <note>
         <pitch>
           <step>B</step>
           <octave>4</octave>
         </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
+        <duration>2880</duration>
+        <voice>5</voice>
         <type>half</type>
-        <dot/>
-        <stem default-y="15">up</stem>
+        <dot></dot>
+        <staff>2</staff>
       </note>
-      <note default-x="67">
+      <note>
         <pitch>
           <step>G</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="5">up</stem>
+        <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="7" width="110">
-      <note default-x="6">
+    <measure number="7">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>2</duration>
-        <voice>1</voice>
+        <duration>1920</duration>
+        <voice>5</voice>
         <type>half</type>
-        <stem default-y="11">up</stem>
+        <staff>2</staff>
       </note>
-      <note default-x="52">
+      <note>
         <pitch>
           <step>B</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="16">up</stem>
+        <staff>2</staff>
       </note>
-      <note default-x="80">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="10">up</stem>
+        <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="8" width="86">
-      <note default-x="7">
+    <measure number="8">
+      <note>
         <pitch>
           <step>G</step>
           <octave>4</octave>
         </pitch>
-        <duration>4</duration>
-        <voice>1</voice>
+        <duration>3840</duration>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
         <notations>
-          <slur type="stop" number="1" default-x="5" default-y="-40" bezier-x="-64" bezier-y="-24"></slur>
+          <slur type="stop" number="1"></slur>
         </notations>
       </note>
-      <barline location="right">
-        <bar-style>light-light</bar-style>
-      </barline>
     </measure>
-    <!--=======================================================-->
-    <measure number="9" width="140">
-      <print new-system="yes">
-        <system-layout>
-          <system-margins>
-            <left-margin>62</left-margin>
-            <right-margin>33</right-margin>
-          </system-margins>
-          <system-distance>71</system-distance>
-        </system-layout>
-      </print>
-      <attributes>
-        <staff-details print-object="yes"></staff-details>
-      </attributes>
-      <note default-x="40">
+    <measure number="9">
+      <print new-system="yes"></print>
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
+        <duration>2880</duration>
+        <voice>5</voice>
         <type>half</type>
-        <dot/>
-        <stem default-y="10">up</stem>
+        <dot></dot>
+        <staff>2</staff>
+        <notations>
+          <technical>
+            <fingering>2</fingering>
+          </technical>
+        </notations>
       </note>
-      <note default-x="107">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="10">up</stem>
+        <staff>2</staff>
         <notations>
-          <slur type="start" number="1" placement="below" default-x="19" default-y="-40" bezier-x="37" bezier-y="-16"></slur>
+          <slur type="start" number="1"></slur>
         </notations>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="10" width="110">
-      <note default-x="7">
+    <measure number="10">
+      <note>
         <pitch>
           <step>B</step>
           <octave>4</octave>
         </pitch>
-        <duration>2</duration>
-        <voice>1</voice>
+        <duration>1920</duration>
+        <voice>5</voice>
         <type>half</type>
-        <stem default-y="15">up</stem>
+        <staff>2</staff>
       </note>
-      <note default-x="58">
+      <note>
         <pitch>
           <step>G</step>
           <octave>4</octave>
         </pitch>
-        <duration>2</duration>
-        <voice>1</voice>
+        <duration>1920</duration>
+        <voice>5</voice>
         <type>half</type>
-        <stem default-y="6">up</stem>
+        <staff>2</staff>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="11" width="107">
-      <note default-x="7">
+    <measure number="11">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
+        <duration>2880</duration>
+        <voice>5</voice>
         <type>half</type>
-        <dot/>
-        <stem default-y="10">up</stem>
+        <dot></dot>
+        <staff>2</staff>
         <notations>
-          <slur type="stop" number="1" default-x="-3" default-y="-36" bezier-x="-38" bezier-y="-20"></slur>
+          <slur type="stop" number="1"></slur>
         </notations>
       </note>
-      <note default-x="74">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="10">up</stem>
+        <staff>2</staff>
         <notations>
-          <slur type="start" number="1" placement="below" default-x="9" default-y="-35" bezier-x="37" bezier-y="-22"></slur>
+          <slur type="start" number="1"></slur>
         </notations>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="12" width="107">
-      <note default-x="7">
+    <measure number="12">
+      <note>
         <pitch>
           <step>B</step>
           <octave>4</octave>
         </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
+        <duration>2880</duration>
+        <voice>5</voice>
         <type>half</type>
-        <dot/>
-        <stem default-y="15">up</stem>
+        <dot></dot>
+        <staff>2</staff>
       </note>
-      <note default-x="74">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
         <type>quarter</type>
-        <stem default-y="10">up</stem>
-      </note>
-    </measure>
-    <!--=======================================================-->
-    <measure number="13" width="107">
-      <note default-x="7">
-        <pitch>
-          <step>G</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
-        <type>half</type>
-        <dot/>
-        <stem default-y="6">up</stem>
+        <staff>2</staff>
         <notations>
-          <slur type="start" number="2" placement="below" default-x="7" default-y="-40" bezier-x="64" bezier-y="-27"></slur>
-          <slur type="stop" number="1" default-x="-4" default-y="-40" bezier-x="-38" bezier-y="-20"></slur>
+          <slur type="stop" number="1"></slur>
         </notations>
       </note>
-      <note default-x="74">
-        <pitch>
-          <step>A</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
-        <type>quarter</type>
-        <stem default-y="10">up</stem>
-      </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="14" width="106">
-      <note default-x="7">
-        <pitch>
-          <step>B</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>3</duration>
-        <voice>1</voice>
-        <type>half</type>
-        <dot/>
-        <stem default-y="15">up</stem>
-      </note>
-      <note default-x="74">
+    <measure number="13">
+      <note>
         <pitch>
           <step>G</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
-        <type>quarter</type>
-        <stem default-y="5">up</stem>
+        <duration>2880</duration>
+        <voice>5</voice>
+        <type>half</type>
+        <dot></dot>
+        <staff>2</staff>
+        <notations>
+          <slur type="start" number="1"></slur>
+        </notations>
       </note>
-    </measure>
-    <!--=======================================================-->
-    <measure number="15" width="122">
-      <note default-x="7">
+      <note>
         <pitch>
           <step>A</step>
           <octave>4</octave>
         </pitch>
-        <duration>2</duration>
-        <voice>1</voice>
-        <type>half</type>
-        <stem default-y="10">up</stem>
+        <duration>960</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <staff>2</staff>
       </note>
-      <note default-x="58">
+    </measure>
+    <measure number="14">
+      <note>
         <pitch>
           <step>B</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
-        <type>quarter</type>
-        <stem default-y="15">up</stem>
+        <duration>2880</duration>
+        <voice>5</voice>
+        <type>half</type>
+        <dot></dot>
+        <staff>2</staff>
       </note>
-      <note default-x="89">
-        <pitch>
-          <step>A</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>1</duration>
-        <voice>1</voice>
-        <type>quarter</type>
-        <stem default-y="10">up</stem>
-      </note>
-    </measure>
-    <!--=======================================================-->
-    <measure number="16" width="98">
-      <note default-x="7">
+      <note>
         <pitch>
           <step>G</step>
           <octave>4</octave>
         </pitch>
-        <duration>4</duration>
-        <voice>1</voice>
+        <duration>960</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
+    </measure>
+    <measure number="15">
+      <note>
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>1920</duration>
+        <voice>5</voice>
+        <type>half</type>
+        <staff>2</staff>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>960</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
+      <note>
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>960</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <staff>2</staff>
+      </note>
+    </measure>
+    <measure number="16">
+      <note>
+        <pitch>
+          <step>G</step>
+          <octave>4</octave>
+        </pitch>
+        <duration>3840</duration>
+        <voice>5</voice>
         <type>whole</type>
+        <staff>2</staff>
         <notations>
-          <slur type="stop" number="2" default-x="-1" default-y="-40" bezier-x="-66" bezier-y="-22"></slur>
+          <slur type="stop" number="1"></slur>
         </notations>
       </note>
       <barline location="right">

@@ -1,0 +1,30 @@
+{
+  "evidence": "PDF30《五月的花柱舞》学生旋律16小节逐音核对，末两小节C5延音；教师伴奏不混入学生旋律。原OMR混入的PDF31伴奏前半段已与后半段合并到009。",
+  "reviewed_pages": [30, 31],
+  "excluded_regions": [{"page": 30, "reason": "标为教师的两行伴奏不混入学生跟弹旋律。"}],
+  "sections": [{
+    "page": 30, "title": "五月的花柱舞（学生旋律）", "meter": [3, 4],
+    "lines": [
+      [
+        {"right": "C5/1/1 E5/1/3 G5/1/5"},
+        {"right": "F5/1 E5/1 D5/1"},
+        {"right": "C5/2 E5/1"},
+        {"right": "G5/3"},
+        {"right": "B4/2/1 D5/1/2"},
+        {"right": "G5/3/5"},
+        {"right": "C5/2 E5/1"},
+        {"right": "G5/3"}
+      ],
+      [
+        {"right": "C5/1 E5/1 G5/1"},
+        {"right": "F5/1 E5/1 D5/1"},
+        {"right": "C5/2 E5/1"},
+        {"right": "G5/3"},
+        {"right": "B4/2 D5/1"},
+        {"right": "G5/2 E5/1"},
+        {"right": "C5/3~start"},
+        {"right": "C5/3~stop"}
+      ]
+    ]
+  }]
+}

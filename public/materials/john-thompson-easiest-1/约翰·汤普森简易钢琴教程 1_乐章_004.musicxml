@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 4.0.3 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+
 <score-partwise version="4.0.3">
   <identification>
     <encoding>
       <software>Audiveris 5.11.0</software>
+      <software>ProxyMusic 4.0.3</software>
       <supports type="yes" element="print" attribute="new-system" value="yes"></supports>
       <supports type="yes" element="print" attribute="new-page" value="yes"></supports>
       <supports type="yes" element="accidental"></supports>
       <supports type="yes" element="beam"></supports>
       <supports type="yes" element="stem"></supports>
-      <software>ProxyMusic 4.0.3</software>
       <encoding-date>2026-07-22</encoding-date>
     </encoding>
     <source>/Users/bytedance/program/panio/.trae/pdf/约翰·汤普森简易钢琴教程 1.pdf</source>
     <miscellaneous>
       <miscellaneous-field name="source-file">/Users/bytedance/program/panio/.trae/pdf/约翰·汤普森简易钢琴教程 1.pdf</miscellaneous-field>
-      <miscellaneous-field name="source-sheet-24">3</miscellaneous-field>
+      <miscellaneous-field name="source-sheet-24">1</miscellaneous-field>
     </miscellaneous>
   </identification>
   <defaults>
@@ -38,36 +38,20 @@
   <part-list>
     <score-part id="P1">
       <part-name>Piano</part-name>
-      <part-abbreviation>Piano</part-abbreviation>
-      <score-instrument id="P1-I1">
-        <instrument-name>Acoustic Grand Piano</instrument-name>
-      </score-instrument>
-      <midi-instrument id="P1-I1">
-        <midi-channel>1</midi-channel>
-        <midi-program>1</midi-program>
-        <volume>78</volume>
-      </midi-instrument>
     </score-part>
   </part-list>
-  <!--= = = = = = = = = = = = = = = = = = = = = = = = = = = = =-->
   <part id="P1">
-    <!--=======================================================-->
-    <measure number="1" width="207">
-      <print>
-        <system-layout>
-          <system-margins>
-            <left-margin>334</left-margin>
-            <right-margin>151</right-margin>
-          </system-margins>
-          <top-system-distance>483</top-system-distance>
-        </system-layout>
-        <staff-layout number="2">
-          <staff-distance>52</staff-distance>
-        </staff-layout>
-        <measure-numbering>system</measure-numbering>
-      </print>
+    <measure number="1">
+      <print></print>
       <attributes>
-        <divisions>1</divisions>
+        <divisions>960</divisions>
+        <key>
+          <fifths>0</fifths>
+        </key>
+        <time>
+          <beats>2</beats>
+          <beat-type>4</beat-type>
+        </time>
         <staves>2</staves>
         <clef number="1">
           <sign>G</sign>
@@ -77,81 +61,81 @@
           <sign>F</sign>
           <line>4</line>
         </clef>
-        <staff-details print-object="yes"></staff-details>
       </attributes>
-      <note default-x="58">
+      <direction>
+        <direction-type>
+          <words>上山坡（第二行）</words>
+        </direction-type>
+      </direction>
+      <note>
         <pitch>
           <step>C</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>960</duration>
         <voice>1</voice>
         <type>quarter</type>
-        <stem default-y="-14">up</stem>
         <staff>1</staff>
+        <notations>
+          <technical>
+            <fingering>1</fingering>
+          </technical>
+        </notations>
       </note>
-      <note default-x="125">
+      <note>
         <pitch>
           <step>D</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>960</duration>
         <voice>1</voice>
         <type>quarter</type>
-        <stem default-y="-9">up</stem>
         <staff>1</staff>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="2" width="135">
-      <note default-x="45">
+    <measure number="2">
+      <note>
         <pitch>
           <step>E</step>
           <octave>4</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>1920</duration>
         <voice>1</voice>
         <type>half</type>
-        <stem default-y="-3">up</stem>
         <staff>1</staff>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="3" width="162">
-      <note default-x="16">
+    <measure number="3">
+      <note>
         <pitch>
           <step>E</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>960</duration>
         <voice>1</voice>
         <type>quarter</type>
-        <stem default-y="-3">up</stem>
         <staff>1</staff>
       </note>
-      <note default-x="84">
+      <note>
         <pitch>
           <step>D</step>
           <octave>4</octave>
         </pitch>
-        <duration>1</duration>
+        <duration>960</duration>
         <voice>1</voice>
         <type>quarter</type>
-        <stem default-y="-9">up</stem>
         <staff>1</staff>
       </note>
     </measure>
-    <!--=======================================================-->
-    <measure number="4" width="138">
-      <note default-x="44">
+    <measure number="4">
+      <note>
         <pitch>
           <step>C</step>
           <octave>4</octave>
         </pitch>
-        <duration>2</duration>
+        <duration>1920</duration>
         <voice>1</voice>
         <type>half</type>
-        <stem default-y="-15">up</stem>
         <staff>1</staff>
       </note>
       <barline location="right">
