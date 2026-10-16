@@ -18,6 +18,7 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { AppShell } from "@/components/AppShell";
+import { order_textbook_materials } from "@/features/assets/materialOrder";
 import { MusicXmlScoreRenderer } from "@/features/assets/MusicXmlScoreRenderer";
 import { ScoreZoomSurface } from "@/features/assets/ScoreZoomSurface";
 import type { material_id } from "@/features/assets/types";
@@ -105,7 +106,8 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
     return <JianpuLibraryState title="正在准备简谱教材" copy="正在读取教材索引、文字提示和双手简谱。" />;
   }
 
-  const material = get_selected_material(catalog, route_material_id);
+  const ordered_materials = order_textbook_materials(catalog.materials);
+  const material = get_selected_material(ordered_materials, route_material_id);
   if (!material) {
     return (
       <JianpuLibraryState
@@ -183,7 +185,7 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
       </section>
 
       <div className="jianpu-material-tabs" role="tablist" aria-label="简谱教材选择">
-        {catalog.materials.map((item) => (
+        {ordered_materials.map((item) => (
           <Link
             key={item.id}
             to={get_jianpu_route(item)}
@@ -875,14 +877,14 @@ function OriginalScoreSlice({
 }
 
 function get_selected_material(
-  catalog: jianpu_catalog,
+  materials: jianpu_material[],
   requested_material_id: string | undefined,
 ): jianpu_material | undefined {
   if (requested_material_id === undefined) {
-    return catalog.materials.find((item) => item.id === "beyer") ?? catalog.materials[0];
+    return materials[0];
   }
   return is_material_id(requested_material_id)
-    ? catalog.materials.find((item) => item.id === requested_material_id)
+    ? materials.find((item) => item.id === requested_material_id)
     : undefined;
 }
 

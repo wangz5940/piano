@@ -124,6 +124,50 @@ const admin = {
 };
 
 describe("简谱教材", () => {
+  it("按学习顺序优先显示小汤 1 和小汤 2，并默认打开小汤 1", () => {
+    const beyer = catalog_fixture.materials[0];
+    const catalog: jianpu_catalog = {
+      ...catalog_fixture,
+      materials: [
+        ...catalog_fixture.materials,
+        {
+          ...beyer,
+          id: "john-thompson-easiest-1",
+          title: "约翰·汤普森简易钢琴教程 1",
+        },
+        {
+          ...beyer,
+          id: "john-thompson-easiest-2",
+          title: "约翰·汤普森简易钢琴教程 2",
+        },
+      ],
+    };
+
+    const markup = renderToStaticMarkup(
+      <MemoryRouter initialEntries={["/简谱教材"]}>
+        <Routes>
+          <Route
+            path="/简谱教材"
+            element={<JianpuLibrary initial_catalog={catalog} />}
+          />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    const small_thompson_1 = markup.indexOf("约翰·汤普森简易钢琴教程 1");
+    const small_thompson_2 = markup.indexOf("约翰·汤普森简易钢琴教程 2");
+    const beyer_index = markup.indexOf("拜厄钢琴基本教程");
+    const hanon_index = markup.indexOf("哈农钢琴练指法");
+
+    expect(small_thompson_1).toBeGreaterThan(-1);
+    expect(small_thompson_1).toBeLessThan(small_thompson_2);
+    expect(small_thompson_2).toBeLessThan(beyer_index);
+    expect(beyer_index).toBeLessThan(hanon_index);
+    expect(markup).toMatch(
+      /<a(?=[^>]*href="\/简谱教材\/john-thompson-easiest-1\/章节\/touch-exercises")(?=[^>]*class="is-selected")(?=[^>]*aria-selected="true")/,
+    );
+  });
+
   it("教材谱面使用统一 SVG 并且不把单手空位画成休止", () => {
     const score: jianpu_score = {
       schema_version: "1.0",
