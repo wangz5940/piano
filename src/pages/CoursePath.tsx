@@ -38,19 +38,11 @@ export function CoursePath() {
       <section className="page-intro path-intro">
         <div>
           <p className="eyebrow">36 周 · 6 个阶段 · 每周 3 次</p>
-          <h1>练习不是赶进度，<br />而是把动作练成反应。</h1>
-          <p className="intro-copy">
-            每天都有热身、方法教材、技术、曲目和简谱视奏。前 8 周先用小汤建立手位和指法，第 9 周后再接入拜厄，最终目标是看到新谱也能组织双手。
-          </p>
+          <h1>课程路径</h1>
         </div>
         <div className="path-note">
-          <span>当前原则</span>
-          <strong>{free_practice ? "自由查看 + 慢速练习" : "慢速 + 连续 + 可复盘"}</strong>
-          <p>
-            {free_practice
-              ? "所有周次都可以打开。建议先按当前进度学习，也可以提前查看后面的内容。"
-              : "错一个音可以继续，丢掉节拍才需要回到更小的分句。"}
-          </p>
+          <span>学习方式</span>
+          <strong>{free_practice ? "自由学习" : "按顺序学习"}</strong>
           <Link to="/管理" className="path-settings-link">
             <SlidersHorizontal size={14} /> 管理学习权限
           </Link>
@@ -74,16 +66,14 @@ export function CoursePath() {
                   <div>
                     <p className="section-kicker">第 {course.week_start}—{course.week_end} 周</p>
                     <h2>{course.title}</h2>
-                    <p>{course.goal}</p>
                   </div>
                   <span>{Math.round(completion * 100)}% 完成</span>
                 </div>
 
-                <p className="course-material-note">{course.material_note}</p>
                 <details className="course-standards">
                   <summary>
                     <CheckCircle2 size={16} />
-                    这一阶段学到什么才算通过
+                    阶段目标
                     <ChevronRight size={16} />
                   </summary>
                   <ol>
@@ -141,10 +131,6 @@ export function CoursePath() {
       </section>
 
       <section className="method-note">
-        <p className="section-kicker">教材规则</p>
-        <p>
-          第 1—4 周使用小汤 1，第 5—8 周使用小汤 2，第 9 周后进入拜厄。哈农只在第 13 周后作为 3—5 分钟辅助；未审核 MusicXML 只进入教材谱库核对，不用于逐音判定。
-        </p>
         <Link to="/" className="text-link">回到今日练习 <ArrowRight size={16} /></Link>
       </section>
     </AppShell>
@@ -180,7 +166,6 @@ function PracticeDayCard({
             {allow_unlearned_tasks && !is_unlocked ? " · 提前查看" : ""}
           </span>
           <h3>{practice_day.title}</h3>
-          <p>{practice_day.objective}</p>
         </div>
         <strong>{completed_count}/5</strong>
       </div>
@@ -218,7 +203,6 @@ function LessonCard({
           <h3>{lesson.title}</h3>
           <span>{get_hand_label(lesson.hand_mode)}</span>
         </div>
-        <p>{lesson.description}</p>
         <div className="lesson-meta">
           <span><Timer size={14} /> {lesson.estimated_minutes} 分钟</span>
           {lesson.target_bpm > 0 && <span>{lesson.target_bpm} BPM</span>}

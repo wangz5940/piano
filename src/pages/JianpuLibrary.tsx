@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   BookOpenText,
@@ -11,9 +11,7 @@ import {
   Heart,
   LibraryBig,
   LoaderCircle,
-  MapPin,
   Music2,
-  Rows3,
   ScanSearch,
   Trash2,
 } from "lucide-react";
@@ -35,7 +33,7 @@ import {
   load_jianpu_score,
 } from "@/features/jianpu/loadJianpuLibrary";
 import { soft_delete_material_segment } from "@/features/materials/materialDeletion";
-import { useCenteredActiveItem } from "@/hooks/useCenteredActiveItem";
+import { JianpuCatalog } from "@/features/jianpu/JianpuCatalog";
 import {
   JianpuRenderer,
   to_render_score_from_jianpu_score,
@@ -73,17 +71,6 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
   const [is_navigation_collapsed, set_is_navigation_collapsed] = useState(false);
   const [favorite_entries, set_favorite_entries] = useState(load_score_favorites);
   const [switching_direction, set_switching_direction] = useState<"previous" | "next">();
-  const segment_list_ref = useRef<HTMLDivElement>(null);
-  useCenteredActiveItem(
-    segment_list_ref,
-    [
-      route_material_id ?? "",
-      segment_id ?? "",
-      chapter_id ?? "",
-      catalog?.generated_at ?? "",
-      String(is_navigation_collapsed),
-    ].join(":"),
-  );
 
   useEffect(() => {
     if (initial_catalog) {
@@ -191,18 +178,7 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
       <section className="page-intro jianpu-library-intro">
         <div>
           <p className="eyebrow"><Music2 size={15} /> 原教材文字与简谱练习</p>
-          <h1>先沿章节理解，<br />再逐页落到琴键上。</h1>
-          <p className="intro-copy">
-            目录遵循教材原有章节。章节导读完整保留原页文字；进入练习片段后，
-            再按原页阅读提示、手别和对应简谱。
-          </p>
-        </div>
-        <div className="jianpu-library-rule">
-          <Rows3 size={19} />
-          <div>
-            <strong>阅读顺序</strong>
-            <p>先读章节导读，再查看本页内容与关联练习，最后连接成完整片段。</p>
-          </div>
+          <h1>简谱教材</h1>
         </div>
       </section>
 
@@ -246,42 +222,12 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
             </button>
           </div>
           {!is_navigation_collapsed && (
-            <>
-              <p>{material.description}</p>
-              <div className="jianpu-segment-list" ref={segment_list_ref}>
-                {get_chapter_tree_groups(material).map((group) => (
-                  <details
-                    key={group.chapter.id}
-                    className="jianpu-segment-tree"
-                    open={group.chapter.id === chapter?.id ||
-                      group.segments.some((item) => item.id === segment?.id)}
-                  >
-                    <summary>
-                      <span>{group.chapter.title}</span>
-                      <small>
-                        第 {group.chapter.page_start}—{group.chapter.page_end} 页 ·
-                        {" "}{group.segments.length > 0 ? `${group.segments.length} 项练习` : "章节导读"}
-                      </small>
-                    </summary>
-                    <div className="jianpu-chapter-tree-content">
-                      <JianpuChapterLink
-                        material={material}
-                        chapter={group.chapter}
-                        selected={group.chapter.id === chapter?.id}
-                      />
-                      {group.segments.map((item) => (
-                        <JianpuSegmentLink
-                          key={item.id}
-                          material={material}
-                          segment={item}
-                          selected={item.id === segment?.id}
-                        />
-                      ))}
-                    </div>
-                  </details>
-                ))}
-              </div>
-            </>
+            <JianpuCatalog
+              key={material.id}
+              material={material}
+              chapter_id={chapter?.id}
+              segment_id={segment?.id}
+            />
           )}
         </aside>
 
@@ -346,68 +292,6 @@ function JianpuLibraryState({
   );
 }
 
-function JianpuSegmentLink({
-  material,
-  segment,
-  selected,
-}: {
-  material: jianpu_material;
-  segment: jianpu_segment;
-  selected: boolean;
-}) {
-  return (
-    <Link
-      to={`/简谱教材/${material.id}/${segment.id}`}
-      className={`jianpu-segment-link ${selected ? "is-selected" : ""}`}
-      aria-current={selected ? "page" : undefined}
-    >
-      <span className="jianpu-segment-sequence">{String(segment.sequence).padStart(3, "0")}</span>
-      <span className="jianpu-segment-copy">
-        <strong>{segment.title}</strong>
-        <small><MapPin size={12} /> {segment.source_page_label}</small>
-        <em>{get_hand_mode_score_label(segment.hand_mode)}</em>
-      </span>
-      <ArrowRight size={15} />
-    </Link>
-  );
-}
-
-function JianpuChapterLink({
-  material,
-  chapter,
-  selected,
-}: {
-  material: jianpu_material;
-  chapter: jianpu_chapter;
-  selected: boolean;
-}) {
-  return (
-    <Link
-      to={get_chapter_route(material, chapter)}
-      className={`jianpu-chapter-link ${selected ? "is-selected" : ""}`}
-      aria-current={selected ? "page" : undefined}
-    >
-      <BookOpenText size={14} />
-      <span>
-        <strong>章节导读</strong>
-        <small>阅读本章原页文字</small>
-      </span>
-      <ArrowRight size={14} />
-    </Link>
-  );
-}
-
-function get_chapter_tree_groups(
-  material: jianpu_material,
-): Array<{ chapter: jianpu_chapter; segments: jianpu_segment[] }> {
-  return material.chapters
-    .map((chapter) => ({
-      chapter,
-      segments: material.segments.filter((segment) =>
-        segment.page_slices.some((slice) => slice.chapter_id === chapter.id)),
-    }));
-}
-
 function JianpuChapterReader({
   material,
   chapter,
@@ -425,7 +309,7 @@ function JianpuChapterReader({
           <p className="section-kicker"><BookOpenText size={15} /> 教材章节</p>
           <h2>{chapter.title}</h2>
           <p>
-            原谱第 {chapter.page_start}—{chapter.page_end} 页 · {chapter.description}
+            原谱第 {chapter.page_start}—{chapter.page_end} 页
           </p>
         </div>
       </header>
@@ -463,7 +347,7 @@ function JianpuChapterPage({
         </div>
         <small>章节导读</small>
       </header>
-      <details className="jianpu-page-instruction jianpu-collapsible-section" open>
+      <details className="jianpu-page-instruction jianpu-collapsible-section">
         <summary>
           <span><BookOpenText size={14} /> 本页内容</span>
           <small>{page.text.split("\n").length} 段提示</small>
@@ -476,23 +360,27 @@ function JianpuChapterPage({
         </div>
       </details>
       {related_segments.length > 0 ? (
-        <div className="jianpu-page-segment-links">
-          <p>关联练习</p>
-          {related_segments.map((segment) => (
-            <Link
-              key={segment.id}
-              to={`/简谱教材/${material.id}/${segment.id}`}
-            >
-              <Music2 size={14} />
-              <span>{get_segment_page_title(segment, page.page)}</span>
-              <ArrowRight size={14} />
-            </Link>
-          ))}
-        </div>
+        <details className="jianpu-page-segment-links jianpu-collapsible-section" open>
+          <summary>
+            <span><Music2 size={14} /> 关联练习</span>
+            <small>{related_segments.length} 项</small>
+            <ChevronDown size={15} />
+          </summary>
+          <div>
+            {related_segments.map((segment) => (
+              <Link
+                key={segment.id}
+                to={`/简谱教材/${material.id}/${segment.id}`}
+              >
+                <Music2 size={14} />
+                <span>{get_segment_page_title(segment, page.page)}</span>
+                <ArrowRight size={14} />
+              </Link>
+            ))}
+          </div>
+        </details>
       ) : (
-        <p className="jianpu-text-only-note">
-          这一页以阅读与理解为主，完成本页提示后再进入后续练习。
-        </p>
+        <p className="jianpu-text-only-note">本页无练习</p>
       )}
     </article>
   );
@@ -701,7 +589,7 @@ function JianpuPageSliceReader({
                   {page_slice.mapping === "cross_page" && " · 跨页片段"}
                 </small>
               </header>
-              <details className="jianpu-page-instruction jianpu-collapsible-section" open>
+              <details className="jianpu-page-instruction jianpu-collapsible-section">
                 <summary>
                   <span><BookOpenText size={14} /> 本页提示</span>
                   <small>{page_slice.text.split("\n").length} 段提示</small>
@@ -748,11 +636,7 @@ function JianpuPageSliceReader({
 }
 
 function get_initial_expanded_slice_keys(page_slices: jianpu_page_slice[]): Set<string> {
-  const first_slice = page_slices[0];
-  if (!first_slice) {
-    return new Set();
-  }
-  return new Set([get_page_slice_key(first_slice)]);
+  return new Set(page_slices.map(get_page_slice_key));
 }
 
 function get_page_slice_key(page_slice: jianpu_page_slice): string {

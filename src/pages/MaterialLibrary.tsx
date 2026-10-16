@@ -209,16 +209,11 @@ export function MaterialLibrary({ initial_catalog, user_override }: material_lib
         <div>
           <p className="eyebrow">本地教材原谱 · {total_segment_count} 个片段</p>
           <h1>教材谱库</h1>
-          <p className="intro-copy">
-            在这里查看拜厄和哈农的原谱整理结果，并和纸本教材逐页核对。
-            完成核对前，这些谱例只用于查看，不参与练习判错。
-          </p>
         </div>
         <div className="material-library-rule">
           <CircleAlert size={18} />
           <div>
             <strong>仅供核对</strong>
-            <p>正式课程只使用已经整理并确认的练习内容。</p>
           </div>
         </div>
       </section>

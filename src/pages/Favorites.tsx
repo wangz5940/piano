@@ -36,11 +36,7 @@ export function Favorites() {
       <section className="page-intro favorites-intro">
         <div>
           <p className="eyebrow"><Heart size={15} /> 收藏</p>
-          <h1>常用曲谱，<br />集中回到同一个入口。</h1>
-          <p className="intro-copy">
-            收藏列表会保存教材谱库、简谱教材、热门曲目和校准后的曲谱入口。
-            校准保存成功的谱默认加入这里。
-          </p>
+          <h1>收藏曲谱</h1>
         </div>
         <div className="favorites-summary">
           <strong>{favorites.length}</strong>
@@ -80,7 +76,7 @@ export function Favorites() {
         <section className="favorites-empty" aria-label="暂无收藏">
           <Music2 size={26} />
           <h2>还没有收藏曲谱</h2>
-          <p>在教材谱库、简谱教材或热门曲目中点击心形按钮即可加入收藏。</p>
+          <p>点击曲谱旁的心形按钮即可收藏。</p>
           <Link to="/曲目" className="text-link">
             去热门曲目看看 <ArrowRight size={16} />
           </Link>

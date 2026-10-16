@@ -39,7 +39,7 @@ describe("内容管理后台", () => {
     expect(markup).toContain("数据库课程顺序");
     expect(markup).toContain("音符级 ScoreDocument 编辑");
     expect(markup).toContain("用户与角色");
-    expect(markup).toContain("旧版本不会被覆盖");
+    expect(markup).toContain("内容后台");
     expect(markup).not.toContain("诗歌");
   });
 });

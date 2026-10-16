@@ -101,17 +101,12 @@ export function RepertoireLibrary() {
       <section className="page-intro repertoire-intro">
         <div>
           <p className="eyebrow"><Music2 size={15} /> 热门曲库</p>
-          <h1>认识的旋律，<br />也要学会独立读谱。</h1>
-          <p className="intro-copy">
-            这里现在分成两层：公版教学谱可以直接练，
-            授权导入曲目已经按原始数据整理成整首教学谱。
-          </p>
+          <h1>热门曲目</h1>
         </div>
         <div className="repertoire-rights-note">
           <ShieldCheck size={19} />
           <div>
-            <strong>全部导入曲目已结构化</strong>
-            <p>授权导入曲目已经完整转换为可练习的 steps，原谱截图继续用于核对拍号、分句和双手排布。</p>
+            <strong>{all_teaching_entries.length} 首教学谱</strong>
           </div>
         </div>
       </section>
@@ -160,7 +155,7 @@ export function RepertoireLibrary() {
         <div className="section-heading repertoire-section-heading">
           <div>
             <p className="section-kicker"><Heart size={15} /> 我的收藏</p>
-            <h2>收藏的曲目，随时回到详情。</h2>
+            <h2>收藏曲目</h2>
           </div>
           <p className="repertoire-section-count">{favorite_entries.length} 首</p>
         </div>
@@ -186,7 +181,7 @@ export function RepertoireLibrary() {
           </div>
         ) : (
           <p className="repertoire-empty-copy">
-            还没有收藏曲目。点击每首曲目右上角的心形按钮，收藏后会显示在这里。
+            点击曲目旁的心形按钮即可收藏。
           </p>
         )}
       </section>
@@ -195,13 +190,10 @@ export function RepertoireLibrary() {
         <div className="section-heading repertoire-section-heading">
           <div>
             <p className="section-kicker"><Music2 size={15} /> 公版教学谱</p>
-            <h2>已经整理成适级教学版，可以直接跟弹。</h2>
+            <h2>公版教学谱</h2>
           </div>
           <p className="repertoire-section-count">{repertoire_entries.length} 首</p>
         </div>
-        <p className="repertoire-section-copy">
-          这部分保留现有的练习谱、指法说明和教学目标，适合直接进入课程练习。
-        </p>
         <div className="repertoire-list">
           {repertoire_entries.map((entry, index) => (
             <StructuredRepertoireCard
@@ -227,14 +219,10 @@ export function RepertoireLibrary() {
         <div className="section-heading repertoire-section-heading">
           <div>
             <p className="section-kicker"><BookOpenText size={15} /> 授权教学版</p>
-          <h2>授权原谱已经完整整理成能直接练的整首版本。</h2>
+            <h2>授权教学版</h2>
           </div>
           <p className="repertoire-section-count">{imported_teaching_entries.length} 首</p>
         </div>
-        <p className="repertoire-section-copy">
-          这部分来自已授权导入原谱，但已经手工整理成结构化教学谱。
-          当前 10 首导入曲目均已完成整首结构化，可直接进入练习。
-        </p>
         <div className="repertoire-list">
           {imported_teaching_entries.map((entry, index) => (
             <StructuredRepertoireCard

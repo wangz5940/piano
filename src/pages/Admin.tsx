@@ -104,10 +104,7 @@ export function Admin({ user_override }: admin_props = {}) {
       <section className="page-intro admin-intro">
         <div>
           <p className="eyebrow"><ShieldCheck size={15} /> 内容管理后台</p>
-          <h1>每次修谱，<br />都留下可追溯的版本。</h1>
-          <p className="intro-copy">
-            上传 MusicXML 与同版本跟弹数据，检查完成后再发布。旧版本不会被覆盖，已有练习记录仍能指向当时使用的谱面。
-          </p>
+          <h1>内容后台</h1>
         </div>
         <button
           type="button"

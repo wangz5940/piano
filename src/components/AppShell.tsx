@@ -25,10 +25,10 @@ interface app_shell_props {
 
 const navigation_items = [
   { to: "/", label: "今日练习", icon: Home, end: true },
+  { to: "/简谱教材", label: "简谱教材", icon: Music2 },
   { to: "/收藏", label: "收藏", icon: Heart },
   { to: "/课程", label: "课程路径", icon: BookOpenText },
   { to: "/教材", label: "教材谱库", icon: LibraryBig },
-  { to: "/简谱教材", label: "简谱教材", icon: Music2 },
   { to: "/曲目", label: "热门曲目", icon: Sparkles },
   { to: "/记录", label: "练习记录", icon: ClipboardList },
   { to: "/管理", label: "学习管理", icon: SlidersHorizontal },
@@ -86,15 +86,6 @@ export function AppShell({ children }: app_shell_props) {
             );
           })}
         </nav>
-
-        <div className="rail-tip">
-          <Sparkles size={16} />
-          <p className="rail-tip-copy">
-            今天只练一个小目标。
-            <br />
-            让双手慢慢学会合作。
-          </p>
-        </div>
       </aside>
 
       <main className="main-content">{children}</main>

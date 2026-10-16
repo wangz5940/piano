@@ -97,10 +97,7 @@ export function Account({
       <section className="page-intro account-intro">
         <div>
           <p className="eyebrow"><Cloud size={15} /> 账号与同步</p>
-          <h1>换一台设备，<br />学习仍从上次继续。</h1>
-          <p className="intro-copy">
-            游客可以一直在本机练习。注册后，课程进度、练习结果和显示偏好会安全同步，不上传麦克风录音。
-          </p>
+          <h1>账号与同步</h1>
         </div>
         <SyncBadge status={effective_sync_status} last_synced_at={last_synced_at} />
       </section>
@@ -120,12 +117,12 @@ export function Account({
             <article>
               <Cloud size={18} />
               <strong>多设备同步</strong>
-              <p>进度、偏好和练习结果已经与账号绑定。</p>
+              <p>同步进度、偏好和练习结果。</p>
             </article>
             <article>
               <KeyRound size={18} />
-              <strong>最少个人数据</strong>
-              <p>仅保存邮箱、显示名称和学习数据，不收集生日或真实姓名。</p>
+              <strong>账号资料</strong>
+              <p>邮箱、昵称与学习数据。</p>
             </article>
           </div>
 

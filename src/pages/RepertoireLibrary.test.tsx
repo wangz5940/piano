@@ -58,7 +58,7 @@ describe("热门曲目库", () => {
     expect(markup).toContain("《Flower Dance》");
     expect(markup).toContain("《D 大调卡农》和声骨架");
     expect(markup).toContain("Christian Petzold");
-    expect(markup).toContain("全部导入曲目已结构化");
+    expect(markup).toContain(`${repertoire_entries.length + imported_teaching_entries.length} 首教学谱`);
     expect(markup).not.toContain("源简谱对照");
     expect(markup).toContain("我的收藏");
     expect(markup).toContain("一键收起");

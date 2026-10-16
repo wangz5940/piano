@@ -35,16 +35,12 @@ export function Management() {
       <section className="page-intro management-intro">
         <div>
           <p className="eyebrow"><SlidersHorizontal size={15} /> 学习管理</p>
-          <h1>把学习路径<br />调成适合你的样子。</h1>
-          <p className="intro-copy">
-            这里控制访问方式和界面布局。课程完成记录不会因为切换开关而改变。
-          </p>
+          <h1>学习管理</h1>
         </div>
         <div className="management-summary">
           <Check size={18} />
           <div>
             <strong>{free_practice ? "自由学习已开启" : "按课程顺序学习"}</strong>
-            <p>{free_practice ? "未学习任务也可以直接查看和练习。" : "仍可查看当前进度，后续任务按顺序开放。"}</p>
           </div>
         </div>
       </section>
@@ -62,7 +58,7 @@ export function Management() {
             checked={free_practice}
             on_change={set_free_practice}
             title="允许查看并练习未学习任务"
-            copy="打开课程路径中的任意周次和任务，不必等待前面的任务完成。完成记录仍按实际练习保存。"
+            copy="可直接进入任意周次。"
           />
         </article>
 
@@ -78,7 +74,7 @@ export function Management() {
             checked={sidebar_collapsed}
             on_change={set_sidebar_collapsed}
             title="默认收起左侧导航"
-            copy="收起后保留图标和当前页面提示，需要时点击导航顶部按钮即可恢复文字菜单。"
+            copy="收起时仅显示图标。"
           />
         </article>
 
@@ -94,7 +90,7 @@ export function Management() {
             checked={show_fingerings}
             on_change={set_show_fingerings}
             title="默认显示谱面指法"
-            copy="控制简谱圈号、五线谱数字和教材原谱注入指号。教学说明仍会保留。"
+            copy="显示简谱和五线谱指号。"
           />
         </article>
 
@@ -112,7 +108,7 @@ export function Management() {
       <section className="management-next">
         <div>
           <p className="section-kicker">继续学习</p>
-          <h2>设置完成后，回到课程路径选择任意任务。</h2>
+          <h2>选择练习</h2>
         </div>
         <Link to="/课程" className="primary-button">
           查看课程路径 <ArrowRight size={17} />
@@ -193,7 +189,7 @@ function AudioInputSettings({
         checked={enabled}
         on_change={set_enabled}
         title="允许使用麦克风识别音高"
-        copy="练习时读取麦克风中的单音，将声音转换为音符事件。建议使用电钢琴或靠近琴弦的麦克风。"
+        copy="识别单音，用于练习判定。"
       />
 
       <div className="audio-calibration">

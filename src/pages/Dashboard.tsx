@@ -58,11 +58,7 @@ export function Dashboard({ progress_override }: dashboard_props = {}) {
         <section className="page-intro dashboard-intro">
           <div>
             <p className="eyebrow">36 周课程 · 已完成</p>
-            <h1>基础课程结业，<br />现在把能力带进真实曲目。</h1>
-            <p className="intro-copy">
-              你已完成全部 108 个练习日。接下来从记录中选择最需要巩固的项目复习，
-              并保持每周三次完整演奏。
-            </p>
+            <h1>基础课程结业</h1>
           </div>
           <div className="today-stamp" aria-label="36 周课程已全部完成">
             <span>课程完成</span>
@@ -75,13 +71,10 @@ export function Dashboard({ progress_override }: dashboard_props = {}) {
           <div className="today-card-head">
             <div>
               <p className="section-kicker"><CheckCircle2 size={15} /> 结业后的练习方式</p>
-              <h2>复习薄弱项目，并持续完整演奏。</h2>
+              <h2>复习与演奏</h2>
             </div>
             <span className="course-chip">已结业</span>
           </div>
-          <p className="today-guidance">
-            优先回看低于通过线的练习，再从第 29—36 周选择一首曲目完整演奏，不再重复推进已完成课程。
-          </p>
           <div className="practice-actions">
             <Link to="/记录" className="primary-button">
               查看练习记录 <ArrowRight size={17} />
@@ -102,14 +95,7 @@ export function Dashboard({ progress_override }: dashboard_props = {}) {
           <p className="eyebrow">
             {current_course.short_title}阶段 · 第 {current_day.week_number} 周 · 本周第 {current_day.day_index} 次
           </p>
-          <h1>
-            今天不贪多，
-            <br />
-            只把一个动作练稳。
-          </h1>
-          <p className="intro-copy">
-            {current_day.objective} 每次约 60 分钟：先让身体放松，再练技术，最后用新简谱检验是否真的能读出来。
-          </p>
+          <h1>今日练习</h1>
         </div>
         <div className="today-stamp" aria-label={`今日已完成 ${completed_today} 项`}>
           <span>今日完成</span>
@@ -129,7 +115,6 @@ export function Dashboard({ progress_override }: dashboard_props = {}) {
           </div>
           <span className="course-chip">第{current_day.week_number}周</span>
         </div>
-        <p className="today-guidance">{current_lesson.guidance}</p>
 
         <div className="today-details">
           <span><Clock3 size={16} /> {current_day.time_budget_minutes} 分钟</span>
@@ -147,8 +132,8 @@ export function Dashboard({ progress_override }: dashboard_props = {}) {
       <section className="section-block">
         <div className="section-heading">
           <div>
-            <p className="section-kicker">今日 60 分钟序列</p>
-            <h2>从放松，到能连续读出一段新谱。</h2>
+            <p className="section-kicker">{current_day.time_budget_minutes} 分钟</p>
+            <h2>练习安排</h2>
           </div>
           <span className="quiet-stat">
             <Check size={16} /> 连续练习 {progress.streak_days} 天
@@ -172,7 +157,6 @@ export function Dashboard({ progress_override }: dashboard_props = {}) {
                 <p>{get_exercise_label(lesson.exercise_type)} · {lesson.estimated_minutes} 分钟</p>
                 <h3>{lesson.title}</h3>
                 <span className="plan-state">{is_complete ? "已完成" : lesson.id === current_lesson.id ? "现在练" : "待进行"}</span>
-                <p className="plan-description">{lesson.description}</p>
                 <Link to={`/练习/${lesson.id}`} className="sequence-link">
                   {is_complete ? "复习本项" : lesson.id === current_lesson.id ? "开始练习" : "查看内容"}
                   <ArrowRight size={14} />
@@ -186,7 +170,7 @@ export function Dashboard({ progress_override }: dashboard_props = {}) {
       <section className="path-preview">
         <div>
           <p className="section-kicker">36 周路径</p>
-          <h2>从第 1 周到第 36 周，能力按完成顺序逐级解锁。</h2>
+          <h2>课程进度</h2>
         </div>
         <div className="path-dots" aria-label="课程路径">
           {courses.map((course) => (

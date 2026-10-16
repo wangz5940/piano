@@ -16,7 +16,7 @@ describe("今日练习页", () => {
 
     expect(markup).toContain("手指编号与中央 C");
     expect(markup).toContain("热身与手型");
-    expect(markup).toContain("今日 60 分钟序列");
+    expect(markup).toContain("练习安排");
     expect(markup).toContain('href="/练习/w1-d1-warmup"');
   });
 

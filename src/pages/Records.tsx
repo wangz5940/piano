@@ -43,10 +43,7 @@ export function Records({ progress_override }: records_props = {}) {
           <p className="eyebrow">
             {account_user ? "账号练习记录 · 已启用多设备同步" : "本地练习记录 · 登录后可同步"}
           </p>
-          <h1>记录不是打分，<br />是为了知道下一次该改什么。</h1>
-          <p className="intro-copy">
-            当前在{current_course?.title ?? "36 周课程"}第 {current_day.week_number} 周。每次只保留一个最需要修正的问题，让复盘能够真正改变下一次练习。
-          </p>
+          <h1>练习记录</h1>
         </div>
         <div className="record-stamp">
           <span>已完成练习日</span>
@@ -77,7 +74,7 @@ export function Records({ progress_override }: records_props = {}) {
         <div className="section-heading">
           <div>
             <p className="section-kicker">本阶段情况</p>
-            <h2>每周三次，留下清楚的完成痕迹。</h2>
+            <h2>每周进度</h2>
           </div>
         </div>
         <div className="week-progress-grid">
