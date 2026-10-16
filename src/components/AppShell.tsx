@@ -16,6 +16,7 @@ import {
 import { NavLink } from "react-router-dom";
 import type { ReactNode } from "react";
 
+import { preload_page } from "@/pageLoaders";
 import { use_app_settings_store } from "@/store/useAppSettingsStore";
 import { use_auth_store } from "@/store/useAuthStore";
 
@@ -77,6 +78,8 @@ export function AppShell({ children }: app_shell_props) {
                 key={item.to}
                 to={item.to}
                 end={item.end}
+                onPointerEnter={() => preload_page(item.to)}
+                onFocus={() => preload_page(item.to)}
                 className={({ isActive }) => `nav-item ${isActive ? "is-active" : ""}`}
                 title={sidebar_collapsed ? item.label : undefined}
               >
@@ -97,6 +100,8 @@ export function AppShell({ children }: app_shell_props) {
               key={item.to}
               to={item.to}
               end={item.end}
+              onPointerEnter={() => preload_page(item.to)}
+              onFocus={() => preload_page(item.to)}
               className={({ isActive }) => `mobile-nav-item ${isActive ? "is-active" : ""}`}
             >
               <Icon size={18} />

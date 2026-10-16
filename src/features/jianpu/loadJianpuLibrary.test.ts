@@ -8,7 +8,7 @@ describe("简谱教材目录加载", () => {
     vi.restoreAllMocks();
   });
 
-  it("读取可被校准保存回写的目录时绕开浏览器缓存", async () => {
+  it("读取可被校准保存回写的目录时要求浏览器重新验证缓存", async () => {
     const fetch_mock = vi.fn(async () =>
       new Response(JSON.stringify({
         schema_version: "1.0",
@@ -65,10 +65,7 @@ describe("简谱教材目录加载", () => {
     await load_jianpu_catalog();
 
     expect(fetch_mock).toHaveBeenCalledWith("/api/v1/content/jianpu-materials", {
-      cache: "no-store",
-      headers: {
-        "Cache-Control": "no-cache",
-      },
+      cache: "no-cache",
     });
   });
 

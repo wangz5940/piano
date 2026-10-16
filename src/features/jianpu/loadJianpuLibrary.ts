@@ -50,12 +50,7 @@ export function clear_jianpu_library_cache(): void {
 }
 
 async function fetch_json(url: string, error_prefix: string): Promise<unknown> {
-  const response = await fetch(url, {
-    cache: "no-store",
-    headers: {
-      "Cache-Control": "no-cache",
-    },
-  });
+  const response = await fetch(url, { cache: "no-cache" });
   if (!response.ok) {
     throw new Error(`${error_prefix}：${response.status}`);
   }

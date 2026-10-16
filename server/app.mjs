@@ -10,6 +10,7 @@ import {
 } from "node:fs";
 import { dirname, extname, relative, resolve } from "node:path";
 
+import { is_not_modified, send_public_json, send_stream } from "./http-cache.mjs";
 import {
   create_session_credentials,
   hash_password,
@@ -112,21 +113,20 @@ export function create_request_handler({
       }
 
       const client_id = get_client_id(request, trust_proxy);
-      const rate = global_limiter.check(client_id);
-      set_rate_headers(response, global_rate_limit, rate);
-      if (!rate.allowed) {
-        response.setHeader("Retry-After", String(rate.retry_after_seconds));
-        send_error(
-          response,
-          429,
-          "too_many_requests",
-          "请求过于频繁，请稍后再试。",
-          request_id,
-        );
-        return;
-      }
-
       if (pathname.startsWith("/api/")) {
+        const rate = global_limiter.check(client_id);
+        set_rate_headers(response, global_rate_limit, rate);
+        if (!rate.allowed) {
+          response.setHeader("Retry-After", String(rate.retry_after_seconds));
+          send_error(
+            response,
+            429,
+            "too_many_requests",
+            "请求过于频繁，请稍后再试。",
+            request_id,
+          );
+          return;
+        }
         await handle_api_request({
           request,
           response,
@@ -420,14 +420,14 @@ async function handle_api_request(context) {
       send_error(response, 404, "not_found", "当前没有已发布课程。", request_id);
       return;
     }
-    send_json(response, 200, { curriculum: serialize_curriculum_bundle(bundle) });
+    send_public_json(request, response, { curriculum: serialize_curriculum_bundle(bundle) });
     return;
   }
 
   if (pathname === "/api/v1/content/materials" && method === "GET") {
-    send_json(
+    send_public_json(
+      request,
       response,
-      200,
       apply_material_segment_deletions(
         context.get_catalog(),
         repository.list_material_deletions(),
@@ -437,9 +437,9 @@ async function handle_api_request(context) {
   }
 
   if (pathname === "/api/v1/content/jianpu-materials" && method === "GET") {
-    send_json(
+    send_public_json(
+      request,
       response,
-      200,
       apply_material_segment_deletions(
         context.get_jianpu_catalog(),
         repository.list_material_deletions(),
@@ -449,7 +449,7 @@ async function handle_api_request(context) {
   }
 
   if (pathname === "/api/v1/content" && method === "GET") {
-    send_json(response, 200, {
+    send_public_json(request, response, {
       content: repository.list_content(false).map(serialize_content),
     });
     return;
@@ -462,7 +462,7 @@ async function handle_api_request(context) {
       send_error(response, 404, "not_found", "内容不存在。", request_id);
       return;
     }
-    send_json(response, 200, { content: serialize_content(content) });
+    send_public_json(request, response, { content: serialize_content(content) });
     return;
   }
 
@@ -488,7 +488,7 @@ async function handle_api_request(context) {
       send_error(response, 404, "not_found", "版本资源不存在。", request_id);
       return;
     }
-    serve_file(request, response, file_path);
+    serve_file(request, response, file_path, !version.published_at);
     return;
   }
 
@@ -2014,35 +2014,34 @@ function handle_static_request(request, response, url, request_id, static_root) 
   serve_file(request, response, file_path);
 }
 
-function serve_file(request, response, file_path) {
+function serve_file(request, response, file_path, private_file = false) {
   const extension = extname(file_path).toLowerCase();
-  const is_html = extension === ".html";
+  const metadata = statSync(file_path);
+  const etag = `W/"${metadata.size.toString(16)}-${metadata.mtimeMs.toString(16)}-${metadata.ctimeMs.toString(16)}"`;
+  const compressible = [".css", ".html", ".js", ".json", ".map", ".musicxml", ".svg", ".xml"].includes(extension);
   response.statusCode = 200;
   response.setHeader("Content-Type", content_types[extension] ?? "application/octet-stream");
   response.setHeader(
     "Cache-Control",
-    is_html
-      ? "no-cache"
+    private_file
+      ? "private, no-store"
       : file_path.includes("/assets/")
-        ? "public, max-age=604800, immutable"
-        : "public, max-age=3600",
+        ? "public, max-age=31536000, immutable"
+        : "public, no-cache",
   );
-  if (request.method === "HEAD") {
+  if (!private_file) {
+    response.setHeader("ETag", etag);
+    response.setHeader("Last-Modified", metadata.mtime.toUTCString());
+  }
+  if (compressible) {
+    response.setHeader("Vary", "Accept-Encoding");
+  }
+  if (!private_file && is_not_modified(request, etag)) {
+    response.statusCode = 304;
     response.end();
     return;
   }
-  const stream = createReadStream(file_path);
-  stream.on("error", () => {
-    if (!response.headersSent) {
-      send_json(response, 500, {
-        error: "read_failed",
-        message: "资源读取失败。",
-      });
-    } else {
-      response.destroy();
-    }
-  });
-  stream.pipe(response);
+  send_stream(request, response, createReadStream(file_path), metadata.size, compressible);
 }
 
 export function send_json(response, status, body, head_only = false) {
