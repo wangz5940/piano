@@ -4,6 +4,7 @@ import sharp from "sharp";
 import { read_json_body, validation_error } from "./validation.mjs";
 
 export const feedback_image_limit = 5 * 1024 * 1024;
+const feedback_body_limit = 4 * feedback_image_limit + 64 * 1024;
 const accepted_types = new Set(["image/jpeg", "image/png", "image/webp"]);
 sharp.cache({ memory: 16, files: 0, items: 16 });
 sharp.concurrency(1);
@@ -105,7 +106,14 @@ export function create_feedback_handler(database, {
         }
         send_json(response, 201, { feedback: serialize(get_entry.get(id)) });
       } catch (error) {
-        if (!request.complete) response.setHeader("Connection", "close");
+        // Drain bounded uploads without closing the socket mid-write, so clients can read
+        // the validation response. Unbounded/oversized bodies must not keep streaming.
+        const content_length = Number(request.headers["content-length"]);
+        if (!request.complete && (!Number.isFinite(content_length) ||
+          content_length <= 0 || content_length > feedback_body_limit)) {
+          response.setHeader("Connection", "close");
+        }
+        request.resume();
         throw error;
       } finally {
         uploading = false;
@@ -170,7 +178,7 @@ async function sanitize_image(file) {
 }
 
 function read_feedback(request) {
-  const max_bytes = 4 * feedback_image_limit + 64 * 1024;
+  const max_bytes = feedback_body_limit;
   if (Number(request.headers["content-length"]) > max_bytes) {
     throw new validation_error("最多上传 4 张图片，每张须小于 5MB。", 413);
   }
