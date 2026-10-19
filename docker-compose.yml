@@ -35,6 +35,9 @@ services:
       - ONLINE_PER_IP=10
       - MAX_INFLIGHT=48
       - AUTH_CONCURRENCY=2
+      - FEEDBACK_STORAGE_MB=500
+      - FEEDBACK_USER_DAILY_LIMIT=5
+      - FEEDBACK_DAILY_LIMIT=50
       - NODE_OPTIONS=--max-old-space-size=768
       - PANIO_DATABASE_PATH=data/panio.sqlite
       - PANIO_UPLOADS_DIR=data/content

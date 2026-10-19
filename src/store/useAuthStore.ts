@@ -107,7 +107,6 @@ export const use_auth_store = create<auth_store>((set, get) => ({
   logout: async () => {
     try {
       await api_request("/api/v1/auth/logout", { method: "POST", body: {} });
-    } finally {
       set({
         status: "guest",
         sync_status: "local",
@@ -116,6 +115,8 @@ export const use_auth_store = create<auth_store>((set, get) => ({
         user: undefined,
         error: undefined,
       });
+    } catch (error) {
+      set({ error: get_error_message(error, "退出未成功，请恢复网络后重试。") });
     }
   },
   delete_account: async (password) => {

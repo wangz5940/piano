@@ -11,6 +11,7 @@ import {
 import { dirname, extname, relative, resolve } from "node:path";
 
 import { is_not_modified, send_public_json, send_stream } from "./http-cache.mjs";
+import { create_feedback_handler } from "./feedback.mjs";
 import {
   create_session_credentials,
   hash_password,
@@ -68,6 +69,7 @@ export function create_request_handler({
   max_inflight = 48,
   auth_concurrency = 2,
   enforce_presence = true,
+  feedback_options,
   logger = default_logger,
   started_at = Date.now(),
 }) {
@@ -84,6 +86,12 @@ export function create_request_handler({
   const static_bucket = create_token_limiter({ rate: 120, burst: 240 });
   const static_client_bucket = create_token_limiter({ rate: 40, burst: 80 });
   const presence = create_presence_limiter({ limit: online_limit, per_ip: online_per_ip });
+  let feedback_handler;
+  const handle_feedback = (context) => {
+    if (!/^\/api\/v1\/feedback(?:\/|$)/.test(context.url.pathname)) return false;
+    feedback_handler ??= create_feedback_handler(repository.raw, feedback_options);
+    return feedback_handler(context);
+  };
   let inflight = 0;
   let auth_inflight = 0;
   const materials_root = dirname(catalog_path);
@@ -197,6 +205,7 @@ export function create_request_handler({
           request_id,
           client_id,
           repository,
+          handle_feedback,
           uploads_root,
           materials_root,
           static_root,
@@ -343,7 +352,7 @@ async function handle_api_request(context) {
         target_type: "user",
         target_id: user.id,
       });
-      response.setHeader("Set-Cookie", serialize_session_cookie(session.token, {
+      response.appendHeader("Set-Cookie", serialize_session_cookie(session.token, {
         secure: secure_cookies,
         max_age_seconds: session.max_age_seconds,
       }));
@@ -377,7 +386,7 @@ async function handle_api_request(context) {
       user_id: account.id,
       expires_at: session.expires_at,
     });
-    response.setHeader("Set-Cookie", serialize_session_cookie(session.token, {
+    response.appendHeader("Set-Cookie", serialize_session_cookie(session.token, {
       secure: secure_cookies,
       max_age_seconds: session.max_age_seconds,
     }));
@@ -406,6 +415,7 @@ async function handle_api_request(context) {
   }
 
   const user = authenticate_request(request, repository);
+  if (await context.handle_feedback({ request, response, url, user, send_json })) return;
 
   if (pathname === "/api/v1/calibrations/source" && method === "GET") {
     require_user(user);
@@ -470,6 +480,11 @@ async function handle_api_request(context) {
 
   if (pathname === "/api/v1/auth/me" && method === "GET") {
     require_user(user);
+    const { token } = parse_session_cookie(request.headers.cookie);
+    response.appendHeader("Set-Cookie", serialize_session_cookie(token, {
+      secure: secure_cookies,
+      max_age_seconds: Math.max(0, Math.floor((Date.parse(user.session_expires_at) - Date.now()) / 1000)),
+    }));
     send_json(response, 200, {
       user,
       snapshot: repository.get_snapshot(user.id),

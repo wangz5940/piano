@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   ArrowRight,
   BookOpenText,
   Check,
   Hand,
   Mic,
+  MessageSquare,
   PanelLeft,
   SlidersHorizontal,
 } from "lucide-react";
@@ -17,7 +18,10 @@ import { use_app_settings_store } from "@/store/useAppSettingsStore";
 import { use_auth_store } from "@/store/useAuthStore";
 import { optional_features } from "@/features/settings/navigation";
 
+const FeedbackPanel = lazy(() => import("@/features/feedback/FeedbackPanel"));
+
 export function Management() {
+  const [feedback_open, set_feedback_open] = useState(false);
   const features = use_app_settings_store((state) => state.feature_switches);
   const set_feature_enabled = use_app_settings_store((state) => state.set_feature_enabled);
   const user = use_auth_store((state) => state.user);
@@ -128,6 +132,31 @@ export function Management() {
           set_calibration_midi={set_audio_calibration_midi}
           save_calibration={save_audio_calibration}
         />
+      </section>
+
+      <section className="settings-section feedback-section" aria-label="反馈与建议">
+        <div className="settings-section-heading">
+          <div>
+            <p className="section-kicker"><MessageSquare size={15} /> 一起改进练琴簿</p>
+            <h2>反馈与建议</h2>
+          </div>
+          <button className="secondary-button" type="button" aria-expanded={feedback_open}
+            aria-controls="feedback-content" onClick={() => set_feedback_open((open) => !open)}>
+            {feedback_open ? "收起反馈" : "写反馈 / 查看回复"}
+          </button>
+        </div>
+        <p>告诉我们使用中遇到的问题，也欢迎分享你的想法。可附上最多 4 张图片。</p>
+        {feedback_open && (
+          <div id="feedback-content">
+            {user ? (
+              <Suspense fallback={<p>正在打开反馈…</p>}>
+                <FeedbackPanel key={user.id} is_admin={user.role === "admin"} />
+              </Suspense>
+            ) : (
+              <p><Link className="secondary-button" to="/账号">登录后提交反馈</Link></p>
+            )}
+          </div>
+        )}
       </section>
 
       <section className="management-next">

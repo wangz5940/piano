@@ -256,6 +256,36 @@ function migrate(database) {
       COMMIT;
     `);
   }
+  if (current_version < 9) {
+    database.exec(`
+      BEGIN IMMEDIATE;
+      CREATE TABLE feedback (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        message TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','resolved')),
+        reply TEXT NOT NULL DEFAULT '',
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      );
+      CREATE INDEX feedback_owner_time ON feedback(user_id, created_at DESC);
+      CREATE INDEX feedback_time ON feedback(created_at DESC);
+      CREATE TABLE feedback_images (
+        id TEXT PRIMARY KEY,
+        feedback_id TEXT NOT NULL REFERENCES feedback(id) ON DELETE CASCADE,
+        data BLOB NOT NULL,
+        size_bytes INTEGER NOT NULL CHECK(size_bytes > 0),
+        position INTEGER NOT NULL
+      );
+      CREATE INDEX feedback_images_parent ON feedback_images(feedback_id, position);
+      UPDATE sessions
+      SET expires_at = strftime('%Y-%m-%dT%H:%M:%fZ', created_at, '+180 days')
+      WHERE expires_at > strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+        AND expires_at < strftime('%Y-%m-%dT%H:%M:%fZ', created_at, '+180 days');
+      INSERT INTO schema_migrations(version, applied_at) VALUES (9, datetime('now'));
+      COMMIT;
+    `);
+  }
 }
 
 function migrate_score_document_storage(database) {
@@ -1368,7 +1398,7 @@ function create_repository(database) {
       if (!row || row.status !== "active") {
         return undefined;
       }
-      return get_public_user(row);
+      return { ...get_public_user(row), session_expires_at: row.expires_at };
     },
     delete_session(token_hash) {
       database.prepare("DELETE FROM sessions WHERE token_hash = ?").run(token_hash);

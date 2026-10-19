@@ -39,7 +39,7 @@ test("SQLite 初始化完整业务表和外键", () => {
     ORDER BY name
   `).all().map((row) => row.name);
 
-  assert.equal(repository.get_schema_version(), 8);
+  assert.equal(repository.get_schema_version(), 9);
   assert.deepEqual(tables, [
     "audit_events",
     "calibration_submissions",
@@ -48,6 +48,8 @@ test("SQLite 初始化完整业务表和外键", () => {
     "curriculum_nodes",
     "curriculum_revisions",
     "curriculums",
+    "feedback",
+    "feedback_images",
     "lesson_score_bindings",
     "material_deletions",
     "material_reviews",

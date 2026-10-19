@@ -50,10 +50,15 @@ const request_handler = create_request_handler({
   online_per_ip: parse_positive_integer(process.env.ONLINE_PER_IP, 10),
   max_inflight: parse_positive_integer(process.env.MAX_INFLIGHT, 48),
   auth_concurrency: parse_positive_integer(process.env.AUTH_CONCURRENCY, 2),
+  feedback_options: {
+    storage_limit: parse_positive_integer(process.env.FEEDBACK_STORAGE_MB, 500) * 1024 * 1024,
+    user_daily_limit: parse_positive_integer(process.env.FEEDBACK_USER_DAILY_LIMIT, 5),
+    daily_limit: parse_positive_integer(process.env.FEEDBACK_DAILY_LIMIT, 50),
+  },
 });
 const server = create_server(request_handler);
 
-server.requestTimeout = 15_000;
+server.requestTimeout = 65_000;
 server.headersTimeout = 8_000;
 server.keepAliveTimeout = 5_000;
 server.maxHeadersCount = 64;

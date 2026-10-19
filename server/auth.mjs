@@ -9,6 +9,7 @@ import { promisify } from "node:util";
 const scrypt_async = promisify(scrypt);
 const session_cookie_name = "panio_session";
 const password_key_length = 64;
+export const session_lifetime_seconds = 180 * 24 * 60 * 60;
 
 export async function hash_password(password) {
   assert_password(password);
@@ -38,7 +39,7 @@ export async function verify_password(password, stored) {
 
 export function create_session_credentials({
   now = Date.now(),
-  lifetime_ms = 30 * 24 * 60 * 60 * 1_000,
+  lifetime_ms = session_lifetime_seconds * 1_000,
 } = {}) {
   const token = randomBytes(32).toString("base64url");
   return {
@@ -76,7 +77,7 @@ export function parse_session_cookie(cookie_header) {
 
 export function serialize_session_cookie(token, {
   secure = false,
-  max_age_seconds = 30 * 24 * 60 * 60,
+  max_age_seconds = session_lifetime_seconds,
 } = {}) {
   return [
     `${session_cookie_name}=${token}`,

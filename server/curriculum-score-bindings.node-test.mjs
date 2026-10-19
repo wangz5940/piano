@@ -227,11 +227,11 @@ async function create_fixture() {
         body: body === undefined ? undefined : JSON.stringify(body),
       });
       const text = await response.text();
-      const set_cookie = response.headers.get("set-cookie") ?? "";
+      const cookies = response.headers.getSetCookie().map((value) => value.split(";", 1)[0]);
       return {
         status: response.status,
         data: text ? JSON.parse(text) : undefined,
-        cookie: set_cookie.split(";", 1)[0],
+        cookie: cookies.join("; "),
       };
     },
     close() {

@@ -121,8 +121,8 @@ export function Account({
             </article>
             <article>
               <KeyRound size={18} />
-              <strong>账号资料</strong>
-              <p>邮箱、昵称与学习数据。</p>
+              <strong>180 天保持登录</strong>
+              <p>在同一浏览器再次打开即可继续；主动退出后需重新登录。</p>
             </article>
           </div>
 
@@ -152,6 +152,7 @@ export function Account({
           {account_action_error && (
             <p className="account-error" role="alert">{account_action_error}</p>
           )}
+          {error && !delete_open && <p className="account-error" role="alert">{error}</p>}
           {delete_open && (
             <form className="account-delete-form" onSubmit={handle_delete}>
               <div>
@@ -265,6 +266,7 @@ export function Account({
               {mode === "register" && <small>至少 10 个字符。</small>}
             </label>
 
+            <p className="account-login-hint">登录状态保留 180 天，无需每次重新登录。</p>
             {error && <p className="account-error" role="alert">{error}</p>}
 
             <button type="submit" className="primary-button" disabled={status === "loading"}>

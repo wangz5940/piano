@@ -5,7 +5,7 @@
 		max_header_size 16KB
 		timeouts {
 			read_header 10s
-			read_body 20s
+			read_body 65s
 			write 60s
 			idle 30s
 		}

@@ -52,8 +52,12 @@ export async function api_request<T = unknown>(
     headers["X-Panio-Client"] = "web";
   }
   if (options.body !== undefined) {
-    headers["Content-Type"] = "application/json";
-    init.body = JSON.stringify(options.body);
+    if (options.body instanceof FormData) {
+      init.body = options.body;
+    } else {
+      headers["Content-Type"] = "application/json";
+      init.body = JSON.stringify(options.body);
+    }
   }
 
   const response = await fetch(path, init);

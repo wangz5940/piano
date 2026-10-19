@@ -751,6 +751,7 @@ function OriginalScorePanel({ segment }: { segment: jianpu_segment }) {
   }, [segment, user_id]);
   return (
     <section className="jianpu-original-score" aria-label={`${segment.title}原谱`}>
+      <h3 className="jianpu-original-title">{segment.title}</h3>
       <ScoreZoomSurface measure_start={1} measure_end={segment.measure_count} className="original-score-slice">
         {render_state === "loading" && <JianpuScoreState copy="正在加载完整原谱…" />}
         {render_state === "error" && <JianpuScoreState copy="原谱暂时无法显示，请稍后重试。" is_error />}
