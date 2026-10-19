@@ -3,6 +3,8 @@ import { test } from "node:test";
 
 import {
   create_rate_limiter,
+  create_token_limiter,
+  create_presence_limiter,
   is_safe_request_target,
   resolve_static_path,
   security_headers,
@@ -48,4 +50,31 @@ test("限流器按窗口计数并限制客户端表大小", () => {
   limiter.check("client-b");
   limiter.check("client-c");
   assert.equal(limiter.size(), 2);
+});
+
+test("令牌桶平滑补充且活跃表满时拒绝新客户端", () => {
+  let timestamp = 0;
+  const limiter = create_token_limiter({ rate: 2, burst: 2, max_clients: 1, now: () => timestamp });
+  assert.equal(limiter.check("a"), true);
+  assert.equal(limiter.check("a"), true);
+  assert.equal(limiter.check("a"), false);
+  assert.equal(limiter.check("b"), false);
+  timestamp = 500;
+  assert.equal(limiter.check("a"), true);
+  assert.equal(limiter.check("a"), false);
+  timestamp = 61_000;
+  assert.equal(limiter.check("b"), true);
+});
+
+test("在线租约续期、IP配额、失效释放与伪造令牌", () => {
+  let timestamp = 0;
+  const limiter = create_presence_limiter({ limit: 2, per_ip: 1, ttl_ms: 100, now: () => timestamp });
+  const first = limiter.acquire(undefined, "a");
+  assert.ok(first);
+  assert.equal(limiter.acquire(undefined, "a"), undefined);
+  assert.equal(limiter.acquire(first.token, "a").token, first.token);
+  assert.ok(limiter.acquire(undefined, "b"));
+  assert.equal(limiter.acquire("fake", "c"), undefined);
+  timestamp = 101;
+  assert.ok(limiter.acquire(undefined, "c"));
 });

@@ -14,8 +14,13 @@ import { AppShell } from "@/components/AppShell";
 import { midi_to_note_name } from "@/features/audio/pitch";
 import { useAudioPitchInput } from "@/features/audio/useAudioPitchInput";
 import { use_app_settings_store } from "@/store/useAppSettingsStore";
+import { use_auth_store } from "@/store/useAuthStore";
+import { optional_features } from "@/features/settings/navigation";
 
 export function Management() {
+  const features = use_app_settings_store((state) => state.feature_switches);
+  const set_feature_enabled = use_app_settings_store((state) => state.set_feature_enabled);
+  const user = use_auth_store((state) => state.user);
   const free_practice = use_app_settings_store((state) => state.free_practice);
   const sidebar_collapsed = use_app_settings_store((state) => state.sidebar_collapsed);
   const show_fingerings = use_app_settings_store((state) => state.show_fingerings);
@@ -46,6 +51,26 @@ export function Management() {
       </section>
 
       <section className="settings-layout" aria-label="学习设置">
+        <article className="settings-section">
+          <div className="settings-section-heading">
+            <div>
+              <p className="section-kicker"><SlidersHorizontal size={15} /> 功能选择</p>
+              <h2>按需开启更多功能</h2>
+            </div>
+            <span>默认关闭</span>
+          </div>
+          <p>简谱教材、收藏、学习管理和账号同步始终保留。</p>
+          {optional_features.filter((feature) =>
+            feature.id !== "admin" || user?.role === "admin").map((feature) => (
+            <SettingToggle
+              key={feature.id}
+              checked={features[feature.id]}
+              on_change={(enabled) => set_feature_enabled(feature.id, enabled)}
+              title={feature.title}
+              copy={feature.copy}
+            />
+          ))}
+        </article>
         <article className="settings-section">
           <div className="settings-section-heading">
             <div>
@@ -110,8 +135,8 @@ export function Management() {
           <p className="section-kicker">继续学习</p>
           <h2>选择练习</h2>
         </div>
-        <Link to="/课程" className="primary-button">
-          查看课程路径 <ArrowRight size={17} />
+        <Link to="/简谱教材" className="primary-button">
+          打开简谱教材 <ArrowRight size={17} />
         </Link>
       </section>
     </AppShell>

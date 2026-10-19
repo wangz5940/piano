@@ -20,6 +20,18 @@ const admin = {
 };
 
 describe("通用乐谱校准台", () => {
+  it("普通账号可以校对和提交，但没有发布和教材删除入口", () => {
+    const markup = renderToStaticMarkup(
+      <MemoryRouter><ScoreCalibration user_override={{ ...admin, role: "student" }}
+        initial_projects={[create_project_fixture()]} initial_catalog={create_catalog_fixture()} /></MemoryRouter>,
+    );
+    expect(markup).toContain("保存到本机");
+    expect(markup).toContain("提交审批");
+    expect(markup).not.toContain("发布到公共原谱");
+    expect(markup).not.toContain("删除教材片段");
+    expect(markup).toContain("重新载入公共版本");
+  });
+
   it("未登录时不暴露校准工作区", () => {
     const markup = renderToStaticMarkup(
       <MemoryRouter>
@@ -27,7 +39,7 @@ describe("通用乐谱校准台", () => {
       </MemoryRouter>,
     );
 
-    expect(markup).toContain("请先登录管理员账号");
+    expect(markup).toContain("登录后即可校对");
     expect(markup).not.toContain("导出 Golden Score");
   });
 
@@ -42,7 +54,7 @@ describe("通用乐谱校准台", () => {
       </MemoryRouter>,
     );
 
-    expect(markup).toContain("从原件证据到 Golden Score");
+    expect(markup).toContain("校对每一个音符");
     expect(markup).toContain('aria-label="教程选择"');
     expect(markup).toContain("教程");
     expect(markup).toContain("教材细分");

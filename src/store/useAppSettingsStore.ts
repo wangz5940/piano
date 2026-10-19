@@ -6,8 +6,10 @@ import {
   save_settings,
 } from "@/features/settings/storage";
 import type { app_settings } from "@/features/settings/storage";
+import { normalize_feature_switches, type optional_feature } from "@/features/settings/navigation";
 
 interface app_settings_store extends app_settings {
+  set_feature_enabled: (feature: optional_feature, enabled: boolean) => void;
   set_sidebar_collapsed: (value: boolean) => void;
   set_free_practice: (value: boolean) => void;
   set_show_fingerings: (value: boolean) => void;
@@ -34,6 +36,7 @@ export function set_settings_sync_handler(
 
 function persist_settings(settings: app_settings): void {
   const persisted_settings = {
+    feature_switches: settings.feature_switches,
     sidebar_collapsed: settings.sidebar_collapsed,
     free_practice: settings.free_practice,
     show_fingerings: settings.show_fingerings,
@@ -50,6 +53,13 @@ function persist_settings(settings: app_settings): void {
 
 export const use_app_settings_store = create<app_settings_store>((set) => ({
   ...load_settings(),
+  set_feature_enabled: (feature, enabled) => {
+    set((state) => {
+      const feature_switches = { ...state.feature_switches, [feature]: enabled };
+      persist_settings({ ...state, feature_switches });
+      return { feature_switches };
+    });
+  },
   set_sidebar_collapsed: (value) => {
     set((state) => {
       const next_settings = { ...state, sidebar_collapsed: value };
@@ -116,7 +126,10 @@ export const use_app_settings_store = create<app_settings_store>((set) => ({
     });
   },
   replace_settings: (settings) => {
-    const normalized_settings = { ...create_initial_settings(), ...settings };
+    const normalized_settings = {
+      ...create_initial_settings(), ...settings,
+      feature_switches: normalize_feature_switches(settings.feature_switches),
+    };
     save_settings(normalized_settings);
     set(normalized_settings);
   },

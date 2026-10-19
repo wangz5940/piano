@@ -13,8 +13,9 @@ describe("收藏页", () => {
     );
 
     expect(markup).toContain("收藏");
-    expect(markup).toContain("今日练习");
+    expect(markup).toContain("简谱教材");
+    expect(markup).not.toContain("今日练习");
     expect(markup).toContain("还没有收藏曲谱");
-    expect(markup).toContain("去热门曲目看看");
+    expect(markup).toContain("去简谱教材看看");
   });
 });

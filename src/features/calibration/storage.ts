@@ -46,9 +46,10 @@ export function create_calibration_project(
 
 export function load_calibration_projects(
   storage: Pick<Storage, "getItem"> = localStorage,
+  user_id?: string,
 ): calibration_project[] {
   try {
-    const value = storage.getItem(storage_key);
+    const value = storage.getItem(user_id ? `${storage_key}:${user_id}` : storage_key);
     if (!value) {
       return [];
     }
@@ -64,8 +65,9 @@ export function load_calibration_projects(
 export function save_calibration_projects(
   projects: calibration_project[],
   storage: Pick<Storage, "setItem"> = localStorage,
+  user_id?: string,
 ): void {
-  storage.setItem(storage_key, JSON.stringify(projects.map((project) => ({
+  storage.setItem(user_id ? `${storage_key}:${user_id}` : storage_key, JSON.stringify(projects.map((project) => ({
     ...project,
     musicxml: null,
   }))));

@@ -11,7 +11,7 @@ import {
 import { synchronize_project_notation_metadata } from "../src/features/calibration/notationSync.ts";
 import { validate_calibration_project } from "../src/features/calibration/validation.ts";
 import type { calibration_project } from "../src/features/calibration/types.ts";
-import type { jianpu_catalog, jianpu_page_slice, jianpu_score } from "../src/features/jianpu/types.ts";
+import type { jianpu_catalog, jianpu_score } from "../src/features/jianpu/types.ts";
 import type { score_document } from "../src/features/score/types.ts";
 import { with_grace_performance_timing } from "../src/features/score/graceTiming.ts";
 import { score_document_to_jianpu_score } from "../server/app.mjs";
@@ -306,15 +306,10 @@ try {
         };
       });
       if (transcription) {
-        const merged: jianpu_page_slice[] = [];
-        for (const slice of jianpu_segment.page_slices) {
-          const previous = merged.at(-1);
-          if (previous?.source_pages[0] === slice.source_pages[0]) {
-            previous.measure_end = slice.measure_end;
-            previous.title += `、${slice.title}`;
-          } else merged.push(slice);
-        }
-        jianpu_segment.page_slices = merged;
+        jianpu_segment.content_sections = jianpu_segment.page_slices.map((slice, index) => ({
+          ...slice,
+          ...(transcription.sections[index].continues ? { continues: true } : {}),
+        }));
       }
     }
   }

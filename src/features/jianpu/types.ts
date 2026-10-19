@@ -20,6 +20,16 @@ export interface jianpu_page_slice {
   chapter_id: string;
   chapter_title: string;
   mapping: jianpu_slice_mapping;
+  continues?: boolean;
+}
+
+export interface jianpu_source_range {
+  segment_id: string;
+  jianpu_url: string;
+  musicxml_url: string;
+  measure_start: number;
+  measure_end: number;
+  title: string;
 }
 
 export interface jianpu_chapter {
@@ -39,6 +49,8 @@ export interface jianpu_segment {
   source_pages: number[];
   source_page_label: string;
   page_slices: jianpu_page_slice[];
+  content_sections?: jianpu_page_slice[];
+  sources?: jianpu_source_range[];
   exercise_labels: string[];
   section_title?: string;
   jianpu_url: string;
@@ -60,6 +72,7 @@ export interface jianpu_material {
   pages: jianpu_page[];
   chapters: jianpu_chapter[];
   segments: jianpu_segment[];
+  source_segments?: jianpu_segment[];
 }
 
 export interface jianpu_catalog {

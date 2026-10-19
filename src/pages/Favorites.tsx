@@ -77,8 +77,8 @@ export function Favorites() {
           <Music2 size={26} />
           <h2>还没有收藏曲谱</h2>
           <p>点击曲谱旁的心形按钮即可收藏。</p>
-          <Link to="/曲目" className="text-link">
-            去热门曲目看看 <ArrowRight size={16} />
+          <Link to="/简谱教材" className="text-link">
+            去简谱教材看看 <ArrowRight size={16} />
           </Link>
         </section>
       )}

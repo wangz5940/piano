@@ -17,6 +17,10 @@ const empty_progress = Object.freeze({
   streak_days: 0,
 });
 const empty_preferences = Object.freeze({
+  feature_switches: {
+    dashboard: false, courses: false, materials: false, repertoire: false,
+    records: false, calibration: false, admin: false,
+  },
   sidebar_collapsed: false,
   free_practice: true,
   show_fingerings: true,
@@ -226,6 +230,31 @@ function migrate(database) {
   }
   if (current_version < 7) {
     migrate_material_deletion_storage(database);
+  }
+  if (current_version < 8) {
+    database.exec(`
+      BEGIN IMMEDIATE;
+      CREATE TABLE calibration_submissions (
+        id TEXT PRIMARY KEY,
+        user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
+        project_id TEXT NOT NULL,
+        input_json TEXT NOT NULL,
+        base_revision TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','approved','rejected')),
+        reviewer_id TEXT REFERENCES users(id) ON DELETE SET NULL,
+        review_note TEXT NOT NULL DEFAULT '',
+        created_at TEXT NOT NULL,
+        reviewed_at TEXT
+      );
+      CREATE INDEX calibration_submission_owner ON calibration_submissions(user_id, status);
+      CREATE TABLE published_material_assets (
+        path TEXT PRIMARY KEY,
+        content TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      );
+      INSERT INTO schema_migrations(version, applied_at) VALUES (8, datetime('now'));
+      COMMIT;
+    `);
   }
 }
 
@@ -1667,6 +1696,19 @@ function create_repository(database) {
           existing?.created_at ?? now,
           now,
         );
+        for (const asset of input.assets ?? []) {
+          database.prepare(`
+            INSERT INTO published_material_assets(path, content, updated_at) VALUES (?, ?, ?)
+            ON CONFLICT(path) DO UPDATE SET content=excluded.content, updated_at=excluded.updated_at
+          `).run(asset.path, asset.content, now);
+        }
+        if (input.submission_id) {
+          const result = database.prepare(`
+            UPDATE calibration_submissions SET status='approved', reviewer_id=?, reviewed_at=?
+            WHERE id=? AND status='pending'
+          `).run(user_id, now, input.submission_id);
+          if (result.changes !== 1) throw new Error("submission_already_reviewed");
+        }
         database.exec("COMMIT");
       } catch (error) {
         database.exec("ROLLBACK");
@@ -1682,6 +1724,47 @@ function create_repository(database) {
         SELECT * FROM score_calibrations WHERE id = ?
       `).get(id);
       return row ? normalize_score_calibration(row) : undefined;
+    },
+    list_score_calibrations() {
+      return database.prepare("SELECT * FROM score_calibrations ORDER BY updated_at").all()
+        .map(normalize_score_calibration);
+    },
+    list_published_material_assets() {
+      return database.prepare("SELECT * FROM published_material_assets").all();
+    },
+    get_published_material_asset(path) {
+      return database.prepare("SELECT * FROM published_material_assets WHERE path=?").get(path);
+    },
+    create_calibration_submission(user_id, input) {
+      const pending = database.prepare(
+        "SELECT count(*) AS count FROM calibration_submissions WHERE user_id=? AND status='pending'",
+      ).get(user_id).count;
+      if (pending >= 10) return undefined;
+      const id = randomUUID();
+      database.prepare(`
+        INSERT INTO calibration_submissions(id,user_id,project_id,input_json,base_revision,created_at)
+        VALUES (?,?,?,?,?,?)
+      `).run(id, user_id, input.project.id, JSON.stringify(input), input.base_revision, new Date().toISOString());
+      return this.get_calibration_submission(id);
+    },
+    get_calibration_submission(id) {
+      const row = database.prepare("SELECT * FROM calibration_submissions WHERE id=?").get(id);
+      return row ? { ...row, input: JSON.parse(row.input_json), input_json: undefined } : undefined;
+    },
+    list_calibration_submissions(user_id) {
+      return database.prepare(`
+        SELECT s.id,s.user_id,s.project_id,s.status,s.review_note,s.created_at,s.reviewed_at,
+          u.display_name, json_extract(s.input_json,'$.project.title') AS title
+        FROM calibration_submissions s LEFT JOIN users u ON u.id=s.user_id
+        WHERE (? IS NULL OR s.user_id=?)
+        ORDER BY (s.status='pending') DESC,s.created_at DESC LIMIT 100
+      `).all(user_id ?? null, user_id ?? null);
+    },
+    reject_calibration_submission(id, reviewer_id, note) {
+      return database.prepare(`
+        UPDATE calibration_submissions SET status='rejected',reviewer_id=?,review_note=?,reviewed_at=?
+        WHERE id=? AND status='pending'
+      `).run(reviewer_id, note, new Date().toISOString(), id).changes === 1;
     },
     list_material_deletions() {
       return database.prepare(`

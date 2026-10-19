@@ -7,8 +7,10 @@ import {
   normalize_primary_calibration_fields,
   type calibration_field,
 } from "@/features/calibration/calibrationFieldOrder";
+import { normalize_feature_switches, type feature_switches } from "./navigation";
 
 export interface app_settings {
+  feature_switches: feature_switches;
   sidebar_collapsed: boolean;
   free_practice: boolean;
   show_fingerings: boolean;
@@ -24,6 +26,7 @@ const storage_key = "lianqinbu.settings.v1";
 
 export function create_initial_settings(): app_settings {
   return {
+    feature_switches: normalize_feature_switches(undefined),
     sidebar_collapsed: false,
     free_practice: true,
     show_fingerings: true,
@@ -57,6 +60,7 @@ export function load_settings(): app_settings {
       : load_calibration_field_order(window.localStorage);
     return {
       ...create_initial_settings(),
+      feature_switches: normalize_feature_switches(parsed_settings.feature_switches),
       sidebar_collapsed: parsed_settings.sidebar_collapsed === true,
       free_practice: parsed_settings.free_practice !== false,
       show_fingerings: parsed_settings.show_fingerings !== false,

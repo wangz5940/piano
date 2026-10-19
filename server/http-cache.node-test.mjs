@@ -26,11 +26,16 @@ async function fixture(t, options = {}) {
   writeFileSync(resolve(root, "jianpu-catalog.json"), JSON.stringify(catalog));
   const deletions = [];
   const server = createServer(create_request_handler({
-    repository: { list_material_deletions: () => deletions },
+    repository: {
+      list_material_deletions: () => deletions,
+      list_published_material_assets: () => [],
+      list_score_calibrations: () => [],
+    },
     static_root: root,
     uploads_root: root,
     catalog_path: resolve(root, "catalog.json"),
     logger: () => {},
+    enforce_presence: false,
     ...options,
   }));
   t.after(async () => {
@@ -128,5 +133,5 @@ test("账号及管理接口不缓存，静态资源不消耗 API 限流额度", 
     assert.equal(response.headers["cache-control"], "no-store");
     assert.equal(response.headers.etag, undefined);
   }
-  assert.equal((await read("/api/v1/health")).status, 429);
+  assert.equal((await read("/api/v1/health")).status, 200);
 });

@@ -19,7 +19,7 @@ const host = process.env.HOST ?? "0.0.0.0";
 const port = parse_positive_integer(process.env.PORT, 4173);
 const rate_limit = parse_positive_integer(process.env.RATE_LIMIT_PER_MINUTE, 180);
 const auth_rate_limit = parse_positive_integer(process.env.AUTH_RATE_LIMIT, 10);
-const max_connections = parse_positive_integer(process.env.MAX_CONNECTIONS, 1_000);
+const max_connections = parse_positive_integer(process.env.MAX_CONNECTIONS, 128);
 const trust_proxy = process.env.TRUST_PROXY === "1";
 const tls_enabled = Boolean(process.env.TLS_KEY_FILE && process.env.TLS_CERT_FILE);
 const secure_cookies = tls_enabled || process.env.COOKIE_SECURE === "1";
@@ -44,6 +44,12 @@ const request_handler = create_request_handler({
   trust_proxy,
   global_rate_limit: rate_limit,
   auth_rate_limit,
+  api_qps: parse_positive_integer(process.env.API_QPS, 30),
+  client_qps: parse_positive_integer(process.env.CLIENT_QPS, 8),
+  online_limit: parse_positive_integer(process.env.ONLINE_LIMIT, 60),
+  online_per_ip: parse_positive_integer(process.env.ONLINE_PER_IP, 10),
+  max_inflight: parse_positive_integer(process.env.MAX_INFLIGHT, 48),
+  auth_concurrency: parse_positive_integer(process.env.AUTH_CONCURRENCY, 2),
 });
 const server = create_server(request_handler);
 

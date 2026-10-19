@@ -320,10 +320,30 @@ export function validate_score_calibration_save(value, options = {}) {
     valid_set_value(state.status, new Set(["pending", "in_progress", "passed"]), `${level} 状态`);
     nullable_iso_timestamp(state.confirmed_at, `${level} 确认时间`);
   }
-  const validation = as_record(input.validation, "校验结果必须是对象");
+  // Never trust client-provided validation or publication attribution.
+  const validation = { structural: "passed", checked_at: new Date().toISOString() };
+  const base_revision = required_string(input.base_revision, "原谱版本", 64, 64);
+  if (!sha256_pattern.test(base_revision)) throw new validation_error("原谱版本无效");
+  if (Object.keys(project.event_metadata).length > 50_000) {
+    throw new validation_error("校对元数据数量过多");
+  }
+  for (const [event_id, metadata] of Object.entries(project.event_metadata)) {
+    identifier(event_id, "事件 ID");
+    const record = as_record(metadata, "事件元数据无效");
+    if (JSON.stringify(record).length > 4_000) throw new validation_error("事件元数据过大");
+    for (const value of Object.values(record)) {
+      if (value !== null && typeof value !== "string" && typeof value !== "number") {
+        throw new validation_error("事件元数据只支持文字、数值或空值");
+      }
+      if (typeof value === "string" && value.length > 1_000) throw new validation_error("事件元数据文字过长");
+      if (typeof value === "number" && !Number.isFinite(value)) throw new validation_error("事件元数据数值无效");
+    }
+  }
+  project.musicxml = null;
   return {
     material_id: match[1],
     segment_id: match[2],
+    base_revision,
     project: structuredClone(project),
     validation: structuredClone(validation),
   };
@@ -342,11 +362,15 @@ function normalize_score_calibration_project(project, publication) {
     : {};
   document.review = {
     ...review,
-    published_by: review.published_by ?? publication.published_by,
-    published_at: review.published_at ?? publication.published_at,
+    published_by: publication.published_by,
+    published_at: publication.published_at,
   };
   for (const measure of document.measures ?? []) {
     for (const event of measure.events ?? []) {
+      if (event.chord === null || event.chord === "") {
+        delete event.chord;
+        delete event.chord_annotation;
+      }
       for (const note of event.notes ?? []) {
         if (note?.fingering && typeof note.fingering === "object") {
           note.fingering.status = "published";
@@ -484,7 +508,14 @@ export function validate_score_document(value, { for_publish = false } = {}) {
       }
       event_ids.add(event_id);
       const onset = bounded_number(event.onset_beats, "事件起拍", 0, beats);
-      const duration = bounded_number(event.duration_beats, "事件时值", 0.0001, beats);
+      if (event.grace !== undefined) {
+        const grace = as_record(event.grace, "倚音记谱无效");
+        if (typeof grace.slash !== "boolean" || event.duration_beats !== 0) {
+          throw new validation_error("倚音不得占用小节拍数");
+        }
+        bounded_number(grace.written_quarters, "倚音记谱时值", 0.0001, 32);
+      }
+      const duration = bounded_number(event.duration_beats, "事件时值", event.grace ? 0 : 0.0001, beats);
       if (onset + duration > beats + 0.0001) {
         throw new validation_error("事件时值超出小节");
       }
@@ -823,6 +854,10 @@ function validate_preferences(value) {
     preferences.calibration_field_order,
   );
   return {
+    feature_switches: Object.fromEntries(
+      ["dashboard", "courses", "materials", "repertoire", "records", "calibration", "admin"]
+        .map((key) => [key, preferences.feature_switches?.[key] === true]),
+    ),
     sidebar_collapsed: preferences.sidebar_collapsed === true,
     free_practice: preferences.free_practice !== false,
     show_fingerings: preferences.show_fingerings !== false,

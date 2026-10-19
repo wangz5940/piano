@@ -78,6 +78,7 @@ export interface calibration_project {
   event_metadata: Record<string, calibration_event_metadata>;
   levels: Record<calibration_level, calibration_level_state>;
   updated_at: string;
+  base_revision?: string;
 }
 
 export interface calibration_issue {

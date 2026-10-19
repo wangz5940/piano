@@ -2,9 +2,11 @@ import { lazy, useEffect } from "react";
 import { HashRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import { PageBoundary } from "@/components/PageBoundary";
+import { CapacityGate } from "@/components/CapacityGate";
 import { Dashboard } from "@/pages/Dashboard";
 import { page_loaders } from "@/pageLoaders";
 import { use_auth_store } from "@/store/useAuthStore";
+import { use_app_settings_store } from "@/store/useAppSettingsStore";
 
 const CoursePath = lazy(page_loaders.course);
 const Account = lazy(page_loaders.account);
@@ -21,11 +23,12 @@ const ScoreCalibration = lazy(page_loaders.calibration);
 export default function App() {
   return (
     <HashRouter>
+      <CapacityGate>
       <RouteScrollReset />
       <AuthBootstrap />
       <PageBoundary>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/收藏" element={<Favorites />} />
           <Route path="/课程" element={<CoursePath />} />
           <Route path="/教材" element={<MaterialLibrary />} />
@@ -44,8 +47,14 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </PageBoundary>
+      </CapacityGate>
     </HashRouter>
   );
+}
+
+function HomePage() {
+  const enabled = use_app_settings_store((state) => state.feature_switches.dashboard);
+  return enabled ? <Dashboard /> : <Navigate to="/简谱教材" replace />;
 }
 
 function AuthBootstrap() {

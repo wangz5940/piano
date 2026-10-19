@@ -17,6 +17,8 @@ describe("学习管理", () => {
     expect(markup).toContain("默认显示谱面指法");
     expect(markup).toContain("麦克风判定");
     expect(markup).toContain("录制校准音");
-    expect(markup).toContain('href="/课程"');
+    expect(markup).toContain("按需开启更多功能");
+    expect(markup).toContain('href="/简谱教材"');
+    expect(markup).not.toContain('href="/课程"');
   });
 });

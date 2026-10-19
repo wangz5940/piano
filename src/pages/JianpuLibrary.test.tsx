@@ -228,7 +228,7 @@ describe("简谱教材", () => {
     expect(markup).toContain("下一曲");
     expect(markup).toContain("已经是第一曲");
     expect(markup).toContain("已经是最后一曲");
-    expect(markup).not.toContain("去校准");
+    expect(markup).not.toContain("校对乐谱");
     expect(markup).not.toContain("左手休止");
   });
 
@@ -244,7 +244,7 @@ describe("简谱教材", () => {
       </MemoryRouter>,
     );
 
-    expect(markup).toContain("去校准");
+    expect(markup).toContain("校对乐谱");
     expect(markup).toContain('href="/校准?segment=beyer%3Abeyer.segment.001"');
   });
 
@@ -279,9 +279,9 @@ describe("简谱教材", () => {
 
     expect(markup).toContain("教材章节");
     expect(markup).toContain("章节导读");
-    expect(markup).toContain("本页内容");
+    expect(markup).toContain("章节学习提示");
     expect(markup).toContain("每当一个手指触键时");
-    expect(markup).toContain("关联练习");
+    expect(markup).toContain("乐曲目录");
   });
 
   it("对无效教材路由显示明确的未找到状态", () => {

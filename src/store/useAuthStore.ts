@@ -322,6 +322,7 @@ function apply_snapshot(snapshot: user_snapshot): void {
 function get_current_settings(): app_settings {
   const settings = use_app_settings_store.getState();
   return {
+    feature_switches: settings.feature_switches,
     sidebar_collapsed: settings.sidebar_collapsed,
     free_practice: settings.free_practice,
     show_fingerings: settings.show_fingerings,

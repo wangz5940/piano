@@ -35,6 +35,7 @@ describe("学习设置存储", () => {
     });
 
     expect(load_settings()).toEqual({
+      feature_switches: create_initial_settings().feature_switches,
       sidebar_collapsed: true,
       free_practice: false,
       show_fingerings: false,
@@ -44,6 +45,18 @@ describe("学习设置存储", () => {
       audio_tuning_offset_cents: 1.4,
       calibration_field_order: expect.arrayContaining(["staff", "pitch_name"]),
       calibration_primary_fields: ["staff", "pitch_name"],
+    });
+  });
+
+  it("旧设置默认关闭额外入口，只有明确的布尔值 true 开启", () => {
+    expect(Object.values(create_initial_settings().feature_switches).every((value) => !value)).toBe(true);
+    vi.stubGlobal("window", {
+      localStorage: { getItem: () => JSON.stringify({
+        feature_switches: { courses: true, admin: "true", records: 1 },
+      }) },
+    });
+    expect(load_settings().feature_switches).toEqual({
+      ...create_initial_settings().feature_switches, courses: true,
     });
   });
 });

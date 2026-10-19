@@ -1,4 +1,5 @@
 import { resolve, sep } from "node:path";
+import { randomBytes } from "node:crypto";
 
 export const security_headers = Object.freeze({
   "Content-Security-Policy": [
@@ -105,4 +106,57 @@ function evict_oldest_client(clients) {
   if (oldest_key !== undefined) {
     clients.delete(oldest_key);
   }
+}
+
+/** A bounded token bucket; new clients cannot evict an active client's limits. */
+export function create_token_limiter({ rate, burst = rate, max_clients = 2_048, now = Date.now }) {
+  const clients = new Map();
+  return {
+    check(key) {
+      const timestamp = now();
+      let state = clients.get(key);
+      if (!state) {
+        if (clients.size >= max_clients) {
+          for (const [id, value] of clients) {
+            if (timestamp - value.at > 60_000) clients.delete(id);
+          }
+          if (clients.size >= max_clients) return false;
+        }
+        state = { tokens: burst, at: timestamp };
+        clients.set(key, state);
+      }
+      state.tokens = Math.min(burst, state.tokens + (timestamp - state.at) * rate / 1_000);
+      state.at = timestamp;
+      if (state.tokens < 1) return false;
+      state.tokens -= 1;
+      return true;
+    },
+  };
+}
+
+/** Online means a browser with a live, server-issued 90-second lease. */
+export function create_presence_limiter({ limit = 60, per_ip = 10, ttl_ms = 90_000, now = Date.now } = {}) {
+  const leases = new Map();
+  return {
+    acquire(token, ip) {
+      const timestamp = now();
+      for (const [id, lease] of leases) if (lease.expires <= timestamp) leases.delete(id);
+      const existing = token && leases.get(token);
+      if (existing && existing.ip === ip) {
+        existing.expires = timestamp + ttl_ms;
+        return { token, online: leases.size };
+      }
+      if (leases.size >= limit || [...leases.values()].filter((lease) => lease.ip === ip).length >= per_ip) return undefined;
+      const next = randomBytes(24).toString("hex");
+      leases.set(next, { ip, expires: timestamp + ttl_ms });
+      return { token: next, online: leases.size };
+    },
+  };
+}
+
+export function is_same_origin_write(request) {
+  if (request.headers["sec-fetch-site"] === "cross-site") return false;
+  const origin = request.headers.origin;
+  if (!origin) return true; // CLI callers must still carry the custom client header and session.
+  try { return new URL(origin).host === request.headers.host; } catch { return false; }
 }

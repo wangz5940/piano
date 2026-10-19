@@ -39,9 +39,10 @@ test("SQLite 初始化完整业务表和外键", () => {
     ORDER BY name
   `).all().map((row) => row.name);
 
-  assert.equal(repository.get_schema_version(), 7);
+  assert.equal(repository.get_schema_version(), 8);
   assert.deepEqual(tables, [
     "audit_events",
+    "calibration_submissions",
     "content_items",
     "content_versions",
     "curriculum_nodes",
@@ -51,6 +52,7 @@ test("SQLite 初始化完整业务表和外键", () => {
     "material_deletions",
     "material_reviews",
     "practice_sessions",
+    "published_material_assets",
     "schema_migrations",
     "score_calibrations",
     "score_drafts",
@@ -638,6 +640,9 @@ test("业务 API 支持账号、同步、练习归档和管理员内容版本", 
     cookie: admin_cookie,
     body: {
       project: create_calibration_project_payload(),
+      base_revision: (await fixture.request("/api/v1/calibrations/source?material_id=beyer&segment_id=beyer.segment.034", {
+        cookie: admin_cookie,
+      })).data.base_revision,
       validation: {
         ok: false,
         by_level: {
@@ -862,6 +867,100 @@ async function upload_version(fixture, cookie, content_id, musicxml_text) {
   });
 }
 
+test("个人校对隔离、超管审批、版本冲突和发布重启恢复", async (t) => {
+  const fixture = await create_fixture();
+  t.after(() => fixture.close());
+  const cookies = {};
+  for (const role of ["student", "parent", "admin"]) {
+    const user = fixture.repository.create_user({
+      email: `${role}@test.example`, display_name: role, role,
+      ...await hash_password("test-password-123"),
+    });
+    const session = create_session_credentials();
+    fixture.repository.create_session({
+      token_hash: session.token_hash, user_id: user.id, expires_at: session.expires_at,
+    });
+    cookies[role] = `panio_session=${session.token}`;
+  }
+  const source_path = "/api/v1/calibrations/source?material_id=beyer&segment_id=beyer.segment.034";
+  const source = await fixture.request(source_path, { cookie: cookies.student });
+  const input = { project: create_calibration_project_payload(), base_revision: source.data.base_revision };
+  const original = readFileSync(resolve(fixture.root, "jianpu/beyer/034.json"), "utf8");
+  assert.equal((await fixture.request("/api/v1/admin/calibrations", {
+    method: "POST", cookie: cookies.student, body: input,
+  })).status, 403);
+  const submit = await fixture.request("/api/v1/calibrations/submissions", {
+    method: "POST", cookie: cookies.student, body: input,
+  });
+  assert.equal(submit.status, 201);
+  assert.equal(readFileSync(resolve(fixture.root, "jianpu/beyer/034.json"), "utf8"), original);
+  const path = `/api/v1/calibrations/submissions/${submit.data.submission.id}`;
+  assert.equal((await fixture.request(path, { cookie: cookies.parent })).status, 404);
+  assert.equal((await fixture.request("/api/v1/calibrations/submissions", {
+    cookie: cookies.parent,
+  })).data.submissions.length, 0);
+  assert.equal((await fixture.request(path, {
+    method: "POST", cookie: cookies.student, body: { decision: "approve" },
+  })).status, 403);
+  const second = await fixture.request("/api/v1/calibrations/submissions", {
+    method: "POST", cookie: cookies.parent, body: input,
+  });
+  const approved = await fixture.request(path, {
+    method: "POST", cookie: cookies.admin, body: { decision: "approve" },
+  });
+  assert.equal(approved.status, 200, JSON.stringify(approved.data));
+  assert.equal(approved.data.submission.status, "approved");
+  assert.notEqual(readFileSync(resolve(fixture.root, "jianpu/beyer/034.json"), "utf8"), original);
+  assert.equal((await fixture.request(path, {
+    method: "POST", cookie: cookies.admin, body: { decision: "approve" },
+  })).status, 409);
+  const stale_path = `/api/v1/calibrations/submissions/${second.data.submission.id}`;
+  assert.equal((await fixture.request(stale_path, {
+    method: "POST", cookie: cookies.admin, body: { decision: "approve" },
+  })).status, 409);
+  assert.equal((await fixture.request(stale_path, {
+    method: "POST", cookie: cookies.admin, body: { decision: "reject", note: "请合并新版" },
+  })).data.submission.status, "rejected");
+  // Contributor-supplied chapter names must not leak through approval.
+  const catalog = JSON.parse(readFileSync(resolve(fixture.root, "jianpu-catalog.json")));
+  assert.equal(catalog.materials[0].chapters[0].title, "原章节名");
+  const durable = fixture.repository.list_published_material_assets();
+  assert.ok(durable.length >= 3);
+  const published = readFileSync(resolve(fixture.root, "jianpu/beyer/034.json"), "utf8");
+  writeFileSync(resolve(fixture.root, "jianpu/beyer/034.json"), original);
+  const reopened = open_database(resolve(fixture.root, "test.sqlite"));
+  create_request_handler({
+    repository: reopened, static_root: resolve(fixture.root, "dist"),
+    uploads_root: resolve(fixture.root, "content"), catalog_path: resolve(fixture.root, "catalog.json"),
+  });
+  reopened.close();
+  assert.equal(readFileSync(resolve(fixture.root, "jianpu/beyer/034.json"), "utf8"), published);
+});
+
+test("在线容量和请求限流不能用伪造 IP 绕过，健康检查不被挤占", async (t) => {
+  const fixture = await create_fixture({ enforce_presence: true, online_limit: 1, online_per_ip: 1 });
+  t.after(() => fixture.close());
+  const first = await fixture.request("/api/v1/presence", { method: "POST", body: {} });
+  assert.equal(first.status, 200);
+  assert.match(first.cookie, /^panio_visit=/);
+  assert.equal((await fixture.request("/api/v1/presence", {
+    method: "POST", body: {}, cookie: first.cookie,
+  })).status, 200);
+  assert.equal((await fixture.request("/api/v1/presence", {
+    method: "POST", body: {}, headers: { "X-Forwarded-For": "1.2.3.4" },
+  })).status, 503);
+  assert.equal((await fixture.request("/api/v1/health")).status, 200);
+  assert.equal((await fixture.request("/api/v1/auth/register", {
+    method: "POST", body: {}, headers: { Origin: "https://attacker.example" },
+  })).status, 403);
+  const limited = await create_fixture({ api_qps: 1, client_qps: 1 });
+  t.after(() => limited.close());
+  await limited.request("/api/v1/auth/me");
+  await limited.request("/api/v1/auth/me");
+  assert.equal((await limited.request("/api/v1/auth/me")).status, 429);
+  assert.equal((await limited.request("/api/v1/health")).status, 200);
+});
+
 function create_musicxml(title) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <score-partwise version="4.0">
@@ -1000,7 +1099,7 @@ function create_calibration_project_payload() {
   };
 }
 
-async function create_fixture() {
+async function create_fixture(options = {}) {
   const root = mkdtempSync(resolve(tmpdir(), "panio-backend-"));
   const static_root = resolve(root, "dist");
   const uploads_root = resolve(root, "content");
@@ -1093,7 +1192,7 @@ async function create_fixture() {
   mkdirSync(resolve(root, "beyer"), { recursive: true });
   writeFileSync(resolve(root, "beyer", "034.musicxml"), create_musicxml("测试片段"));
 
-  const repository = open_database(":memory:");
+  const repository = open_database(resolve(root, "test.sqlite"));
   const server = createServer(create_request_handler({
     repository,
     static_root,
@@ -1101,7 +1200,11 @@ async function create_fixture() {
     catalog_path,
     global_rate_limit: 1_000,
     auth_rate_limit: 100,
+    api_qps: 1_000,
+    client_qps: 1_000,
+    enforce_presence: false,
     logger: () => {},
+    ...options,
   }));
   await new Promise((resolve_listen) => server.listen(0, "127.0.0.1", resolve_listen));
   const address = server.address();
@@ -1115,8 +1218,9 @@ async function create_fixture() {
       body,
       cookie,
       raw = false,
+      headers: extra_headers = {},
     } = {}) {
-      const headers = {};
+      const headers = { ...extra_headers };
       if (body !== undefined) {
         headers["Content-Type"] = "application/json";
         headers["X-Panio-Client"] = "web";

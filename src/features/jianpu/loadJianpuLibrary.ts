@@ -159,6 +159,8 @@ function normalize_segment(value: unknown): jianpu_segment {
     source_pages,
     source_page_label: as_string(record.source_page_label, "简谱教材片段缺少来源页说明"),
     page_slices,
+    content_sections: record.content_sections === undefined ? undefined
+      : as_array(record.content_sections, "简谱教材内容边界无效").map(normalize_page_slice),
     exercise_labels: as_string_array(record.exercise_labels, "简谱教材练习标签无效"),
     section_title: as_optional_string(record.section_title, "简谱教材章节标题无效"),
     jianpu_url: as_string(record.jianpu_url, "简谱教材片段缺少简谱地址"),
@@ -190,6 +192,7 @@ function normalize_page_slice(value: unknown): jianpu_page_slice {
     chapter_id: as_string(record.chapter_id, "简谱教材页内章节 ID 缺失"),
     chapter_title: as_string(record.chapter_title, "简谱教材页内章节标题缺失"),
     mapping: as_slice_mapping(record.mapping),
+    ...(record.continues === true ? { continues: true } : {}),
   };
 }
 
@@ -217,9 +220,10 @@ function validate_page_slices(
   if (page_slices.length === 0) {
     throw new Error("简谱教材片段缺少页内拆分");
   }
-  const sliced_pages = page_slices.flatMap((slice) => slice.source_pages);
-  if (sliced_pages.length !== source_pages.length ||
-    sliced_pages.some((page, index) => page !== source_pages[index])) {
+  const sliced_pages = [...new Set(page_slices.flatMap((slice) => slice.source_pages))];
+  const expected_pages = [...new Set(source_pages)];
+  if (sliced_pages.length !== expected_pages.length ||
+    sliced_pages.some((page, index) => page !== expected_pages[index])) {
     throw new Error("简谱教材页内来源页不一致");
   }
   let next_measure_start = 1;

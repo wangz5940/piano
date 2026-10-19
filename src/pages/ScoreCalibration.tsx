@@ -12,7 +12,6 @@ import {
   Check,
   ChevronDown,
   ChevronRight,
-  CircleAlert,
   Download,
   FileMusic,
   Pause,
@@ -72,7 +71,6 @@ import type {
 import {
   clear_jianpu_library_cache,
   load_jianpu_catalog,
-  load_jianpu_score,
 } from "@/features/jianpu/loadJianpuLibrary";
 import {
   load_score_favorites,
@@ -95,6 +93,8 @@ import type {
 import { create_manual_fingering_annotation } from "@/features/score";
 import { use_app_settings_store } from "@/store/useAppSettingsStore";
 import { use_auth_store } from "@/store/useAuthStore";
+import { CalibrationReviews } from "@/features/calibration/CalibrationReviews";
+import { parse_musicxml_to_score_document } from "@/features/calibration/musicxml";
 
 interface score_calibration_props {
   user_override?: account_user | null;
@@ -155,7 +155,13 @@ const level_copy: Record<
   L3: { title: "教学数据", copy: "手别、指法、手位与训练目标" },
 };
 
-export function ScoreCalibration({
+export function ScoreCalibration(props: score_calibration_props = {}) {
+  const stored_user = use_auth_store((state) => state.user);
+  const user = props.user_override === undefined ? stored_user : props.user_override;
+  return <CalibrationWorkbench key={user?.id ?? "guest"} {...props} />;
+}
+
+function CalibrationWorkbench({
   user_override,
   initial_projects,
   initial_catalog,
@@ -168,7 +174,7 @@ export function ScoreCalibration({
     const candidates = initial_projects ??
       (typeof window === "undefined"
         ? []
-        : load_calibration_projects(window.localStorage));
+        : user ? load_calibration_projects(window.localStorage, user.id) : []);
     return candidates.map((candidate) =>
       synchronize_project_notation_metadata(structuredClone(candidate)));
   });
@@ -190,6 +196,7 @@ export function ScoreCalibration({
   const [inspector_layout, set_inspector_layout] =
     useState<calibration_inspector_layout>("bottom");
   const [is_saving, set_is_saving] = useState(false);
+  const [review_version, set_review_version] = useState(0);
   const [score_viewport_size, set_score_viewport_size] = useState({
     width: score_preview_natural_width,
     height: 640,
@@ -326,7 +333,7 @@ export function ScoreCalibration({
   }, [project?.id, preview_mode, score_scale_mode, score_viewport_size.width]);
 
   useEffect(() => {
-    if (initial_catalog || initial_projects || user?.role !== "admin") {
+    if (initial_catalog || initial_projects || !user?.id) {
       return;
     }
     let active = true;
@@ -373,7 +380,7 @@ export function ScoreCalibration({
     return () => {
       active = false;
     };
-  }, [initial_catalog, initial_projects, requested_segment_key, user?.role]);
+  }, [initial_catalog, initial_projects, requested_segment_key, user?.id]);
 
   useEffect(() => {
     if (!requested_segment_key || segment_options.length === 0) {
@@ -402,16 +409,32 @@ export function ScoreCalibration({
     }
     let active = true;
     set_is_loading_catalog(true);
-    void load_jianpu_score(selected.segment.jianpu_url)
-      .then((score) => {
+    void api_request<{ score: jianpu_score; musicxml: string; project?: calibration_project; base_revision: string }>(
+      `/api/v1/calibrations/source?material_id=${encodeURIComponent(selected.material.id)}&segment_id=${encodeURIComponent(selected.segment.id)}`,
+    )
+      .then(({ score, musicxml, project: published_project, base_revision }) => {
         if (!active) {
           return;
         }
-        const next_project = project_from_jianpu_segment(
+        const next_project = published_project ?? project_from_jianpu_segment(
           selected.material,
           selected.segment,
           score,
         );
+        if (!published_project) {
+          const imported = parse_musicxml_to_score_document(musicxml, next_project.work, {
+            id: next_project.document.id, source_file: selected.segment.musicxml_url,
+          });
+          next_project.title = selected.segment.title;
+          next_project.document = imported.document;
+          next_project.document.title = selected.segment.title;
+          next_project.event_metadata = imported.event_metadata;
+        }
+        next_project.base_revision = base_revision;
+        next_project.material_catalog ??= {
+          material_id: selected.material.id, title: selected.material.title,
+          chapters: selected.material.chapters,
+        };
         set_projects((current) => merge_material_projects(current, [next_project]));
         set_selected_project_id(next_project.id);
         set_preview_mode("jianpu");
@@ -439,24 +462,13 @@ export function ScoreCalibration({
       <AppShell>
         <CalibrationState
           icon={<ShieldCheck size={24} />}
-          title={auth_status === "loading" ? "正在确认账号权限" : "请先登录管理员账号"}
-          copy="校准项目包含未发布乐谱和本地原件，只向管理员开放。"
+          title={auth_status === "loading" ? "正在确认账号权限" : "登录后即可校对"}
+          copy="个人修改保存到本机，仅自己可见；提交后由超管审批发布。"
         >
           <Link to="/账号" className="primary-button">
             前往登录 <ArrowRight size={17} />
           </Link>
         </CalibrationState>
-      </AppShell>
-    );
-  }
-  if (user.role !== "admin") {
-    return (
-      <AppShell>
-        <CalibrationState
-          icon={<CircleAlert size={24} />}
-          title="当前账号没有乐谱校准权限"
-          copy="请使用管理员账号进入校准台。"
-        />
       </AppShell>
     );
   }
@@ -585,6 +597,18 @@ export function ScoreCalibration({
     set_message("作品标题已更新，并同步到当前教材片段列表。");
   };
 
+  const save_local = () => {
+    try {
+      save_calibration_projects([
+        project, ...load_calibration_projects(window.localStorage, user.id).filter((item) => item.id !== project.id),
+      ], window.localStorage, user.id);
+      clear_jianpu_library_cache();
+      set_message("个人校对已保存，简谱教材和原谱中仅你自己可见。");
+    } catch {
+      set_message("本机存储空间不足，请导出校对数据后重试。");
+    }
+  };
+
   const save_to_database = async () => {
     if (data_json_error) {
       set_message(data_json_error);
@@ -596,6 +620,19 @@ export function ScoreCalibration({
         project,
         user?.id ?? "calibration-workbench",
       );
+      if (!project.base_revision) throw new Error("请重新载入公共版本后再提交。");
+      if (user.role !== "admin") {
+        save_calibration_projects([
+          project, ...load_calibration_projects(window.localStorage, user.id).filter((item) => item.id !== project.id),
+        ], window.localStorage, user.id);
+        await api_request("/api/v1/calibrations/submissions", {
+          method: "POST",
+          body: { project, base_revision: project.base_revision },
+        });
+        set_message("已提交超管审批。个人修改仍只对自己可见。");
+        set_review_version((value) => value + 1);
+        return;
+      }
       const response = await api_request<{
         calibration: { updated_at: string };
         original_sync: {
@@ -607,15 +644,22 @@ export function ScoreCalibration({
         body: {
           project: project_to_save,
           validation,
+          base_revision: project.base_revision,
         },
       });
       clear_jianpu_library_cache();
       clear_material_asset_cache();
+      const source = await api_request<{ base_revision: string }>(
+        `/api/v1/calibrations/source?material_id=${encodeURIComponent(project.id.split(":")[1])}&segment_id=${encodeURIComponent(project.id.split(":").slice(2).join(":"))}`,
+      );
+      project_to_save.base_revision = source.base_revision;
       const next_projects = projects.map((candidate) =>
         candidate.id === project_to_save.id ? project_to_save : candidate);
       set_projects(next_projects);
       try {
-        save_calibration_projects(next_projects, window.localStorage);
+        // Published data comes from the server; do not keep an overriding personal copy.
+        save_calibration_projects(load_calibration_projects(window.localStorage, user.id)
+          .filter((item) => item.id !== project.id), window.localStorage, user.id);
         save_score_favorites(upsert_score_favorite(
           load_score_favorites(),
           create_calibration_favorite(project_to_save),
@@ -638,6 +682,8 @@ export function ScoreCalibration({
   const delete_project = () => {
     const next = remove_calibration_project(projects, project.id);
     set_projects(next);
+    save_calibration_projects(load_calibration_projects(window.localStorage, user.id)
+      .filter((item) => item.id !== project.id), window.localStorage, user.id);
     set_selected_project_id(next[0]?.id ?? "");
   };
 
@@ -1119,16 +1165,20 @@ export function ScoreCalibration({
       <section className="calibration-header">
         <div>
           <p className="eyebrow"><ScanSearch size={15} /> 乐谱校准台</p>
-          <h1>从原件证据到 Golden Score</h1>
+          <h1>校对每一个音符</h1>
+          <p>{user.role === "admin" ? "超管发布和审批后更新公共原谱。" : "本机保存仅自己可见，公共原谱由超管审批后更新。"}</p>
         </div>
         <div className="calibration-header-actions">
+          <button type="button" className="secondary-button" onClick={save_local} disabled={Boolean(data_json_error)}>
+            保存到本机
+          </button>
           <button
             type="button"
             className="secondary-button"
             onClick={() => void save_to_database()}
             disabled={is_saving || Boolean(data_json_error)}
           >
-            <Save size={16} /> {is_saving ? "保存中" : "保存"}
+            <Save size={16} /> {is_saving ? "提交中" : user.role === "admin" ? "发布到公共原谱" : "提交审批"}
           </button>
           <button
             type="button"
@@ -1140,6 +1190,7 @@ export function ScoreCalibration({
           </button>
         </div>
       </section>
+      <CalibrationReviews user={user} refresh_version={review_version} />
 
       <section className="calibration-levels" aria-label="校准等级">
         {calibration_levels.map((level) => {
@@ -1264,9 +1315,9 @@ export function ScoreCalibration({
                 className="calibration-delete"
                 onClick={delete_project}
               >
-                <Trash2 size={14} /> 清除当前校准
+                <Trash2 size={14} /> 重新载入公共版本
               </button>
-              <button
+              {user.role === "admin" && <button
                 type="button"
                 className="calibration-delete"
                 disabled={!project.material_catalog?.material_id ||
@@ -1278,7 +1329,7 @@ export function ScoreCalibration({
                 {deleting_material_segment_id === get_project_segment_id(project)
                   ? "删除中"
                   : "删除教材片段"}
-              </button>
+              </button>}
             </>
           )}
           {is_segment_panel_collapsed && (

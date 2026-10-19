@@ -22,6 +22,9 @@ import {
 } from "./auth.mjs";
 import {
   create_rate_limiter,
+  create_token_limiter,
+  create_presence_limiter,
+  is_same_origin_write,
   is_safe_request_target,
   resolve_static_path,
   security_headers,
@@ -58,6 +61,13 @@ export function create_request_handler({
   trust_proxy = false,
   global_rate_limit = 180,
   auth_rate_limit = 10,
+  api_qps = 30,
+  client_qps = 8,
+  online_limit = 60,
+  online_per_ip = 10,
+  max_inflight = 48,
+  auth_concurrency = 2,
+  enforce_presence = true,
   logger = default_logger,
   started_at = Date.now(),
 }) {
@@ -69,8 +79,16 @@ export function create_request_handler({
     limit: auth_rate_limit,
     window_ms: 15 * 60_000,
   });
+  const api_bucket = create_token_limiter({ rate: api_qps, burst: api_qps * 2 });
+  const client_bucket = create_token_limiter({ rate: client_qps, burst: client_qps * 2 });
+  const static_bucket = create_token_limiter({ rate: 120, burst: 240 });
+  const static_client_bucket = create_token_limiter({ rate: 40, burst: 80 });
+  const presence = create_presence_limiter({ limit: online_limit, per_ip: online_per_ip });
+  let inflight = 0;
+  let auth_inflight = 0;
   const materials_root = dirname(catalog_path);
   const jianpu_catalog_path = resolve(materials_root, "jianpu-catalog.json");
+  restore_published_materials(repository, materials_root, static_root);
   let catalog_cache;
   let jianpu_catalog_cache;
 
@@ -113,10 +131,55 @@ export function create_request_handler({
       }
 
       const client_id = get_client_id(request, trust_proxy);
+      const health = pathname === "/api/v1/health";
+      const api = pathname.startsWith("/api/");
+      if (!health && (inflight >= max_inflight ||
+        !(api ? api_bucket : static_bucket).check("global") ||
+        !(api ? client_bucket : static_client_bucket).check(client_id))) {
+        response.setHeader("Retry-After", "2");
+        send_error(response, 429, "capacity_limited", "访问较多，请稍后重试。", request_id);
+        return;
+      }
+      if (!health) {
+        inflight++;
+        response.once("close", () => { inflight--; });
+      }
+      if (is_write_method(request.method ?? "GET") && !is_same_origin_write(request)) {
+        send_error(response, 403, "cross_origin_denied", "不接受跨站写入。", request_id);
+        return;
+      }
+      if (enforce_presence && !health && (api || pathname.startsWith("/materials/"))) {
+        const token = /(?:^|;\s*)panio_visit=([a-f0-9]{48})(?:;|$)/.exec(request.headers.cookie ?? "")?.[1];
+        const lease = presence.acquire(token, client_id);
+        if (!lease) {
+          response.setHeader("Retry-After", "30");
+          send_error(response, 503, "online_capacity", "当前在线人数已达上限，请稍后再试。", request_id);
+          return;
+        }
+        if (lease.token !== token) response.appendHeader("Set-Cookie",
+          `panio_visit=${lease.token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400${secure_cookies ? "; Secure" : ""}`);
+        if (pathname === "/api/v1/presence" && request.method === "POST") {
+          if (request.headers["x-panio-client"] !== "web") throw new validation_error("缺少客户端标识", 403);
+          send_json(response, 200, { online: lease.online, limit: online_limit, heartbeat_seconds: 25 });
+          return;
+        }
+      }
+      const password_work = request.method === "POST" &&
+        ["/api/v1/auth/register", "/api/v1/auth/login"].includes(pathname) ||
+        request.method === "DELETE" && pathname === "/api/v1/me";
+      if (password_work) {
+        if (auth_inflight >= auth_concurrency) {
+          response.setHeader("Retry-After", "2");
+          send_error(response, 429, "auth_busy", "登录服务繁忙，请稍后重试。", request_id);
+          return;
+        }
+        auth_inflight++;
+      }
+      try {
       if (pathname.startsWith("/api/")) {
         const rate = global_limiter.check(client_id);
         set_rate_headers(response, global_rate_limit, rate);
-        if (!rate.allowed) {
+        if (!health && !rate.allowed) {
           response.setHeader("Retry-After", String(rate.retry_after_seconds));
           send_error(
             response,
@@ -136,6 +199,7 @@ export function create_request_handler({
           repository,
           uploads_root,
           materials_root,
+          static_root,
           secure_cookies,
           auth_limiter,
           auth_rate_limit,
@@ -158,7 +222,30 @@ export function create_request_handler({
         return;
       }
 
-      handle_static_request(request, response, url, request_id, static_root);
+      // Source assets reflect approved publications, including immediately after deployment.
+      if (pathname.startsWith("/materials/")) {
+        if (!["GET", "HEAD"].includes(request.method)) {
+          send_error(response, 405, "method_not_allowed", "静态资源仅接受 GET 或 HEAD。", request_id);
+          return;
+        }
+        const file_path = resolve_static_path(materials_root, pathname.slice("/materials".length));
+        if (!file_path || !is_regular_file(file_path)) {
+          send_error(response, 404, "not_found", "资源不存在。", request_id);
+          return;
+        }
+        if (["/materials/catalog.json", "/materials/jianpu-catalog.json"].includes(pathname)) {
+          send_public_json(request, response, apply_material_segment_deletions(
+            JSON.parse(readFileSync(file_path, "utf8")), repository.list_material_deletions(),
+          ));
+        } else {
+          serve_file(request, response, file_path);
+        }
+      } else {
+        handle_static_request(request, response, url, request_id, static_root);
+      }
+      } finally {
+        if (password_work) auth_inflight--;
+      }
     })().catch((error) => {
       if (response.writableEnded) {
         return;
@@ -319,6 +406,67 @@ async function handle_api_request(context) {
   }
 
   const user = authenticate_request(request, repository);
+
+  if (pathname === "/api/v1/calibrations/source" && method === "GET") {
+    require_user(user);
+    const material_id = url.searchParams.get("material_id");
+    const segment_id = url.searchParams.get("segment_id");
+    const source = calibration_source(context, material_id, segment_id);
+    send_json(response, 200, {
+      base_revision: source.revision,
+      score: JSON.parse(source.score),
+      musicxml: source.xml,
+      project: repository.get_score_calibration(`material:${material_id}:${segment_id}`)?.project,
+    });
+    return;
+  }
+  if (pathname === "/api/v1/calibrations/submissions" && method === "GET") {
+    require_user(user);
+    send_json(response, 200, {
+      submissions: repository.list_calibration_submissions(user.role === "admin" ? undefined : user.id),
+    });
+    return;
+  }
+  if (pathname === "/api/v1/calibrations/submissions" && method === "POST") {
+    require_user(user);
+    const input = validate_score_calibration_save(await read_json_body(request, 2 * 1_024 * 1_024));
+    // A contributor's score cannot silently change other chapters.
+    delete input.project.material_catalog;
+    assert_calibration_revision(context, input);
+    const submission = repository.create_calibration_submission(user.id, input);
+    if (!submission) throw new validation_error("最多保留 10 份待审批校对，请等待审核。", 429, "pending_limit");
+    send_json(response, 201, { submission });
+    return;
+  }
+  const submission_match = pathname.match(/^\/api\/v1\/calibrations\/submissions\/([a-f0-9-]+)$/);
+  if (submission_match && (method === "GET" || method === "POST")) {
+    require_user(user);
+    const submission = repository.get_calibration_submission(submission_match[1]);
+    if (!submission || (user.role !== "admin" && submission.user_id !== user.id)) {
+      throw new validation_error("校对记录不存在。", 404, "not_found");
+    }
+    if (method === "GET") {
+      send_json(response, 200, { submission });
+      return;
+    }
+    require_admin(user);
+    if (submission.status !== "pending") throw new validation_error("该校对已经审批。", 409, "already_reviewed");
+    const body = await read_json_body(request, 4_096);
+    if (body.decision === "reject") {
+      repository.reject_calibration_submission(submission.id, user.id, String(body.note ?? "").slice(0, 500));
+    } else if (body.decision === "approve") {
+      const input = validate_score_calibration_save(submission.input, { published_by: user.id });
+      publish_calibration(context, user, input, submission.id);
+    } else {
+      throw new validation_error("请选择通过或退回。");
+    }
+    repository.record_audit_event({
+      actor_user_id: user.id, action: `calibration.${body.decision}`,
+      target_type: "calibration_submission", target_id: submission.id,
+    });
+    send_json(response, 200, { submission: repository.get_calibration_submission(submission.id) });
+    return;
+  }
 
   if (pathname === "/api/v1/auth/me" && method === "GET") {
     require_user(user);
@@ -781,18 +929,10 @@ async function handle_api_request(context) {
   if (pathname === "/api/v1/admin/calibrations" && method === "POST") {
     require_admin(user);
     const input = validate_score_calibration_save(
-      await read_json_body(request, 16 * 1_024 * 1_024),
+      await read_json_body(request, 2 * 1_024 * 1_024),
       { published_by: user.id },
     );
-    const saved = repository.save_score_calibration(user.id, {
-      ...input,
-      sync_original_data: () => sync_calibration_original_data(
-        input,
-        materials_root,
-        context.set_catalog,
-        context.set_jianpu_catalog,
-      ),
-    });
+    const saved = publish_calibration(context, user, input);
     repository.record_audit_event({
       actor_user_id: user.id,
       action: "admin.score_calibration.save",
@@ -1054,11 +1194,91 @@ function atomic_write(file_path, content) {
   renameSync(temporary_path, file_path);
 }
 
+function calibration_source(context, material_id, segment_id) {
+  const material = context.get_jianpu_catalog().materials.find((item) => item.id === material_id);
+  const segment = material?.segments.find((item) => item.id === segment_id);
+  if (!segment || segment.deletion_status === "deleted" ||
+    context.repository.list_material_deletions().some((item) =>
+      item.material_id === material_id && item.segment_id === segment_id)) {
+    throw new validation_error("未找到对应的教材。", 404, "material_segment_not_found");
+  }
+  const read = (url) => {
+    if (!url.startsWith("/materials/")) throw new validation_error("原谱路径无效");
+    const path = resolve_static_path(context.materials_root, url.slice("/materials".length));
+    if (!path || !path.startsWith(`${context.materials_root}/`)) throw new validation_error("原谱路径无效");
+    return readFileSync(path, "utf8");
+  };
+  const score = read(segment.jianpu_url);
+  const xml = read(segment.musicxml_url);
+  return { score, xml, revision: createHash("sha256").update(score).update("\0").update(xml).digest("hex") };
+}
+
+function assert_calibration_revision(context, input) {
+  const source = calibration_source(context, input.material_id, input.segment_id);
+  if (source.revision !== input.base_revision) {
+    throw new validation_error("原谱已有新版本，请保留个人草稿，重新载入公共版本后合并修改。", 409, "stale_calibration");
+  }
+}
+
+function publish_calibration(context, user, input, submission_id) {
+  assert_calibration_revision(context, input);
+  const assets = [];
+  const original_sync = sync_calibration_original_data(
+    input, context.materials_root, undefined, undefined,
+    (path, content) => assets.push({ path: relative(context.materials_root, path), content }),
+  );
+  // The score, approval and exact file contents commit together. Files are recoverable projections.
+  const saved = context.repository.save_score_calibration(user.id, {
+    ...input, original_sync, assets, submission_id,
+  });
+  write_published_assets(assets, context.materials_root, context.static_root);
+  context.set_catalog(undefined);
+  context.set_jianpu_catalog(undefined);
+  return saved;
+}
+
+function write_published_assets(assets, materials_root, static_root) {
+  for (const asset of assets) {
+    for (const root of new Set([materials_root, resolve(static_root, "materials")])) {
+      const target = resolve_static_path(root, `/${asset.path}`);
+      if (!target) throw new Error("invalid_published_path");
+      mkdirSync(dirname(target), { recursive: true });
+      atomic_write(target, asset.content);
+    }
+  }
+}
+
+function restore_published_materials(repository, materials_root, static_root) {
+  const assets = repository.list_published_material_assets();
+  write_published_assets(assets, materials_root, static_root);
+  // Migrate previously published calibrations to durable file snapshots once.
+  const calibrations = repository.list_score_calibrations();
+  if (calibrations.length) {
+    const catalog = JSON.parse(readFileSync(resolve(materials_root, "jianpu-catalog.json"), "utf8"));
+    const paths = new Set(assets.map((asset) => asset.path));
+    for (const calibration of calibrations) {
+      const segment = catalog.materials.find((item) => item.id === calibration.material_id)
+        ?.segments.find((item) => item.id === calibration.segment_id);
+      if (!segment || paths.has(segment.jianpu_url.replace(/^\/materials\//, ""))) continue;
+      const next_assets = [];
+      const original_sync = sync_calibration_original_data(
+        calibration, materials_root, undefined, undefined,
+        (path, content) => next_assets.push({ path: relative(materials_root, path), content }),
+      );
+      repository.save_score_calibration(calibration.updated_by ?? null, {
+        ...calibration, original_sync, assets: next_assets,
+      });
+      write_published_assets(next_assets, materials_root, static_root);
+    }
+  }
+}
+
 function sync_calibration_original_data(
   input,
   materials_root,
   set_catalog,
   set_jianpu_catalog,
+  write = atomic_write,
 ) {
   const jianpu_catalog_path = resolve(materials_root, "jianpu-catalog.json");
   const jianpu_catalog = JSON.parse(readFileSync(jianpu_catalog_path, "utf8"));
@@ -1069,7 +1289,17 @@ function sync_calibration_original_data(
   if (!segment?.jianpu_url) {
     throw new validation_error("未找到对应的教材简谱原始数据", 404, "material_segment_not_found");
   }
-  const has_catalog_updates = sync_calibration_material_catalog(
+  const measure_count = input.project.document.measures.length;
+  if (segment.measure_count !== measure_count) {
+    if ((segment.content_sections?.length ?? 0) > 1 || segment.page_slices?.length > 1) {
+      throw new validation_error("本段包含多个内容边界，增删小节前需先校对曲目边界。");
+    }
+    segment.measure_count = measure_count;
+    for (const slice of [...(segment.content_sections ?? []), ...(segment.page_slices ?? [])]) {
+      slice.measure_end = measure_count;
+    }
+  }
+  sync_calibration_material_catalog(
     input.project.material_catalog,
     material,
     input.segment_id,
@@ -1101,18 +1331,17 @@ function sync_calibration_original_data(
     input.project.event_metadata ?? {},
   );
   const serialized = `${JSON.stringify(original_data)}\n`;
-  atomic_write(target_path, serialized);
+  write(target_path, serialized);
   const musicxml_sync = sync_calibration_musicxml_original_data(
     input,
     segment,
     materials_root,
+    write,
   );
-  if (has_catalog_updates) {
-    atomic_write(jianpu_catalog_path, `${JSON.stringify(jianpu_catalog, null, 2)}\n`);
-    set_jianpu_catalog?.(jianpu_catalog);
-  }
+  write(jianpu_catalog_path, `${JSON.stringify(jianpu_catalog, null, 2)}\n`);
+  set_jianpu_catalog?.(jianpu_catalog);
   if (material_catalog_sync.changed) {
-    atomic_write(
+    write(
       material_catalog_sync.catalog_path,
       `${JSON.stringify(material_catalog_sync.catalog, null, 2)}\n`,
     );
@@ -1150,7 +1379,7 @@ function sync_calibration_material_library_catalog(
   return { catalog_path, catalog, changed: true };
 }
 
-function sync_calibration_musicxml_original_data(input, segment, materials_root) {
+function sync_calibration_musicxml_original_data(input, segment, materials_root, write = atomic_write) {
   if (!segment?.musicxml_url) {
     throw new validation_error("未找到对应的教材五线谱原始数据", 404, "material_musicxml_not_found");
   }
@@ -1170,7 +1399,7 @@ function sync_calibration_musicxml_original_data(input, segment, materials_root)
     input.project.document,
     input.project.event_metadata ?? {},
   );
-  atomic_write(target_path, serialized);
+  write(target_path, serialized);
   return {
     musicxml_path: target_path,
     musicxml_sha256: createHash("sha256").update(serialized).digest("hex"),
@@ -1214,6 +1443,9 @@ function sync_calibration_material_catalog(
     if (segment && segment.title !== normalized_project_title) {
       segment.title = normalized_project_title;
       changed = true;
+    }
+    if (segment?.content_sections?.length === 1) {
+      segment.content_sections[0].title = normalized_project_title;
     }
     for (const slice of segment?.page_slices ?? []) {
       if (slice.title !== normalized_project_title) {

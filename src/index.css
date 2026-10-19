@@ -1630,7 +1630,9 @@ a {
     bottom: 12px;
     left: 12px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(74px, 1fr);
+    overflow-x: auto;
     padding: 6px;
     border: 1px solid rgb(255 255 255 / 32%);
     border-radius: 10px;
@@ -4512,10 +4514,6 @@ a {
 }
 
 @media (max-width: 980px) {
-  .mobile-nav {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .week-progress-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -6610,6 +6608,51 @@ a {
   overflow: hidden;
 }
 
+.jianpu-work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  padding: 8px 24px 24px;
+  gap: 0 28px;
+}
+
+.jianpu-work-entry {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 12px;
+  min-height: 92px;
+  padding: 16px 4px;
+  color: #244f43;
+  border-bottom: 1px solid #e4ddcf;
+  transition: background-color 150ms ease;
+}
+
+.jianpu-work-entry:hover,
+.jianpu-work-entry:focus-visible {
+  background: #f0f5ec;
+}
+
+.jianpu-work-number {
+  align-self: start;
+  padding-top: 4px;
+  color: #958974;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.jianpu-work-entry h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.jianpu-work-entry p {
+  margin: 6px 0 0;
+  color: #807b70;
+  font-size: 11px;
+}
+
 .jianpu-reader-head {
   align-items: center;
   padding: 14px 18px 13px;
@@ -7935,6 +7978,32 @@ a {
   color: #18231f;
   font-family: inherit;
   font-size: 10px;
+}
+
+.capacity-state {
+  max-width: 520px;
+  margin: 18vh auto;
+  padding: 28px;
+}
+.calibration-reviews {
+  border-block: 1px solid #d9ded6;
+  padding: 18px 0;
+  margin-bottom: 20px;
+}
+.calibration-reviews summary { cursor: pointer; font-weight: 650; }
+.calibration-review-list { display: grid; gap: 8px; margin: 16px 0; }
+.calibration-review-list > button {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
+  text-align: left; padding: 12px; border: 1px solid #d9ded6; border-radius: 8px;
+  background: #fff; color: inherit;
+}
+.calibration-review-list span { color: #667169; font-size: 12px; }
+.calibration-review-comparison {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;
+}
+.calibration-review-comparison > div { min-width: 0; overflow: auto; max-height: 620px; }
+@media (max-width: 760px) {
+  .calibration-review-comparison { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 980px) {
