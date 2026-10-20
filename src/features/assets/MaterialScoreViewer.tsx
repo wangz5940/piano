@@ -252,6 +252,7 @@ function MaterialScoreSlice({
     <ScoreZoomSurface
       measure_start={measure_start}
       measure_end={measure_end}
+      download_name={`${segment.title}-原谱-${measure_start}-${measure_end}小节`}
       className="material-score-slice"
     >
       {render_state === "loading" && (

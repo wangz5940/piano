@@ -72,9 +72,9 @@ services:
         max-size: "5m"
         max-file: "2"
     ports:
+      - "80:80"
       - "443:443"
       - "443:443/udp"
-      - "4173:4173"
     environment:
       - PANIO_PUBLIC_HOST=${PANIO_PUBLIC_HOST:-101.96.229.102}
       - GOMEMLIMIT=96MiB

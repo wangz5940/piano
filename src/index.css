@@ -7026,6 +7026,19 @@ a {
   background: #245d4d;
 }
 
+.score-zoom-controls button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.score-image-download {
+  margin-left: 3px;
+}
+
+.score-image-download .is-spinning {
+  animation: spin 900ms linear infinite;
+}
+
 .score-zoom-controls input {
   width: clamp(92px, 13vw, 170px);
   accent-color: #245d4d;

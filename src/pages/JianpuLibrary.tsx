@@ -638,6 +638,7 @@ export function JianpuPageSliceReader({
               <ScoreZoomSurface
                 measure_start={page_slice.measure_start}
                 measure_end={page_slice.measure_end}
+                download_name={`${page_slice.title}-简谱`}
                 className="textbook-score-slice"
               >
                 <TextbookJianpuScore
@@ -830,7 +831,12 @@ function OriginalScorePanel({ segment }: { segment: jianpu_segment }) {
   }, [segment, user_id, attempt]);
   return (
     <section className="jianpu-original-score" aria-label={`${segment.title}原谱`}>
-      <ScoreZoomSurface measure_start={1} measure_end={segment.measure_count} className="original-score-slice">
+      <ScoreZoomSurface
+        measure_start={1}
+        measure_end={segment.measure_count}
+        download_name={`${segment.title}-原谱`}
+        className="original-score-slice"
+      >
         {render_state === "loading" && <JianpuScoreState copy="正在加载完整原谱…" />}
         {render_state === "error" && <>
           <JianpuScoreState copy="原谱暂时无法显示，请稍后重试。" is_error />

@@ -1,6 +1,8 @@
 import { useCallback, useRef, useState } from "react";
 import type { CSSProperties, ReactNode, TouchEvent, WheelEvent } from "react";
-import { Minus, Plus } from "lucide-react";
+import { Download, LoaderCircle, Minus, Plus } from "lucide-react";
+
+import { download_score_images } from "./downloadScoreImage";
 
 const minimum_score_zoom = 0.72;
 const maximum_score_zoom = 1.5;
@@ -10,6 +12,7 @@ interface score_zoom_surface_props {
   children: ReactNode;
   measure_start: number;
   measure_end: number;
+  download_name?: string;
   className?: string;
 }
 
@@ -17,9 +20,12 @@ export function ScoreZoomSurface({
   children,
   measure_start,
   measure_end,
+  download_name,
   className = "",
 }: score_zoom_surface_props) {
   const [zoom, set_zoom] = useState(1);
+  const [download_state, set_download_state] = useState<"idle" | "downloading" | "error">("idle");
+  const surface_ref = useRef<HTMLElement>(null);
   const pinch_distance_ref = useRef<number>();
   const update_zoom = useCallback((next_zoom: number) => {
     set_zoom(Math.min(maximum_score_zoom, Math.max(minimum_score_zoom, next_zoom)));
@@ -61,10 +67,23 @@ export function ScoreZoomSurface({
       pinch_distance_ref.current = undefined;
     }
   }, []);
+  const handle_download = useCallback(async () => {
+    const surface = surface_ref.current;
+    if (!surface || !download_name || download_state === "downloading") return;
+    set_download_state("downloading");
+    try {
+      await download_score_images(surface, download_name);
+      set_download_state("idle");
+    } catch {
+      set_download_state("error");
+      window.setTimeout(() => set_download_state("idle"), 2_000);
+    }
+  }, [download_name, download_state]);
   const zoom_percent = Math.round(zoom * 100);
 
   return (
     <section
+      ref={surface_ref}
       className={`score-zoom-surface ${className}`.trim()}
       style={{ "--score-zoom": String(zoom) } as CSSProperties}
       onWheel={handle_wheel}
@@ -99,6 +118,20 @@ export function ScoreZoomSurface({
             <Plus size={14} />
           </button>
           <output>{zoom_percent}%</output>
+          {download_name && (
+            <button
+              type="button"
+              className="score-image-download"
+              aria-label={download_state === "error" ? "曲谱图片下载失败" : "下载曲谱图片"}
+              title={download_state === "error" ? "曲谱图片下载失败" : "下载曲谱图片"}
+              disabled={download_state === "downloading"}
+              onClick={() => void handle_download()}
+            >
+              {download_state === "downloading"
+                ? <LoaderCircle className="is-spinning" size={14} />
+                : <Download size={14} />}
+            </button>
+          )}
         </div>
       </header>
       <div className="score-zoom-viewport">

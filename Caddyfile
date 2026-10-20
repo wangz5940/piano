@@ -31,6 +31,6 @@ https://{$PANIO_PUBLIC_HOST} {
 	}
 }
 
-http://:4173 {
+http://:80 {
 	redir https://{$PANIO_PUBLIC_HOST}{uri} 308
 }
