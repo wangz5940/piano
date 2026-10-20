@@ -6,9 +6,14 @@ import type {
   jianpu_catalog,
   jianpu_score,
 } from "@/features/jianpu/types";
+import {
+  capture_score_scroll_anchor,
+  get_score_scroll_delta,
+} from "@/features/jianpu/scoreScrollPosition";
 
 import {
   JianpuLibrary,
+  JianpuPageSliceReader,
   TextbookJianpuScore,
 } from "./JianpuLibrary";
 
@@ -202,6 +207,51 @@ describe("简谱教材", () => {
       <TextbookJianpuScore score={score} show_final_bar={false} />,
     );
     expect(intermediate_markup).not.toContain("jianpu-svg-barline is-final");
+  });
+
+  it("曲目阅读区移除重复的章节和曲目标题栏", () => {
+    const source_segment = catalog_fixture.materials[0].segments[0];
+    const score: jianpu_score = {
+      schema_version: "1.0",
+      segment_id: source_segment.id,
+      key_signature: source_segment.key_signature,
+      tonic_midi: source_segment.tonic_midi,
+      time_signature: source_segment.time_signature,
+      measures: Array.from({ length: source_segment.measure_count }, (_, index) => ({
+        index: index + 1,
+        number: String(index + 1),
+        directions: [],
+        events: [],
+      })),
+    };
+    const markup = renderToStaticMarkup(
+      <JianpuPageSliceReader score={score} page_slices={source_segment.page_slices} />,
+    );
+
+    expect(markup).not.toContain("jianpu-chapter-heading");
+    expect(markup).not.toContain("jianpu-page-card-head");
+    expect(markup).not.toContain("教材章节");
+    expect(markup).toContain("学习提示");
+    expect(markup).toContain("textbook-score-slice");
+  });
+
+  it("切曲时按视口中心保存并恢复谱面相对位置", () => {
+    const anchor = capture_score_scroll_anchor({
+      top: -1000,
+      bottom: 3000,
+      height: 4000,
+    }, 1000);
+
+    expect(anchor).toEqual({ progress: 0.375, viewport_y: 500 });
+    expect(get_score_scroll_delta({
+      top: -700,
+      height: 3200,
+    }, anchor!)).toBe(0);
+    expect(capture_score_scroll_anchor({
+      top: 1100,
+      bottom: 2100,
+      height: 1000,
+    }, 1000)).toBeUndefined();
   });
 
   it("按树状索引展示两本教材和单手谱入口", () => {

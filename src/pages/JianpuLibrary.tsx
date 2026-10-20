@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   BookOpenText,
@@ -35,6 +35,11 @@ import {
 } from "@/features/jianpu/loadJianpuLibrary";
 import { group_material_by_content } from "@/features/jianpu/contentGrouping";
 import { load_work_musicxml, load_work_score, prefetch_work_musicxml } from "@/features/jianpu/workScore";
+import {
+  capture_score_scroll_anchor,
+  get_score_scroll_delta,
+  type score_scroll_anchor,
+} from "@/features/jianpu/scoreScrollPosition";
 import { personal_material } from "@/features/calibration/personalScore";
 import { load_calibration_projects } from "@/features/calibration/storage";
 import { soft_delete_material_segment } from "@/features/materials/materialDeletion";
@@ -371,6 +376,8 @@ function JianpuReader({
   const [reading_view, set_reading_view] = useState<reading_view>("jianpu");
   const [opened_original, set_opened_original] = useState<jianpu_segment>();
   const original_button = useRef<HTMLButtonElement>(null);
+  const reading_surface = useRef<HTMLDivElement>(null);
+  const pending_scroll_anchor = useRef<(score_scroll_anchor & { segment_id: string })>();
   const user_id = use_auth_store((state) => state.user?.id);
   const [score, set_score] = useState<jianpu_score>();
   const [score_state, set_score_state] = useState<render_state>("loading");
@@ -382,6 +389,19 @@ function JianpuReader({
     // Reuse the existing per-URL cache; do not cache personal/combined XML by URL.
     void prefetch_work_musicxml(segment).catch(() => {});
   }, [segment]);
+  const navigate_with_score_position = useCallback((
+    target_segment: jianpu_segment,
+    direction: "previous" | "next",
+  ) => {
+    const surface = reading_surface.current;
+    const anchor = surface
+      ? capture_score_scroll_anchor(surface.getBoundingClientRect(), window.innerHeight)
+      : undefined;
+    pending_scroll_anchor.current = anchor
+      ? { ...anchor, segment_id: target_segment.id }
+      : undefined;
+    navigation?.on_navigate(target_segment, direction);
+  }, [navigation]);
 
   useEffect(() => {
     if (reading_view === "original") set_opened_original(segment);
@@ -398,6 +418,50 @@ function JianpuReader({
     observer.observe(button);
     return () => observer.disconnect();
   }, [score_state, prepare_original]);
+
+  useEffect(() => {
+    const pending = pending_scroll_anchor.current;
+    const surface = reading_surface.current;
+    if (!pending || pending.segment_id !== segment.id || !surface) return;
+
+    let first_frame = 0;
+    let second_frame = 0;
+    let scheduled = false;
+    const content_is_ready = () => reading_view === "jianpu"
+      ? score_state === "ready" &&
+        score?.segment_id === segment.id &&
+        Boolean(surface.querySelector(".textbook-jianpu-score"))
+      : Boolean(surface.querySelector(".jianpu-original-score-host svg"));
+    const restore = () => {
+      if (!content_is_ready()) {
+        scheduled = false;
+        return;
+      }
+      first_frame = requestAnimationFrame(() => {
+        second_frame = requestAnimationFrame(() => {
+          scheduled = false;
+          const current = pending_scroll_anchor.current;
+          if (!current || current.segment_id !== segment.id) return;
+          const delta = get_score_scroll_delta(surface.getBoundingClientRect(), current);
+          window.scrollBy({ top: delta, left: 0, behavior: "auto" });
+          pending_scroll_anchor.current = undefined;
+        });
+      });
+    };
+    const schedule_restore = () => {
+      if (scheduled || !content_is_ready()) return;
+      scheduled = true;
+      restore();
+    };
+    const observer = new MutationObserver(schedule_restore);
+    observer.observe(surface, { childList: true, subtree: true });
+    schedule_restore();
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(first_frame);
+      cancelAnimationFrame(second_frame);
+    };
+  }, [reading_view, score?.segment_id, score_state, segment.id]);
 
   useEffect(() => {
     let active = true;
@@ -441,10 +505,10 @@ function JianpuReader({
               total_count={navigation.total_count}
               switching_direction={navigation.switching_direction}
               on_previous={navigation.previous_segment
-                ? () => navigation.on_navigate(navigation.previous_segment!, "previous")
+                ? () => navigate_with_score_position(navigation.previous_segment!, "previous")
                 : undefined}
               on_next={navigation.next_segment
-                ? () => navigation.on_navigate(navigation.next_segment!, "next")
+                ? () => navigate_with_score_position(navigation.next_segment!, "next")
                 : undefined}
             />
           )}
@@ -509,28 +573,30 @@ function JianpuReader({
         </button>
       </div>
 
-      {reading_view === "jianpu" ? (
-        score_state === "loading" ? (
-          <JianpuScoreState copy="正在排版本片段的简谱…" />
-        ) : score_state === "error" || !score ? (
-          <JianpuScoreState copy="本片段暂时无法显示简谱，请先切换到原谱核对。" is_error />
-        ) : (
-          <JianpuPageSliceReader
-            score={score}
-            page_slices={segment.page_slices}
-          />
-        )
-      ) : null}
-      {(reading_view === "original" || opened_original === segment) && (
-        <div hidden={reading_view !== "original"}>
-          <OriginalScorePanel key={segment.id} segment={segment} />
-        </div>
-      )}
+      <div ref={reading_surface} className="jianpu-reading-surface">
+        {reading_view === "jianpu" ? (
+          score_state === "loading" ? (
+            <JianpuScoreState copy="正在排版本片段的简谱…" />
+          ) : score_state === "error" || !score ? (
+            <JianpuScoreState copy="本片段暂时无法显示简谱，请先切换到原谱核对。" is_error />
+          ) : (
+            <JianpuPageSliceReader
+              score={score}
+              page_slices={segment.page_slices}
+            />
+          )
+        ) : null}
+        {(reading_view === "original" || opened_original === segment) && (
+          <div hidden={reading_view !== "original"}>
+            <OriginalScorePanel key={segment.id} segment={segment} />
+          </div>
+        )}
+      </div>
     </article>
   );
 }
 
-function JianpuPageSliceReader({
+export function JianpuPageSliceReader({
   score,
   page_slices,
 }: {
@@ -547,75 +613,54 @@ function JianpuPageSliceReader({
 
   return (
     <section className="jianpu-page-reader" aria-label="按小节组阅读简谱">
-      {page_slices.map((page_slice, index) => {
-        const previous_slice = page_slices[index - 1];
+      {page_slices.map((page_slice) => {
         const slice_key = get_page_slice_key(page_slice);
         const is_expanded = expanded_slice_keys.has(slice_key);
-        const is_new_chapter = !previous_slice ||
-          previous_slice.chapter_id !== page_slice.chapter_id;
         const page_score = {
           ...score,
           measures: score.measures.slice(page_slice.measure_start - 1, page_slice.measure_end),
         };
         return (
-          <Fragment key={slice_key}>
-            {is_new_chapter && (
-              <div className="jianpu-chapter-heading">
-                <span>教材章节</span>
-                <h3>{page_slice.chapter_title}</h3>
+          <article key={slice_key} id={`jianpu-slice-${slice_key}`} className="jianpu-page-card">
+            <details className="jianpu-page-instruction jianpu-collapsible-section">
+              <summary>
+                <span><BookOpenText size={14} /> 学习提示</span>
+                <small>{page_slice.text.split("\n").length} 段提示</small>
+                <ChevronDown size={15} />
+              </summary>
+              <div>
+                {page_slice.text.split("\n").map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
               </div>
+            </details>
+            {is_expanded ? (
+              <ScoreZoomSurface
+                measure_start={page_slice.measure_start}
+                measure_end={page_slice.measure_end}
+                className="textbook-score-slice"
+              >
+                <TextbookJianpuScore
+                  score={page_score}
+                  is_page_slice
+                  show_final_bar={page_slice.measure_end === score.measures.length}
+                />
+              </ScoreZoomSurface>
+            ) : (
+              <button
+                type="button"
+                className="jianpu-page-score-toggle"
+                onClick={() => set_expanded_slice_keys((current) => {
+                  const next = new Set(current);
+                  next.add(slice_key);
+                  return next;
+                })}
+              >
+                展开本段谱面
+                <ChevronsRight size={16} />
+              </button>
             )}
-            <article id={`jianpu-slice-${slice_key}`} className="jianpu-page-card">
-              <header className="jianpu-page-card-head">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <p>{format_source_page_label(page_slice.source_pages)}</p>
-                  <h3>{page_slice.title}</h3>
-                </div>
-                <small>
-                  第 {page_slice.measure_start}—{page_slice.measure_end} 小节
-                </small>
-              </header>
-              <details className="jianpu-page-instruction jianpu-collapsible-section">
-                <summary>
-                  <span><BookOpenText size={14} /> 学习提示</span>
-                  <small>{page_slice.text.split("\n").length} 段提示</small>
-                  <ChevronDown size={15} />
-                </summary>
-                <div>
-                  {page_slice.text.split("\n").map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
-              </details>
-              {is_expanded ? (
-                <ScoreZoomSurface
-                  measure_start={page_slice.measure_start}
-                  measure_end={page_slice.measure_end}
-                  className="textbook-score-slice"
-                >
-                  <TextbookJianpuScore
-                    score={page_score}
-                    is_page_slice
-                    show_final_bar={page_slice.measure_end === score.measures.length}
-                  />
-                </ScoreZoomSurface>
-              ) : (
-                <button
-                  type="button"
-                  className="jianpu-page-score-toggle"
-                  onClick={() => set_expanded_slice_keys((current) => {
-                    const next = new Set(current);
-                    next.add(slice_key);
-                    return next;
-                  })}
-                >
-                  展开本段谱面
-                  <ChevronsRight size={16} />
-                </button>
-              )}
-            </article>
-          </Fragment>
+          </article>
         );
       })}
     </section>
@@ -628,10 +673,6 @@ function get_initial_expanded_slice_keys(page_slices: jianpu_page_slice[]): Set<
 
 function get_page_slice_key(page_slice: jianpu_page_slice): string {
   return `${page_slice.source_pages.join("-")}-${page_slice.measure_start}-${page_slice.measure_end}`;
-}
-
-function format_source_page_label(source_pages: number[]): string {
-  return `原谱第 ${source_pages.join("、")} 页`;
 }
 
 function JianpuScoreState({ copy, is_error = false }: { copy: string; is_error?: boolean }) {
@@ -789,7 +830,6 @@ function OriginalScorePanel({ segment }: { segment: jianpu_segment }) {
   }, [segment, user_id, attempt]);
   return (
     <section className="jianpu-original-score" aria-label={`${segment.title}原谱`}>
-      <h3 className="jianpu-original-title">{segment.title}</h3>
       <ScoreZoomSurface measure_start={1} measure_end={segment.measure_count} className="original-score-slice">
         {render_state === "loading" && <JianpuScoreState copy="正在加载完整原谱…" />}
         {render_state === "error" && <>

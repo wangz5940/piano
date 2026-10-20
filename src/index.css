@@ -6692,90 +6692,12 @@ a {
   margin: 12px 12px 16px;
 }
 
-.jianpu-chapter-heading {
-  display: grid;
-  gap: 3px;
-  padding: 13px 15px 12px;
-  border-left: 3px solid #c97934;
-  background: #f3efe5;
-}
-
-.jianpu-chapter-heading span {
-  color: #957550;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.jianpu-chapter-heading h3 {
-  margin: 0;
-  color: #315745;
-  font-family: ui-serif, "Songti SC", serif;
-  font-size: 19px;
-  letter-spacing: -0.025em;
-}
-
 .jianpu-page-card {
   overflow: hidden;
   border: 1px solid #d2c7b6;
   border-radius: 10px;
   background: #fffdf7;
   box-shadow: 0 6px 0 rgb(75 71 50 / 4%);
-}
-
-.jianpu-page-card-head {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 11px;
-  padding: 10px 13px;
-  border-bottom: 1px solid #ded5c6;
-  background:
-    linear-gradient(90deg, rgb(44 92 73 / 7%) 1px, transparent 1px) 0 0 / 28px 28px,
-    #f2f6ed;
-}
-
-.jianpu-page-card-head > span {
-  display: grid;
-  width: 29px;
-  height: 29px;
-  place-items: center;
-  color: #fdf9ef;
-  border-radius: 50%;
-  background: #2d6554;
-  font-family: ui-monospace, "SF Mono", monospace;
-  font-size: 9px;
-  font-weight: 800;
-}
-
-.jianpu-page-card-head p,
-.jianpu-page-card-head h3,
-.jianpu-page-card-head small {
-  margin: 0;
-}
-
-.jianpu-page-card-head p {
-  color: #7a887b;
-  font-size: 9px;
-  font-weight: 800;
-}
-
-.jianpu-page-card-head h3 {
-  overflow: hidden;
-  margin-top: 2px;
-  color: #1d4739;
-  font-family: ui-serif, "Songti SC", serif;
-  font-size: 17px;
-  letter-spacing: -0.02em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.jianpu-page-card-head small {
-  color: #7d776d;
-  font-size: 9px;
-  font-weight: 800;
-  text-align: right;
 }
 
 .jianpu-page-instruction {
@@ -7213,6 +7135,10 @@ a {
     linear-gradient(90deg, rgb(31 85 72 / 3%) 1px, transparent 1px) 0 0 / 37px 37px,
     linear-gradient(rgb(31 85 72 / 3%) 1px, transparent 1px) 0 0 / 37px 37px,
     #fffdf8;
+}
+
+.jianpu-original-score .original-score-slice {
+  border-top: 0;
 }
 
 .jianpu-original-score-head {
@@ -7991,16 +7917,6 @@ a {
   margin-bottom: 20px;
 }
 .calibration-reviews summary { cursor: pointer; font-weight: 650; }
-.jianpu-original-title {
-  margin: 0;
-  padding: 24px 20px 12px;
-  color: #24392f;
-  text-align: center;
-  font-size: clamp(20px, 2.5vw, 28px);
-  font-weight: 650;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
-}
 .account-login-hint { color: #627069; font-size: 13px; line-height: 1.7; }
 .feedback-section { margin-top: 24px; }
 .feedback-section > p { color: #65716a; line-height: 1.7; }
