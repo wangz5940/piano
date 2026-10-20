@@ -26,6 +26,7 @@ const copied_style_properties = [
 ] as const;
 const maximum_page_height = 7_000;
 const maximum_canvas_dimension = 16_000;
+const maximum_canvas_area = 64_000_000;
 let embedded_fonts_request: Promise<string> | undefined;
 
 interface svg_page {
@@ -61,23 +62,11 @@ export async function download_score_images(
     const svg = svgs[page.source_index];
     rendered_pages.push(await rasterize_svg_page(svg, page, font_styles));
   }
-  const images = await combine_rendered_pages(rendered_pages);
+  const image = await combine_rendered_pages(rendered_pages);
 
   const base_name = sanitize_score_image_name(requested_name);
-  if (images.length === 1) {
-    trigger_blob_download(images[0], `${base_name}.png`);
-  } else {
-    const { default: JSZip } = await import("jszip");
-    const archive = new JSZip();
-    for (const [index, image] of images.entries()) {
-      archive.file(score_image_file_name(requested_name, index, images.length), image);
-    }
-    trigger_blob_download(
-      await archive.generateAsync({ type: "blob", compression: "DEFLATE" }),
-      `${base_name}-图片.zip`,
-    );
-  }
-  return images.length;
+  trigger_blob_download(image, `${base_name}.png`);
+  return 1;
 }
 
 export function sanitize_score_image_name(value: string): string {
@@ -102,9 +91,14 @@ export function split_svg_pages(height: number, source_index = 0): svg_page[] {
   }));
 }
 
-function score_image_file_name(name: string, page_index: number, total: number): string {
-  const suffix = total === 1 ? "" : `-${String(page_index + 1).padStart(2, "0")}`;
-  return `${sanitize_score_image_name(name)}${suffix}.png`;
+export function get_combined_image_scale(width: number, height: number): number {
+  if (width <= 0 || height <= 0) return 1;
+  return Math.min(
+    1,
+    maximum_canvas_dimension / width,
+    maximum_canvas_dimension / height,
+    Math.sqrt(maximum_canvas_area / (width * height)),
+  );
 }
 
 async function rasterize_svg_page(
@@ -152,6 +146,7 @@ async function rasterize_svg_page(
     2,
     maximum_canvas_dimension / source_rect.width,
     maximum_canvas_dimension / page.height,
+    Math.sqrt(maximum_canvas_area / (source_rect.width * page.height)),
   );
   const canvas = document.createElement("canvas");
   canvas.width = Math.max(1, Math.round(source_rect.width * scale));
@@ -179,47 +174,43 @@ async function rasterize_svg_page(
   return { blob, width: canvas.width, height: canvas.height };
 }
 
-async function combine_rendered_pages(pages: rendered_page[]): Promise<Blob[]> {
-  const groups: rendered_page[][] = [];
+async function combine_rendered_pages(pages: rendered_page[]): Promise<Blob> {
+  if (pages.length === 1) return pages[0].blob;
+  const source_width = Math.max(...pages.map((page) => page.width));
+  const source_height = pages.reduce((total, page) => total + page.height, 0);
+  const scale = get_combined_image_scale(source_width, source_height);
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(source_width * scale));
+  canvas.height = Math.max(1, Math.round(source_height * scale));
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("score_image_canvas_unavailable");
+  context.fillStyle = "#fffdf8";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  let y = 0;
   for (const page of pages) {
-    const current = groups.at(-1);
-    const current_height = current?.reduce((total, item) => total + item.height, 0) ?? 0;
-    if (!current || current_height + page.height > maximum_canvas_dimension) {
-      groups.push([page]);
-    } else {
-      current.push(page);
+    const image = new Image();
+    const url = URL.createObjectURL(page.blob);
+    try {
+      image.src = url;
+      await image.decode();
+      context.drawImage(
+        image,
+        0,
+        Math.round(y * scale),
+        Math.round(page.width * scale),
+        Math.round(page.height * scale),
+      );
+    } finally {
+      URL.revokeObjectURL(url);
     }
+    y += page.height;
   }
-
-  return Promise.all(groups.map(async (group) => {
-    if (group.length === 1) return group[0].blob;
-    const canvas = document.createElement("canvas");
-    canvas.width = Math.max(...group.map((page) => page.width));
-    canvas.height = group.reduce((total, page) => total + page.height, 0);
-    const context = canvas.getContext("2d");
-    if (!context) throw new Error("score_image_canvas_unavailable");
-    context.fillStyle = "#fffdf8";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    let y = 0;
-    for (const page of group) {
-      const image = new Image();
-      const url = URL.createObjectURL(page.blob);
-      try {
-        image.src = url;
-        await image.decode();
-        context.drawImage(image, 0, y);
-      } finally {
-        URL.revokeObjectURL(url);
-      }
-      y += page.height;
-    }
-    return new Promise<Blob>((resolve, reject) => {
-      canvas.toBlob((blob) => {
-        if (blob) resolve(blob);
-        else reject(new Error("score_image_encoding_failed"));
-      }, "image/png");
-    });
-  }));
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) resolve(blob);
+      else reject(new Error("score_image_encoding_failed"));
+    }, "image/png");
+  });
 }
 
 function copy_computed_svg_styles(source: Element, clone: Element): void {
