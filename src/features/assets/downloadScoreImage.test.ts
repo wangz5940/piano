@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   get_combined_image_scale,
   sanitize_score_image_name,
+  score_image_style_properties,
   split_svg_pages,
 } from "./downloadScoreImage";
 
@@ -29,5 +30,14 @@ describe("曲谱图片下载", () => {
     expect(get_combined_image_scale(20_000, 10_000)).toBeCloseTo(
       Math.sqrt(64_000_000 / 200_000_000),
     );
+  });
+
+  it("导出时保留谱面几何变换与非缩放线条", () => {
+    expect(score_image_style_properties).toEqual(expect.arrayContaining([
+      "transform",
+      "transform-box",
+      "transform-origin",
+      "vector-effect",
+    ]));
   });
 });

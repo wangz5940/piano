@@ -2,7 +2,7 @@ const embedded_font_urls = [
   ["SimpMusic Base", "/__simpmusic-fonts/SimpMusicBase.ttf"],
   ["SimpMusic Accent", "/__simpmusic-fonts/SimpMusicAccent.ttf"],
 ] as const;
-const copied_style_properties = [
+export const score_image_style_properties = [
   "color",
   "display",
   "fill",
@@ -22,6 +22,10 @@ const copied_style_properties = [
   "stroke-opacity",
   "stroke-width",
   "text-anchor",
+  "transform",
+  "transform-box",
+  "transform-origin",
+  "vector-effect",
   "visibility",
 ] as const;
 const maximum_page_height = 7_000;
@@ -216,7 +220,7 @@ async function combine_rendered_pages(pages: rendered_page[]): Promise<Blob> {
 function copy_computed_svg_styles(source: Element, clone: Element): void {
   const computed = getComputedStyle(source);
   const style = (clone as SVGElement).style;
-  for (const property of copied_style_properties) {
+  for (const property of score_image_style_properties) {
     const value = computed.getPropertyValue(property);
     if (value) style.setProperty(property, value);
   }
