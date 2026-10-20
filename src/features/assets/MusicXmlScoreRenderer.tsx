@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import { load_material_practice_events, load_musicxml_text } from "./loadCatalog";
 import { inject_musicxml_fingerings } from "./musicxmlFingerings";
+import { load_score_engine, start_score_measure } from "./loadScoreEngine";
 
 export type musicxml_render_state = "loading" | "ready" | "error";
 
@@ -41,13 +42,16 @@ export function MusicXmlScoreRenderer({
     const render_host = host;
     let cancelled = false;
     let clear_display: (() => void) | undefined;
+    let resize_observer: ResizeObserver | undefined;
+    let resize_frame = 0;
     render_host.replaceChildren();
     on_state_change?.("loading");
 
     async function render_score() {
       try {
+        const finish_resources = start_score_measure("resources");
         const [{ OpenSheetMusicDisplay }, musicxml, practice_data] = await Promise.all([
-          import("opensheetmusicdisplay"),
+          load_score_engine(),
           musicxml_text !== undefined
             ? Promise.resolve(musicxml_text)
             : musicxml_url
@@ -60,12 +64,14 @@ export function MusicXmlScoreRenderer({
         if (cancelled) {
           return;
         }
+        finish_resources();
 
         const score_xml = show_fingerings
           ? inject_musicxml_fingerings(musicxml, practice_data?.events ?? [])
           : musicxml;
         const display = new OpenSheetMusicDisplay(render_host, {
-          autoResize: auto_resize,
+          // Observe this container instead of installing OSMD's permanent window listener.
+          autoResize: false,
           backend: "svg",
           drawPartNames: false,
           drawTitle: false,
@@ -77,14 +83,40 @@ export function MusicXmlScoreRenderer({
           fingeringInsideStafflines: false,
         });
         clear_display = () => display.clear();
+        const finish_parse = start_score_measure("parse");
         await display.load(score_xml);
+        finish_parse();
         if (cancelled) {
           clear_display();
           return;
         }
 
-        display.render();
-        on_state_change?.("ready");
+        let rendered_width = 0;
+        const render_visible_score = () => {
+          const width = render_host.clientWidth;
+          if (cancelled || width <= 0 || width === rendered_width) return;
+          const finish_render = start_score_measure("render");
+          display.render();
+          finish_render();
+          rendered_width = width;
+          on_state_change?.("ready");
+        };
+        render_visible_score();
+        if (auto_resize) {
+          resize_observer = new ResizeObserver(() => {
+            cancelAnimationFrame(resize_frame);
+            resize_frame = requestAnimationFrame(() => {
+              // A retained tab has width zero while hidden. Render only after it
+              // becomes visible at a different width, including directory toggles.
+              try {
+                render_visible_score();
+              } catch {
+                on_state_change?.("error");
+              }
+            });
+          });
+          resize_observer.observe(render_host);
+        }
       } catch {
         if (!cancelled) {
           on_state_change?.("error");
@@ -95,6 +127,8 @@ export function MusicXmlScoreRenderer({
     void render_score();
     return () => {
       cancelled = true;
+      resize_observer?.disconnect();
+      cancelAnimationFrame(resize_frame);
       clear_display?.();
       render_host.replaceChildren();
     };

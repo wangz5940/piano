@@ -4,6 +4,12 @@ import { load_jianpu_score } from "./loadJianpuLibrary";
 import type { jianpu_score, jianpu_segment, jianpu_source_range } from "./types";
 import { load_calibration_projects } from "@/features/calibration/storage";
 
+/** Warm raw public sources only. Personal edits are resolved afresh when opened. */
+export async function prefetch_work_musicxml(segment: jianpu_segment): Promise<void> {
+  const urls = segment.sources?.map((source) => source.musicxml_url) ?? [segment.musicxml_url];
+  await Promise.all([...new Set(urls)].map(load_musicxml_text));
+}
+
 export async function load_work_score(segment: jianpu_segment, user_id?: string): Promise<jianpu_score> {
   const projects = user_id ? load_calibration_projects(localStorage, user_id) : [];
   const load = async (segment_id: string, url: string) => {

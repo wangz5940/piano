@@ -8,6 +8,8 @@ import {
   statSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
+import { brotliCompress, constants, gzip } from "node:zlib";
+import { promisify } from "node:util";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -120,6 +122,28 @@ function local_simpmusic_font_assets(): Plugin {
   };
 }
 
+function precompressed_build_assets(): Plugin {
+  return {
+    name: "precompressed-build-assets",
+    async generateBundle(_options, bundle) {
+      // Compression is build work, not work for the small production server.
+      // Only immutable JS/CSS are emitted; mutable scores keep HTTP validation.
+      for (const item of Object.values(bundle)) {
+        if (!/\.(js|css)$/u.test(item.fileName)) continue;
+        const bytes = Buffer.from(item.type === "chunk" ? item.code : item.source);
+        if (bytes.length < 1024) continue;
+        const brotli = await promisify(brotliCompress)(bytes, {
+          params: { [constants.BROTLI_PARAM_QUALITY]: 11 },
+        });
+        const gzipped = await promisify(gzip)(bytes, { level: 9 });
+        const digest = createHash("sha256").update(bytes).digest("hex");
+        this.emitFile({ type: "asset", fileName: `${item.fileName}.${digest}.br`, source: brotli });
+        this.emitFile({ type: "asset", fileName: `${item.fileName}.${digest}.gz`, source: gzipped });
+      }
+    },
+  };
+}
+
 export default defineConfig({
   build: {
     sourcemap: "hidden",
@@ -133,5 +157,5 @@ export default defineConfig({
       },
     },
   },
-  plugins: [react(), tsconfigPaths(), local_simpmusic_font_assets()],
+  plugins: [react(), tsconfigPaths(), local_simpmusic_font_assets(), precompressed_build_assets()],
 });

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   BookOpenText,
@@ -20,6 +20,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppShell } from "@/components/AppShell";
 import { order_textbook_materials } from "@/features/assets/materialOrder";
 import { MusicXmlScoreRenderer } from "@/features/assets/MusicXmlScoreRenderer";
+import { load_score_engine, start_score_measure } from "@/features/assets/loadScoreEngine";
 import { ScoreZoomSurface } from "@/features/assets/ScoreZoomSurface";
 import type { material_id } from "@/features/assets/types";
 import {
@@ -33,7 +34,7 @@ import {
   load_jianpu_catalog,
 } from "@/features/jianpu/loadJianpuLibrary";
 import { group_material_by_content } from "@/features/jianpu/contentGrouping";
-import { load_work_musicxml, load_work_score } from "@/features/jianpu/workScore";
+import { load_work_musicxml, load_work_score, prefetch_work_musicxml } from "@/features/jianpu/workScore";
 import { personal_material } from "@/features/calibration/personalScore";
 import { load_calibration_projects } from "@/features/calibration/storage";
 import { soft_delete_material_segment } from "@/features/materials/materialDeletion";
@@ -368,12 +369,35 @@ function JianpuReader({
   calibration_href?: string;
 }) {
   const [reading_view, set_reading_view] = useState<reading_view>("jianpu");
+  const [opened_original, set_opened_original] = useState<jianpu_segment>();
+  const original_button = useRef<HTMLButtonElement>(null);
   const user_id = use_auth_store((state) => state.user?.id);
   const [score, set_score] = useState<jianpu_score>();
   const [score_state, set_score_state] = useState<render_state>("loading");
   const hand_label = score
     ? get_score_hand_label(score)
     : get_hand_mode_reader_label(segment.hand_mode);
+  const prepare_original = useCallback(() => {
+    void load_score_engine().catch(() => {});
+    // Reuse the existing per-URL cache; do not cache personal/combined XML by URL.
+    void prefetch_work_musicxml(segment).catch(() => {});
+  }, [segment]);
+
+  useEffect(() => {
+    if (reading_view === "original") set_opened_original(segment);
+  }, [reading_view, segment]);
+
+  useEffect(() => {
+    const button = original_button.current;
+    if (score_state !== "ready" || !button) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect();
+      prepare_original();
+    });
+    observer.observe(button);
+    return () => observer.disconnect();
+  }, [score_state, prepare_original]);
 
   useEffect(() => {
     let active = true;
@@ -472,8 +496,12 @@ function JianpuReader({
         </button>
         <button
           type="button"
+          ref={original_button}
           className={reading_view === "original" ? "is-selected" : ""}
           aria-pressed={reading_view === "original"}
+          onPointerEnter={prepare_original}
+          onPointerDown={prepare_original}
+          onFocus={prepare_original}
           onClick={() => set_reading_view("original")}
         >
           <FileMusic size={15} />
@@ -492,8 +520,11 @@ function JianpuReader({
             page_slices={segment.page_slices}
           />
         )
-      ) : (
-        <OriginalScorePanel segment={segment} />
+      ) : null}
+      {(reading_view === "original" || opened_original === segment) && (
+        <div hidden={reading_view !== "original"}>
+          <OriginalScorePanel key={segment.id} segment={segment} />
+        </div>
       )}
     </article>
   );
@@ -740,21 +771,33 @@ function OriginalScorePanel({ segment }: { segment: jianpu_segment }) {
   const user_id = use_auth_store((state) => state.user?.id);
   const [render_state, set_render_state] = useState<render_state>("loading");
   const [musicxml, set_musicxml] = useState<string>();
+  const [attempt, set_attempt] = useState(0);
   useEffect(() => {
     let active = true;
     set_musicxml(undefined);
     set_render_state("loading");
+    // Start the independent engine download before waiting for source XML.
+    void load_score_engine().catch(() => {});
+    const finish_source = start_score_measure("source");
     void load_work_musicxml(segment, user_id).then((xml) => {
-      if (active) set_musicxml(xml);
+      if (active) {
+        finish_source();
+        set_musicxml(xml);
+      }
     }).catch(() => { if (active) set_render_state("error"); });
     return () => { active = false; };
-  }, [segment, user_id]);
+  }, [segment, user_id, attempt]);
   return (
     <section className="jianpu-original-score" aria-label={`${segment.title}原谱`}>
       <h3 className="jianpu-original-title">{segment.title}</h3>
       <ScoreZoomSurface measure_start={1} measure_end={segment.measure_count} className="original-score-slice">
         {render_state === "loading" && <JianpuScoreState copy="正在加载完整原谱…" />}
-        {render_state === "error" && <JianpuScoreState copy="原谱暂时无法显示，请稍后重试。" is_error />}
+        {render_state === "error" && <>
+          <JianpuScoreState copy="原谱暂时无法显示，请稍后重试。" is_error />
+          <button type="button" className="jianpu-original-link" onClick={() => set_attempt((value) => value + 1)}>
+            重新加载原谱
+          </button>
+        </>}
         {musicxml && <MusicXmlScoreRenderer
           musicxml_text={musicxml}
           className="jianpu-original-score-host"

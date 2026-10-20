@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { once } from "node:events";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { createServer, request } from "node:http";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { test } from "node:test";
-import { brotliDecompressSync, gunzipSync } from "node:zlib";
+import { brotliCompressSync, brotliDecompressSync, constants, gzipSync, gunzipSync } from "node:zlib";
 
 import { create_request_handler } from "./app.mjs";
 
@@ -87,6 +88,53 @@ test("压缩协商尊重 q=0、质量权重和 HEAD 语义", async (t) => {
   assert.equal(head.status, 200);
   assert.equal(head.headers["content-encoding"], "gzip");
   assert.equal(head.body.length, 0);
+});
+
+test("构建时压缩产物直接复用，保持解码、协商、HEAD 和 304 语义", async (t) => {
+  const { read, root, script } = await fixture(t);
+  for (const [encoding, suffix, compressed, decode] of [
+    ["br", "br", brotliCompressSync(script, { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } }), brotliDecompressSync],
+    ["gzip", "gz", gzipSync(script, { level: 9 }), gunzipSync],
+  ]) {
+    const digest = createHash("sha256").update(script).digest("hex");
+    writeFileSync(resolve(root, `assets/app.js.${digest}.${suffix}`), compressed);
+    const result = await read("/assets/app.js", { "Accept-Encoding": encoding });
+    assert.deepEqual(result.body, compressed);
+    assert.equal(decode(result.body).toString(), script);
+    assert.equal(result.headers["content-encoding"], encoding);
+    assert.equal(Number(result.headers["content-length"]), compressed.length);
+    const head = await read("/assets/app.js", { "Accept-Encoding": encoding }, "HEAD");
+    assert.equal(head.headers["content-length"], result.headers["content-length"]);
+    assert.equal(head.body.length, 0);
+    const cached = await read("/assets/app.js", {
+      "Accept-Encoding": encoding, "If-None-Match": result.headers.etag,
+    });
+    assert.equal(cached.status, 304);
+    assert.equal(cached.body.length, 0);
+  }
+  const identity = await read("/assets/app.js", { "Accept-Encoding": "br;q=0,gzip;q=0" });
+  assert.equal(identity.headers["content-encoding"], undefined);
+  assert.equal(identity.body.toString(), script);
+  const preferred = await read("/assets/app.js", { "Accept-Encoding": "br;q=0.2,gzip;q=0.9" });
+  assert.equal(preferred.headers["content-encoding"], "gzip");
+});
+
+test("同 URL 的源文件更新后忽略旧预压缩产物，谱面不使用静态旁文件", async (t) => {
+  const { read, root, script } = await fixture(t);
+  const digest = createHash("sha256").update(script).digest("hex");
+  const sidecar = resolve(root, `assets/app.js.${digest}.br`);
+  writeFileSync(sidecar, brotliCompressSync(script));
+  const initial = await read("/assets/app.js", { "Accept-Encoding": "br" });
+  const updated = script.replaceAll("练琴簿", "新乐谱");
+  writeFileSync(resolve(root, "assets/app.js"), updated);
+  const changed = await read("/assets/app.js", {
+    "Accept-Encoding": "br", "If-None-Match": initial.headers.etag,
+  });
+  assert.equal(changed.status, 200);
+  assert.notEqual(changed.headers.etag, initial.headers.etag);
+  assert.equal(brotliDecompressSync(changed.body).toString(), updated);
+  writeFileSync(resolve(root, "score.musicxml.br"), brotliCompressSync("stale score"));
+  assert.equal((await read("/score.musicxml", { "Accept-Encoding": "br" })).body.toString(), "<score>original</score>");
 });
 
 test("教材目录支持压缩和 304，删除片段后旧 ETag 失效", async (t) => {

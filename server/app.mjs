@@ -10,7 +10,7 @@ import {
 } from "node:fs";
 import { dirname, extname, relative, resolve } from "node:path";
 
-import { is_not_modified, send_public_json, send_stream } from "./http-cache.mjs";
+import { accepted_encoding, compressed_asset_path, is_not_modified, send_public_json, send_stream } from "./http-cache.mjs";
 import { create_feedback_handler } from "./feedback.mjs";
 import {
   create_session_credentials,
@@ -2287,6 +2287,17 @@ function serve_file(request, response, file_path, private_file = false) {
     response.statusCode = 304;
     response.end();
     return;
+  }
+  const encoding = accepted_encoding(request);
+  if (!private_file && file_path.includes("/assets/") &&
+    [".js", ".css"].includes(extension) && encoding) {
+    const compressed_path = compressed_asset_path(file_path, metadata, encoding);
+    if (is_regular_file(compressed_path)) {
+      const compressed_metadata = statSync(compressed_path);
+      response.setHeader("Content-Encoding", encoding);
+      send_stream(request, response, createReadStream(compressed_path), compressed_metadata.size, false);
+      return;
+    }
   }
   send_stream(request, response, createReadStream(file_path), metadata.size, compressible);
 }

@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { createBrotliCompress, createGzip, constants } from "node:zlib";
 import { pipeline, Readable } from "node:stream";
 
@@ -16,7 +17,7 @@ export function is_not_modified(request, etag) {
     });
 }
 
-function accepted_encoding(request) {
+export function accepted_encoding(request) {
   const preferences = new Map(
     (request.headers["accept-encoding"] ?? "").toLowerCase().split(",").map((part) => {
       const [name, ...parameters] = part.trim().split(";");
@@ -29,6 +30,23 @@ function accepted_encoding(request) {
   const encoding = weight("br") >= weight("gzip") ? "br" : "gzip";
   return weight(encoding) > 0 &&
     weight(encoding) >= (preferences.get("identity") ?? 0) ? encoding : undefined;
+}
+
+const asset_digests = new Map();
+
+export function compressed_asset_path(file_path, metadata, encoding) {
+  const version = `${metadata.size}:${metadata.mtimeMs}:${metadata.ctimeMs}`;
+  let entry = asset_digests.get(file_path);
+  if (entry?.version !== version) {
+    entry = {
+      version,
+      digest: createHash("sha256").update(readFileSync(file_path)).digest("hex"),
+    };
+    asset_digests.delete(file_path);
+    if (asset_digests.size >= 64) asset_digests.delete(asset_digests.keys().next().value);
+    asset_digests.set(file_path, entry);
+  }
+  return `${file_path}.${entry.digest}.${encoding === "br" ? "br" : "gz"}`;
 }
 
 export function send_stream(request, response, stream, size, compressible) {
