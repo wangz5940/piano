@@ -3,6 +3,7 @@ import { HashRouter, Navigate, Route, Routes, useLocation } from "react-router-d
 
 import { PageBoundary } from "@/components/PageBoundary";
 import { CapacityGate } from "@/components/CapacityGate";
+import { api_request } from "@/features/api/client";
 import { Dashboard } from "@/pages/Dashboard";
 import { page_loaders } from "@/pageLoaders";
 import { use_auth_store } from "@/store/useAuthStore";
@@ -26,6 +27,7 @@ export default function App() {
       <CapacityGate>
       <RouteScrollReset />
       <AuthBootstrap />
+      <RouteAccessLogger />
       <PageBoundary>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -73,6 +75,27 @@ function RouteScrollReset() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [location.pathname]);
+
+  return null;
+}
+
+function RouteAccessLogger() {
+  const location = useLocation();
+  const user_id = use_auth_store((state) => state.user?.id);
+
+  useEffect(() => {
+    if (!user_id) {
+      return;
+    }
+    const path = `${location.pathname}${location.search}`;
+    const timeout = window.setTimeout(() => {
+      void api_request("/api/v1/access-events", {
+        method: "POST",
+        body: { path },
+      }).catch(() => undefined);
+    }, 0);
+    return () => window.clearTimeout(timeout);
+  }, [location.pathname, location.search, user_id]);
 
   return null;
 }

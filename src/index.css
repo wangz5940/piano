@@ -7678,7 +7678,8 @@ a {
 }
 
 .admin-card,
-.admin-users {
+.admin-users,
+.admin-feedback-section {
   padding: 21px;
   border: 1px solid #d5cdbf;
   border-radius: 11px;
@@ -7687,7 +7688,8 @@ a {
 }
 
 .admin-card > header,
-.admin-users > header {
+.admin-users > header,
+.admin-feedback-section > header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -7698,7 +7700,8 @@ a {
 }
 
 .admin-card h2,
-.admin-users h2 {
+.admin-users h2,
+.admin-feedback-section h2 {
   margin: 4px 0 0;
   color: #1f5548;
   font-family: ui-serif, "Songti SC", serif;
@@ -7714,6 +7717,88 @@ a {
   background: #f0f5ed;
   font-size: 9px;
   font-weight: 800;
+}
+
+.admin-ops-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+  align-items: start;
+}
+
+.admin-record-list {
+  display: grid;
+  gap: 9px;
+  max-height: 430px;
+  overflow-y: auto;
+}
+
+.admin-record-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 128px;
+  gap: 12px;
+  align-items: center;
+  padding: 11px;
+  border: 1px solid #e0d8cc;
+  border-radius: 8px;
+  background: #fffdf7;
+}
+
+.admin-record-row strong,
+.admin-record-row small,
+.admin-record-row time {
+  display: block;
+}
+
+.admin-record-row strong {
+  overflow: hidden;
+  color: #304d40;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-record-row small,
+.admin-record-row time {
+  overflow: hidden;
+  margin-top: 3px;
+  color: #7f8179;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-record-row > div:last-child {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+
+.admin-status-pill {
+  max-width: 118px;
+  overflow: hidden;
+  padding: 4px 7px;
+  color: #66766a;
+  border: 1px solid #cbd7c8;
+  border-radius: 99px;
+  background: #f0f5ed;
+  font-size: 9px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-status-pill.is-success {
+  color: #2e654f;
+  border-color: #b9ceb7;
+  background: #eef5e9;
+}
+
+.admin-status-pill.is-danger {
+  color: #8b3f35;
+  border-color: #e1aaa1;
+  background: #fff0ed;
 }
 
 .admin-form-row {
@@ -7824,6 +7909,10 @@ a {
 }
 
 .admin-users {
+  margin-top: 18px;
+}
+
+.admin-feedback-section {
   margin-top: 18px;
 }
 
@@ -7965,6 +8054,7 @@ a {
 .feedback-form > button, .feedback-reply-editor form > button { justify-self: start; }
 .feedback-success { display: flex; gap: 8px; align-items: center; color: #376547; font-size: 14px; }
 .feedback-history-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 32px; padding-top: 24px; border-top: 1px solid #d9ded4; }
+.feedback-history-heading.is-standalone { margin-top: 0; padding-top: 0; border-top: 0; }
 .feedback-history-heading h3 { margin: 0; font-size: 17px; }
 .feedback-scope { display: flex; gap: 4px; }
 .feedback-scope button { background: none; color: #68776e; border: 0; border-radius: 6px; padding: 8px 12px; }
@@ -8006,6 +8096,7 @@ a {
 
 @media (max-width: 980px) {
   .admin-grid,
+  .admin-ops-grid,
   .admin-user-table {
     grid-template-columns: 1fr;
   }
@@ -8025,11 +8116,13 @@ a {
 
   .account-panel,
   .admin-card,
-  .admin-users {
+  .admin-users,
+  .admin-feedback-section {
     padding: 17px;
   }
 
-  .admin-user-table article {
+  .admin-user-table article,
+  .admin-record-row {
     grid-template-columns: minmax(0, 1fr) 105px;
   }
 }

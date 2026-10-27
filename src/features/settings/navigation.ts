@@ -5,7 +5,7 @@ export const optional_features = [
   { id: "repertoire", title: "热门曲目", copy: "探索教材之外的曲目。" },
   { id: "records", title: "练习记录", copy: "查看历次练习表现。" },
   { id: "calibration", title: "乐谱校对", copy: "登录后可校对；个人修改仅自己可见。" },
-  { id: "admin", title: "内容后台", copy: "超管管理内容和审核校对。" },
+  { id: "admin", title: "管理后台", copy: "超管管理账户、访问记录、反馈和内容。" },
 ] as const;
 
 export type optional_feature = typeof optional_features[number]["id"];

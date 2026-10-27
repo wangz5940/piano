@@ -1370,6 +1370,30 @@ function create_repository(database) {
         ORDER BY created_at DESC
       `).all().map(get_public_user);
     },
+    list_login_records(limit = 100) {
+      return database.prepare(`
+        SELECT
+          e.id, e.actor_user_id, e.action, e.target_id, e.details_json, e.created_at,
+          u.email, u.display_name
+        FROM audit_events e
+        LEFT JOIN users u ON u.id = e.actor_user_id
+        WHERE e.action IN ('auth.login', 'auth.login.failed')
+        ORDER BY e.created_at DESC
+        LIMIT ?
+      `).all(limit).map(normalize_login_record);
+    },
+    list_access_records(limit = 100) {
+      return database.prepare(`
+        SELECT
+          e.id, e.actor_user_id, e.target_id, e.details_json, e.created_at,
+          u.email, u.display_name
+        FROM audit_events e
+        LEFT JOIN users u ON u.id = e.actor_user_id
+        WHERE e.action = 'access.page'
+        ORDER BY e.created_at DESC
+        LIMIT ?
+      `).all(limit).map(normalize_access_record);
+    },
     update_user_role(user_id, role) {
       const now = new Date().toISOString();
       database.prepare("UPDATE users SET role = ?, updated_at = ? WHERE id = ?")
@@ -2213,6 +2237,42 @@ function get_public_user(row) {
     created_at: row.created_at,
     updated_at: row.updated_at,
   };
+}
+
+function normalize_login_record(row) {
+  const details = parse_json(row.details_json, {});
+  const success = row.action === "auth.login";
+  return {
+    id: row.id,
+    user_id: row.actor_user_id ?? undefined,
+    display_name: row.display_name ?? undefined,
+    email: row.email ?? undefined,
+    action: row.action,
+    status: success ? "success" : "failed",
+    attempted_email: string_value(details.email),
+    reason: string_value(details.reason),
+    client_id: string_value(details.client_id),
+    user_agent: string_value(details.user_agent),
+    created_at: row.created_at,
+  };
+}
+
+function normalize_access_record(row) {
+  const details = parse_json(row.details_json, {});
+  return {
+    id: row.id,
+    user_id: row.actor_user_id ?? undefined,
+    display_name: row.display_name ?? undefined,
+    email: row.email ?? undefined,
+    path: row.target_id ?? string_value(details.path) ?? "/",
+    client_id: string_value(details.client_id),
+    user_agent: string_value(details.user_agent),
+    created_at: row.created_at,
+  };
+}
+
+function string_value(value) {
+  return typeof value === "string" && value.length > 0 ? value : undefined;
 }
 
 function parse_json(value, fallback) {

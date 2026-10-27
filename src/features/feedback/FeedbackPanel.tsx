@@ -19,7 +19,13 @@ interface feedback_page {
 const max_image_bytes = 5 * 1024 * 1024;
 const image_types = new Set(["image/jpeg", "image/png", "image/webp"]);
 
-export default function FeedbackPanel({ is_admin }: { is_admin: boolean }) {
+export default function FeedbackPanel({
+  is_admin,
+  show_composer = true,
+}: {
+  is_admin: boolean;
+  show_composer?: boolean;
+}) {
   const [message, set_message] = useState("");
   const [files, set_files] = useState<File[]>([]);
   const [busy, set_busy] = useState(false);
@@ -70,62 +76,64 @@ export default function FeedbackPanel({ is_admin }: { is_admin: boolean }) {
 
   return (
     <div className="feedback-submission-panel">
-      <form className="feedback-form" onSubmit={(event) => void submit(event)}>
-        <label htmlFor="feedback-message">遇到了什么问题，或希望增加什么功能？</label>
-        <textarea
-          id="feedback-message"
-          value={message}
-          onChange={(event) => { set_message(event.target.value); set_submitted(false); }}
-          placeholder="例如：教材名称、曲目、小节，以及希望怎样改进…"
-          maxLength={2000}
-          rows={5}
-          required
-          disabled={busy}
-          aria-describedby="feedback-privacy feedback-counter"
-        />
-        <div className="feedback-form-note">
-          <span id="feedback-privacy">仅你和超级管理员可见。每人每天最多提交 5 条。</span>
-          <span id="feedback-counter">{message.length}/2000</span>
-        </div>
-        <div className="feedback-attachments">
-          <label className={`secondary-button feedback-upload ${busy || files.length >= 4 ? "is-disabled" : ""}`}>
-            <ImagePlus size={17} /> 添加图片（{files.length}/4）
-            <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              multiple
-              disabled={busy || files.length >= 4}
-              aria-label="添加反馈图片"
-              onChange={(event) => {
-                select_files(Array.from(event.target.files ?? []));
-                event.target.value = "";
-              }}
-            />
-          </label>
-          <small>选填 · 每张小于 5MB · JPG / PNG / WebP</small>
-        </div>
-        {files.length > 0 && (
-          <div className="feedback-images">
-            {files.map((file, index) => (
-              <SelectedImage
-                key={`${index}:${file.name}:${file.lastModified}`}
-                file={file}
-                index={index}
-                disabled={busy}
-                remove={() => set_files((current) => current.filter((_, i) => i !== index))}
-              />
-            ))}
+      {show_composer && (
+        <form className="feedback-form" onSubmit={(event) => void submit(event)}>
+          <label htmlFor="feedback-message">遇到了什么问题，或希望增加什么功能？</label>
+          <textarea
+            id="feedback-message"
+            value={message}
+            onChange={(event) => { set_message(event.target.value); set_submitted(false); }}
+            placeholder="例如：教材名称、曲目、小节，以及希望怎样改进…"
+            maxLength={2000}
+            rows={5}
+            required
+            disabled={busy}
+            aria-describedby="feedback-privacy feedback-counter"
+          />
+          <div className="feedback-form-note">
+            <span id="feedback-privacy">仅你和超级管理员可见。每人每天最多提交 5 条。</span>
+            <span id="feedback-counter">{message.length}/2000</span>
           </div>
-        )}
-        {error && <p className="account-error" role="alert">{error}</p>}
-        {submitted && <p className="feedback-success" role="status"><Check size={17} /> 反馈已提交，可在下方查看回复。</p>}
-        <button type="submit" className="primary-button" disabled={busy || !message.trim()}>
-          {busy ? <LoaderCircle size={17} className="is-spinning" /> : <Send size={17} />}
-          {busy ? "正在提交…" : "提交反馈"}
-        </button>
-      </form>
+          <div className="feedback-attachments">
+            <label className={`secondary-button feedback-upload ${busy || files.length >= 4 ? "is-disabled" : ""}`}>
+              <ImagePlus size={17} /> 添加图片（{files.length}/4）
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                disabled={busy || files.length >= 4}
+                aria-label="添加反馈图片"
+                onChange={(event) => {
+                  select_files(Array.from(event.target.files ?? []));
+                  event.target.value = "";
+                }}
+              />
+            </label>
+            <small>选填 · 每张小于 5MB · JPG / PNG / WebP</small>
+          </div>
+          {files.length > 0 && (
+            <div className="feedback-images">
+              {files.map((file, index) => (
+                <SelectedImage
+                  key={`${index}:${file.name}:${file.lastModified}`}
+                  file={file}
+                  index={index}
+                  disabled={busy}
+                  remove={() => set_files((current) => current.filter((_, i) => i !== index))}
+                />
+              ))}
+            </div>
+          )}
+          {error && <p className="account-error" role="alert">{error}</p>}
+          {submitted && <p className="feedback-success" role="status"><Check size={17} /> 反馈已提交，可在下方查看回复。</p>}
+          <button type="submit" className="primary-button" disabled={busy || !message.trim()}>
+            {busy ? <LoaderCircle size={17} className="is-spinning" /> : <Send size={17} />}
+            {busy ? "正在提交…" : "提交反馈"}
+          </button>
+        </form>
+      )}
 
-      <div className="feedback-history-heading">
+      <div className={`feedback-history-heading ${show_composer ? "" : "is-standalone"}`}>
         <h3>{scope === "all" ? "用户反馈" : "我的反馈"}</h3>
         {is_admin && (
           <div className="feedback-scope" role="group" aria-label="反馈范围">

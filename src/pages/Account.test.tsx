@@ -18,7 +18,7 @@ describe("账号与同步", () => {
     expect(markup).not.toContain("session");
   });
 
-  it("管理员账号显示内容后台入口", () => {
+  it("超管账号显示管理后台入口", () => {
     const markup = renderToStaticMarkup(
       <MemoryRouter initialEntries={["/账号"]}>
         <Account

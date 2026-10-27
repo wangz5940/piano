@@ -2,10 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
 import {
   ArrowRight,
+  Activity,
   BookUp,
   CheckCircle2,
   CircleAlert,
+  Clock,
   FileMusic,
+  MessageSquare,
   RefreshCw,
   ShieldCheck,
   Upload,
@@ -15,8 +18,11 @@ import { Link } from "react-router-dom";
 
 import { AppShell } from "@/components/AppShell";
 import { api_request } from "@/features/api/client";
+import FeedbackPanel from "@/features/feedback/FeedbackPanel";
 import type {
   account_user,
+  admin_access_record,
+  admin_login_record,
   managed_curriculum,
   managed_content,
   managed_score,
@@ -37,6 +43,8 @@ export function Admin({ user_override }: admin_props = {}) {
   const [curriculum, set_curriculum] = useState<managed_curriculum>();
   const [scores, set_scores] = useState<managed_score[]>([]);
   const [users, set_users] = useState<account_user[]>([]);
+  const [login_records, set_login_records] = useState<admin_login_record[]>([]);
+  const [access_records, set_access_records] = useState<admin_access_record[]>([]);
   const [load_error, set_load_error] = useState<string>();
   const [refresh_key, set_refresh_key] = useState(0);
   const user = user_override === undefined ? stored_user : user_override ?? undefined;
@@ -51,13 +59,24 @@ export function Admin({ user_override }: admin_props = {}) {
       api_request<{ curriculum: managed_curriculum }>("/api/v1/admin/curriculums/active/nodes"),
       api_request<{ scores: managed_score[] }>("/api/v1/admin/scores"),
       api_request<{ users: account_user[] }>("/api/v1/admin/users"),
+      api_request<{ login_records: admin_login_record[] }>("/api/v1/admin/login-records"),
+      api_request<{ access_records: admin_access_record[] }>("/api/v1/admin/access-records"),
     ])
-      .then(([content_response, curriculum_response, scores_response, users_response]) => {
+      .then(([
+        content_response,
+        curriculum_response,
+        scores_response,
+        users_response,
+        login_response,
+        access_response,
+      ]) => {
         if (active) {
           set_content(content_response.content);
           set_curriculum(curriculum_response.curriculum);
           set_scores(scores_response.scores);
           set_users(users_response.users);
+          set_login_records(login_response.login_records);
+          set_access_records(access_response.access_records);
           set_load_error(undefined);
         }
       })
@@ -76,8 +95,8 @@ export function Admin({ user_override }: admin_props = {}) {
       <AppShell>
         <AdminState
           icon={<ShieldCheck size={24} />}
-          title={status === "loading" ? "正在确认账号权限" : "请先登录管理员账号"}
-          copy="内容上传、版本发布和用户角色调整必须经过服务端权限验证。"
+          title={status === "loading" ? "正在确认账号权限" : "请先登录超管账号"}
+          copy="账户、访问、反馈与内容发布都必须经过服务端权限验证。"
         >
           <Link to="/账号" className="primary-button">
             前往登录 <ArrowRight size={17} />
@@ -93,7 +112,7 @@ export function Admin({ user_override }: admin_props = {}) {
         <AdminState
           icon={<CircleAlert size={24} />}
           title="当前账号没有内容管理权限"
-          copy={`你当前以${get_role_label(user.role)}身份登录。后台只向管理员开放。`}
+          copy={`你当前以${get_role_label(user.role)}身份登录。后台只向超管开放。`}
         />
       </AppShell>
     );
@@ -103,8 +122,8 @@ export function Admin({ user_override }: admin_props = {}) {
     <AppShell>
       <section className="page-intro admin-intro">
         <div>
-          <p className="eyebrow"><ShieldCheck size={15} /> 内容管理后台</p>
-          <h1>内容后台</h1>
+          <p className="eyebrow"><ShieldCheck size={15} /> 超管控制台</p>
+          <h1>管理后台</h1>
         </div>
         <button
           type="button"
@@ -141,6 +160,60 @@ export function Admin({ user_override }: admin_props = {}) {
         current_user_id={user.id}
         on_updated={() => set_refresh_key((key) => key + 1)}
       />
+
+      <section className="admin-ops-grid">
+        <AuditRecordsPanel
+          title="登录记录"
+          icon={<Clock size={15} />}
+          count={login_records.length}
+          empty="还没有登录记录。"
+        >
+          {login_records.map((record) => (
+            <article key={record.id} className="admin-record-row">
+              <div>
+                <strong>{record.display_name ?? record.attempted_email ?? "未知账号"}</strong>
+                <small>{record.email ?? record.attempted_email ?? "账号已删除或不存在"}</small>
+              </div>
+              <div>
+                <span className={`admin-status-pill ${record.status === "success" ? "is-success" : "is-danger"}`}>
+                  {record.status === "success" ? "成功" : get_login_failure_label(record.reason)}
+                </span>
+                <time dateTime={record.created_at}>{format_datetime(record.created_at)}</time>
+              </div>
+            </article>
+          ))}
+        </AuditRecordsPanel>
+
+        <AuditRecordsPanel
+          title="访问记录"
+          icon={<Activity size={15} />}
+          count={access_records.length}
+          empty="还没有页面访问记录。"
+        >
+          {access_records.map((record) => (
+            <article key={record.id} className="admin-record-row">
+              <div>
+                <strong>{record.path}</strong>
+                <small>{record.display_name ?? record.email ?? "账号已删除"}</small>
+              </div>
+              <div>
+                <span className="admin-status-pill">{record.client_id ?? "unknown"}</span>
+                <time dateTime={record.created_at}>{format_datetime(record.created_at)}</time>
+              </div>
+            </article>
+          ))}
+        </AuditRecordsPanel>
+      </section>
+
+      <section className="admin-feedback-section">
+        <header>
+          <div>
+            <p className="section-kicker"><MessageSquare size={15} /> 反馈列表</p>
+            <h2>用户反馈与回复</h2>
+          </div>
+        </header>
+        <FeedbackPanel key={user.id} is_admin={true} show_composer={false} />
+      </section>
     </AppShell>
   );
 }
@@ -754,7 +827,7 @@ function UserManagement({
     <section className="admin-users">
       <header>
         <div>
-          <p className="section-kicker"><Users size={15} /> 账号权限</p>
+          <p className="section-kicker"><Users size={15} /> 账户列表</p>
           <h2>用户与角色</h2>
         </div>
         <span>{users.length} 个账号</span>
@@ -764,7 +837,9 @@ function UserManagement({
           <article key={account.id}>
             <div>
               <strong>{account.display_name}</strong>
-              <small>{account.email}</small>
+              <small>
+                {account.email} · {get_role_label(account.role)} · {account.status === "active" ? "启用" : "停用"} · {format_datetime(account.created_at)}
+              </small>
             </div>
             {account.role === "admin" || account.id === current_user_id ? (
               <span>{get_role_label(account.role)}</span>
@@ -787,6 +862,35 @@ function UserManagement({
       </div>
       {message && <p className="admin-form-message" role="status">{message}</p>}
     </section>
+  );
+}
+
+function AuditRecordsPanel({
+  title,
+  icon,
+  count,
+  empty,
+  children,
+}: {
+  title: string;
+  icon: ReactNode;
+  count: number;
+  empty: string;
+  children: ReactNode;
+}) {
+  return (
+    <article className="admin-card admin-audit-card">
+      <header>
+        <div>
+          <p className="section-kicker">{icon} 审计记录</p>
+          <h2>{title}</h2>
+        </div>
+        <span>{count} 条</span>
+      </header>
+      <div className="admin-record-list">
+        {count === 0 ? <p className="admin-empty">{empty}</p> : children}
+      </div>
+    </article>
   );
 }
 
@@ -816,7 +920,7 @@ function get_role_label(role: user_role): string {
     student: "学生",
     parent: "家长",
     teacher: "老师",
-    admin: "管理员",
+    admin: "超管",
   }[role];
 }
 
@@ -827,4 +931,22 @@ function get_kind_label(kind: managed_content["kind"]): string {
     exercise: "练习",
     piece: "曲目",
   }[kind];
+}
+
+function get_login_failure_label(reason: admin_login_record["reason"]): string {
+  if (reason === "unknown_account") return "未知账号";
+  if (reason === "disabled") return "停用";
+  return "失败";
+}
+
+function format_datetime(value: string): string {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime())
+    ? value
+    : date.toLocaleString("zh-CN", {
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
 }

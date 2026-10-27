@@ -126,6 +126,14 @@ export function validate_account_deletion(value) {
   };
 }
 
+export function validate_access_event(value) {
+  const path = required_string(value.path, "访问路径", 1, 240);
+  if (!path.startsWith("/") || /[\u0000-\u001f\u007f]/.test(path)) {
+    throw new validation_error("访问路径格式无效");
+  }
+  return { path };
+}
+
 export function validate_snapshot(value) {
   const base_revision = nonnegative_integer(value.base_revision, "同步版本");
   const merge_local = value.merge_local === true;

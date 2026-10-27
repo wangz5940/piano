@@ -21,6 +21,31 @@ export interface account_user {
   updated_at: string;
 }
 
+export interface admin_login_record {
+  id: string;
+  user_id?: string;
+  display_name?: string;
+  email?: string;
+  action: "auth.login" | "auth.login.failed";
+  status: "success" | "failed";
+  attempted_email?: string;
+  reason?: "unknown_account" | "disabled" | "password" | "invalid_credentials";
+  client_id?: string;
+  user_agent?: string;
+  created_at: string;
+}
+
+export interface admin_access_record {
+  id: string;
+  user_id?: string;
+  display_name?: string;
+  email?: string;
+  path: string;
+  client_id?: string;
+  user_agent?: string;
+  created_at: string;
+}
+
 export interface user_snapshot {
   revision: number;
   progress: user_progress;

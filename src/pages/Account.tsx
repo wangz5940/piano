@@ -129,7 +129,7 @@ export function Account({
           <div className="account-actions">
             {user.role === "admin" && (
               <Link to="/后台" className="primary-button">
-                进入内容后台 <ArrowRight size={17} />
+                进入管理后台 <ArrowRight size={17} />
               </Link>
             )}
             <button type="button" className="secondary-button" onClick={() => void logout()}>
@@ -321,7 +321,7 @@ function get_role_label(role: user_role): string {
     student: "学生",
     parent: "家长",
     teacher: "老师",
-    admin: "管理员",
+    admin: "超管",
   }[role];
 }
 

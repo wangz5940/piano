@@ -36,7 +36,7 @@ const navigation_items = [
   { to: "/管理", label: "学习管理", icon: SlidersHorizontal },
   { to: "/账号", label: "账号与同步", icon: CircleUserRound },
   { to: "/校准", label: "乐谱校对", icon: ScanSearch, feature: "calibration" },
-  { to: "/后台", label: "内容后台", icon: ShieldCheck, feature: "admin" },
+  { to: "/后台", label: "管理后台", icon: ShieldCheck, feature: "admin" },
 ];
 
 export function AppShell({ children }: app_shell_props) {

@@ -546,6 +546,14 @@ test("业务 API 支持账号、同步、练习归档和管理员内容版本", 
     role: "admin",
     ...admin_password,
   });
+  const failed_admin_login = await fixture.request("/api/v1/auth/login", {
+    method: "POST",
+    body: {
+      email: "admin@example.com",
+      password: "wrong-administrator-password",
+    },
+  });
+  assert.equal(failed_admin_login.status, 401);
   const admin_login = await fixture.request("/api/v1/auth/login", {
     method: "POST",
     body: {
@@ -555,6 +563,38 @@ test("业务 API 支持账号、同步、练习归档和管理员内容版本", 
   });
   assert.equal(admin_login.status, 200);
   const admin_cookie = admin_login.cookie;
+
+  const access_event = await fixture.request("/api/v1/access-events", {
+    method: "POST",
+    cookie: admin_cookie,
+    body: { path: "/后台" },
+  });
+  assert.equal(access_event.status, 201);
+  const admin_login_records = await fixture.request("/api/v1/admin/login-records", {
+    cookie: admin_cookie,
+  });
+  assert.equal(admin_login_records.status, 200);
+  assert.equal(
+    admin_login_records.data.login_records.some((record) =>
+      record.email === "admin@example.com" && record.status === "success"),
+    true,
+  );
+  assert.equal(
+    admin_login_records.data.login_records.some((record) =>
+      record.attempted_email === "admin@example.com" && record.status === "failed"),
+    true,
+  );
+  const admin_access_records = await fixture.request("/api/v1/admin/access-records", {
+    cookie: admin_cookie,
+  });
+  assert.equal(admin_access_records.status, 200);
+  assert.equal(
+    admin_access_records.data.access_records.some((record) => record.path === "/后台"),
+    true,
+  );
+  assert.equal((await fixture.request("/api/v1/admin/login-records", {
+    cookie: student_cookie,
+  })).status, 403);
 
   const active_curriculum = await fixture.request("/api/v1/curriculums/active");
   assert.equal(active_curriculum.status, 200);

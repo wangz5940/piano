@@ -33,6 +33,7 @@ import {
 import {
   read_json_body,
   validate_account_deletion,
+  validate_access_event,
   validate_content_create,
   validate_content_update,
   validate_content_version,
@@ -377,6 +378,16 @@ async function handle_api_request(context) {
       ? await verify_password(input.password, account)
       : await consume_password_work(input.password);
     if (!account || !password_matches || account.status !== "active") {
+      repository.record_audit_event({
+        actor_user_id: account?.id,
+        action: "auth.login.failed",
+        target_type: "user",
+        target_id: account?.id,
+        details: audit_request_details(request, client_id, {
+          email: input.email,
+          reason: get_login_failure_reason(account, password_matches),
+        }),
+      });
       send_error(response, 401, "invalid_credentials", "邮箱或密码错误。", request_id);
       return;
     }
@@ -394,6 +405,7 @@ async function handle_api_request(context) {
       actor_user_id: account.id,
       action: "auth.login",
       target_type: "session",
+      details: audit_request_details(request, client_id),
     });
     send_json(response, 200, {
       user: repository.get_user_by_id(account.id),
@@ -416,6 +428,20 @@ async function handle_api_request(context) {
 
   const user = authenticate_request(request, repository);
   if (await context.handle_feedback({ request, response, url, user, send_json })) return;
+
+  if (pathname === "/api/v1/access-events" && method === "POST") {
+    require_user(user);
+    const input = validate_access_event(await read_json_body(request, 4_096));
+    repository.record_audit_event({
+      actor_user_id: user.id,
+      action: "access.page",
+      target_type: "route",
+      target_id: input.path,
+      details: audit_request_details(request, client_id),
+    });
+    send_json(response, 201, { status: "recorded" });
+    return;
+  }
 
   if (pathname === "/api/v1/calibrations/source" && method === "GET") {
     require_user(user);
@@ -658,6 +684,22 @@ async function handle_api_request(context) {
   if (pathname === "/api/v1/admin/users" && method === "GET") {
     require_admin(user);
     send_json(response, 200, { users: repository.list_users() });
+    return;
+  }
+
+  if (pathname === "/api/v1/admin/login-records" && method === "GET") {
+    require_admin(user);
+    send_json(response, 200, {
+      login_records: repository.list_login_records(get_query_limit(url, 100, 500)),
+    });
+    return;
+  }
+
+  if (pathname === "/api/v1/admin/access-records" && method === "GET") {
+    require_admin(user);
+    send_json(response, 200, {
+      access_records: repository.list_access_records(get_query_limit(url, 100, 500)),
+    });
     return;
   }
 
@@ -1158,6 +1200,34 @@ function require_admin(user) {
   if (user.role !== "admin") {
     throw new validation_error("当前账号没有管理权限。", 403, "permission_denied");
   }
+}
+
+function audit_request_details(request, client_id, details = {}) {
+  const user_agent = String(request.headers["user-agent"] ?? "").slice(0, 240);
+  return {
+    ...details,
+    client_id: String(client_id).slice(0, 128),
+    ...(user_agent ? { user_agent } : {}),
+  };
+}
+
+function get_login_failure_reason(account, password_matches) {
+  if (!account) return "unknown_account";
+  if (account.status !== "active") return "disabled";
+  if (!password_matches) return "password";
+  return "invalid_credentials";
+}
+
+function get_query_limit(url, default_limit, max_limit) {
+  const raw = url.searchParams.get("limit");
+  if (raw === null || raw === "") {
+    return default_limit;
+  }
+  const limit = Number(raw);
+  if (!Number.isInteger(limit) || limit < 1) {
+    throw new validation_error("查询数量无效");
+  }
+  return Math.min(limit, max_limit);
 }
 
 async function consume_password_work(password) {
