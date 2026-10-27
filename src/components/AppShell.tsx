@@ -44,10 +44,13 @@ export function AppShell({ children }: app_shell_props) {
   const set_sidebar_collapsed = use_app_settings_store((state) => state.set_sidebar_collapsed);
   const user = use_auth_store((state) => state.user);
   const features = use_app_settings_store((state) => state.feature_switches);
-  const visible_navigation_items = navigation_items.filter((item) =>
-    (!item.feature || features[item.feature as optional_feature]) &&
-    (item.feature !== "admin" || user?.role === "admin") &&
-    (item.feature !== "calibration" || Boolean(user)));
+  const visible_navigation_items = navigation_items.filter((item) => {
+    if (item.feature === "admin") {
+      return user?.role === "admin";
+    }
+    return (!item.feature || features[item.feature as optional_feature]) &&
+      (item.feature !== "calibration" || Boolean(user));
+  });
 
   return (
     <div className={`app-shell ${sidebar_collapsed ? "is-rail-collapsed" : ""}`}>
