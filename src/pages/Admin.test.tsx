@@ -42,6 +42,9 @@ describe("管理后台", () => {
     expect(markup).toContain("用户与角色");
     expect(markup).toContain("登录记录");
     expect(markup).toContain("访问记录");
+    expect(markup).toContain("路径、账号或客户端");
+    expect(markup).toContain("已登录");
+    expect(markup).toContain("匿名");
     expect(markup).toContain("反馈列表");
     expect(markup).toContain("管理后台");
     expect(markup).not.toContain("诗歌");

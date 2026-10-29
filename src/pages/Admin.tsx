@@ -36,6 +36,8 @@ interface admin_props {
   user_override?: account_user | null;
 }
 
+type access_filter = "all" | "authenticated" | "anonymous";
+
 export function Admin({ user_override }: admin_props = {}) {
   const stored_user = use_auth_store((state) => state.user);
   const status = use_auth_store((state) => state.status);
@@ -45,9 +47,37 @@ export function Admin({ user_override }: admin_props = {}) {
   const [users, set_users] = useState<account_user[]>([]);
   const [login_records, set_login_records] = useState<admin_login_record[]>([]);
   const [access_records, set_access_records] = useState<admin_access_record[]>([]);
+  const [access_filter, set_access_filter] = useState<access_filter>("all");
+  const [access_query, set_access_query] = useState("");
   const [load_error, set_load_error] = useState<string>();
   const [refresh_key, set_refresh_key] = useState(0);
   const user = user_override === undefined ? stored_user : user_override ?? undefined;
+  const filtered_access_records = useMemo(() => {
+    const query = access_query.trim().toLowerCase();
+    return access_records.filter((record) => {
+      if (access_filter === "authenticated" && !record.authenticated) {
+        return false;
+      }
+      if (access_filter === "anonymous" && record.authenticated) {
+        return false;
+      }
+      if (!query) {
+        return true;
+      }
+      const searchable = [
+        record.path,
+        get_access_actor_label(record),
+        record.email,
+        record.client_id,
+        record.user_agent,
+        record.authenticated ? "已登录 登录 authenticated" : "匿名 未登录 anonymous",
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return searchable.includes(query);
+    });
+  }, [access_filter, access_query, access_records]);
 
   useEffect(() => {
     if (user?.role !== "admin") {
@@ -187,17 +217,49 @@ export function Admin({ user_override }: admin_props = {}) {
         <AuditRecordsPanel
           title="访问记录"
           icon={<Activity size={15} />}
-          count={access_records.length}
-          empty="还没有页面访问记录。"
+          count={filtered_access_records.length}
+          empty={access_records.length === 0 ? "还没有页面访问记录。" : "没有符合条件的访问记录。"}
+          tools={
+            <div className="admin-access-filters" aria-label="访问记录筛选">
+              <div className="admin-access-segments">
+                {([
+                  ["all", "全部"],
+                  ["authenticated", "已登录"],
+                  ["anonymous", "匿名"],
+                ] as const).map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={access_filter === value ? "is-active" : undefined}
+                    aria-pressed={access_filter === value}
+                    onClick={() => set_access_filter(value)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <label className="admin-record-search">
+                <span>筛选</span>
+                <input
+                  type="search"
+                  value={access_query}
+                  placeholder="路径、账号或客户端"
+                  onChange={(event) => set_access_query(event.target.value)}
+                />
+              </label>
+            </div>
+          }
         >
-          {access_records.map((record) => (
+          {filtered_access_records.map((record) => (
             <article key={record.id} className="admin-record-row">
               <div>
                 <strong>{record.path}</strong>
-                <small>{record.display_name ?? record.email ?? "账号已删除"}</small>
+                <small>{get_access_actor_label(record)} · {record.client_id ?? "unknown"}</small>
               </div>
               <div>
-                <span className="admin-status-pill">{record.client_id ?? "unknown"}</span>
+                <span className={`admin-status-pill ${record.authenticated ? "is-success" : "is-muted"}`}>
+                  {record.authenticated ? "已登录" : "匿名"}
+                </span>
                 <time dateTime={record.created_at}>{format_datetime(record.created_at)}</time>
               </div>
             </article>
@@ -870,12 +932,14 @@ function AuditRecordsPanel({
   icon,
   count,
   empty,
+  tools,
   children,
 }: {
   title: string;
   icon: ReactNode;
   count: number;
   empty: string;
+  tools?: ReactNode;
   children: ReactNode;
 }) {
   return (
@@ -887,6 +951,7 @@ function AuditRecordsPanel({
         </div>
         <span>{count} 条</span>
       </header>
+      {tools}
       <div className="admin-record-list">
         {count === 0 ? <p className="admin-empty">{empty}</p> : children}
       </div>
@@ -937,6 +1002,13 @@ function get_login_failure_label(reason: admin_login_record["reason"]): string {
   if (reason === "unknown_account") return "未知账号";
   if (reason === "disabled") return "停用";
   return "失败";
+}
+
+function get_access_actor_label(record: admin_access_record): string {
+  if (!record.authenticated) {
+    return "匿名访问";
+  }
+  return record.display_name ?? record.email ?? "账号已删除";
 }
 
 function format_datetime(value: string): string {

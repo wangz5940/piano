@@ -38,6 +38,7 @@ export interface admin_login_record {
 export interface admin_access_record {
   id: string;
   user_id?: string;
+  authenticated: boolean;
   display_name?: string;
   email?: string;
   path: string;

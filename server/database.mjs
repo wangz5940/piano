@@ -2262,6 +2262,9 @@ function normalize_access_record(row) {
   return {
     id: row.id,
     user_id: row.actor_user_id ?? undefined,
+    authenticated: typeof details.authenticated === "boolean"
+      ? details.authenticated
+      : Boolean(row.actor_user_id),
     display_name: row.display_name ?? undefined,
     email: row.email ?? undefined,
     path: row.target_id ?? string_value(details.path) ?? "/",

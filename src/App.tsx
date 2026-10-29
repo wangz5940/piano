@@ -81,10 +81,11 @@ function RouteScrollReset() {
 
 function RouteAccessLogger() {
   const location = useLocation();
+  const auth_status = use_auth_store((state) => state.status);
   const user_id = use_auth_store((state) => state.user?.id);
 
   useEffect(() => {
-    if (!user_id) {
+    if (auth_status === "idle" || auth_status === "loading") {
       return;
     }
     const path = `${location.pathname}${location.search}`;
@@ -95,7 +96,7 @@ function RouteAccessLogger() {
       }).catch(() => undefined);
     }, 0);
     return () => window.clearTimeout(timeout);
-  }, [location.pathname, location.search, user_id]);
+  }, [auth_status, location.pathname, location.search, user_id]);
 
   return null;
 }

@@ -7734,6 +7734,61 @@ a {
   overflow-y: auto;
 }
 
+.admin-access-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: end;
+}
+
+.admin-access-segments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-access-segments button {
+  min-height: 31px;
+  padding: 6px 10px;
+  color: #5f6c61;
+  border: 1px solid #d9d1c5;
+  border-radius: 8px;
+  background: #fffdf7;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-access-segments button.is-active {
+  color: #f7f1e7;
+  border-color: #385244;
+  background: #385244;
+}
+
+.admin-record-search {
+  display: grid;
+  gap: 5px;
+}
+
+.admin-record-search span {
+  color: #7f8179;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.admin-record-search input {
+  width: 100%;
+  min-height: 31px;
+  padding: 7px 9px;
+  color: #304d40;
+  border: 1px solid #d9d1c5;
+  border-radius: 8px;
+  background: #fffdf7;
+  font: inherit;
+  font-size: 10px;
+}
+
 .admin-record-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 128px;
@@ -7799,6 +7854,12 @@ a {
   color: #8b3f35;
   border-color: #e1aaa1;
   background: #fff0ed;
+}
+
+.admin-status-pill.is-muted {
+  color: #706b63;
+  border-color: #ddd2c1;
+  background: #f7f0e5;
 }
 
 .admin-form-row {
@@ -8109,6 +8170,7 @@ a {
 
 @media (max-width: 700px) {
   .account-capabilities,
+  .admin-access-filters,
   .admin-form-row,
   .hand-position-map {
     grid-template-columns: 1fr;

@@ -564,6 +564,12 @@ test("业务 API 支持账号、同步、练习归档和管理员内容版本", 
   assert.equal(admin_login.status, 200);
   const admin_cookie = admin_login.cookie;
 
+  const anonymous_access_event = await fixture.request("/api/v1/access-events", {
+    method: "POST",
+    body: { path: "/简谱教材?source=guest" },
+  });
+  assert.equal(anonymous_access_event.status, 201);
+
   const access_event = await fixture.request("/api/v1/access-events", {
     method: "POST",
     cookie: admin_cookie,
@@ -589,7 +595,17 @@ test("业务 API 支持账号、同步、练习归档和管理员内容版本", 
   });
   assert.equal(admin_access_records.status, 200);
   assert.equal(
-    admin_access_records.data.access_records.some((record) => record.path === "/后台"),
+    admin_access_records.data.access_records.some((record) =>
+      record.path === "/后台" &&
+      record.email === "admin@example.com" &&
+      record.authenticated === true),
+    true,
+  );
+  assert.equal(
+    admin_access_records.data.access_records.some((record) =>
+      record.path === "/简谱教材?source=guest" &&
+      record.user_id === undefined &&
+      record.authenticated === false),
     true,
   );
   assert.equal((await fixture.request("/api/v1/admin/login-records", {
