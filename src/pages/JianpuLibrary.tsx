@@ -19,7 +19,7 @@ import { AppShell } from "@/components/AppShell";
 import { order_textbook_materials } from "@/features/assets/materialOrder";
 import { MusicXmlScoreRenderer } from "@/features/assets/MusicXmlScoreRenderer";
 import { load_score_engine, start_score_measure } from "@/features/assets/loadScoreEngine";
-import { ScoreZoomSurface } from "@/features/assets/ScoreZoomSurface";
+import { ScoreZoomSurface, type score_zoom_control } from "@/features/assets/ScoreZoomSurface";
 import type { material_id } from "@/features/assets/types";
 import {
   is_score_favorite,
@@ -328,6 +328,8 @@ function JianpuReader({
   calibration_href?: string;
 }) {
   const [reading_view, set_reading_view] = useState<reading_view>("jianpu");
+  const [score_zoom, set_score_zoom] = useState(1);
+  const zoom_control = { zoom: score_zoom, set_zoom: set_score_zoom };
   const [opened_original, set_opened_original] = useState<jianpu_segment>();
   const original_button = useRef<HTMLButtonElement>(null);
   const reading_surface = useRef<HTMLDivElement>(null);
@@ -526,12 +528,13 @@ function JianpuReader({
             <JianpuPageSliceReader
               score={score}
               page_slices={segment.page_slices}
+              zoom_control={zoom_control}
             />
           )
         ) : null}
         {(reading_view === "original" || opened_original === segment) && (
           <div hidden={reading_view !== "original"}>
-            <OriginalScorePanel key={segment.id} segment={segment} />
+            <OriginalScorePanel key={segment.id} segment={segment} zoom_control={zoom_control} />
           </div>
         )}
       </div>
@@ -543,9 +546,11 @@ function JianpuReader({
 export function JianpuPageSliceReader({
   score,
   page_slices,
+  zoom_control,
 }: {
   score: jianpu_score;
   page_slices: jianpu_page_slice[];
+  zoom_control?: score_zoom_control;
 }) {
   const [expanded_slice_keys, set_expanded_slice_keys] = useState<Set<string>>(
     () => get_initial_expanded_slice_keys(page_slices),
@@ -584,6 +589,7 @@ export function JianpuPageSliceReader({
                 measure_end={page_slice.measure_end}
                 download_name={`${page_slice.title}-简谱`}
                 className="textbook-score-slice"
+                zoom_control={zoom_control}
               >
                 <TextbookJianpuScore
                   score={page_score}
@@ -709,7 +715,10 @@ function get_hand_mode_reader_label(hand_mode: jianpu_hand_mode): string {
   return hand_mode === "right" ? "右手材料" : "左手材料";
 }
 
-function OriginalScorePanel({ segment }: { segment: jianpu_segment }) {
+function OriginalScorePanel({ segment, zoom_control }: {
+  segment: jianpu_segment;
+  zoom_control: score_zoom_control;
+}) {
   const user_id = use_auth_store((state) => state.user?.id);
   const [render_state, set_render_state] = useState<render_state>("loading");
   const [musicxml, set_musicxml] = useState<string>();
@@ -736,6 +745,7 @@ function OriginalScorePanel({ segment }: { segment: jianpu_segment }) {
         measure_end={segment.measure_count}
         download_name={`${segment.title}-原谱`}
         className="original-score-slice"
+        zoom_control={zoom_control}
       >
         {render_state === "loading" && <JianpuScoreState copy="正在加载完整原谱…" />}
         {render_state === "error" && <>

@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import type { CSSProperties, ReactNode, TouchEvent, WheelEvent } from "react";
+import type { CSSProperties, Dispatch, ReactNode, SetStateAction, TouchEvent, WheelEvent } from "react";
 import { Download, LoaderCircle, Minus, Plus } from "lucide-react";
 
 import { download_score_images } from "./downloadScoreImage";
@@ -8,12 +8,18 @@ const minimum_score_zoom = 0.72;
 const maximum_score_zoom = 1.5;
 const score_zoom_step = 0.08;
 
+export interface score_zoom_control {
+  zoom: number;
+  set_zoom: Dispatch<SetStateAction<number>>;
+}
+
 interface score_zoom_surface_props {
   children: ReactNode;
   measure_start: number;
   measure_end: number;
   download_name?: string;
   className?: string;
+  zoom_control?: score_zoom_control;
 }
 
 export function ScoreZoomSurface({
@@ -22,21 +28,24 @@ export function ScoreZoomSurface({
   measure_end,
   download_name,
   className = "",
+  zoom_control,
 }: score_zoom_surface_props) {
-  const [zoom, set_zoom] = useState(1);
+  const [local_zoom, set_local_zoom] = useState(1);
+  const zoom = zoom_control?.zoom ?? local_zoom;
+  const set_zoom = zoom_control?.set_zoom ?? set_local_zoom;
   const [download_state, set_download_state] = useState<"idle" | "downloading" | "error">("idle");
   const surface_ref = useRef<HTMLElement>(null);
   const pinch_distance_ref = useRef<number>();
   const update_zoom = useCallback((next_zoom: number) => {
     set_zoom(Math.min(maximum_score_zoom, Math.max(minimum_score_zoom, next_zoom)));
-  }, []);
+  }, [set_zoom]);
   const change_zoom = useCallback((direction: number) => {
     set_zoom((current) =>
       Math.min(
         maximum_score_zoom,
         Math.max(minimum_score_zoom, current + direction * score_zoom_step),
       ));
-  }, []);
+  }, [set_zoom]);
   const handle_wheel = useCallback((event: WheelEvent<HTMLElement>) => {
     if (!event.ctrlKey && !event.metaKey) {
       return;
