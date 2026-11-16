@@ -105,7 +105,7 @@ export function ScoreZoomSurface({
             type="range"
             min={Math.round(minimum_score_zoom * 100)}
             max={Math.round(maximum_score_zoom * 100)}
-            step={Math.round(score_zoom_step * 100)}
+            step={1}
             value={zoom_percent}
             aria-label="谱面缩放比例"
             onChange={(event) => update_zoom(Number(event.target.value) / 100)}

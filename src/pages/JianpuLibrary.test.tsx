@@ -1,4 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
@@ -10,6 +12,9 @@ import {
   capture_score_scroll_anchor,
   get_score_scroll_delta,
 } from "@/features/jianpu/scoreScrollPosition";
+import { get_reading_material, get_reading_score_number } from "@/features/jianpu/readingCatalog";
+import { group_material_by_content } from "@/features/jianpu/contentGrouping";
+import { combine_work_scores } from "@/features/jianpu/workScore";
 
 import {
   JianpuLibrary,
@@ -27,8 +32,8 @@ const catalog_fixture: jianpu_catalog = {
       description: "从读谱、触键到双手配合的基础教材。",
       page_count: 102,
       pages: [{
-        page: 7,
-        title: "右手触键练习",
+        page: 24,
+        title: "练习13（双手练习）",
         text: "每当一个手指触键时，其前一手指应立即抬起。",
         exercise_labels: [],
       }],
@@ -36,18 +41,18 @@ const catalog_fixture: jianpu_catalog = {
         id: "touch-exercises",
         title: "手指触键练习",
         description: "建立单手与双手触键的稳定动作。",
-        page_start: 7,
-        page_end: 9,
+        page_start: 24,
+        page_end: 26,
       }],
       segments: [{
-        id: "beyer.segment.001",
-        sequence: 1,
-        title: "右手触键练习",
-        source_pages: [7],
-        source_page_label: "原谱第 7 页",
+        id: "beyer.segment.031",
+        sequence: 13,
+        title: "练习13（双手练习）",
+        source_pages: [24],
+        source_page_label: "原谱第 24 页",
         page_slices: [{
-          source_pages: [7],
-          title: "右手触键练习",
+          source_pages: [24],
+          title: "练习13（双手练习）",
           text: "每当一个手指触键时，其前一手指应立即抬起。",
           measure_start: 1,
           measure_end: 24,
@@ -56,8 +61,8 @@ const catalog_fixture: jianpu_catalog = {
           mapping: "verified",
         }],
         exercise_labels: [],
-        jianpu_url: "/materials/jianpu/beyer/001.json",
-        musicxml_url: "/materials/beyer/拜厄钢琴基本教程_乐章_001.musicxml",
+        jianpu_url: "/materials/jianpu/beyer/031.json",
+        musicxml_url: "/materials/beyer/拜厄钢琴基本教程_乐章_031.musicxml",
         measure_count: 24,
         time_signature: "4/4",
         key_signature: "C 大调（1 = C）",
@@ -129,24 +134,8 @@ const admin = {
 };
 
 describe("简谱教材", () => {
-  it("按学习顺序优先显示小汤 1 和小汤 2，并默认打开小汤 1", () => {
-    const beyer = catalog_fixture.materials[0];
-    const catalog: jianpu_catalog = {
-      ...catalog_fixture,
-      materials: [
-        ...catalog_fixture.materials,
-        {
-          ...beyer,
-          id: "john-thompson-easiest-1",
-          title: "约翰·汤普森简易钢琴教程 1",
-        },
-        {
-          ...beyer,
-          id: "john-thompson-easiest-2",
-          title: "约翰·汤普森简易钢琴教程 2",
-        },
-      ],
-    };
+  it("按学习顺序展示教材，并默认直接打开小汤 1 的 001 曲谱", () => {
+    const catalog: jianpu_catalog = JSON.parse(readFileSync(resolve("public/materials/jianpu-catalog.json"), "utf8"));
 
     const markup = renderToStaticMarkup(
       <MemoryRouter initialEntries={["/简谱教材"]}>
@@ -169,8 +158,35 @@ describe("简谱教材", () => {
     expect(small_thompson_2).toBeLessThan(beyer_index);
     expect(beyer_index).toBeLessThan(hanon_index);
     expect(markup).toMatch(
-      /<a(?=[^>]*href="\/简谱教材\/john-thompson-easiest-1\/章节\/touch-exercises")(?=[^>]*class="is-selected")(?=[^>]*aria-selected="true")/,
+      /<a(?=[^>]*href="\/简谱教材\/john-thompson-easiest-1\/john-thompson-easiest-1.segment.001.work.1")(?=[^>]*class="is-selected")(?=[^>]*aria-selected="true")/,
     );
+    expect(markup).toContain('class="textbook-score-number">001</span>请弹吧（右手）');
+    expect(markup).not.toContain("章节导读");
+    expect(markup).not.toContain("jianpu-segment-panel");
+  });
+
+  it("拜厄从第 24 页练习 13 开始，同时保留共用源谱中的准确小节范围", () => {
+    const catalog: jianpu_catalog = JSON.parse(readFileSync(resolve("public/materials/jianpu-catalog.json"), "utf8"));
+    const source = catalog.materials.find((item) => item.id === "beyer")!;
+    const reading = get_reading_material(source);
+    const first = reading.segments[0];
+    expect(first.title).toBe("练习13（双手练习）");
+    expect(first.source_pages).toEqual([24]);
+    expect(get_reading_score_number(reading, first)).toBe("013");
+    expect(reading.segments.slice(0, 4).map((item) => get_reading_score_number(reading, item)))
+      .toEqual(["013", "014", "015", "016"]);
+    expect(first.sources).toEqual([expect.objectContaining({ segment_id: "beyer.segment.031", measure_start: 25, measure_end: 32 })]);
+    expect(reading.segments.every((item) => item.source_pages.every((page) => page >= 24))).toBe(true);
+    expect(reading.pages[0].page).toBe(24);
+    expect(reading.chapters[0].page_start).toBe(24);
+    const source_score: jianpu_score = JSON.parse(readFileSync(resolve("public/materials/jianpu/beyer/031.json"), "utf8"));
+    const score = combine_work_scores(first, [source_score]);
+    expect(score.measures).toHaveLength(8);
+    expect(score.measures.flatMap((measure) => measure.events))
+      .toEqual(source_score.measures.slice(24, 32).flatMap((measure) => measure.events));
+    for (const material of catalog.materials.filter((item) => item.id !== "beyer")) {
+      expect(get_reading_material(material)).toEqual(group_material_by_content(material));
+    }
   });
 
   it("教材谱面使用统一 SVG 并且不把单手空位画成休止", () => {
@@ -254,9 +270,9 @@ describe("简谱教材", () => {
     }, 1000)).toBeUndefined();
   });
 
-  it("按树状索引展示两本教材和单手谱入口", () => {
+  it("提供全屏、悬浮目录和切曲入口，并保留单手谱与收藏功能", () => {
     const markup = renderToStaticMarkup(
-      <MemoryRouter initialEntries={["/简谱教材/beyer/beyer.segment.001"]}>
+      <MemoryRouter initialEntries={["/简谱教材/beyer/beyer.segment.031"]}>
         <Routes>
           <Route
             path="/简谱教材/:material_id/:segment_id"
@@ -266,25 +282,27 @@ describe("简谱教材", () => {
       </MemoryRouter>,
     );
 
-    expect(markup).toContain("原教材文字与简谱练习");
     expect(markup).toContain("拜厄钢琴基本教程");
     expect(markup).toContain("哈农钢琴练指法");
-    expect(markup).toContain("原谱第 7 页");
-    expect(markup).toContain("阅读索引");
-    expect(markup).toContain("收起阅读目录");
+    expect(markup).toContain("原谱第 24 页");
+    expect(markup).toContain('aria-label="全屏展示"');
+    expect(markup).toContain('aria-label="曲谱目录"');
+    expect(markup).toContain('aria-label="收藏练习13（双手练习）"');
+    expect(markup).not.toContain("阅读索引");
     expect(markup).toContain(">简谱<");
-    expect(markup).toContain("右手谱");
-    expect(markup).toContain("上一曲");
-    expect(markup).toContain("下一曲");
-    expect(markup).toContain("已经是第一曲");
-    expect(markup).toContain("已经是最后一曲");
+    expect(markup).toContain("右手材料");
+    expect(markup).toContain("上一首");
+    expect(markup).toContain("下一首");
+    expect(markup).toContain("已经是第一首");
+    expect(markup).toContain("已经是最后一首");
+    expect(markup).toContain('class="textbook-stage-navigation" hidden=""');
     expect(markup).not.toContain("校对乐谱");
     expect(markup).not.toContain("左手休止");
   });
 
   it("管理员可从简谱曲谱直接进入对应校准台", () => {
     const markup = renderToStaticMarkup(
-      <MemoryRouter initialEntries={["/简谱教材/beyer/beyer.segment.001"]}>
+      <MemoryRouter initialEntries={["/简谱教材/beyer/beyer.segment.031"]}>
         <Routes>
           <Route
             path="/简谱教材/:material_id/:segment_id"
@@ -295,7 +313,7 @@ describe("简谱教材", () => {
     );
 
     expect(markup).toContain("校对乐谱");
-    expect(markup).toContain('href="/校准?segment=beyer%3Abeyer.segment.001"');
+    expect(markup).toContain('href="/校准?segment=beyer%3Abeyer.segment.031"');
   });
 
   it("按索引打开哈农片段时保留章节和双手信息", () => {
@@ -312,7 +330,7 @@ describe("简谱教材", () => {
 
     expect(markup).toContain("练习一");
     expect(markup).toContain("第一部分：准备练习");
-    expect(markup).toContain("双手谱");
+    expect(markup).toContain("右手与左手");
   });
 
   it("为教材章节提供原页文字导读和关联练习入口", () => {
@@ -328,7 +346,7 @@ describe("简谱教材", () => {
     );
 
     expect(markup).toContain("教材章节");
-    expect(markup).toContain("章节导读");
+    expect(markup).toContain("手指触键练习");
     expect(markup).toContain("章节学习提示");
     expect(markup).toContain("每当一个手指触键时");
     expect(markup).toContain("乐曲目录");

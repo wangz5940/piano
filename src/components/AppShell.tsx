@@ -26,7 +26,7 @@ interface app_shell_props {
 }
 
 const navigation_items = [
-  { to: "/", label: "今日练习", icon: Home, end: true, feature: "dashboard" },
+  { to: "/今日练习", label: "今日练习", icon: Home, end: true, feature: "dashboard" },
   { to: "/简谱教材", label: "简谱教材", icon: Music2 },
   { to: "/收藏", label: "收藏", icon: Heart },
   { to: "/课程", label: "课程路径", icon: BookOpenText, feature: "courses" },

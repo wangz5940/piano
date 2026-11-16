@@ -6248,8 +6248,7 @@ a {
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 4px 9px;
-  min-width: 224px;
-  padding: 14px 16px;
+  padding: 10px 14px;
   color: #557063;
   border: 1px solid #c8d0c4;
   border-radius: 9px;
@@ -6287,6 +6286,247 @@ a {
 
 .jianpu-library-layout.is-navigation-collapsed {
   grid-template-columns: 48px minmax(0, 1fr);
+}
+
+.jianpu-library-layout.is-score-focused {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.textbook-score-number {
+  margin-right: 12px;
+  color: #8b927f;
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.textbook-score-stage {
+  position: relative;
+  min-width: 0;
+  padding-bottom: 64px;
+}
+
+.textbook-stage-navigation[hidden] {
+  display: none;
+}
+
+.textbook-stage-arrow {
+  position: fixed;
+  top: 50%;
+  z-index: 20;
+  display: grid;
+  width: 48px;
+  height: 64px;
+  place-items: center;
+  color: #245d4d;
+  border: 1px solid #cbd5ca;
+  border-radius: 12px;
+  background: rgb(255 253 247 / 94%);
+  box-shadow: 0 4px 18px rgb(28 48 36 / 12%);
+  transform: translateY(-50%);
+}
+
+.textbook-stage-arrow.is-previous { left: 18px; }
+.textbook-stage-arrow.is-next { right: 18px; }
+
+.textbook-stage-arrow:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+
+.textbook-stage-actions {
+  position: fixed;
+  right: max(22px, env(safe-area-inset-right));
+  bottom: max(22px, env(safe-area-inset-bottom));
+  z-index: 25;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid #d5dacf;
+  border-radius: 13px;
+  background: rgb(255 253 247 / 96%);
+  box-shadow: 0 5px 24px rgb(28 48 36 / 12%);
+}
+
+.textbook-stage-actions button,
+.textbook-catalog-popover header > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 12px;
+  color: #315f4f;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 12px;
+}
+
+.textbook-stage-actions button:hover,
+.textbook-catalog-popover button:hover {
+  background: #eef4eb;
+}
+
+.textbook-score-stage button:focus-visible {
+  outline: 2px solid #245d4d;
+  outline-offset: 3px;
+}
+
+.textbook-score-stage.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  width: 100%;
+  height: 100dvh;
+  padding: 0;
+  background: #fffefb;
+}
+
+.app-shell:has(.textbook-score-stage.is-fullscreen) .side-rail,
+.app-shell:has(.textbook-score-stage.is-fullscreen) .mobile-nav,
+.app-shell:has(.textbook-score-stage.is-fullscreen) .jianpu-material-tabs {
+  visibility: hidden;
+}
+
+.textbook-score-stage.is-fullscreen .textbook-stage-scroll {
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 24px clamp(56px, 6vw, 100px) 100px;
+}
+
+.textbook-score-stage.is-fullscreen .jianpu-reader,
+.textbook-score-stage.is-fullscreen .jianpu-page-card,
+.textbook-score-stage.is-fullscreen .textbook-score-slice,
+.textbook-score-stage.is-fullscreen .original-score-slice,
+.textbook-score-stage.is-fullscreen .textbook-jianpu-score {
+  border: 0;
+  border-radius: 0;
+  background: #fffefb;
+  box-shadow: none;
+}
+
+.textbook-score-stage.is-fullscreen .jianpu-reader-head {
+  justify-content: center;
+  padding: 0 0 14px;
+  border: 0;
+  text-align: center;
+}
+
+.textbook-score-stage.is-fullscreen .jianpu-reader-head h2 { font-size: 18px; }
+
+.textbook-score-stage.is-fullscreen .jianpu-reader-head > div > p,
+.textbook-score-stage.is-fullscreen .jianpu-reader-head-actions,
+.textbook-score-stage.is-fullscreen .jianpu-view-switch,
+.textbook-score-stage.is-fullscreen .jianpu-page-instruction {
+  display: none;
+}
+
+.textbook-score-stage.is-fullscreen .score-zoom-toolbar {
+  flex-wrap: wrap;
+  min-height: 44px;
+  padding: 8px;
+  border-bottom: 1px solid #e2dacb;
+  background: #fffefb;
+}
+
+.textbook-score-stage.is-fullscreen .score-zoom-controls input {
+  width: clamp(80px, 14vw, 180px);
+}
+
+.textbook-score-stage.is-fullscreen .jianpu-page-reader { margin: 0; }
+
+.textbook-catalog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgb(24 40 31 / 16%);
+}
+
+.textbook-catalog-popover {
+  position: absolute;
+  right: max(22px, env(safe-area-inset-right));
+  bottom: max(94px, calc(env(safe-area-inset-bottom) + 72px));
+  display: flex;
+  flex-direction: column;
+  width: min(640px, calc(100% - 44px));
+  max-height: min(620px, calc(100dvh - 132px));
+  padding: 20px;
+  color: #254e3f;
+  border: 1px solid #cbd5ca;
+  border-radius: 16px;
+  background: #fffdf7;
+  box-shadow: 0 16px 60px rgb(28 48 36 / 22%);
+}
+
+.textbook-catalog-popover header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.textbook-catalog-popover h2 { margin: 0; font-size: 17px; }
+.textbook-catalog-popover p { margin: 5px 0 0; color: #7a7f75; font-size: 12px; }
+.textbook-catalog-popover header > button { min-width: 40px; padding: 0; }
+
+.textbook-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+  gap: 10px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px;
+  overscroll-behavior: contain;
+}
+
+.textbook-catalog-grid button {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  min-height: 82px;
+  padding: 13px 8px;
+  color: #315f4f;
+  border: 1px solid #d8ded1;
+  border-radius: 9px;
+  background: #fafbf5;
+}
+
+.textbook-catalog-grid strong {
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: 21px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.textbook-catalog-grid small {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.textbook-catalog-grid button.is-current {
+  color: #fffaf1;
+  border-color: #265e50;
+  background: #265e50;
+}
+
+@media (max-width: 760px) {
+  .textbook-stage-actions { right: 14px; bottom: max(86px, calc(env(safe-area-inset-bottom) + 76px)); }
+  .textbook-score-stage.is-fullscreen .textbook-stage-actions { bottom: max(14px, env(safe-area-inset-bottom)); }
+  .textbook-stage-arrow { width: 38px; height: 54px; }
+  .textbook-stage-arrow.is-previous { left: 8px; }
+  .textbook-stage-arrow.is-next { right: 8px; }
+  .textbook-score-stage.is-fullscreen .textbook-stage-scroll { padding: 18px 10px 90px; }
+  .textbook-catalog-popover { right: 14px; bottom: 154px; width: calc(100% - 28px); max-height: calc(100dvh - 182px); padding: 16px; }
+  .textbook-score-stage.is-fullscreen .textbook-catalog-popover { bottom: max(80px, calc(env(safe-area-inset-bottom) + 72px)); max-height: calc(100dvh - 112px); }
 }
 
 .jianpu-segment-panel,

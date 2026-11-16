@@ -3,13 +3,11 @@ import {
   ArrowRight,
   BookOpenText,
   ChevronDown,
-  ChevronsLeft,
   ChevronsRight,
   CircleAlert,
   FileMusic,
   FileSearch,
   Heart,
-  LibraryBig,
   LoaderCircle,
   Music2,
   ScanSearch,
@@ -33,7 +31,8 @@ import {
 import {
   load_jianpu_catalog,
 } from "@/features/jianpu/loadJianpuLibrary";
-import { group_material_by_content } from "@/features/jianpu/contentGrouping";
+import { get_reading_material, get_reading_score_number } from "@/features/jianpu/readingCatalog";
+import { TextbookScoreStage } from "@/features/jianpu/TextbookScoreStage";
 import { load_work_musicxml, load_work_score, prefetch_work_musicxml } from "@/features/jianpu/workScore";
 import {
   capture_score_scroll_anchor,
@@ -43,7 +42,6 @@ import {
 import { personal_material } from "@/features/calibration/personalScore";
 import { load_calibration_projects } from "@/features/calibration/storage";
 import { soft_delete_material_segment } from "@/features/materials/materialDeletion";
-import { JianpuCatalog } from "@/features/jianpu/JianpuCatalog";
 import {
   JianpuRenderer,
   to_render_score_from_jianpu_score,
@@ -78,13 +76,12 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
   const [load_error, set_load_error] = useState<string>();
   const [delete_message, set_delete_message] = useState<string>();
   const [deleting_segment_id, set_deleting_segment_id] = useState<string>();
-  const [is_navigation_collapsed, set_is_navigation_collapsed] = useState(false);
   const [favorite_entries, set_favorite_entries] = useState(load_score_favorites);
   const [switching_direction, set_switching_direction] = useState<"previous" | "next">();
   const reading_materials = useMemo(() => {
     const projects = user?.id && typeof localStorage !== "undefined"
       ? load_calibration_projects(localStorage, user.id) : [];
-    return catalog?.materials.map((material) => group_material_by_content(personal_material(material, projects)));
+    return catalog?.materials.map((material) => get_reading_material(personal_material(material, projects)));
   }, [catalog, user?.id]);
 
   useEffect(() => {
@@ -131,12 +128,9 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
       />
     );
   }
-  const default_chapter = route_material_id === undefined && segment_id === undefined
-    ? get_default_chapter(material)
-    : undefined;
   const chapter = chapter_id
     ? get_selected_chapter(material, chapter_id)
-    : default_chapter;
+    : undefined;
   if (chapter_id && !chapter) {
     return (
       <JianpuLibraryState
@@ -191,13 +185,6 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
 
   return (
     <AppShell>
-      <section className="page-intro jianpu-library-intro">
-        <div>
-          <p className="eyebrow"><Music2 size={15} /> 原教材文字与简谱练习</p>
-          <h1>简谱教材</h1>
-        </div>
-      </section>
-
       <div className="jianpu-material-tabs" role="tablist" aria-label="简谱教材选择">
         {ordered_materials.map((item) => (
           <Link
@@ -209,44 +196,11 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
           >
             <BookOpenText size={17} />
             <span>{item.title}</span>
-            <small>{item.chapters.length} 个章节 · {item.segments.length} 首乐曲与练习</small>
           </Link>
         ))}
       </div>
 
-      <section className={`jianpu-library-layout ${is_navigation_collapsed ? "is-navigation-collapsed" : ""}`}>
-        <aside
-          className={`jianpu-segment-panel ${is_navigation_collapsed ? "is-collapsed" : ""}`}
-          aria-label={`${material.title}章节与练习目录`}
-        >
-          <div className="jianpu-segment-panel-head">
-            {!is_navigation_collapsed && (
-              <div>
-                <p className="section-kicker"><LibraryBig size={15} /> 阅读索引</p>
-                <h2>{material.title}</h2>
-              </div>
-            )}
-            {!is_navigation_collapsed && <span>{material.page_count} 页</span>}
-            <button
-              type="button"
-              className="jianpu-navigation-toggle"
-              onClick={() => set_is_navigation_collapsed((value) => !value)}
-              aria-label={is_navigation_collapsed ? "展开阅读目录" : "收起阅读目录"}
-              aria-expanded={!is_navigation_collapsed}
-            >
-              {is_navigation_collapsed ? <ChevronsRight size={17} /> : <ChevronsLeft size={17} />}
-            </button>
-          </div>
-          {!is_navigation_collapsed && (
-            <JianpuCatalog
-              key={material.id}
-              material={material}
-              chapter_id={chapter?.id}
-              segment_id={segment?.id}
-            />
-          )}
-        </aside>
-
+      <section className="jianpu-library-layout is-score-focused">
         <div className="jianpu-reader-column">
           {delete_message && (
             <p className="jianpu-library-message">{delete_message}</p>
@@ -443,7 +397,9 @@ function JianpuReader({
           const current = pending_scroll_anchor.current;
           if (!current || current.segment_id !== segment.id) return;
           const delta = get_score_scroll_delta(surface.getBoundingClientRect(), current);
-          window.scrollBy({ top: delta, left: 0, behavior: "auto" });
+          const fullscreen_scroll = surface.closest(".textbook-score-stage.is-fullscreen")
+            ?.querySelector(".textbook-stage-scroll");
+          (fullscreen_scroll ?? window).scrollBy({ top: delta, left: 0, behavior: "auto" });
           pending_scroll_anchor.current = undefined;
         });
       });
@@ -486,32 +442,19 @@ function JianpuReader({
   }, [segment, user_id]);
 
   return (
+    <TextbookScoreStage material={material} segment={segment}
+      switching_direction={navigation?.switching_direction}
+      on_navigate={navigate_with_score_position}>
     <article className="jianpu-reader">
       <header className="jianpu-reader-head">
         <div>
-          <p className="section-kicker"><Music2 size={15} /> 简谱教材</p>
-          <h2>{segment.title}</h2>
+          <h2><span className="textbook-score-number">{get_reading_score_number(material, segment)}</span>{segment.title}</h2>
           <p>
             {segment.section_title && `${segment.section_title} · `}
             {segment.source_page_label} · {segment.measure_count} 小节 · {hand_label}
           </p>
         </div>
         <div className="jianpu-reader-head-actions">
-          {navigation && (
-            <ScoreSequenceControls
-              previous_title={navigation.previous_segment?.title}
-              next_title={navigation.next_segment?.title}
-              current_index={navigation.current_index}
-              total_count={navigation.total_count}
-              switching_direction={navigation.switching_direction}
-              on_previous={navigation.previous_segment
-                ? () => navigate_with_score_position(navigation.previous_segment!, "previous")
-                : undefined}
-              on_next={navigation.next_segment
-                ? () => navigate_with_score_position(navigation.next_segment!, "next")
-                : undefined}
-            />
-          )}
           <button
             type="button"
             className={`repertoire-favorite-toggle ${is_favorite ? "is-favorite" : ""}`}
@@ -593,6 +536,7 @@ function JianpuReader({
         )}
       </div>
     </article>
+    </TextbookScoreStage>
   );
 }
 
@@ -692,50 +636,6 @@ interface jianpu_segment_navigation_props {
   total_count: number;
   switching_direction?: "previous" | "next";
   on_navigate: (segment: jianpu_segment, direction: "previous" | "next") => void;
-}
-
-function ScoreSequenceControls({
-  previous_title,
-  next_title,
-  current_index,
-  total_count,
-  switching_direction,
-  on_previous,
-  on_next,
-}: {
-  previous_title?: string;
-  next_title?: string;
-  current_index: number;
-  total_count: number;
-  switching_direction?: "previous" | "next";
-  on_previous?: () => void;
-  on_next?: () => void;
-}) {
-  return (
-    <div className="score-sequence-controls" aria-label="曲目顺序切换">
-      <button
-        type="button"
-        className={switching_direction === "previous" ? "is-switching" : ""}
-        disabled={!on_previous || Boolean(switching_direction)}
-        title={previous_title ? `上一曲：${previous_title}` : "已经是第一曲"}
-        onClick={on_previous}
-      >
-        <ChevronsLeft size={15} />
-        {switching_direction === "previous" ? "切换中" : "上一曲"}
-      </button>
-      <span>{current_index + 1}/{total_count}</span>
-      <button
-        type="button"
-        className={switching_direction === "next" ? "is-switching" : ""}
-        disabled={!on_next || Boolean(switching_direction)}
-        title={next_title ? `下一曲：${next_title}` : "已经是最后一曲"}
-        onClick={on_next}
-      >
-        {switching_direction === "next" ? "切换中" : "下一曲"}
-        <ChevronsRight size={15} />
-      </button>
-    </div>
-  );
 }
 
 export function TextbookJianpuScore({
@@ -926,8 +826,8 @@ function get_selected_chapter(
 }
 
 function get_jianpu_route(material: jianpu_material): string {
-  const first_chapter = get_default_chapter(material);
-  return first_chapter ? get_chapter_route(material, first_chapter) : "/简谱教材";
+  const first_segment = material.segments[0];
+  return first_segment ? `/简谱教材/${material.id}/${first_segment.id}` : `/简谱教材/${material.id}`;
 }
 
 function create_jianpu_favorite(
@@ -949,19 +849,6 @@ function get_jianpu_favorite_id(
   segment: jianpu_segment,
 ): string {
   return `jianpu:${material.id}:${segment.id}`;
-}
-
-function get_chapter_route(
-  material: jianpu_material,
-  chapter: jianpu_chapter,
-): string {
-  return `/简谱教材/${material.id}/章节/${chapter.id}`;
-}
-
-function get_default_chapter(material: jianpu_material): jianpu_chapter | undefined {
-  return material.chapters.find((chapter) => chapter.id !== "front-matter" &&
-    material.segments.some((segment) => segment.page_slices[0].chapter_id === chapter.id))
-    ?? material.chapters[0];
 }
 
 function is_material_id(value: string | undefined): value is material_id {

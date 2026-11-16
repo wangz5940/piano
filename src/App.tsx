@@ -7,7 +7,6 @@ import { api_request } from "@/features/api/client";
 import { Dashboard } from "@/pages/Dashboard";
 import { page_loaders } from "@/pageLoaders";
 import { use_auth_store } from "@/store/useAuthStore";
-import { use_app_settings_store } from "@/store/useAppSettingsStore";
 
 const CoursePath = lazy(page_loaders.course);
 const Account = lazy(page_loaders.account);
@@ -31,6 +30,7 @@ export default function App() {
       <PageBoundary>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/今日练习" element={<Dashboard />} />
           <Route path="/收藏" element={<Favorites />} />
           <Route path="/课程" element={<CoursePath />} />
           <Route path="/教材" element={<MaterialLibrary />} />
@@ -55,8 +55,7 @@ export default function App() {
 }
 
 function HomePage() {
-  const enabled = use_app_settings_store((state) => state.feature_switches.dashboard);
-  return enabled ? <Dashboard /> : <Navigate to="/简谱教材" replace />;
+  return <Navigate to="/简谱教材" replace />;
 }
 
 function AuthBootstrap() {
