@@ -56,7 +56,12 @@ test("migration upgrades only unexpired legacy sessions without reviving expired
     const expires_at = new Date(now + (30 - age_days) * 86400000).toISOString();
     db.raw.prepare("INSERT INTO sessions VALUES (?,?,?,?,?)").run(name, user.id, expires_at, created_at, created_at);
   }
-  db.raw.exec("DROP TABLE feedback_images; DROP TABLE feedback; DELETE FROM schema_migrations WHERE version=9;");
+  db.raw.exec(`
+    DROP TABLE feedback_images; DROP TABLE feedback;
+    DROP INDEX access_events_session_idx;
+    ALTER TABLE audit_events DROP COLUMN access_session_id;
+    DELETE FROM schema_migrations WHERE version >= 9;
+  `);
   db.close();
   const migrated = open_database(path);
   assert.equal(migrated.raw.prepare("SELECT expires_at FROM sessions WHERE token_hash='active'").get().expires_at, new Date(now + 175 * 86400000).toISOString());

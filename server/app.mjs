@@ -431,16 +431,15 @@ async function handle_api_request(context) {
 
   if (pathname === "/api/v1/access-events" && method === "POST") {
     const input = validate_access_event(await read_json_body(request, 4_096));
-    repository.record_audit_event({
+    const recorded = repository.record_access_event({
       actor_user_id: user?.id ?? null,
-      action: "access.page",
-      target_type: "route",
-      target_id: input.path,
+      path: input.path,
+      session_id: input.session_id,
       details: audit_request_details(request, client_id, {
         authenticated: Boolean(user),
       }),
     });
-    send_json(response, 201, { status: "recorded" });
+    send_json(response, recorded ? 201 : 200, { status: recorded ? "recorded" : "already_recorded" });
     return;
   }
 

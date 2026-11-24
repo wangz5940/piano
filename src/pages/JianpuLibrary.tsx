@@ -323,7 +323,7 @@ function JianpuReader({
   calibration_href?: string;
 }) {
   const [reading_view, set_reading_view] = useState<reading_view>("jianpu");
-  const [score_zoom, set_score_zoom] = useState(1);
+  const [score_zoom, set_score_zoom] = useState(0.72);
   const zoom_control = { zoom: score_zoom, set_zoom: set_score_zoom };
   const [opened_original, set_opened_original] = useState<jianpu_segment>();
   const original_button = useRef<HTMLButtonElement>(null);

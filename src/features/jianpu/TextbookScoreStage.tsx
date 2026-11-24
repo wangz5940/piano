@@ -96,6 +96,94 @@ export function TextbookScoreStage({
   }, [is_catalog_open]);
 
   useEffect(() => {
+    const element = stage_scroll.current;
+    if (!element) return;
+    let gesture: { x: number; y: number; id: number; source: "touch" | "mouse" } | undefined;
+    const start = (target: EventTarget | null, x: number, y: number, id: number, source: "touch" | "mouse") => {
+      gesture = undefined;
+      if (is_catalog_open || switching_direction || !(target instanceof Element) ||
+        target.closest("button, a, input, select, textarea, summary, .score-zoom-toolbar")) return;
+      if (!is_fullscreen && !target.closest(".jianpu-reading-surface")) return;
+      const viewport = target.closest(".score-zoom-viewport");
+      // Wide scores retain horizontal panning instead of switching unexpectedly.
+      if (viewport && viewport.scrollWidth > viewport.clientWidth + 1) return;
+      gesture = { x, y, id, source };
+    };
+    const move = (event: Event, x: number, y: number) => {
+      if (!gesture) return;
+      const dx = Math.abs(x - gesture.x);
+      const dy = Math.abs(y - gesture.y);
+      if (dy >= 16 && dy >= dx) gesture = undefined;
+      else if (dx >= 16 && dx > dy * 1.5 && event.cancelable) event.preventDefault();
+    };
+    const finish = (x: number, y: number) => {
+      const started = gesture;
+      gesture = undefined;
+      if (!started || switching_direction || is_catalog_open) return;
+      const dx = x - started.x;
+      const dy = y - started.y;
+      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      const target = dx < 0 ? next : previous;
+      if (target) {
+        set_show_navigation(true);
+        on_navigate(target, dx < 0 ? "next" : "previous");
+      }
+    };
+    const touch_start = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (event.touches.length !== 1 || !touch) { gesture = undefined; return; }
+      start(event.target, touch.clientX, touch.clientY, touch.identifier, "touch");
+    };
+    const touch_move = (event: TouchEvent) => {
+      if (event.touches.length !== 1) { gesture = undefined; return; }
+      const touch = event.touches[0];
+      if (touch && gesture?.source === "touch" && touch.identifier === gesture.id) {
+        move(event, touch.clientX, touch.clientY);
+      }
+    };
+    const touch_end = (event: TouchEvent) => {
+      const touch = event.changedTouches[0];
+      if (touch && gesture?.source === "touch" && touch.identifier === gesture.id) {
+        finish(touch.clientX, touch.clientY);
+      }
+    };
+    const cancel = () => { gesture = undefined; };
+    // Mouse dragging follows the same gesture rules as a one-finger swipe.
+    const pointer_start = (event: PointerEvent) => {
+      if (event.pointerType === "mouse" && event.button === 0) {
+        start(event.target, event.clientX, event.clientY, event.pointerId, "mouse");
+      }
+    };
+    const pointer_move = (event: PointerEvent) => {
+      if (gesture?.source === "mouse" && event.pointerId === gesture.id) move(event, event.clientX, event.clientY);
+    };
+    const pointer_end = (event: PointerEvent) => {
+      if (gesture?.source === "mouse" && event.pointerId === gesture.id) finish(event.clientX, event.clientY);
+    };
+    const pointer_cancel = (event: PointerEvent) => {
+      if (gesture?.source === "mouse" && event.pointerId === gesture.id) cancel();
+    };
+    element.addEventListener("touchstart", touch_start, { passive: true });
+    element.addEventListener("touchmove", touch_move, { passive: false });
+    element.addEventListener("touchend", touch_end);
+    element.addEventListener("touchcancel", cancel);
+    element.addEventListener("pointerdown", pointer_start);
+    document.addEventListener("pointermove", pointer_move);
+    document.addEventListener("pointerup", pointer_end);
+    document.addEventListener("pointercancel", pointer_cancel);
+    return () => {
+      element.removeEventListener("touchstart", touch_start);
+      element.removeEventListener("touchmove", touch_move);
+      element.removeEventListener("touchend", touch_end);
+      element.removeEventListener("touchcancel", cancel);
+      element.removeEventListener("pointerdown", pointer_start);
+      document.removeEventListener("pointermove", pointer_move);
+      document.removeEventListener("pointerup", pointer_end);
+      document.removeEventListener("pointercancel", pointer_cancel);
+    };
+  }, [is_catalog_open, is_fullscreen, next, on_navigate, previous, switching_direction]);
+
+  useEffect(() => {
     const handle_key = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         if (is_catalog_open) close_catalog();

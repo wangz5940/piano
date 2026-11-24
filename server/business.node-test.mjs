@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
@@ -39,7 +39,7 @@ test("SQLite 初始化完整业务表和外键", () => {
     ORDER BY name
   `).all().map((row) => row.name);
 
-  assert.equal(repository.get_schema_version(), 9);
+  assert.equal(repository.get_schema_version(), 10);
   assert.deepEqual(tables, [
     "audit_events",
     "calibration_submissions",
@@ -79,6 +79,85 @@ test("SQLite 初始化完整业务表和外键", () => {
   );
   assert.equal(repository.raw.prepare("PRAGMA foreign_keys").get().foreign_keys, 1);
   repository.close();
+});
+
+test("访问按标签页会话去重，刷新、并发、长时间停留和登录不重复计数", async (t) => {
+  const fixture = await create_fixture();
+  t.after(() => fixture.close());
+  const session_id = randomUUID();
+  const first = await fixture.request("/api/v1/access-events", {
+    method: "POST", body: { path: "/简谱教材", session_id },
+  });
+  assert.equal(first.status, 201);
+  const initial = fixture.repository.list_access_records()[0];
+  const responses = await Promise.all(Array.from({ length: 24 }, (_, index) => fixture.request("/api/v1/access-events", {
+    method: "POST", body: { path: `/简谱教材/曲目-${index}`, session_id },
+  })));
+  assert.ok(responses.every((response) => response.status === 200 && response.data.status === "already_recorded"));
+  assert.equal(fixture.repository.list_access_records().length, 1);
+  assert.equal(fixture.repository.list_access_records()[0].path, "/简谱教材");
+  const older = new Date(Date.now() - 40 * 60_000).toISOString();
+  fixture.repository.raw.prepare("UPDATE audit_events SET created_at = ? WHERE id = ?").run(older, initial.id);
+  assert.equal((await fixture.request("/api/v1/access-events", {
+    method: "POST", body: { path: "/管理", session_id },
+  })).status, 200);
+
+  const account = await fixture.request("/api/v1/auth/register", {
+    method: "POST", body: { email: "tab-visitor@example.test", display_name: "会话访客", role: "student", password: "tab-visitor-password" },
+  });
+  assert.equal(account.status, 201);
+  assert.equal((await fixture.request("/api/v1/access-events", {
+    method: "POST", cookie: account.cookie, body: { path: "/账号", session_id },
+  })).status, 200);
+  const identified = fixture.repository.list_access_records();
+  assert.equal(identified.length, 1);
+  assert.equal(identified[0].id, initial.id);
+  assert.equal(identified[0].created_at, older);
+  assert.equal(identified[0].path, "/简谱教材");
+  assert.equal(identified[0].email, "tab-visitor@example.test");
+  assert.equal(identified[0].authenticated, true);
+
+  // Reopening with the same IP/account starts a distinct tab visit.
+  assert.equal((await fixture.request("/api/v1/access-events", {
+    method: "POST", cookie: account.cookie, body: { path: "/简谱教材", session_id: randomUUID() },
+  })).status, 201);
+  assert.equal(fixture.repository.list_access_records().length, 2);
+  const reopened = open_database(resolve(fixture.root, "test.sqlite"));
+  try {
+    assert.equal(reopened.record_access_event({ path: "/刷新", session_id, details: { authenticated: false } }), false);
+    assert.equal(reopened.list_access_records().length, 2);
+  } finally {
+    reopened.close();
+  }
+  for (const invalid of ["short", "x".repeat(65), " ".repeat(36), null]) {
+    assert.equal((await fixture.request("/api/v1/access-events", {
+      method: "POST", body: { path: "/简谱教材", session_id: invalid },
+    })).status, 400);
+  }
+  assert.equal(fixture.repository.list_access_records().length, 2);
+});
+
+test("会话去重迁移保留历史访问和登录审计", (t) => {
+  const root = mkdtempSync(resolve(tmpdir(), "panio-access-migration-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const path = resolve(root, "test.sqlite");
+  const old = open_database(path);
+  const visit_id = old.record_audit_event({ action: "access.page", target_type: "route", target_id: "/旧访问", details: { authenticated: false } });
+  const login_id = old.record_audit_event({ action: "auth.login.failed", target_type: "user", details: { email: "old@example.test" } });
+  old.raw.exec("DROP INDEX access_events_session_idx; ALTER TABLE audit_events DROP COLUMN access_session_id; DELETE FROM schema_migrations WHERE version = 10;");
+  old.close();
+  const migrated = open_database(path);
+  try {
+    assert.equal(migrated.get_schema_version(), 10);
+    assert.equal(migrated.list_access_records()[0].id, visit_id);
+    assert.equal(migrated.list_login_records()[0].id, login_id);
+    const session_id = randomUUID();
+    assert.equal(migrated.record_access_event({ path: "/新访问", session_id, details: { authenticated: false } }), true);
+    assert.equal(migrated.record_access_event({ path: "/新曲目", session_id, details: { authenticated: false } }), false);
+    assert.equal(migrated.list_access_records().length, 2);
+  } finally {
+    migrated.close();
+  }
 });
 
 test("MusicXML 导出保留 Slur 起止标记", () => {

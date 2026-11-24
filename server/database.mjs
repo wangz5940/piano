@@ -286,6 +286,16 @@ function migrate(database) {
       COMMIT;
     `);
   }
+  if (current_version < 10) {
+    database.exec(`
+      BEGIN IMMEDIATE;
+      ALTER TABLE audit_events ADD COLUMN access_session_id TEXT;
+      CREATE UNIQUE INDEX access_events_session_idx ON audit_events(access_session_id)
+        WHERE action = 'access.page' AND access_session_id IS NOT NULL;
+      INSERT INTO schema_migrations(version, applied_at) VALUES (10, datetime('now'));
+      COMMIT;
+    `);
+  }
 }
 
 function migrate_score_document_storage(database) {
@@ -1843,6 +1853,27 @@ function create_repository(database) {
         WHERE material_id = ? AND segment_id = ?
       `).get(input.material_id, input.segment_id);
       return normalize_material_deletion(row);
+    },
+    record_access_event({ actor_user_id, path, session_id, details }) {
+      const inserted = database.prepare(`
+        INSERT INTO audit_events(
+          id, actor_user_id, action, target_type, target_id, details_json, created_at, access_session_id
+        ) VALUES (?, ?, 'access.page', 'route', ?, ?, ?, ?)
+        ON CONFLICT(access_session_id)
+          WHERE action = 'access.page' AND access_session_id IS NOT NULL DO NOTHING
+      `).run(randomUUID(), actor_user_id ?? null, path, JSON.stringify(details),
+        new Date().toISOString(), session_id ?? null);
+      if (!inserted.changes && actor_user_id) {
+        // Signing in can identify the existing visit without counting another one.
+        const previous = database.prepare(`
+          SELECT id, details_json FROM audit_events
+          WHERE action = 'access.page' AND access_session_id = ? AND actor_user_id IS NULL
+        `).get(session_id);
+        if (previous) database.prepare(`
+          UPDATE audit_events SET actor_user_id = ?, details_json = ? WHERE id = ?
+        `).run(actor_user_id, JSON.stringify({ ...parse_json(previous.details_json, {}), authenticated: true }), previous.id);
+      }
+      return Boolean(inserted.changes);
     },
     record_audit_event({ actor_user_id, action, target_type, target_id, details = {} }) {
       const id = randomUUID();

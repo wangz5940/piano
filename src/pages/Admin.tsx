@@ -218,7 +218,7 @@ export function Admin({ user_override }: admin_props = {}) {
           title="访问记录"
           icon={<Activity size={15} />}
           count={filtered_access_records.length}
-          empty={access_records.length === 0 ? "还没有页面访问记录。" : "没有符合条件的访问记录。"}
+          empty={access_records.length === 0 ? "还没有会话访问记录。" : "没有符合条件的访问记录。"}
           tools={
             <div className="admin-access-filters" aria-label="访问记录筛选">
               <div className="admin-access-segments">

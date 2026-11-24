@@ -131,7 +131,12 @@ export function validate_access_event(value) {
   if (!path.startsWith("/") || /[\u0000-\u001f\u007f]/.test(path)) {
     throw new validation_error("访问路径格式无效");
   }
-  return { path };
+  const session_id = value.session_id === undefined
+    ? undefined : required_string(value.session_id, "访问会话", 32, 64);
+  if (session_id !== undefined && !/^[a-zA-Z0-9_-]{32,64}$/.test(session_id)) {
+    throw new validation_error("访问会话格式无效");
+  }
+  return { path, session_id };
 }
 
 export function validate_snapshot(value) {

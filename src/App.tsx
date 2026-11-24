@@ -3,7 +3,7 @@ import { HashRouter, Navigate, Route, Routes, useLocation } from "react-router-d
 
 import { PageBoundary } from "@/components/PageBoundary";
 import { CapacityGate } from "@/components/CapacityGate";
-import { api_request } from "@/features/api/client";
+import { record_tab_visit } from "@/features/analytics/tabVisit";
 import { Dashboard } from "@/pages/Dashboard";
 import { page_loaders } from "@/pageLoaders";
 import { use_auth_store } from "@/store/useAuthStore";
@@ -88,13 +88,15 @@ function RouteAccessLogger() {
       return;
     }
     const path = `${location.pathname}${location.search}`;
-    const timeout = window.setTimeout(() => {
-      void api_request("/api/v1/access-events", {
-        method: "POST",
-        body: { path },
-      }).catch(() => undefined);
-    }, 0);
-    return () => window.clearTimeout(timeout);
+    let active = true;
+    let timeout: number;
+    const record = () => {
+      void record_tab_visit(path, user_id).catch(() => {
+        if (active) timeout = window.setTimeout(record, 30_000);
+      });
+    };
+    timeout = window.setTimeout(record, 0);
+    return () => { active = false; window.clearTimeout(timeout); };
   }, [auth_status, location.pathname, location.search, user_id]);
 
   return null;

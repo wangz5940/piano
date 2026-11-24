@@ -159,6 +159,7 @@ describe("简谱教材", () => {
       .toBeLessThan(markup.indexOf('class="textbook-catalog-trigger"'));
     expect(markup).not.toContain("jianpu-material-tabs");
     expect(markup).toContain('class="textbook-score-number">001</span>请弹吧（右手）');
+    expect(markup).toContain('--score-zoom:0.72');
     expect(markup).not.toContain("章节导读");
     expect(markup).not.toContain("jianpu-segment-panel");
   });
