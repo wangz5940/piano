@@ -18,7 +18,6 @@ import { Link } from "react-router-dom";
 
 import { AppShell } from "@/components/AppShell";
 import { api_request } from "@/features/api/client";
-import FeedbackPanel from "@/features/feedback/FeedbackPanel";
 import type {
   account_user,
   admin_access_record,
@@ -274,7 +273,8 @@ export function Admin({ user_override }: admin_props = {}) {
             <h2>用户反馈与回复</h2>
           </div>
         </header>
-        <FeedbackPanel key={user.id} is_admin={true} show_composer={false} />
+        <p>查看全部反馈、更新处理状态，并回复用户。</p>
+        <Link to="/后台/反馈" className="secondary-button">打开反馈管理 <ArrowRight size={16} /></Link>
       </section>
     </AppShell>
   );

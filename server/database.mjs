@@ -296,6 +296,16 @@ function migrate(database) {
       COMMIT;
     `);
   }
+  if (current_version < 11) {
+    database.exec(`
+      BEGIN IMMEDIATE;
+      ALTER TABLE feedback ADD COLUMN feedback_type TEXT NOT NULL DEFAULT 'other'
+        CHECK(feedback_type IN ('suggestion','bug','other'));
+      ALTER TABLE feedback ADD COLUMN contact TEXT NOT NULL DEFAULT '';
+      INSERT INTO schema_migrations(version, applied_at) VALUES (11, datetime('now'));
+      COMMIT;
+    `);
+  }
 }
 
 function migrate_score_document_storage(database) {
@@ -1915,6 +1925,7 @@ function parse_snapshot(row) {
     preferences: {
       ...empty_preferences,
       ...parse_json(row.preferences_json, {}),
+      free_practice: true,
     },
     updated_at: row.updated_at,
   };

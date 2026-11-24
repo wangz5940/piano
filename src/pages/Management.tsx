@@ -1,11 +1,9 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
-  BookOpenText,
   Check,
   Hand,
   Mic,
-  MessageSquare,
   PanelLeft,
   SlidersHorizontal,
 } from "lucide-react";
@@ -18,17 +16,12 @@ import { use_app_settings_store } from "@/store/useAppSettingsStore";
 import { use_auth_store } from "@/store/useAuthStore";
 import { optional_features } from "@/features/settings/navigation";
 
-const FeedbackPanel = lazy(() => import("@/features/feedback/FeedbackPanel"));
-
 export function Management() {
-  const [feedback_open, set_feedback_open] = useState(false);
   const features = use_app_settings_store((state) => state.feature_switches);
   const set_feature_enabled = use_app_settings_store((state) => state.set_feature_enabled);
   const user = use_auth_store((state) => state.user);
-  const free_practice = use_app_settings_store((state) => state.free_practice);
   const sidebar_collapsed = use_app_settings_store((state) => state.sidebar_collapsed);
   const show_fingerings = use_app_settings_store((state) => state.show_fingerings);
-  const set_free_practice = use_app_settings_store((state) => state.set_free_practice);
   const set_sidebar_collapsed = use_app_settings_store((state) => state.set_sidebar_collapsed);
   const set_show_fingerings = use_app_settings_store((state) => state.set_show_fingerings);
   const audio_input_enabled = use_app_settings_store((state) => state.audio_input_enabled);
@@ -49,13 +42,13 @@ export function Management() {
         <div className="management-summary">
           <Check size={18} />
           <div>
-            <strong>{free_practice ? "自由学习已开启" : "按课程顺序学习"}</strong>
+            <strong>自由学习已开启</strong>
           </div>
         </div>
       </section>
 
       <section className="settings-layout" aria-label="学习设置">
-        <article className="settings-section">
+        <article className="settings-section feature-settings-section">
           <div className="settings-section-heading">
             <div>
               <p className="section-kicker"><SlidersHorizontal size={15} /> 功能选择</p>
@@ -63,7 +56,7 @@ export function Management() {
             </div>
             <span>默认关闭</span>
           </div>
-          <p>简谱教材、收藏、学习管理和账号同步始终保留。</p>
+          <p>简谱教材、收藏、学习管理、反馈与建议和账号同步始终保留。</p>
           {optional_features.filter((feature) =>
             feature.id !== "admin" || user?.role === "admin").map((feature) => (
             <SettingToggle
@@ -74,21 +67,6 @@ export function Management() {
               copy={feature.copy}
             />
           ))}
-        </article>
-        <article className="settings-section">
-          <div className="settings-section-heading">
-            <div>
-              <p className="section-kicker"><BookOpenText size={15} /> 课程访问</p>
-              <h2>学习权限</h2>
-            </div>
-            <span>默认开启</span>
-          </div>
-          <SettingToggle
-            checked={free_practice}
-            on_change={set_free_practice}
-            title="允许查看并练习未学习任务"
-            copy="可直接进入任意周次。"
-          />
         </article>
 
         <article className="settings-section">
@@ -132,31 +110,6 @@ export function Management() {
           set_calibration_midi={set_audio_calibration_midi}
           save_calibration={save_audio_calibration}
         />
-      </section>
-
-      <section className="settings-section feedback-section" aria-label="反馈与建议">
-        <div className="settings-section-heading">
-          <div>
-            <p className="section-kicker"><MessageSquare size={15} /> 一起改进练琴簿</p>
-            <h2>反馈与建议</h2>
-          </div>
-          <button className="secondary-button" type="button" aria-expanded={feedback_open}
-            aria-controls="feedback-content" onClick={() => set_feedback_open((open) => !open)}>
-            {feedback_open ? "收起反馈" : "写反馈 / 查看回复"}
-          </button>
-        </div>
-        <p>告诉我们使用中遇到的问题，也欢迎分享你的想法。可附上最多 4 张图片。</p>
-        {feedback_open && (
-          <div id="feedback-content">
-            {user ? (
-              <Suspense fallback={<p>正在打开反馈…</p>}>
-                <FeedbackPanel key={user.id} is_admin={user.role === "admin"} />
-              </Suspense>
-            ) : (
-              <p><Link className="secondary-button" to="/账号">登录后提交反馈</Link></p>
-            )}
-          </div>
-        )}
       </section>
 
       <section className="management-next">

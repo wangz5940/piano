@@ -325,7 +325,7 @@ function get_current_settings(): app_settings {
   return {
     feature_switches: settings.feature_switches,
     sidebar_collapsed: settings.sidebar_collapsed,
-    free_practice: settings.free_practice,
+    free_practice: true,
     show_fingerings: settings.show_fingerings,
     audio_input_enabled: settings.audio_input_enabled,
     audio_calibration_midi: settings.audio_calibration_midi,

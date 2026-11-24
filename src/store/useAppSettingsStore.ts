@@ -11,7 +11,6 @@ import { normalize_feature_switches, type optional_feature } from "@/features/se
 interface app_settings_store extends app_settings {
   set_feature_enabled: (feature: optional_feature, enabled: boolean) => void;
   set_sidebar_collapsed: (value: boolean) => void;
-  set_free_practice: (value: boolean) => void;
   set_show_fingerings: (value: boolean) => void;
   set_audio_input_enabled: (value: boolean) => void;
   set_audio_calibration_midi: (value: number) => void;
@@ -38,7 +37,7 @@ function persist_settings(settings: app_settings): void {
   const persisted_settings = {
     feature_switches: settings.feature_switches,
     sidebar_collapsed: settings.sidebar_collapsed,
-    free_practice: settings.free_practice,
+    free_practice: true,
     show_fingerings: settings.show_fingerings,
     audio_input_enabled: settings.audio_input_enabled,
     audio_calibration_midi: settings.audio_calibration_midi,
@@ -65,13 +64,6 @@ export const use_app_settings_store = create<app_settings_store>((set) => ({
       const next_settings = { ...state, sidebar_collapsed: value };
       persist_settings(next_settings);
       return { sidebar_collapsed: next_settings.sidebar_collapsed };
-    });
-  },
-  set_free_practice: (value) => {
-    set((state) => {
-      const next_settings = { ...state, free_practice: value };
-      persist_settings(next_settings);
-      return { free_practice: next_settings.free_practice };
     });
   },
   set_show_fingerings: (value) => {
@@ -128,6 +120,7 @@ export const use_app_settings_store = create<app_settings_store>((set) => ({
   replace_settings: (settings) => {
     const normalized_settings = {
       ...create_initial_settings(), ...settings,
+      free_practice: true,
       feature_switches: normalize_feature_switches(settings.feature_switches),
     };
     save_settings(normalized_settings);

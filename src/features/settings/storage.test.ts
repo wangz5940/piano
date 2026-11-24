@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { create_initial_settings, load_settings } from "./storage";
+import { create_initial_settings, load_settings, save_settings } from "./storage";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -37,7 +37,7 @@ describe("学习设置存储", () => {
     expect(load_settings()).toEqual({
       feature_switches: create_initial_settings().feature_switches,
       sidebar_collapsed: true,
-      free_practice: false,
+      free_practice: true,
       show_fingerings: false,
       audio_input_enabled: true,
       audio_calibration_midi: 69,
@@ -46,6 +46,13 @@ describe("学习设置存储", () => {
       calibration_field_order: expect.arrayContaining(["staff", "pitch_name"]),
       calibration_primary_fields: ["staff", "pitch_name"],
     });
+  });
+
+  it("保存时将历史关闭的学习权限固定为开启", () => {
+    const setItem = vi.fn();
+    vi.stubGlobal("window", { localStorage: { setItem } });
+    save_settings({ ...create_initial_settings(), free_practice: false, sidebar_collapsed: true });
+    expect(JSON.parse(setItem.mock.calls[0][1])).toMatchObject({ free_practice: true, sidebar_collapsed: true });
   });
 
   it("旧设置默认关闭额外入口，只有明确的布尔值 true 开启", () => {

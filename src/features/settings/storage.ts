@@ -62,7 +62,7 @@ export function load_settings(): app_settings {
       ...create_initial_settings(),
       feature_switches: normalize_feature_switches(parsed_settings.feature_switches),
       sidebar_collapsed: parsed_settings.sidebar_collapsed === true,
-      free_practice: parsed_settings.free_practice !== false,
+      free_practice: true,
       show_fingerings: parsed_settings.show_fingerings !== false,
       audio_input_enabled: parsed_settings.audio_input_enabled === true,
       audio_calibration_midi: is_valid_midi(parsed_settings.audio_calibration_midi)
@@ -93,7 +93,7 @@ export function save_settings(settings: app_settings): void {
     return;
   }
 
-  window.localStorage.setItem(storage_key, JSON.stringify(settings));
+  window.localStorage.setItem(storage_key, JSON.stringify({ ...settings, free_practice: true }));
 }
 
 function is_valid_midi(value: unknown): value is number {

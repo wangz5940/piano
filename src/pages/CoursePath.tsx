@@ -25,12 +25,11 @@ import {
 import { get_latest_result } from "@/features/progress/storage";
 import type { hand_mode, lesson, practice_day } from "@/features/course/types";
 import { use_progress_store } from "@/store/useProgressStore";
-import { use_app_settings_store } from "@/store/useAppSettingsStore";
 
 export function CoursePath() {
   const published_curriculum = usePublishedCurriculum();
   const progress = use_progress_store((state) => state.progress);
-  const free_practice = use_app_settings_store((state) => state.free_practice);
+  const free_practice = true;
   const current_day = get_current_practice_day(progress);
 
   return (
@@ -44,7 +43,7 @@ export function CoursePath() {
           <span>学习方式</span>
           <strong>{free_practice ? "自由学习" : "按顺序学习"}</strong>
           <Link to="/管理" className="path-settings-link">
-            <SlidersHorizontal size={14} /> 管理学习权限
+            <SlidersHorizontal size={14} /> 学习设置
           </Link>
         </div>
       </section>

@@ -1,148 +1,137 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Check, ImagePlus, LoaderCircle, Send, X } from "lucide-react";
-import { api_request } from "@/features/api/client";
+import { Link } from "react-router-dom";
+import { api_error } from "@/features/api/client";
+import { load_feedback, submit_feedback, update_feedback } from "./api";
+import { feedback_form_reducer, feedback_status_label, initial_feedback_state } from "./model";
+import type { feedback_entry, feedback_page } from "./model";
+import { feedback_types, validate_feedback } from "./validation.mjs";
 
-interface feedback_entry {
-  id: string;
-  message: string;
-  display_name: string;
-  status: "pending" | "resolved";
-  reply: string;
-  created_at: string;
-  images: { id: string; size_bytes: number; url: string }[];
-}
-interface feedback_page {
-  feedback: feedback_entry[];
-  next_offset: number | null;
-}
 const max_image_bytes = 5 * 1024 * 1024;
 const image_types = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 export default function FeedbackPanel({
-  is_admin,
-  show_composer = true,
-}: {
-  is_admin: boolean;
-  show_composer?: boolean;
-}) {
-  const [message, set_message] = useState("");
+  is_admin, show_composer = true, show_history = true,
+}: { is_admin: boolean; show_composer?: boolean; show_history?: boolean }) {
+  const [state, dispatch] = useReducer(feedback_form_reducer, initial_feedback_state);
+  const { draft, errors } = state;
   const [files, set_files] = useState<File[]>([]);
-  const [busy, set_busy] = useState(false);
-  const [error, set_error] = useState("");
-  const [submitted, set_submitted] = useState(false);
+  const [attachment_error, set_attachment_error] = useState("");
   const [revision, set_revision] = useState(0);
   const [scope, set_scope] = useState<"mine" | "all">(is_admin ? "all" : "mine");
+  const in_flight = useRef(false);
+  const message_input = useRef<HTMLTextAreaElement>(null);
+  const contact_input = useRef<HTMLInputElement>(null);
+  const busy = state.status === "submitting";
 
   const select_files = (incoming: File[]) => {
-    set_error("");
-    set_submitted(false);
+    set_attachment_error("");
     if (files.length + incoming.length > 4) {
-      set_error("最多上传 4 张图片，请先移除多余图片。");
-      return;
+      set_attachment_error("最多上传 4 张图片，请先移除多余图片。"); return;
     }
     if (incoming.some((file) => file.size >= max_image_bytes || file.size === 0)) {
-      set_error("每张图片必须小于 5MB，且不能为空。");
-      return;
+      set_attachment_error("每张图片必须小于 5MB，且不能为空。"); return;
     }
     if (incoming.some((file) => !image_types.has(file.type))) {
-      set_error("请选择 JPG、PNG 或 WebP 图片。");
-      return;
+      set_attachment_error("请选择 JPG、PNG 或 WebP 图片。"); return;
     }
     set_files((current) => [...current, ...incoming]);
   };
-
+  const reset = () => {
+    dispatch({ type: "reset" }); set_files([]); set_attachment_error("");
+    window.setTimeout(() => message_input.current?.focus(), 0);
+  };
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    if (busy) return;
-    set_busy(true);
-    set_error("");
-    set_submitted(false);
-    try {
-      const body = new FormData();
-      body.append("message", message.trim());
-      files.forEach((file) => body.append("images", file));
-      await api_request("/api/v1/feedback", { method: "POST", body });
-      set_message("");
-      set_files([]);
-      set_submitted(true);
-      set_revision((value) => value + 1);
-    } catch (failure) {
-      set_error(error_message(failure));
-    } finally {
-      set_busy(false);
+    if (in_flight.current) return;
+    const validation = validate_feedback(draft);
+    if (Object.keys(validation).length) {
+      dispatch({ type: "invalid", errors: validation });
+      if (validation.message) message_input.current?.focus();
+      else if (validation.contact) contact_input.current?.focus();
+      return;
     }
+    in_flight.current = true;
+    dispatch({ type: "submit" });
+    try {
+      await submit_feedback(draft, files);
+      dispatch({ type: "success" }); set_revision((value) => value + 1);
+    } catch (failure) {
+      dispatch({ type: "failure", error: error_message(failure) });
+    } finally { in_flight.current = false; }
   };
-
   return (
     <div className="feedback-submission-panel">
-      {show_composer && (
-        <form className="feedback-form" onSubmit={(event) => void submit(event)}>
-          <label htmlFor="feedback-message">遇到了什么问题，或希望增加什么功能？</label>
-          <textarea
-            id="feedback-message"
-            value={message}
-            onChange={(event) => { set_message(event.target.value); set_submitted(false); }}
-            placeholder="例如：教材名称、曲目、小节，以及希望怎样改进…"
-            maxLength={2000}
-            rows={5}
-            required
-            disabled={busy}
-            aria-describedby="feedback-privacy feedback-counter"
-          />
-          <div className="feedback-form-note">
-            <span id="feedback-privacy">仅你和超级管理员可见。每人每天最多提交 5 条。</span>
-            <span id="feedback-counter">{message.length}/2000</span>
+      {show_composer && (state.status === "success" ? (
+        <div className="feedback-submitted">
+          <p className="feedback-success" role="status"><Check size={20} /> 反馈已提交</p>
+          <p>谢谢你的反馈。处理状态和回复会显示在历史反馈中。</p>
+          <div className="feedback-success-actions">
+            <button type="button" className="secondary-button" onClick={reset}>继续写反馈</button>
+            <Link to="/反馈/历史" className="primary-button">查看历史反馈</Link>
           </div>
+        </div>
+      ) : (
+        <form className="feedback-form" noValidate onSubmit={(event) => void submit(event)}>
+          <label htmlFor="feedback-type">反馈类型</label>
+          <select id="feedback-type" value={draft.feedback_type} disabled={busy}
+            aria-invalid={Boolean(errors.feedback_type)} aria-describedby={errors.feedback_type ? "feedback-type-error" : undefined}
+            onChange={(event) => dispatch({ type: "change", field: "feedback_type", value: event.target.value })}>
+            {feedback_types.map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}
+          </select>
+          {errors.feedback_type && <p id="feedback-type-error" className="account-error" role="alert">{errors.feedback_type}</p>}
+          <label htmlFor="feedback-message">详细内容 <span className="feedback-required">必填 · 至少 10 个字符</span></label>
+          <textarea id="feedback-message" ref={message_input} value={draft.message}
+            onChange={(event) => dispatch({ type: "change", field: "message", value: event.target.value })}
+            placeholder="请描述遇到的问题或希望改进的功能，例如教材、曲目、小节及具体操作…"
+            rows={7} required disabled={busy} aria-invalid={Boolean(errors.message)}
+            aria-describedby={`feedback-privacy feedback-counter${errors.message ? " feedback-message-error" : ""}`} />
+          {errors.message && <p id="feedback-message-error" className="account-error" role="alert">{errors.message}</p>}
+          <div className="feedback-form-note">
+            <span id="feedback-privacy">仅你和管理员可见。每人每天最多提交 5 条。</span>
+            <span id="feedback-counter">{Array.from(draft.message.trim()).length}/2000</span>
+          </div>
+          <label htmlFor="feedback-contact">联系方式 <span className="feedback-required">选填</span></label>
+          <input id="feedback-contact" ref={contact_input} type="text" value={draft.contact} maxLength={254}
+            placeholder="邮箱或手机号" autoComplete="off" disabled={busy}
+            aria-invalid={Boolean(errors.contact)} aria-describedby={errors.contact ? "feedback-contact-error" : undefined}
+            onChange={(event) => dispatch({ type: "change", field: "contact", value: event.target.value })} />
+          {errors.contact && <p id="feedback-contact-error" className="account-error" role="alert">{errors.contact}</p>}
           <div className="feedback-attachments">
             <label className={`secondary-button feedback-upload ${busy || files.length >= 4 ? "is-disabled" : ""}`}>
               <ImagePlus size={17} /> 添加图片（{files.length}/4）
-              <input
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                multiple
-                disabled={busy || files.length >= 4}
-                aria-label="添加反馈图片"
-                onChange={(event) => {
-                  select_files(Array.from(event.target.files ?? []));
-                  event.target.value = "";
-                }}
-              />
+              <input type="file" accept="image/jpeg,image/png,image/webp" multiple disabled={busy || files.length >= 4}
+                aria-label="添加反馈图片" onChange={(event) => {
+                  select_files(Array.from(event.target.files ?? [])); event.target.value = "";
+                }} />
             </label>
             <small>选填 · 每张小于 5MB · JPG / PNG / WebP</small>
           </div>
-          {files.length > 0 && (
-            <div className="feedback-images">
-              {files.map((file, index) => (
-                <SelectedImage
-                  key={`${index}:${file.name}:${file.lastModified}`}
-                  file={file}
-                  index={index}
-                  disabled={busy}
-                  remove={() => set_files((current) => current.filter((_, i) => i !== index))}
-                />
-              ))}
-            </div>
-          )}
-          {error && <p className="account-error" role="alert">{error}</p>}
-          {submitted && <p className="feedback-success" role="status"><Check size={17} /> 反馈已提交，可在下方查看回复。</p>}
-          <button type="submit" className="primary-button" disabled={busy || !message.trim()}>
-            {busy ? <LoaderCircle size={17} className="is-spinning" /> : <Send size={17} />}
-            {busy ? "正在提交…" : "提交反馈"}
-          </button>
+          {files.length > 0 && <div className="feedback-images">{files.map((file, index) => (
+            <SelectedImage key={`${index}:${file.name}:${file.lastModified}`} file={file} index={index} disabled={busy}
+              remove={() => { set_files((current) => current.filter((_, i) => i !== index)); set_attachment_error(""); }} />
+          ))}</div>}
+          {(state.error || attachment_error) && <p className="account-error" role="alert">{state.error || attachment_error}</p>}
+          <div className="feedback-form-actions">
+            <button type="submit" className="primary-button" disabled={busy}>
+              {busy ? <LoaderCircle size={17} className="is-spinning" /> : <Send size={17} />}
+              {busy ? "正在提交…" : "提交反馈"}
+            </button>
+            <button type="button" className="secondary-button" disabled={busy} onClick={reset}>重置表单</button>
+          </div>
         </form>
-      )}
-
-      <div className={`feedback-history-heading ${show_composer ? "" : "is-standalone"}`}>
-        <h3>{scope === "all" ? "用户反馈" : "我的反馈"}</h3>
-        {is_admin && (
-          <div className="feedback-scope" role="group" aria-label="反馈范围">
+      ))}
+      {show_history && <>
+        <div className={`feedback-history-heading ${show_composer ? "" : "is-standalone"}`}>
+          <h2>{scope === "all" ? "全部反馈" : "我的反馈"}</h2>
+          {is_admin && <div className="feedback-scope" role="group" aria-label="反馈范围">
             <button type="button" aria-pressed={scope === "mine"} onClick={() => set_scope("mine")}>我的反馈</button>
             <button type="button" aria-pressed={scope === "all"} onClick={() => set_scope("all")}>全部反馈</button>
-          </div>
-        )}
-      </div>
-      <FeedbackHistory key={`${scope}:${revision}`} scope={scope} is_admin={is_admin} />
+          </div>}
+        </div>
+        <FeedbackHistory key={`${scope}:${revision}`} scope={scope} is_admin={is_admin} />
+      </>}
     </div>
   );
 }
@@ -176,7 +165,7 @@ function FeedbackHistory({ scope, is_admin }: { scope: "mine" | "all"; is_admin:
     let active = true;
     set_page(undefined);
     set_error("");
-    void api_request<feedback_page>(`/api/v1/feedback?scope=${scope}&offset=${offset}`)
+    void load_feedback(scope, offset)
       .then((result) => { if (active) set_page(result); })
       .catch((failure) => { if (active) set_error(error_message(failure)); });
     return () => { active = false; };
@@ -214,15 +203,18 @@ function FeedbackEntry({ entry, is_admin }: { entry: feedback_entry; is_admin: b
   const [resolved, set_resolved] = useState(entry.status === "resolved");
   const [busy, set_busy] = useState(false);
   const [error, set_error] = useState("");
+  const [updated, set_updated] = useState(false);
   const respond = async (event: FormEvent) => {
     event.preventDefault();
+    if (busy) return;
     set_busy(true);
     set_error("");
     try {
-      const result = await api_request<{ feedback: feedback_entry }>(`/api/v1/feedback/${entry.id}`, {
-        method: "PATCH", body: { reply, status: resolved ? "resolved" : "pending" },
-      });
+      const result = await update_feedback(entry.id, reply, resolved ? "resolved" : "pending");
+      set_updated(true);
       set_saved(result.feedback);
+      set_reply(result.feedback.reply);
+      set_resolved(result.feedback.status === "resolved");
     } catch (failure) {
       set_error(error_message(failure));
     } finally {
@@ -237,10 +229,12 @@ function FeedbackEntry({ entry, is_admin }: { entry: feedback_entry; is_admin: b
           <time dateTime={entry.created_at}>{new Date(entry.created_at).toLocaleString("zh-CN")}</time>
         </div>
         <span className={`feedback-status ${saved.status === "resolved" ? "is-resolved" : ""}`}>
-          {saved.status === "resolved" ? "已处理" : saved.reply ? "已回复" : "待查看"}
+          {feedback_status_label(saved)}
         </span>
       </header>
+      <p className="feedback-entry-type">{feedback_types.find((type) => type.value === entry.feedback_type)?.label ?? "其他问题"}</p>
       <p className="feedback-message">{entry.message}</p>
+      {entry.contact && <p className="feedback-contact">联系方式：{entry.contact}</p>}
       {entry.images.length > 0 && (
         <div className="feedback-images">
           {entry.images.map((image, index) => (
@@ -253,13 +247,14 @@ function FeedbackEntry({ entry, is_admin }: { entry: feedback_entry; is_admin: b
       {saved.reply && <div className="feedback-reply"><strong>管理员回复</strong><p>{saved.reply}</p></div>}
       {is_admin && (
         <details className="feedback-reply-editor">
-          <summary>{saved.reply ? "修改回复" : "回复反馈"}</summary>
+          <summary>处理状态与回复</summary>
           <form onSubmit={(event) => void respond(event)}>
             <label htmlFor={`feedback-reply-${entry.id}`}>回复内容</label>
-            <textarea id={`feedback-reply-${entry.id}`} value={reply} onChange={(event) => set_reply(event.target.value)} maxLength={2000} rows={3} required disabled={busy} />
-            <label className="feedback-resolve"><input type="checkbox" checked={resolved} onChange={(event) => set_resolved(event.target.checked)} disabled={busy} /> 标记为已处理</label>
+            <textarea id={`feedback-reply-${entry.id}`} value={reply} onChange={(event) => { set_reply(event.target.value); set_updated(false); }} maxLength={2000} rows={3} disabled={busy} />
+            <label className="feedback-resolve"><input type="checkbox" checked={resolved} onChange={(event) => { set_resolved(event.target.checked); set_updated(false); }} disabled={busy} /> 标记为已处理</label>
             {error && <p className="account-error" role="alert">{error}</p>}
-            <button className="secondary-button" type="submit" disabled={busy || !reply.trim()}>{busy ? "保存中…" : "保存回复"}</button>
+            {updated && <p className="feedback-success" role="status">处理状态与回复已保存。</p>}
+            <button className="secondary-button" type="submit" disabled={busy}>{busy ? "保存中…" : "保存状态与回复"}</button>
           </form>
         </details>
       )}
@@ -268,5 +263,8 @@ function FeedbackEntry({ entry, is_admin }: { entry: feedback_entry; is_admin: b
 }
 
 function error_message(error: unknown) {
+  if (error instanceof TypeError || (error instanceof api_error && error.status >= 500)) {
+    return "反馈服务暂时不可用，请稍后重试。";
+  }
   return error instanceof Error ? error.message : "请求失败，请稍后重试。";
 }

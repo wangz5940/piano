@@ -6,6 +6,7 @@ import {
   Home,
   LibraryBig,
   Music2,
+  MessageSquare,
   Piano,
   PanelLeftClose,
   PanelLeftOpen,
@@ -35,9 +36,11 @@ const navigation_items = [
   { to: "/曲目", label: "热门曲目", icon: Sparkles, feature: "repertoire" },
   { to: "/记录", label: "练习记录", icon: ClipboardList, feature: "records" },
   { to: "/管理", label: "学习管理", icon: SlidersHorizontal },
+  { to: "/反馈", label: "反馈与建议", icon: MessageSquare },
   { to: "/账号", label: "账号与同步", icon: CircleUserRound },
   { to: "/校准", label: "乐谱校对", icon: ScanSearch, feature: "calibration" },
-  { to: "/后台", label: "管理后台", icon: ShieldCheck, feature: "admin" },
+  { to: "/后台", label: "管理后台", icon: ShieldCheck, feature: "admin", end: true },
+  { to: "/后台/反馈", label: "反馈管理", icon: MessageSquare, feature: "admin" },
 ];
 
 export function AppShell({ children }: app_shell_props) {

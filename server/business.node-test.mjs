@@ -39,7 +39,7 @@ test("SQLite 初始化完整业务表和外键", () => {
     ORDER BY name
   `).all().map((row) => row.name);
 
-  assert.equal(repository.get_schema_version(), 10);
+  assert.equal(repository.get_schema_version(), 11);
   assert.deepEqual(tables, [
     "audit_events",
     "calibration_submissions",
@@ -144,11 +144,11 @@ test("会话去重迁移保留历史访问和登录审计", (t) => {
   const old = open_database(path);
   const visit_id = old.record_audit_event({ action: "access.page", target_type: "route", target_id: "/旧访问", details: { authenticated: false } });
   const login_id = old.record_audit_event({ action: "auth.login.failed", target_type: "user", details: { email: "old@example.test" } });
-  old.raw.exec("DROP INDEX access_events_session_idx; ALTER TABLE audit_events DROP COLUMN access_session_id; DELETE FROM schema_migrations WHERE version = 10;");
+  old.raw.exec("DROP INDEX access_events_session_idx; ALTER TABLE audit_events DROP COLUMN access_session_id; ALTER TABLE feedback DROP COLUMN feedback_type; ALTER TABLE feedback DROP COLUMN contact; DELETE FROM schema_migrations WHERE version >= 10;");
   old.close();
   const migrated = open_database(path);
   try {
-    assert.equal(migrated.get_schema_version(), 10);
+    assert.equal(migrated.get_schema_version(), 11);
     assert.equal(migrated.list_access_records()[0].id, visit_id);
     assert.equal(migrated.list_login_records()[0].id, login_id);
     const session_id = randomUUID();
@@ -490,7 +490,7 @@ test("业务 API 支持账号、同步、练习归档和管理员内容版本", 
       progress,
       preferences: {
         sidebar_collapsed: false,
-        free_practice: true,
+        free_practice: false,
         show_fingerings: true,
         audio_input_enabled: false,
         audio_calibration_midi: 60,
@@ -502,6 +502,7 @@ test("业务 API 支持账号、同步、练习归档和管理员内容版本", 
   });
   assert.equal(snapshot.status, 200);
   assert.equal(snapshot.data.snapshot.revision, 1);
+  assert.equal(snapshot.data.snapshot.preferences.free_practice, true);
   assert.deepEqual(
     snapshot.data.snapshot.preferences.calibration_field_order.slice(0, 3),
     ["staff", "pitch_name", "duration"],

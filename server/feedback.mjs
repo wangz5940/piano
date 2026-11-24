@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import busboy from "busboy";
 import sharp from "sharp";
+import { validate_feedback } from "../src/features/feedback/validation.mjs";
 import { read_json_body, validation_error } from "./validation.mjs";
 
 export const feedback_image_limit = 5 * 1024 * 1024;
@@ -93,8 +94,8 @@ export function create_feedback_handler(database, {
             throw new validation_error("账号已失效，请重新登录。", 401);
           }
           database.prepare(`
-            INSERT INTO feedback(id,user_id,message,created_at,updated_at) VALUES (?,?,?,?,?)
-          `).run(id, user.id, input.message, now, now);
+            INSERT INTO feedback(id,user_id,message,feedback_type,contact,created_at,updated_at) VALUES (?,?,?,?,?,?,?)
+          `).run(id, user.id, input.message, input.feedback_type, input.contact, now, now);
           const insert = database.prepare(`
             INSERT INTO feedback_images(id,feedback_id,data,size_bytes,position) VALUES (?,?,?,?,?)
           `);
@@ -138,7 +139,10 @@ export function create_feedback_handler(database, {
       if (user.role !== "admin") throw new validation_error("仅超级管理员可以回复反馈。", 403);
       require_entry(entry_match[1], user);
       const input = await read_json_body(request, 16 * 1024);
-      const reply = validate_message(input.reply, "回复");
+      const reply = typeof input.reply === "string" ? input.reply.trim() : undefined;
+      if (reply === undefined || Array.from(reply).length > 2000) {
+        throw new validation_error("回复内容不能超过 2000 个字符。");
+      }
       if (!["pending", "resolved"].includes(input.status)) throw new validation_error("反馈状态无效。");
       database.prepare("UPDATE feedback SET reply=?,status=?,updated_at=? WHERE id=?")
         .run(reply, input.status, new Date().toISOString(), entry_match[1]);
@@ -147,13 +151,6 @@ export function create_feedback_handler(database, {
     }
     throw new validation_error("接口不存在。", 404, "not_found");
   };
-}
-
-function validate_message(value, label = "反馈") {
-  if (typeof value !== "string" || !value.trim() || value.trim().length > 2000) {
-    throw new validation_error(`${label}请填写 1—2000 个字。`);
-  }
-  return value.trim();
 }
 
 async function sanitize_image(file) {
@@ -186,15 +183,15 @@ function read_feedback(request) {
     let parser;
     try {
       parser = busboy({ headers: request.headers, limits: {
-        files: 4, fileSize: feedback_image_limit, fields: 1, fieldSize: 8000,
-        parts: 6, fieldNameSize: 40,
+        files: 4, fileSize: feedback_image_limit, fields: 3, fieldSize: 8000,
+        parts: 8, fieldNameSize: 40,
       } });
     } catch {
       reject(new validation_error("反馈上传格式无效。"));
       return;
     }
     const files = [];
-    let message;
+    const fields = {};
     let bytes = 0;
     let settled = false;
     const cleanup = () => {
@@ -223,10 +220,10 @@ function read_feedback(request) {
     request.once("aborted", aborted);
     request.once("error", aborted);
     parser.on("field", (name, value, info) => {
-      if (name !== "message" || info.valueTruncated || info.nameTruncated || message !== undefined) {
+      if (!["message", "feedback_type", "contact"].includes(name) || info.valueTruncated || info.nameTruncated || Object.hasOwn(fields, name)) {
         fail(new validation_error("反馈内容无效或过长。"));
       } else {
-        message = value;
+        fields[name] = value;
       }
     });
     parser.on("file", (name, stream, info) => {
@@ -250,10 +247,12 @@ function read_feedback(request) {
     parser.on("close", () => {
       if (settled) return;
       try {
-        const valid_message = validate_message(message);
+        const input = { feedback_type: fields.feedback_type ?? "other", message: fields.message, contact: fields.contact ?? "" };
+        const error = Object.values(validate_feedback(input))[0];
+        if (error) throw new validation_error(error);
         settled = true;
         cleanup();
-        resolve({ message: valid_message, files });
+        resolve({ ...input, message: input.message.trim(), contact: input.contact.trim(), files });
       } catch (error) {
         fail(error);
       }

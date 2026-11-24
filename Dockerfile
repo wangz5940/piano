@@ -40,6 +40,7 @@ COPY --from=build /app/server ./server
 COPY --from=build /app/public ./public
 # 服务端运行时直接引用的源码模块
 COPY --from=build /app/src/features/score/migration-runtime.mjs ./src/features/score/migration-runtime.mjs
+COPY --from=build /app/src/features/feedback/validation.mjs ./src/features/feedback/validation.mjs
 
 # 创建数据目录
 RUN mkdir -p data/content backups

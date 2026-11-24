@@ -15,6 +15,7 @@ const Favorites = lazy(page_loaders.favorites);
 const JianpuLibrary = lazy(page_loaders.jianpu);
 const MaterialLibrary = lazy(page_loaders.materials);
 const Management = lazy(page_loaders.management);
+const Feedback = lazy(page_loaders.feedback);
 const Practice = lazy(page_loaders.practice);
 const Records = lazy(page_loaders.records);
 const RepertoireLibrary = lazy(page_loaders.repertoire);
@@ -43,6 +44,9 @@ export default function App() {
           <Route path="/练习/:lesson_id" element={<Practice />} />
           <Route path="/记录" element={<Records />} />
           <Route path="/管理" element={<Management />} />
+          <Route path="/反馈" element={<Feedback />} />
+          <Route path="/反馈/历史" element={<Feedback mode="history" />} />
+          <Route path="/后台/反馈" element={<Feedback mode="admin" />} />
           <Route path="/账号" element={<Account />} />
           <Route path="/校准" element={<ScoreCalibration />} />
           <Route path="/后台" element={<Admin />} />

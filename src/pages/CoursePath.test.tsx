@@ -8,7 +8,6 @@ import { CoursePath } from "./CoursePath";
 
 afterEach(() => {
   use_app_settings_store.getState().set_sidebar_collapsed(false);
-  use_app_settings_store.getState().set_free_practice(true);
 });
 
 describe("课程路径", () => {

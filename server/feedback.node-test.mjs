@@ -130,17 +130,67 @@ test("feedback rejects fifth image, 5MB boundary, fake images, malformed bodies 
   assert.equal(f.repository.raw.prepare("SELECT count(*) AS count FROM feedback").get().count, 0);
   // Invalid requests release the upload slot; the largest permitted input is accepted.
   const near_limit = Buffer.concat([picture, Buffer.alloc(feedback_image_limit - 1 - picture.length)]);
-  assert.equal((await f.post("student", "有效图片", [near_limit])).status, 201);
+  assert.equal((await f.post("student", "这是有效图片上传反馈内容", [near_limit])).status, 201);
 });
 
 test("feedback has persistent per-user and global quotas, plus an atomic image storage limit", async (t) => {
   const f = await fixture(t, { user_daily_limit: 1, daily_limit: 2, storage_limit: 1 });
-  assert.equal((await f.post("student", "图片超出存储配额", [await png()])).status, 503);
+  assert.equal((await f.post("student", "这些图片超出了存储配额限制", [await png()])).status, 503);
   assert.equal(f.repository.raw.prepare("SELECT count(*) AS count FROM feedback").get().count, 0);
-  assert.equal((await f.post("student", "文字反馈", [])).status, 201);
+  assert.equal((await f.post("student", "这是一条有效的文字反馈内容", [])).status, 201);
   assert.equal((await f.post("student", "超过用户每日配额", [])).status, 429);
-  assert.equal((await f.post("parent", "另一个用户", [])).status, 201);
+  assert.equal((await f.post("parent", "另一个用户提交的完整反馈内容", [])).status, 201);
   assert.equal((await f.post("admin", "超过全站每日配额", [])).status, 429);
+});
+
+test("feedback validates type, content and contact, and persists status-only admin updates", async (t) => {
+  const f = await fixture(t);
+  for (const fields of [{ feedback_type: "invalid" }, { contact: "not-a-contact" }, { contact: "1381234567" }]) {
+    assert.equal((await f.post("student", "希望增加练习速度调节功能", [], {}, fields)).status, 400);
+  }
+  for (const message of ["文".repeat(9), "😀".repeat(9)]) {
+    assert.equal((await f.post("student", message, [])).status, 400);
+  }
+  assert.equal(f.repository.raw.prepare("SELECT count(*) AS count FROM feedback").get().count, 0);
+  const posted = await f.post("student", "  下一首曲谱显示位置需要调整  ", [], {}, { feedback_type: "bug", contact: "  piano@example.com  " });
+  assert.equal(posted.status, 201);
+  const entry = posted.data.feedback;
+  assert.equal(entry.feedback_type, "bug");
+  assert.equal(entry.message, "下一首曲谱显示位置需要调整");
+  assert.equal(entry.contact, "piano@example.com");
+  const path = `/api/v1/feedback/${entry.id}`;
+  for (const status of ["resolved", "pending"]) {
+    const updated = await f.request(path, { method: "PATCH", cookie: f.cookies.admin, json: { reply: "", status } });
+    assert.equal(updated.status, 200);
+    assert.equal(updated.data.feedback.status, status);
+    assert.equal(updated.data.feedback.reply, "");
+  }
+  for (const json of [{ reply: "", status: "invalid" }, { reply: "文".repeat(2001), status: "resolved" }, { status: "resolved" }]) {
+    assert.equal((await f.request(path, { method: "PATCH", cookie: f.cookies.admin, json })).status, 400);
+  }
+  const phone = await f.post("parent", "😀".repeat(10), [], {}, { feedback_type: "suggestion", contact: "13812345678" });
+  assert.equal(phone.status, 201);
+  const defaults = await f.post("student", "其他问题需要详细描述说明", []);
+  assert.equal(defaults.data.feedback.feedback_type, "other");
+  assert.equal(defaults.data.feedback.contact, "");
+  const saved = await f.request("/api/v1/feedback", { cookie: f.cookies.student });
+  assert.equal(saved.data.feedback.find((item) => item.id === entry.id).contact, "piano@example.com");
+});
+
+test("feedback migration preserves legacy short messages, replies and private images", async (t) => {
+  const f = await fixture(t);
+  const posted = await f.post("student", "这是一条已有的历史反馈内容", [await png()]);
+  const id = posted.data.feedback.id;
+  f.repository.raw.prepare("UPDATE feedback SET message='旧反馈',reply='旧回复',status='resolved' WHERE id=?").run(id);
+  f.repository.raw.exec("ALTER TABLE feedback DROP COLUMN feedback_type; ALTER TABLE feedback DROP COLUMN contact; DELETE FROM schema_migrations WHERE version=11;");
+  const migrated = open_database(f.database_path);
+  assert.equal(migrated.get_schema_version(), 11);
+  assert.deepEqual({ ...migrated.raw.prepare("SELECT message,reply,status,feedback_type,contact FROM feedback WHERE id=?").get(id) }, {
+    message: "旧反馈", reply: "旧回复", status: "resolved", feedback_type: "other", contact: "",
+  });
+  assert.equal(migrated.raw.prepare("SELECT count(*) AS count FROM feedback_images WHERE feedback_id=?").get(id).count, 1);
+  assert.equal(migrated.raw.prepare("PRAGMA foreign_key_check").all().length, 0);
+  migrated.close();
 });
 
 async function png() {
@@ -195,9 +245,10 @@ async function fixture(t, feedback_options) {
   };
   return {
     root, database_path, repository, cookies, request,
-    post(role, message, images, headers) {
+    post(role, message, images, headers, fields = {}) {
       const body = new FormData();
       body.append("message", message);
+      Object.entries(fields).forEach(([key, value]) => body.append(key, value));
       images.forEach((image) => body.append("images", new Blob([image], { type: "image/png" }), "../../sample.png"));
       return request("/api/v1/feedback", { method: "POST", cookie: cookies[role], body, headers });
     },

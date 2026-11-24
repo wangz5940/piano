@@ -872,7 +872,7 @@ function validate_preferences(value) {
         .map((key) => [key, preferences.feature_switches?.[key] === true]),
     ),
     sidebar_collapsed: preferences.sidebar_collapsed === true,
-    free_practice: preferences.free_practice !== false,
+    free_practice: true,
     show_fingerings: preferences.show_fingerings !== false,
     audio_input_enabled: preferences.audio_input_enabled === true,
     audio_calibration_midi: optional_bounded_integer(
