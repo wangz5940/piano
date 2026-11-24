@@ -20,6 +20,7 @@ interface score_zoom_surface_props {
   download_name?: string;
   className?: string;
   zoom_control?: score_zoom_control;
+  score_title?: ReactNode;
 }
 
 export function ScoreZoomSurface({
@@ -29,6 +30,7 @@ export function ScoreZoomSurface({
   download_name,
   className = "",
   zoom_control,
+  score_title,
 }: score_zoom_surface_props) {
   const [local_zoom, set_local_zoom] = useState(1);
   const zoom = zoom_control?.zoom ?? local_zoom;
@@ -145,6 +147,7 @@ export function ScoreZoomSurface({
       </header>
       <div className="score-zoom-viewport">
         <div className="score-zoom-content">
+          {score_title && <h2 className="score-page-title">{score_title}</h2>}
           {children}
         </div>
       </div>

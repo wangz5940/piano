@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { ChevronLeft, ChevronRight, Grid3X3, Maximize, Minimize, X } from "lucide-react";
 
@@ -18,16 +18,23 @@ export function TextbookScoreStage({
   material, material_selection, segment, children, switching_direction, on_navigate,
 }: textbook_score_stage_props) {
   const stage = useRef<HTMLElement>(null);
+  const stage_scroll = useRef<HTMLDivElement>(null);
   const catalog_button = useRef<HTMLButtonElement>(null);
   const catalog_panel = useRef<HTMLElement>(null);
   const owns_native_fullscreen = useRef(false);
-  const [is_fullscreen, set_is_fullscreen] = useState(false);
+  // Start in viewport fullscreen; native fullscreen requires a user gesture.
+  const [is_fullscreen, set_is_fullscreen] = useState(true);
   const [show_navigation, set_show_navigation] = useState(false);
   const [is_catalog_open, set_is_catalog_open] = useState(false);
   const catalog_id = useId();
   const current_index = material.segments.findIndex((item) => item.id === segment.id);
   const previous = material.segments[current_index - 1];
   const next = material.segments[current_index + 1];
+
+  useLayoutEffect(() => {
+    stage_scroll.current?.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    if (!is_fullscreen) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [segment.id, is_fullscreen]);
 
   const close_catalog = useCallback(() => {
     set_is_catalog_open(false);
@@ -144,7 +151,7 @@ export function TextbookScoreStage({
           <span className="textbook-catalog-count">{material.segments.length}</span>
         </button>
       </header>
-      <div className="textbook-stage-scroll">{children}</div>
+      <div ref={stage_scroll} className="textbook-stage-scroll">{children}</div>
 
       <div className="textbook-stage-navigation" hidden={!show_navigation} aria-label="曲目顺序切换">
         <button type="button" className="textbook-stage-arrow is-previous"

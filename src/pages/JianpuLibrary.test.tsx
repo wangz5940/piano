@@ -8,10 +8,6 @@ import type {
   jianpu_catalog,
   jianpu_score,
 } from "@/features/jianpu/types";
-import {
-  capture_score_scroll_anchor,
-  get_score_scroll_delta,
-} from "@/features/jianpu/scoreScrollPosition";
 import { get_reading_material, get_reading_score_number } from "@/features/jianpu/readingCatalog";
 import { group_material_by_content } from "@/features/jianpu/contentGrouping";
 import { combine_work_scores } from "@/features/jianpu/workScore";
@@ -227,7 +223,7 @@ describe("简谱教材", () => {
     expect(intermediate_markup).not.toContain("jianpu-svg-barline is-final");
   });
 
-  it("曲目阅读区移除重复的章节和曲目标题栏", () => {
+  it("曲目标题只在首段谱面内展示，章节阅读保留学习提示", () => {
     const source_segment = catalog_fixture.materials[0].segments[0];
     const score: jianpu_score = {
       schema_version: "1.0",
@@ -251,25 +247,20 @@ describe("简谱教材", () => {
     expect(markup).not.toContain("教材章节");
     expect(markup).toContain("学习提示");
     expect(markup).toContain("textbook-score-slice");
-  });
+    expect(markup).not.toContain("score-page-title");
 
-  it("切曲时按视口中心保存并恢复谱面相对位置", () => {
-    const anchor = capture_score_scroll_anchor({
-      top: -1000,
-      bottom: 3000,
-      height: 4000,
-    }, 1000);
-
-    expect(anchor).toEqual({ progress: 0.375, viewport_y: 500 });
-    expect(get_score_scroll_delta({
-      top: -700,
-      height: 3200,
-    }, anchor!)).toBe(0);
-    expect(capture_score_scroll_anchor({
-      top: 1100,
-      bottom: 2100,
-      height: 1000,
-    }, 1000)).toBeUndefined();
+    const titled_markup = renderToStaticMarkup(
+      <JianpuPageSliceReader score={score}
+        page_slices={[
+          { ...source_segment.page_slices[0], measure_end: 12 },
+          { ...source_segment.page_slices[0], measure_start: 13 },
+        ]}
+        score_title="013 练习13（双手练习）"
+        zoom_control={{ zoom: 0.72, set_zoom: () => {} }} />,
+    );
+    expect(titled_markup.match(/class="score-page-title"/g)).toHaveLength(1);
+    expect(titled_markup).toContain('class="score-zoom-content"><h2 class="score-page-title">013 练习13（双手练习）</h2>');
+    expect(titled_markup.match(/--score-zoom:0.72/g)).toHaveLength(2);
   });
 
   it("提供全屏、悬浮目录和切曲入口，并保留单手谱与收藏功能", () => {
@@ -287,7 +278,9 @@ describe("简谱教材", () => {
     expect(markup).toContain("拜厄钢琴基本教程");
     expect(markup).toContain("哈农钢琴练指法");
     expect(markup).toContain("原谱第 24 页");
-    expect(markup).toContain('aria-label="全屏展示"');
+    expect(markup).toContain('aria-label="退出全屏"');
+    expect(markup).toContain('class="textbook-score-stage is-fullscreen"');
+    expect(markup).toContain('class="score-zoom-content"><h2 class="score-page-title">');
     expect(markup).toContain('aria-label="曲谱目录"');
     expect(markup).toContain('aria-label="收藏练习13（双手练习）"');
     expect(markup).not.toContain("阅读索引");

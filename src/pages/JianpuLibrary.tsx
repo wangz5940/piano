@@ -36,11 +36,6 @@ import { get_reading_material, get_reading_score_number } from "@/features/jianp
 import { TextbookScoreStage } from "@/features/jianpu/TextbookScoreStage";
 import { TextbookMaterialSelect } from "@/features/jianpu/TextbookMaterialSelect";
 import { load_work_musicxml, load_work_score, prefetch_work_musicxml } from "@/features/jianpu/workScore";
-import {
-  capture_score_scroll_anchor,
-  get_score_scroll_delta,
-  type score_scroll_anchor,
-} from "@/features/jianpu/scoreScrollPosition";
 import { personal_material } from "@/features/calibration/personalScore";
 import { load_calibration_projects } from "@/features/calibration/storage";
 import { soft_delete_material_segment } from "@/features/materials/materialDeletion";
@@ -332,8 +327,6 @@ function JianpuReader({
   const zoom_control = { zoom: score_zoom, set_zoom: set_score_zoom };
   const [opened_original, set_opened_original] = useState<jianpu_segment>();
   const original_button = useRef<HTMLButtonElement>(null);
-  const reading_surface = useRef<HTMLDivElement>(null);
-  const pending_scroll_anchor = useRef<(score_scroll_anchor & { segment_id: string })>();
   const user_id = use_auth_store((state) => state.user?.id);
   const [score, set_score] = useState<jianpu_score>();
   const [score_state, set_score_state] = useState<render_state>("loading");
@@ -345,20 +338,6 @@ function JianpuReader({
     // Reuse the existing per-URL cache; do not cache personal/combined XML by URL.
     void prefetch_work_musicxml(segment).catch(() => {});
   }, [segment]);
-  const navigate_with_score_position = useCallback((
-    target_segment: jianpu_segment,
-    direction: "previous" | "next",
-  ) => {
-    const surface = reading_surface.current;
-    const anchor = surface
-      ? capture_score_scroll_anchor(surface.getBoundingClientRect(), window.innerHeight)
-      : undefined;
-    pending_scroll_anchor.current = anchor
-      ? { ...anchor, segment_id: target_segment.id }
-      : undefined;
-    navigation?.on_navigate(target_segment, direction);
-  }, [navigation]);
-
   useEffect(() => {
     if (reading_view === "original") set_opened_original(segment);
   }, [reading_view, segment]);
@@ -374,52 +353,6 @@ function JianpuReader({
     observer.observe(button);
     return () => observer.disconnect();
   }, [score_state, prepare_original]);
-
-  useEffect(() => {
-    const pending = pending_scroll_anchor.current;
-    const surface = reading_surface.current;
-    if (!pending || pending.segment_id !== segment.id || !surface) return;
-
-    let first_frame = 0;
-    let second_frame = 0;
-    let scheduled = false;
-    const content_is_ready = () => reading_view === "jianpu"
-      ? score_state === "ready" &&
-        score?.segment_id === segment.id &&
-        Boolean(surface.querySelector(".textbook-jianpu-score"))
-      : Boolean(surface.querySelector(".jianpu-original-score-host svg"));
-    const restore = () => {
-      if (!content_is_ready()) {
-        scheduled = false;
-        return;
-      }
-      first_frame = requestAnimationFrame(() => {
-        second_frame = requestAnimationFrame(() => {
-          scheduled = false;
-          const current = pending_scroll_anchor.current;
-          if (!current || current.segment_id !== segment.id) return;
-          const delta = get_score_scroll_delta(surface.getBoundingClientRect(), current);
-          const fullscreen_scroll = surface.closest(".textbook-score-stage.is-fullscreen")
-            ?.querySelector(".textbook-stage-scroll");
-          (fullscreen_scroll ?? window).scrollBy({ top: delta, left: 0, behavior: "auto" });
-          pending_scroll_anchor.current = undefined;
-        });
-      });
-    };
-    const schedule_restore = () => {
-      if (scheduled || !content_is_ready()) return;
-      scheduled = true;
-      restore();
-    };
-    const observer = new MutationObserver(schedule_restore);
-    observer.observe(surface, { childList: true, subtree: true });
-    schedule_restore();
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(first_frame);
-      cancelAnimationFrame(second_frame);
-    };
-  }, [reading_view, score?.segment_id, score_state, segment.id]);
 
   useEffect(() => {
     let active = true;
@@ -443,15 +376,16 @@ function JianpuReader({
     };
   }, [segment, user_id]);
 
+  const score_title = <><span className="textbook-score-number">{get_reading_score_number(material, segment)}</span>{segment.title}</>;
+
   return (
     <TextbookScoreStage material={material} segment={segment}
       material_selection={material_selection}
       switching_direction={navigation?.switching_direction}
-      on_navigate={navigate_with_score_position}>
+      on_navigate={(target, direction) => navigation?.on_navigate(target, direction)}>
     <article className="jianpu-reader">
       <header className="jianpu-reader-head">
         <div>
-          <h2><span className="textbook-score-number">{get_reading_score_number(material, segment)}</span>{segment.title}</h2>
           <p>
             {segment.section_title && `${segment.section_title} · `}
             {segment.source_page_label} · {segment.measure_count} 小节 · {hand_label}
@@ -507,23 +441,29 @@ function JianpuReader({
         </div>
       </header>
 
-      <div ref={reading_surface} className="jianpu-reading-surface">
+      <div className="jianpu-reading-surface">
         {reading_view === "jianpu" ? (
-          score_state === "loading" ? (
-            <JianpuScoreState copy="正在排版本片段的简谱…" />
-          ) : score_state === "error" || !score ? (
-            <JianpuScoreState copy="本片段暂时无法显示简谱，请先切换到原谱核对。" is_error />
+          score_state !== "ready" || !score || score.segment_id !== segment.id ? (
+            <ScoreZoomSurface measure_start={1} measure_end={segment.measure_count}
+              className="textbook-score-slice" zoom_control={zoom_control} score_title={score_title}>
+              <JianpuScoreState
+                copy={score_state === "error"
+                  ? "本片段暂时无法显示简谱，请先切换到原谱核对。"
+                  : "正在排版本片段的简谱…"}
+                is_error={score_state === "error"} />
+            </ScoreZoomSurface>
           ) : (
             <JianpuPageSliceReader
               score={score}
               page_slices={segment.page_slices}
+              score_title={score_title}
               zoom_control={zoom_control}
             />
           )
         ) : null}
         {(reading_view === "original" || opened_original === segment) && (
           <div hidden={reading_view !== "original"}>
-            <OriginalScorePanel key={segment.id} segment={segment} zoom_control={zoom_control} />
+            <OriginalScorePanel key={segment.id} segment={segment} zoom_control={zoom_control} score_title={score_title} />
           </div>
         )}
       </div>
@@ -536,10 +476,12 @@ export function JianpuPageSliceReader({
   score,
   page_slices,
   zoom_control,
+  score_title,
 }: {
   score: jianpu_score;
   page_slices: jianpu_page_slice[];
   zoom_control?: score_zoom_control;
+  score_title?: ReactNode;
 }) {
   const [expanded_slice_keys, set_expanded_slice_keys] = useState<Set<string>>(
     () => get_initial_expanded_slice_keys(page_slices),
@@ -551,7 +493,7 @@ export function JianpuPageSliceReader({
 
   return (
     <section className="jianpu-page-reader" aria-label="按小节组阅读简谱">
-      {page_slices.map((page_slice) => {
+      {page_slices.map((page_slice, index) => {
         const slice_key = get_page_slice_key(page_slice);
         const is_expanded = expanded_slice_keys.has(slice_key);
         const page_score = {
@@ -579,6 +521,7 @@ export function JianpuPageSliceReader({
                 download_name={`${page_slice.title}-简谱`}
                 className="textbook-score-slice"
                 zoom_control={zoom_control}
+                score_title={index === 0 ? score_title : undefined}
               >
                 <TextbookJianpuScore
                   score={page_score}
@@ -704,9 +647,10 @@ function get_hand_mode_reader_label(hand_mode: jianpu_hand_mode): string {
   return hand_mode === "right" ? "右手材料" : "左手材料";
 }
 
-function OriginalScorePanel({ segment, zoom_control }: {
+function OriginalScorePanel({ segment, zoom_control, score_title }: {
   segment: jianpu_segment;
   zoom_control: score_zoom_control;
+  score_title: ReactNode;
 }) {
   const user_id = use_auth_store((state) => state.user?.id);
   const [render_state, set_render_state] = useState<render_state>("loading");
@@ -735,6 +679,7 @@ function OriginalScorePanel({ segment, zoom_control }: {
         download_name={`${segment.title}-原谱`}
         className="original-score-slice"
         zoom_control={zoom_control}
+        score_title={score_title}
       >
         {render_state === "loading" && <JianpuScoreState copy="正在加载完整原谱…" />}
         {render_state === "error" && <>

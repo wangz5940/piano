@@ -409,6 +409,7 @@ input:focus-visible,
 
 .textbook-stage-scroll {
   margin-top: 24px;
+  overflow-anchor: none;
 }
 
 .textbook-score-stage .jianpu-reader {
@@ -447,6 +448,13 @@ input:focus-visible,
   font-weight: 400;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
+}
+
+.textbook-score-stage .score-page-title {
+  margin: 0;
+  padding: 24px 20px 0;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .textbook-score-stage .jianpu-reader-head > div > p:last-child {
@@ -601,6 +609,10 @@ input:focus-visible,
   background: var(--ui-surface);
 }
 
+.textbook-score-stage .score-zoom-viewport {
+  overscroll-behavior-y: auto;
+}
+
 .textbook-score-stage .textbook-jianpu-meta {
   display: none;
 }
@@ -611,6 +623,10 @@ input:focus-visible,
 
 .textbook-score-stage .jianpu-renderer-system {
   background: var(--ui-surface);
+  /* WebKit can skip SVG painting inside a zoomed, scrolling viewport. */
+  content-visibility: visible;
+  contain-intrinsic-size: none;
+  contain: none;
 }
 
 .textbook-stage-arrow {
@@ -723,6 +739,8 @@ input:focus-visible,
 .textbook-score-stage.is-fullscreen {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
   background: var(--ui-surface);
 }
 
@@ -751,11 +769,7 @@ input:focus-visible,
 }
 
 .textbook-score-stage.is-fullscreen .jianpu-reader-head {
-  padding: 4px 0 18px;
-}
-
-.textbook-score-stage.is-fullscreen .jianpu-reader-head h2 {
-  font-size: 20px;
+  display: none;
 }
 
 .textbook-score-stage.is-fullscreen .score-zoom-toolbar {
@@ -889,12 +903,8 @@ input:focus-visible,
     padding: 18px 16px 84px;
   }
 
-  .textbook-score-stage.is-fullscreen .jianpu-reader-head {
-    justify-content: center;
-    padding: 0 0 12px;
-  }
-
-  .textbook-score-stage.is-fullscreen .jianpu-reader-head h2 {
+  .textbook-score-stage .score-page-title {
+    padding-top: 20px;
     font-size: 18px;
   }
 
