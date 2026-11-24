@@ -7,6 +7,7 @@ import type { jianpu_material, jianpu_segment } from "./types";
 
 interface textbook_score_stage_props {
   material: jianpu_material;
+  material_selection: ReactNode;
   segment: jianpu_segment;
   children: ReactNode;
   switching_direction?: "previous" | "next";
@@ -14,7 +15,7 @@ interface textbook_score_stage_props {
 }
 
 export function TextbookScoreStage({
-  material, segment, children, switching_direction, on_navigate,
+  material, material_selection, segment, children, switching_direction, on_navigate,
 }: textbook_score_stage_props) {
   const stage = useRef<HTMLElement>(null);
   const catalog_button = useRef<HTMLButtonElement>(null);
@@ -134,6 +135,15 @@ export function TextbookScoreStage({
       className={`textbook-score-stage ${is_fullscreen ? "is-fullscreen" : ""}`}
       aria-label={`${material.title}曲谱阅读器`}
       onClick={handle_score_click}>
+      <header className="textbook-reader-toolbar">
+        {material_selection}
+        <button type="button" ref={catalog_button} className="textbook-catalog-trigger"
+          aria-controls={catalog_id} aria-expanded={is_catalog_open} aria-label="曲谱目录"
+          onClick={() => set_is_catalog_open((open) => !open)}>
+          <Grid3X3 size={16} /><span>目录</span>
+          <span className="textbook-catalog-count">{material.segments.length}</span>
+        </button>
+      </header>
       <div className="textbook-stage-scroll">{children}</div>
 
       <div className="textbook-stage-navigation" hidden={!show_navigation} aria-label="曲目顺序切换">
@@ -156,11 +166,6 @@ export function TextbookScoreStage({
           aria-label={is_fullscreen ? "退出全屏" : "全屏展示"}>
           {is_fullscreen ? <Minimize size={19} /> : <Maximize size={19} />}
           <span>{is_fullscreen ? "退出全屏" : "全屏"}</span>
-        </button>
-        <button type="button" ref={catalog_button} aria-controls={catalog_id}
-          aria-expanded={is_catalog_open} aria-label="曲谱目录"
-          onClick={() => set_is_catalog_open((open) => !open)}>
-          <Grid3X3 size={19} /><span>目录</span>
         </button>
       </div>
 

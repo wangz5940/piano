@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import {
   ArrowRight,
   BookOpenText,
@@ -33,6 +34,7 @@ import {
 } from "@/features/jianpu/loadJianpuLibrary";
 import { get_reading_material, get_reading_score_number } from "@/features/jianpu/readingCatalog";
 import { TextbookScoreStage } from "@/features/jianpu/TextbookScoreStage";
+import { TextbookMaterialSelect } from "@/features/jianpu/TextbookMaterialSelect";
 import { load_work_musicxml, load_work_score, prefetch_work_musicxml } from "@/features/jianpu/workScore";
 import {
   capture_score_scroll_anchor,
@@ -182,35 +184,31 @@ export function JianpuLibrary({ initial_catalog, user_override }: jianpu_library
     navigate(`/简谱教材/${material.id}/${target_segment.id}`);
     window.setTimeout(() => set_switching_direction(undefined), 360);
   };
+  const material_selection = (
+    <TextbookMaterialSelect materials={ordered_materials} selected_material={material}
+      on_select={(selected) => navigate(get_jianpu_route(selected))} />
+  );
 
   return (
     <AppShell>
-      <div className="jianpu-material-tabs" role="tablist" aria-label="简谱教材选择">
-        {ordered_materials.map((item) => (
-          <Link
-            key={item.id}
-            to={get_jianpu_route(item)}
-            className={item.id === material.id ? "is-selected" : ""}
-            role="tab"
-            aria-selected={item.id === material.id}
-          >
-            <BookOpenText size={17} />
-            <span>{item.title}</span>
-          </Link>
-        ))}
-      </div>
-
       <section className="jianpu-library-layout is-score-focused">
         <div className="jianpu-reader-column">
           {delete_message && (
             <p className="jianpu-library-message">{delete_message}</p>
           )}
           {chapter ? (
-            <JianpuChapterReader material={material} chapter={chapter} />
+            <>
+              <div className="textbook-reader-toolbar">
+                {material_selection}
+                <Link className="textbook-catalog-trigger" to={get_jianpu_route(material)}>曲谱目录</Link>
+              </div>
+              <JianpuChapterReader material={material} chapter={chapter} />
+            </>
           ) : (
             <JianpuReader
               key={user?.id ?? "guest"}
               material={material}
+              material_selection={material_selection}
               segment={segment!}
               is_favorite={is_score_favorite(
                 favorite_entries,
@@ -310,6 +308,7 @@ function JianpuChapterReader({
 
 function JianpuReader({
   material,
+  material_selection,
   segment,
   is_favorite,
   on_toggle_favorite,
@@ -319,6 +318,7 @@ function JianpuReader({
   calibration_href,
 }: {
   material: jianpu_material;
+  material_selection: ReactNode;
   segment: jianpu_segment;
   is_favorite: boolean;
   on_toggle_favorite: () => void;
@@ -445,6 +445,7 @@ function JianpuReader({
 
   return (
     <TextbookScoreStage material={material} segment={segment}
+      material_selection={material_selection}
       switching_direction={navigation?.switching_direction}
       on_navigate={navigate_with_score_position}>
     <article className="jianpu-reader">
@@ -457,6 +458,19 @@ function JianpuReader({
           </p>
         </div>
         <div className="jianpu-reader-head-actions">
+          <div className="jianpu-view-switch" role="group" aria-label="阅读视图">
+            <button type="button" className={reading_view === "jianpu" ? "is-selected" : ""}
+              aria-pressed={reading_view === "jianpu"} onClick={() => set_reading_view("jianpu")}>
+              <Music2 size={15} />简谱
+            </button>
+            <button type="button" ref={original_button}
+              className={reading_view === "original" ? "is-selected" : ""}
+              aria-pressed={reading_view === "original"}
+              onPointerEnter={prepare_original} onPointerDown={prepare_original} onFocus={prepare_original}
+              onClick={() => set_reading_view("original")}>
+              <FileMusic size={15} />原谱
+            </button>
+          </div>
           <button
             type="button"
             className={`repertoire-favorite-toggle ${is_favorite ? "is-favorite" : ""}`}
@@ -492,31 +506,6 @@ function JianpuReader({
           )}
         </div>
       </header>
-
-      <div className="jianpu-view-switch" role="group" aria-label="阅读视图">
-        <button
-          type="button"
-          className={reading_view === "jianpu" ? "is-selected" : ""}
-          aria-pressed={reading_view === "jianpu"}
-          onClick={() => set_reading_view("jianpu")}
-        >
-          <Music2 size={15} />
-          简谱
-        </button>
-        <button
-          type="button"
-          ref={original_button}
-          className={reading_view === "original" ? "is-selected" : ""}
-          aria-pressed={reading_view === "original"}
-          onPointerEnter={prepare_original}
-          onPointerDown={prepare_original}
-          onFocus={prepare_original}
-          onClick={() => set_reading_view("original")}
-        >
-          <FileMusic size={15} />
-          原谱
-        </button>
-      </div>
 
       <div ref={reading_surface} className="jianpu-reading-surface">
         {reading_view === "jianpu" ? (

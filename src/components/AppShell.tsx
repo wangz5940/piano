@@ -6,6 +6,7 @@ import {
   Home,
   LibraryBig,
   Music2,
+  Piano,
   PanelLeftClose,
   PanelLeftOpen,
   ScanSearch,
@@ -56,7 +57,7 @@ export function AppShell({ children }: app_shell_props) {
     <div className={`app-shell ${sidebar_collapsed ? "is-rail-collapsed" : ""}`}>
       <aside className={`side-rail ${sidebar_collapsed ? "is-collapsed" : ""}`}>
         <NavLink to="/" className="brand-mark" aria-label="返回练琴簿首页">
-          <span className="brand-note">♩</span>
+          <span className="brand-note"><Piano size={22} strokeWidth={1.5} /></span>
           <span className="brand-copy">
             <strong>练琴簿</strong>
             <small>PIANO PRACTICE</small>

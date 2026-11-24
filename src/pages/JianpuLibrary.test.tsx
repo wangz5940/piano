@@ -148,18 +148,20 @@ describe("简谱教材", () => {
       </MemoryRouter>,
     );
 
-    const small_thompson_1 = markup.indexOf("约翰·汤普森简易钢琴教程 1");
-    const small_thompson_2 = markup.indexOf("约翰·汤普森简易钢琴教程 2");
-    const beyer_index = markup.indexOf("拜厄钢琴基本教程");
-    const hanon_index = markup.indexOf("哈农钢琴练指法");
+    const small_thompson_1 = markup.indexOf('<option value="john-thompson-easiest-1"');
+    const small_thompson_2 = markup.indexOf('<option value="john-thompson-easiest-2"');
+    const beyer_index = markup.indexOf('<option value="beyer"');
+    const hanon_index = markup.indexOf('<option value="hanon"');
 
     expect(small_thompson_1).toBeGreaterThan(-1);
     expect(small_thompson_1).toBeLessThan(small_thompson_2);
     expect(small_thompson_2).toBeLessThan(beyer_index);
     expect(beyer_index).toBeLessThan(hanon_index);
-    expect(markup).toMatch(
-      /<a(?=[^>]*href="\/简谱教材\/john-thompson-easiest-1\/john-thompson-easiest-1.segment.001.work.1")(?=[^>]*class="is-selected")(?=[^>]*aria-selected="true")/,
-    );
+    expect(markup).toMatch(/<option value="john-thompson-easiest-1"[^>]*selected=""/);
+    expect(markup).toContain('aria-label="教材选择"');
+    expect(markup.indexOf('class="textbook-material-picker"'))
+      .toBeLessThan(markup.indexOf('class="textbook-catalog-trigger"'));
+    expect(markup).not.toContain("jianpu-material-tabs");
     expect(markup).toContain('class="textbook-score-number">001</span>请弹吧（右手）');
     expect(markup).not.toContain("章节导读");
     expect(markup).not.toContain("jianpu-segment-panel");
